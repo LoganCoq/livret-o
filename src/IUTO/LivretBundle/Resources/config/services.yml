@@ -1,0 +1,4 @@
+services:
+#    iuto_livret.example:
+#        class: IUTO\LivretBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
