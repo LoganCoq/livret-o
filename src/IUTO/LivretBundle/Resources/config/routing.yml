@@ -4,4 +4,4 @@ iuto_livret_homepage:
 
 test_base:
     path: /base/{id}
-    defaults: { _controller: IUTOLivretBundle:Base:statut }
+    defaults: { _controller: IUTOLivretBundle:Base:base }
