@@ -9,7 +9,7 @@ class BaseController extends Controller
 {
   public function baseAction() // Test étudiant
   {
-    $content = $this->get('templating')->render('LivretBundle:Default:base.html.twig', array('statutCAS' => 'étudiant'));
+    $content = $this->get('templating')->render('IUTOLivretBundle:Base:base.html.twig', array('statutCAS' => 'étudiant'));
     return new Response($content);
   }
 }

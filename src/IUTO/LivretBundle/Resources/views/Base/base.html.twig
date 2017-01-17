@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <title>
           {% block title %}
-            {% if {{statutCAS}}=="étudiant" %} <!--CAS = étudiant-->
+            {% if 1==1 %} <!--CAS = étudiant-->
               Connecté en tant qu'{{statutCAS}}
             {% else %} <!--CAS = professeur ou chef de département ou service communication -->
               Connecté en tant que {{statutCAS}}
@@ -17,9 +17,8 @@
     </head>
     <body>
         <ul id="menu-principal">
-            {% for option in options%}
-                <li> <a href="#">{{option}}</a> </li>
-            {% endfor %}
+                <li> <a href="#">option</a> </li>
+
         </ul>
 
         {% block body %}{% endblock %}

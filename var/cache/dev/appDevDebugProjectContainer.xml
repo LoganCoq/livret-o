@@ -434,7 +434,7 @@
                 <tag name="cache.pool" clearer="cache.default_clearer"/>
                 <argument>Hth2SL0rXp</argument>
                 <argument>0</argument>
-                <argument>zGLD8Q-aZ0k+eJ5xXji93Y</argument>
+                <argument>ekWaasImZbnDnNH16w0KBO</argument>
                 <argument>/home/soukaina/Documents/iut/2A/projet_livretO_2A/var/cache/dev/pools</argument>
                 <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
                 <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -562,7 +562,7 @@
           <tag name="monolog.logger" channel="cache"/>
           <argument>Unxwc6Cn-c</argument>
           <argument>null</argument>
-          <argument>zGLD8Q-aZ0k+eJ5xXji93Y</argument>
+          <argument>ekWaasImZbnDnNH16w0KBO</argument>
           <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
           <factory class="Symfony\Component\PropertyAccess\PropertyAccessor" method="createCache"/>
         </service>
@@ -583,7 +583,7 @@
       <tag name="cache.pool" clearer="cache.default_clearer"/>
       <argument>0YfoyCIh6I</argument>
       <argument>0</argument>
-      <argument>zGLD8Q-aZ0k+eJ5xXji93Y</argument>
+      <argument>ekWaasImZbnDnNH16w0KBO</argument>
       <argument>/home/soukaina/Documents/iut/2A/projet_livretO_2A/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -593,7 +593,7 @@
       <tag name="cache.pool" clearer="cache.default_clearer"/>
       <argument>PID-GnFfrB</argument>
       <argument>0</argument>
-      <argument>zGLD8Q-aZ0k+eJ5xXji93Y</argument>
+      <argument>ekWaasImZbnDnNH16w0KBO</argument>
       <argument>/home/soukaina/Documents/iut/2A/projet_livretO_2A/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -1586,7 +1586,7 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>587dddbd2d03b7.96097725</argument>
+            <argument>587dee524db131.68564880</argument>
           </service>
         </argument>
       </argument>
@@ -1734,7 +1734,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>587dddbd2d03b7.96097725</argument>
+            <argument>587dee524db131.68564880</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -2191,7 +2191,9 @@
       <argument type="service">
         <service class="Doctrine\ORM\Configuration" public="false">
           <call method="setEntityNamespaces">
-            <argument type="collection"/>
+            <argument type="collection">
+              <argument key="IUTOLivretBundle">IUTO\LivretBundle\Entity</argument>
+            </argument>
           </call>
           <call method="setMetadataCacheImpl">
             <argument type="service" id="doctrine_cache.providers.doctrine.orm.default_metadata_cache"/>
@@ -2204,7 +2206,19 @@
           </call>
           <call method="setMetadataDriverImpl">
             <argument type="service">
-              <service class="Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain" public="false"/>
+              <service class="Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain" public="false">
+                <call method="addDriver">
+                  <argument type="service">
+                    <service class="Doctrine\ORM\Mapping\Driver\AnnotationDriver" public="false">
+                      <argument type="service" id="annotation_reader"/>
+                      <argument type="collection">
+                        <argument>/home/soukaina/Documents/iut/2A/projet_livretO_2A/src/IUTO/LivretBundle/Entity</argument>
+                      </argument>
+                    </service>
+                  </argument>
+                  <argument>IUTO\LivretBundle\Entity</argument>
+                </call>
+              </service>
             </argument>
           </call>
           <call method="setProxyDir">

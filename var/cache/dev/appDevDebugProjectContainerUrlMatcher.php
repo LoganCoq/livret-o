@@ -114,6 +114,11 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             return array (  '_controller' => 'IUTO\\LivretBundle\\Controller\\DefaultController::indexAction',  '_route' => 'iuto_livret_homepage',);
         }
 
+        // test_base
+        if ($pathinfo === '/base') {
+            return array (  '_controller' => 'IUTO\\LivretBundle\\Controller\\BaseController::baseAction',  '_route' => 'test_base',);
+        }
+
         // homepage
         if (rtrim($pathinfo, '/') === '') {
             if (substr($pathinfo, -1) !== '/') {
