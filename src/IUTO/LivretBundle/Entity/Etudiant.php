@@ -134,4 +134,80 @@ class Etudiant
     {
         return $this->mailEtu;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->formation = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add projet
+     *
+     * @param \IUTO\LivretBundle\Entity\Projet $projet
+     *
+     * @return Etudiant
+     */
+    public function addProjet(\IUTO\LivretBundle\Entity\Projet $projet)
+    {
+        $this->projets[] = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Remove projet
+     *
+     * @param \IUTO\LivretBundle\Entity\Projet $projet
+     */
+    public function removeProjet(\IUTO\LivretBundle\Entity\Projet $projet)
+    {
+        $this->projets->removeElement($projet);
+    }
+
+    /**
+     * Get projets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjets()
+    {
+        return $this->projets;
+    }
+
+    /**
+     * Add formation
+     *
+     * @param \IUTO\LivretBundle\Entity\Formation $formation
+     *
+     * @return Etudiant
+     */
+    public function addFormation(\IUTO\LivretBundle\Entity\Formation $formation)
+    {
+        $this->formation[] = $formation;
+
+        return $this;
+    }
+
+    /**
+     * Remove formation
+     *
+     * @param \IUTO\LivretBundle\Entity\Formation $formation
+     */
+    public function removeFormation(\IUTO\LivretBundle\Entity\Formation $formation)
+    {
+        $this->formation->removeElement($formation);
+    }
+
+    /**
+     * Get formation
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFormation()
+    {
+        return $this->formation;
+    }
 }
