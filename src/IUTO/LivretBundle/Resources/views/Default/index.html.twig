@@ -10,7 +10,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/src.css') }}">
     {% endblock %}
 </head>
-<body>
+<body background="{{ asset('assets/images/shattered.png') }}">
 {% block body %}
     <div></div>
     {% block page %}
@@ -18,7 +18,7 @@
             {% block content %}
                 <h1 class="title_accueil"> Bienvenue sur le générateur de livret de projets </h1>
                 <div class="buttons_accueil">
-                    <button type="button" class="btn btn-default" id="btn_accueil"> Utilisateurs de l'université <br/> (personnels et
+                    <button type="button" class="btn btn-default" id="btn_accueil" onclick="window.location.href='/base/etudiant'"> Utilisateurs de l'université <br/> (personnels et
                         étudiants)
                     </button>
                     <button type="button" class="btn btn-default" id="btn_accueil"> Public </button>
