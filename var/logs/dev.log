@@ -1646,3 +1646,6 @@
 [2017-01-17 14:46:10] request.INFO: Matched route "iuto_livret_homepage". {"route":"iuto_livret_homepage","route_parameters":{"_controller":"IUTO\\LivretBundle\\Controller\\DefaultController::indexAction","_route":"iuto_livret_homepage"},"request_uri":"http://localhost:8000/","method":"GET"} []
 [2017-01-17 14:46:10] security.INFO: Populated the TokenStorage with an anonymous Token. [] []
 [2017-01-17 14:46:10] request.INFO: Matched route "_wdt". {"route":"_wdt","route_parameters":{"_controller":"web_profiler.controller.profiler:toolbarAction","token":"d396bf","_route":"_wdt"},"request_uri":"http://localhost:8000/_wdt/d396bf","method":"GET"} []
+[2017-01-17 14:51:11] request.INFO: Matched route "iuto_livret_homepage". {"route":"iuto_livret_homepage","route_parameters":{"_controller":"IUTO\\LivretBundle\\Controller\\DefaultController::indexAction","_route":"iuto_livret_homepage"},"request_uri":"http://localhost:8000/","method":"GET"} []
+[2017-01-17 14:51:11] security.INFO: Populated the TokenStorage with an anonymous Token. [] []
+[2017-01-17 14:51:11] request.INFO: Matched route "_wdt". {"route":"_wdt","route_parameters":{"_controller":"web_profiler.controller.profiler:toolbarAction","token":"a8389f","_route":"_wdt"},"request_uri":"http://localhost:8000/_wdt/a8389f","method":"GET"} []
