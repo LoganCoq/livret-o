@@ -7,32 +7,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BaseController extends Controller
 {
-  public function baseAction() // Test du controlleur
+  public function baseAction($id) // Renvoie le statut de la personne qui se connecte
   {
-    return new Response("Hello World");
-  }
-
-  public function StudentAction() // récupère le status de la personne qui se connecte
-  {
-    $content = $this->get('templating')->render('LivretBundle:Default:base.html.twig', array('statutCAS' => 'étudiant'));
-    return new Response($content);
-  }
-
-  public function ProfAction()
-  {
-    $content = $this->get('templating')->render('LivretBundle:Default:base.html.twig', array('statutCAS' => 'professeur'));
-    return new Response($content);
-  }
-
-  public function CommAction()
-  {
-    $content = $this->get('templating')->render('LivretBundle:Default:base.html.twig', array('statutCAS' => 'communication'));
-    return new Response($content);
-  }
-
-  public function ChefAction()
-  {
-    $content = $this->get('templating')->render('LivretBundle:Default:base.html.twig', array('statutCAS' => 'chef'));
-    return new Response($content);
+    if ($id == "etudiant"){ // Si un étudiant se connecte
+        return $this->render('IUTOLivretBundle:Base:base.html.twig', array('statutCAS' => 'étudiant', 'info' => array('Créer un compte rendu', 'Correction compte rendu')));
+    }
+    elseif ($id == "professeur"){ // Si un professeur se connecte
+        return $this->render('IUTOLivretBundle:Base:base.html.twig', array('statutCAS' => 'professeur', 'info' => array('Demandes de correction', 'Projets validés')));
+    }
+    elseif ($id == "communication"){ // Si un membre du service communication se connecte
+        return $this->render('IUTOLivretBundle:Base:base.html.twig', array('statutCAS' => 'professeur', 'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets')));
+    }
+    elseif ($id == "chef"){ // Si un chef de département se connecte
+        return $this->render('IUTOLivretBundle:Base:base.html.twig', array('statutCAS' => 'professeur', 'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet')));
+    }
   }
 }

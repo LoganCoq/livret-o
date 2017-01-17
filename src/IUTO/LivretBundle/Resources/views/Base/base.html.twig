@@ -4,24 +4,25 @@
         <meta charset="UTF-8" />
         <title>
           {% block title %}
-            {% if {{statutCAS}}=="étudiant" %} <!--CAS = étudiant-->
+            {% if statutCAS=='étudiant' %} {#CAS = étudiant#}
               Connecté en tant qu'{{statutCAS}}
-            {% else %} <!--CAS = professeur ou chef de département ou service communication -->
+            {% else %} {#CAS = professeur ou chef de département ou service communication#}
               Connecté en tant que {{statutCAS}}
             {% endif %}
-
           {% endblock %}
         </title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <ul id="menu-principal">
-            {% for option in options%}
+      <nav id="menu-principal">
+        <button id = "boutonStatutCAS"> <a href="#">{{statutCAS}}</a> </button>
+        <ul>
+          {% for option in info %}
                 <li> <a href="#">{{option}}</a> </li>
-            {% endfor %}
+          {% endfor%}
         </ul>
-
+      </nav>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
