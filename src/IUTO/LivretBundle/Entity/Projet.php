@@ -271,4 +271,128 @@ class Projet
     {
         return $this->validerProjet;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->etudiants = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->personnels = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set dateDebut
+     *
+     * @param \DateTime $dateDebut
+     *
+     * @return Projet
+     */
+    public function setDateDebut($dateDebut)
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDebut
+     *
+     * @return \DateTime
+     */
+    public function getDateDebut()
+    {
+        return $this->dateDebut;
+    }
+
+    /**
+     * Set dateFin
+     *
+     * @param \DateTime $dateFin
+     *
+     * @return Projet
+     */
+    public function setDateFin($dateFin)
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFin
+     *
+     * @return \DateTime
+     */
+    public function getDateFin()
+    {
+        return $this->dateFin;
+    }
+
+    /**
+     * Add etudiant
+     *
+     * @param \IUTO\LivretBundle\Entity\Etudiant $etudiant
+     *
+     * @return Projet
+     */
+    public function addEtudiant(\IUTO\LivretBundle\Entity\Etudiant $etudiant)
+    {
+        $this->etudiants[] = $etudiant;
+
+        return $this;
+    }
+
+    /**
+     * Remove etudiant
+     *
+     * @param \IUTO\LivretBundle\Entity\Etudiant $etudiant
+     */
+    public function removeEtudiant(\IUTO\LivretBundle\Entity\Etudiant $etudiant)
+    {
+        $this->etudiants->removeElement($etudiant);
+    }
+
+    /**
+     * Get etudiants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEtudiants()
+    {
+        return $this->etudiants;
+    }
+
+    /**
+     * Add personnel
+     *
+     * @param \IUTO\LivretBundle\Entity\Personnel $personnel
+     *
+     * @return Projet
+     */
+    public function addPersonnel(\IUTO\LivretBundle\Entity\Personnel $personnel)
+    {
+        $this->personnels[] = $personnel;
+
+        return $this;
+    }
+
+    /**
+     * Remove personnel
+     *
+     * @param \IUTO\LivretBundle\Entity\Personnel $personnel
+     */
+    public function removePersonnel(\IUTO\LivretBundle\Entity\Personnel $personnel)
+    {
+        $this->personnels->removeElement($personnel);
+    }
+
+    /**
+     * Get personnels
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPersonnels()
+    {
+        return $this->personnels;
+    }
 }

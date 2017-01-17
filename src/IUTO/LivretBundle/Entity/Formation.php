@@ -36,14 +36,14 @@ class Formation
     private $semestre;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @ORM\Column(name="dateDebut", type="date")
      */
     private $dateDebut;
 
     /**
-     * @var date
+     * @var \DateTime
      *
      * @ORM\Column(name="dateFin", type="date")
      */
@@ -110,5 +110,77 @@ class Formation
     public function getSemestre()
     {
         return $this->semestre;
+    }
+
+    /**
+     * Set dateDebut
+     *
+     * @param \DateTime $dateDebut
+     *
+     * @return Formation
+     */
+    public function setDateDebut($dateDebut)
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDebut
+     *
+     * @return \DateTime
+     */
+    public function getDateDebut()
+    {
+        return $this->dateDebut;
+    }
+
+    /**
+     * Set dateFin
+     *
+     * @param \DateTime $dateFin
+     *
+     * @return Formation
+     */
+    public function setDateFin($dateFin)
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFin
+     *
+     * @return \DateTime
+     */
+    public function getDateFin()
+    {
+        return $this->dateFin;
+    }
+
+    /**
+     * Set departement
+     *
+     * @param \IUTO\LivretBundle\Entity\Departement $departement
+     *
+     * @return Formation
+     */
+    public function setDepartement(\IUTO\LivretBundle\Entity\Departement $departement = null)
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    /**
+     * Get departement
+     *
+     * @return \IUTO\LivretBundle\Entity\Departement
+     */
+    public function getDepartement()
+    {
+        return $this->departement;
     }
 }
