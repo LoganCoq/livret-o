@@ -1,3 +1,7 @@
 iuto_livret_homepage:
     path:     /
     defaults: { _controller: IUTOLivretBundle:Default:index }
+
+test_base:
+    path: /base
+    defaults: { _controller: IUTOLivretBundle:Default:base }
