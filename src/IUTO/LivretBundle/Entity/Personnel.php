@@ -48,6 +48,11 @@ class Personnel
     private $fonction;
 
     /**
+     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Projet", inversedBy="personnels")
+     */
+    private $projets;
+
+    /**
      * Get id
      *
      * @return int

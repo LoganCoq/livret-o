@@ -90,6 +90,11 @@ class Projet
     private $etudiants;
 
     /**
+     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Personnel", mappedBy="projet")
+     */
+    private $personnels;
+
+    /**
      * Get id
      *
      * @return int

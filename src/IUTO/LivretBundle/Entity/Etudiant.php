@@ -44,7 +44,6 @@ class Etudiant
 
     /**
     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Projet", inversedBy="etudiants")
-    * @ORM\JoinColumn(nullable=false)
     */
     private $projets;
 
