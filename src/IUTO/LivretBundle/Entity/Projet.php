@@ -70,6 +70,29 @@ class Projet
      */
     private $validerProjet;
 
+    /**
+     * @var date
+     *
+     * @ORM\Column(name="dateDebut", type="date")
+     */
+    private $dateDebut;
+
+    /**
+     * @var date
+     *
+     * @ORM\Column(name="dateFin", type="date")
+     */
+    private $dateFin;
+
+    /**
+    * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Etudiant", mappedBy="projet")
+    */
+    private $etudiants;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Personnel", mappedBy="projet")
+     */
+    private $personnels;
 
     /**
      * Get id
@@ -249,4 +272,3 @@ class Projet
         return $this->validerProjet;
     }
 }
-

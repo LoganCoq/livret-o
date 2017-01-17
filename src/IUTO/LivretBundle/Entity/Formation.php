@@ -35,6 +35,24 @@ class Formation
      */
     private $semestre;
 
+    /**
+     * @var date
+     *
+     * @ORM\Column(name="dateDebut", type="date")
+     */
+    private $dateDebut;
+
+    /**
+     * @var date
+     *
+     * @ORM\Column(name="dateFin", type="date")
+     */
+    private $dateFin;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Departement", cascade={"persist"})
+    */
+    private $departement;
 
     /**
      * Get id
@@ -94,4 +112,3 @@ class Formation
         return $this->semestre;
     }
 }
-
