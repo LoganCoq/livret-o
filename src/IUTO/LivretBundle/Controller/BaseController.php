@@ -16,10 +16,10 @@ class BaseController extends Controller
         return $this->render('IUTOLivretBundle:Base:base.html.twig', array('statutCAS' => 'professeur', 'info' => array('Demandes de correction', 'Projets validés')));
     }
     elseif ($id == "communication"){ // Si un membre du service communication se connecte
-        return $this->render('IUTOLivretBundle:Base:base.html.twig', array('statutCAS' => 'professeur', 'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets')));
+        return $this->render('IUTOLivretBundle:Base:base.html.twig', array('statutCAS' => 'Service de communication', 'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets')));
     }
     elseif ($id == "chef"){ // Si un chef de département se connecte
-        return $this->render('IUTOLivretBundle:Base:base.html.twig', array('statutCAS' => 'professeur', 'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet')));
+        return $this->render('IUTOLivretBundle:Base:base.html.twig', array('statutCAS' => 'Chef de département', 'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet')));
     }
   }
 }
