@@ -4,23 +4,28 @@
         <meta charset="UTF-8" />
         <title>
           {% block title %}
-            {% if 1==1 %} <!--CAS = étudiant-->
+            {% if statutCAS=='étudiant' %} {#CAS = étudiant#}
               Connecté en tant qu'{{statutCAS}}
-            {% else %} <!--CAS = professeur ou chef de département ou service communication -->
+            {% else %} {#CAS = professeur ou chef de département ou service communication#}
               Connecté en tant que {{statutCAS}}
             {% endif %}
-
           {% endblock %}
         </title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+      <nav>
+
+        <input type = "hidden" name = "genre" value = "Action">
+        <input type="submit" value={{statutCAS}} class="boutonGenre">
+        {% for option in info %}
+              <li> <a href="#">option {{i}}</a> </li>
+        {% endfor%}
         <ul id="menu-principal">
-                <li> <a href="#">option</a> </li>
 
         </ul>
-
+      </nav>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
