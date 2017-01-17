@@ -35,6 +35,10 @@ class Formation
      */
     private $semestre;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Departement", cascade={"persist"})
+    */
+    private $departement;
 
     /**
      * Get id
@@ -94,4 +98,3 @@ class Formation
         return $this->semestre;
     }
 }
-

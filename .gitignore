@@ -1,3 +1,5 @@
+
+
 /build/
 /phpunit.xml
 /var/*
@@ -5,6 +7,7 @@
 /var/cache/*
 !var/cache/.gitkeep
 !/var/logs
+/var/cache/dev/*
 /var/logs/*
 !var/logs/.gitkeep
 !/var/sessions
