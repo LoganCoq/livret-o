@@ -42,6 +42,17 @@ class Etudiant
      */
     private $mailEtu;
 
+    /**
+    * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Projet", inversedBy="etudiants")
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $projets;
+
+    /**
+    * @ORM\ManytoMany(targetEntity="IUTO\LivretBundle\Entity\Formation")
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $formation;
 
     /**
      * Get id
@@ -125,4 +136,3 @@ class Etudiant
         return $this->mailEtu;
     }
 }
-

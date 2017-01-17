@@ -49,6 +49,10 @@ class Livret
      */
     private $editoLivret;
 
+    /**
+    * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Projet", cascade={"persist"})
+    */
+    private $projets;
 
     /**
      * Get id
@@ -156,4 +160,3 @@ class Livret
         return $this->editoLivret;
     }
 }
-

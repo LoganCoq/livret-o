@@ -42,6 +42,10 @@ class Personnel
      */
     private $mailPers;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Fonction")
+    */
+    private $fonction;
 
     /**
      * Get id
@@ -125,4 +129,3 @@ class Personnel
         return $this->mailPers;
     }
 }
-
