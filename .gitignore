@@ -17,5 +17,5 @@
 /.idea/*
 /src/AppBundle/Controller/TestController.php
 /app/config/parameters.yml.save
-var/logs/dev.log
+/var/logs/dev.log
 /vendor/
