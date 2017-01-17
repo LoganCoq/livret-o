@@ -15,15 +15,12 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-      <nav>
-
-        <input type = "hidden" name = "genre" value = "Action">
-        <input type="submit" value={{statutCAS}} class="boutonGenre">
-        {% for option in info %}
-              <li> <a href="#">{{option}}</a> </li>
-        {% endfor%}
-        <ul id="menu-principal">
-
+      <nav id="menu-principal">
+        <button id = "boutonStatutCAS"> <a href="#">{{statutCAS}}</a> </button>
+        <ul>
+          {% for option in info %}
+                <li> <a href="#">{{option}}</a> </li>
+          {% endfor%}
         </ul>
       </nav>
         {% block body %}{% endblock %}
