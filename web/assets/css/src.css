@@ -1,17 +1,26 @@
 .title_accueil {
     text-align: center;
-    font-size: 60px;
-    margin-top: 70px;
+    font-size: 410%;
+    margin-top: 6%;
 }
 
 .buttons_accueil {
     text-align: center;
-    margin: 100px 100px 0px 100px;
+    margin: 5% 5% 0px 5%;
 }
 
-.btn-default {
-    font-size: 30px;
-    width: 600px;
-    height: 300px;
-    margin: 0px 50px;
+#btn_accueil {
+    font-size: 210%;
+    width: 35%;
+    height: 9em;
+    margin: 0% 3%;
+    background-color: #eaeaea;
+}
+
+#btn_accueil:hover {
+    font-size: 210%;
+    width: 35%;
+    height: 9em;
+    margin: 0% 3%;
+    background-color: #cbcbcb;
 }
