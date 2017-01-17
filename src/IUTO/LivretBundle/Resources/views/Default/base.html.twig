@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>
+          {% block title %}
+            {% if {{statutCAS}}=="étudiant" %} <!--CAS = étudiant-->
+              Connecté en tant qu'{{statutCAS}}
+            {% else %} <!--CAS = professeur ou chef de département ou service communication -->
+              Connecté en tant que {{statutCAS}}
+            {% endif %}
+
+          {% endblock %}
+        </title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <ul id="menu-principal">
+            {% for option in options%}
+                <li> <a href="#">{{option}}</a> </li>
+            {% endfor %}
+        </ul>
+
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
