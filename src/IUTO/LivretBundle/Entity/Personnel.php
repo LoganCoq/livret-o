@@ -133,4 +133,28 @@ class Personnel
     {
         return $this->mailPers;
     }
+    /**
+     * Set fonction
+     *
+     * @param \IUTO\LivretBundle\Entity\Fonction $fonction
+     *
+     * @return Personnel
+     */
+    public function setFonction(\IUTO\LivretBundle\Entity\Fonction $fonction = null)
+    {
+        $this->fonction = $fonction;
+
+        return $this;
+    }
+
+    /**
+     * Get fonction
+     *
+     * @return \IUTO\LivretBundle\Entity\Fonction
+     */
+    public function getFonction()
+    {
+        return $this->fonction;
+    }
+    
 }
