@@ -85,12 +85,12 @@ class Projet
     private $dateFin;
 
     /**
-    * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Etudiant", mappedBy="projet")
+    * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Etudiant", mappedBy="projets")
     */
     private $etudiants;
 
     /**
-     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Personnel", mappedBy="projet")
+     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Personnel", mappedBy="projets")
      */
     private $personnels;
 
