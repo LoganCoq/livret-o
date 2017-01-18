@@ -3,13 +3,15 @@
 
 namespace IUTO\LivretBundle\DataFixtures\ORM;
 
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Entity\Personnel;
 
-class LoadCommentaire implements FixtureInterface
+class LoadCommentaire implements FixtureInterface, DependentFixtureInterface
 {
     // Dans l'argument de la méthode load, l'objet $manager est l'EntityManager
     public function load(ObjectManager $manager)
@@ -31,5 +33,16 @@ class LoadCommentaire implements FixtureInterface
 
 
         $manager->flush();
+    }
+
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on
+     *
+     * @return array
+     */
+    function getDependencies()
+    {
+        return array(LoadPersonnel::class,LoadProjet::class );
     }
 }

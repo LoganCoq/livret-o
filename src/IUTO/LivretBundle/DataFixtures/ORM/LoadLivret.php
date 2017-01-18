@@ -12,7 +12,6 @@ class LoadLivret implements FixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        // TODO: Implement load() method.
         $livret = new Livret();
         $livret->setIntituleLivret("Projet département Informatique");
         $livret->setDateCreationLivret(new \DateTime());
