@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+{% block create %}
 <div class="form-group row">
   <label for="title" class="col-2 col-form-label">Titre</label>
   <div class="col-10">
@@ -36,3 +37,4 @@
     <input class="form-control" type="text" value={{formation}} id="formation" disabled>
   </div>
 </div>
+{% endblock create %}

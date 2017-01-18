@@ -2,8 +2,8 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use IUTO\LivretBundle\Entity\Etudiant;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
 class StudentController extends Controller
 {
@@ -20,13 +20,13 @@ class StudentController extends Controller
 
         $formation = $etudiant->getFormation();
 
-        $anneeDebut = $formation->getYearDebut();
-        $anneeFin = $formation->getYearFin();
+        $anneeDebut = $formation[0]->getYearDebut();
+        $anneeFin = $formation[0]->getYearFin();
 
-        $departement = $formation->getDepartement();
+        $departement = $formation[0]->getDepartement();
 
-        return $this->render('IUTOLivretBundle:Student:createProject.html.twig',array('formation' => $formation),
-            array('departement' => $departement), array('anneeDebut' => $anneeDebut), array('anneeFin' => $anneeFin)
+        return $this->render('IUTOLivretBundle:Student:createProject.html.twig',array('formation' => $formation,
+            'departement' => $departement, 'anneeDebut' => $anneeDebut, 'anneeFin' => $anneeFin)
         );
     }
 }
