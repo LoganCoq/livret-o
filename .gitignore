@@ -20,3 +20,4 @@ var/logs/dev.log
 /vendor/*
 *.lock
 composer.json
+composer.lock

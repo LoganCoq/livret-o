@@ -19,16 +19,18 @@
         {% endblock %}
     </head>
 
-    <body>
+    <body background="{{ asset('assets/images/cork-wallet.png') }}">
       <div id="wrapper">
           <div id="sidebar-wrapper" class="">
               <nav id="spy">
                   <ul class="sidebar-nav nav">
                       <li class="sidebar-brand active">
-                        <a href="">
+                        <p id="statutCAS">
                           {{statutCAS|capitalize}}
-                        </a>
+                        </p>
                       </li>
+                        </br>
+                        </br>
                         {% for option in info %}
                           <li class="sidebar-brand options">
                             <a href="#">{{option}}</a>
