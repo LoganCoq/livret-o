@@ -4,19 +4,19 @@ iuto_livret_homepage:
 
 #==================ROUTES MODULE ETUDIANT==================#
 iuto_livret_studenthomepage:
-    path: /{id}
+    path: /etudiant
     defaults: { _controller: IUTOLivretBundle:Student:studenthome }
 #==================ROUTE MODULE PROFESSEUR===========#
 iuto_livret_teacherhomepage:
-    path: /{id}
+    path: /professeur
     defaults: { _controller: IUTOLivretBundle:Teacher:teacherhome }
 #==================ROUTE MODULE CHEF DEPARTEMENT===========#
 iuto_livret_chiefhomepage:
-    path: /{id}
+    path: /chef
     defaults: { _controller: IUTOLivretBundle:Chief:chiefhome }
 #==================ROUTE MODULE COMMUNICATIONN=============#
 iuto_livret_communicationhomepage:
-    path: /{id}
+    path: /communication
     defaults: { _controller: IUTOLivretBundle:Communication:communicationhome }
 #==================ROUTE MODULE CORRECTION PROF===========#
 iuto_livret_correctionProf1:
