@@ -5,6 +5,7 @@ namespace IUTO\LivretBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Ldap\LdapClient;
 
+
 class TestController extends Controller
 {
     public function testAction()
