@@ -24,8 +24,6 @@ class AppKernel extends Kernel
             new IUTO\LivretBundle\IUTOLivretBundle(),
         ];
 
-        require '../vendor/autoload.php';
-
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
