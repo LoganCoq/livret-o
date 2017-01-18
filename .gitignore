@@ -21,3 +21,4 @@ var/logs/dev.log
 *.lock
 composer.json
 composer.lock
+.gitignore

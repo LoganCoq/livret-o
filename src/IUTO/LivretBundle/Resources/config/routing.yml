@@ -5,3 +5,7 @@ iuto_livret_homepage:
 test_base:
     path: /base/{id}
     defaults: { _controller: IUTOLivretBundle:Base:base }
+
+test:
+    path: /test
+    defaults: { _controller: IUTOLivretBundle:Test:test}
