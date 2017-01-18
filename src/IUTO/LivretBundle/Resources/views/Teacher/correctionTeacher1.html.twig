@@ -1,0 +1,22 @@
+{% extends base.html.twig %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Correction projets</title>
+</head>
+<body>
+<h1> Demandes de correction de projets </h1>
+{% block content %}
+<p> Choisir un projet à corriger :</p>
+<form>
+  <select name="nom" size="1">
+    {% for elem in projets %}
+      {{elem}}
+    {% endfor %}
+  </select>
+</form>
+<input type="submit" value="Suivant"/>
+{% endblock %}
+</body>
+</html>
