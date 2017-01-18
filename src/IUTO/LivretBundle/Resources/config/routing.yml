@@ -18,3 +18,7 @@ iuto_livret_chiefhomepage:
 iuto_livret_communicationhomepage:
     path: /{id}
     defaults: { _controller: IUTOLivretBundle:Base:base }
+#==================ROUTE MODULE CreateProject=============#
+iuto_livret_createProject:
+    path: /create/project
+    defaults: { _controller: IUTOLivretBundle:Student:createProject }
