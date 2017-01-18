@@ -3,25 +3,6 @@ iuto_livret_homepage:
     defaults: { _controller: IUTOLivretBundle:Home:index }
 
 #==================ROUTES MODULE ETUDIANT==================#
-iuto_livret_base:
-    path: /id
-    defaults: { _controller: IUTOLivretBundle:Base:base }
-
 iuto_livret_studenthomepage:
-    path: /etudiant
-    defaults: { _controller: IUTOLivretBundle:Student:student }
-
-#=================ROUTES MODULE PROFESSEUR=================#
-iuto_livret_teacherhomepage:
-    path: /professeur
-    defaults: { _controller: IUTOLivretBundle:Teacher:teacher }
-
-#====================ROUTES MODULE COMM====================#
-iuto_livret_commhomepage:
-    path: /service-de-communication
-    defaults: { _controller: IUTOLivretBundle:Comm:comm }
-
-#==================ROUTES MODULE CHEF DPT==================#
-iuto_livret_chiefhomepage:
-    path: /chef-de-departement
-    defaults: { _controller: IUTOLivretBundle:Chief:chief }
+    path: /{id}
+    defaults: { _controller: IUTOLivretBundle:Base:base }
