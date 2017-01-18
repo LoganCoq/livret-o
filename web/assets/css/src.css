@@ -4,7 +4,8 @@
     margin-top: 6%;
 }
 
-body,footer {
+body,
+footer {
   font-family: Arial;
 }
 
@@ -17,15 +18,11 @@ body,footer {
     font-size: 210%;
     width: 35%;
     height: 9em;
-    margin: 0% 3%;
+    margin: 0 3%;
     background-color: #eaeaea;
 }
 
 #btn_accueil:hover {
-    font-size: 210%;
-    width: 35%;
-    height: 9em;
-    margin: 0% 3%;
     background-color: #cbcbcb;
 }
 
@@ -70,4 +67,32 @@ body,footer {
  color: #fff;
  background: #820063;
  text-decoration: none;
+}
+
+#content {
+    margin-left: 15%;
+}
+
+.buttonhome,
+.buttonhome:focus {
+    background-color: #c3c3c3;
+    text-decoration: none;
+    color: #000000;
+    padding: 8px 20px;
+    line-height: 3em;
+    border-radius: 6px;
+}
+
+.buttonhome:hover {
+    background-color: #b9b9b9;
+    text-decoration: none;
+    color: #000000;
+    padding: 8px 20px;
+    line-height: 3em;
+    border-radius: 6px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
 }
