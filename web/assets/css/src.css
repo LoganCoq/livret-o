@@ -71,3 +71,7 @@ body,footer {
  background: #820063;
  text-decoration: none;
 }
+
+#content {
+    margin-left: 15%;
+}
