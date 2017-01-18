@@ -3,6 +3,7 @@
 
 namespace IUTO\LivretBundle\DataFixtures\ORM;
 
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use IUTO\LivretBundle\Entity\Personnel;
@@ -11,7 +12,7 @@ use IUTO\LivretBundle\Entity\Etudiant;
 
 
 
-class LoadProjet implements FixtureInterface
+class LoadProjet implements FixtureInterface, DependentFixtureInterface
 {
     // Dans l'argument de la méthode load, l'objet $manager est l'EntityManager
     public function load(ObjectManager $manager)
@@ -35,8 +36,8 @@ class LoadProjet implements FixtureInterface
         if ($etu2)
             $projet->addEtudiant($etu2);
 
-        $pers1 = $manager->getRepository(Personnel::class)->findOneByMailPers("sebastien.limet@univ-olreans.fr");
-        $pers2 = $manager->getRepository(Personnel::class)->fincOneByMailPers("toto.titi@univ-olreans.fr");
+        $pers1 = $manager->getRepository(Personnel::class)->findOneByMailPers("sebastien.limet@univ-orleans.fr");
+        $pers2 = $manager->getRepository(Personnel::class)->findOneByMailPers("toto.titi@univ-orleans.fr");
 
         $projet->addPersonnel($pers1);
         $projet->addPersonnel($pers2);
@@ -44,5 +45,16 @@ class LoadProjet implements FixtureInterface
 
         $manager->persist($projet);
         $manager->flush();
+    }
+
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on
+     *
+     * @return array
+     */
+    function getDependencies()
+    {
+        return array(LoadPersonnel::class);
     }
 }

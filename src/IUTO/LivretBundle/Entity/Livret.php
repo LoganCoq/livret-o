@@ -2,6 +2,7 @@
 
 namespace IUTO\LivretBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -158,5 +159,46 @@ class Livret
     public function getEditoLivret()
     {
         return $this->editoLivret;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->projets = new ArrayCollection();
+    }
+
+    /**
+     * Add projet
+     *
+     * @param \IUTO\LivretBundle\Entity\Projet $projet
+     *
+     * @return Livret
+     */
+    public function addProjet(\IUTO\LivretBundle\Entity\Projet $projet)
+    {
+        $this->projets[] = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Remove projet
+     *
+     * @param \IUTO\LivretBundle\Entity\Projet $projet
+     */
+    public function removeProjet(\IUTO\LivretBundle\Entity\Projet $projet)
+    {
+        $this->projets->removeElement($projet);
+    }
+
+    /**
+     * Get projets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjets()
+    {
+        return $this->projets;
     }
 }
