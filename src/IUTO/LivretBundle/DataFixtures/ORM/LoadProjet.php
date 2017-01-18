@@ -23,8 +23,16 @@ class LoadProjet implements FixtureInterface
         $projet->setMarquantProjet(true);
         $projet->setMotsClesProjet(array("vaisselle","eau","laver"));
         $projet->setValiderProjet(true);
-        $projet->addEtudiant($manager->getRepository(Etudiant::class)->findByNomEtu("Zerguini"));
-        $projet->addEtudiant($manager->getRepository(Etudiant::class)->findByNomEtu("Dubernet"));
+        $projet->setDateDebut(new \DateTime(date('Y').'01-01'));
+        $projet->setDateFin(new \DateTime(date('Y').'12-31'));
+
+
+        $etu1 = $manager->getRepository(Etudiant::class)->findOneByNomEtu("Zerguini");
+        $etu2 = $manager->getRepository(Etudiant::class)->findOneByNomEtu("Dubernet");
+        if ($etu1)
+            $projet->addEtudiant($etu1);
+        if ($etu2)
+            $projet->addEtudiant($etu2);
 
         $manager->persist($projet);
         $manager->flush();
