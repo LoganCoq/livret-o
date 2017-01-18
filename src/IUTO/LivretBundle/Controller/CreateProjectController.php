@@ -13,7 +13,7 @@ class CreateProjectController extends Controller{
     {
         $manager = $this->getDoctrine()->getManager();
 
-        $etudiant = $manager->getRepository(Etudiant::class);
+        $etudiant = $manager->getRepository(Etudiant::class)->findOneByNomEtu("Dubernet");
 
         $formation = $etudiant->getFormation();
 
