@@ -7,9 +7,6 @@
 body,footer {
   font-family: Arial;
 }
-body {
-
-}
 
 .buttons_accueil {
     text-align: center;
@@ -49,14 +46,28 @@ body {
 }
 
 .sidebar-nav li a {
- color: #AB2345;
+ color: #FFF;
  height: 65px;
  line-height: 60px;
- font-size: 18px
+ font-size: 18px;
+ text-align: center;
+}
+
+#statutCAS{
+  color: #000;
+  height: 50px;
+  line-height: 60px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.sidebar-nav li a:hover {
+
+    background-color: #cbcbcb;
 }
 
 .sidebar-nav li.active {
  color: #fff;
- background: rgba(255,255,255,0.2);
+ background: #820063;
  text-decoration: none;
 }
