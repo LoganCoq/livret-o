@@ -2,6 +2,7 @@ iuto_livret_homepage:
     path:     /
     defaults: { _controller: IUTOLivretBundle:Home:index }
 
-test_base:
-    path: /base/{id}
+#==================ROUTES MODULE ETUDIANT==================#
+iuto_livret_studenthomepage:
+    path: /{id}
     defaults: { _controller: IUTOLivretBundle:Base:base }

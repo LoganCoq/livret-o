@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for i in info %}
+  <li class="sidebar-brand options">
+    <a href="#">{{i}}</a>
+  </li>
+{% endfor%}
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
