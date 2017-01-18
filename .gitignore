@@ -18,3 +18,5 @@ var/logs/*
 /app/config/parameters.yml.save
 var/logs/dev.log
 /vendor/*
+*.lock
+composer.json
