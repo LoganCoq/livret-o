@@ -9,6 +9,6 @@ class ChiefController extends Controller
 {
   public function chiefController()
   {
-    return $this->render('IUTOLivretBundle:Chief:chief.html.twig', array('statutCAS' => 'professeur', 'options' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet')));
+    return $this->render('IUTOLivretBundle:Chief:chief.html.twig', array('statutCAS' => 'Chef de département', 'options' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet')));
   }
 }
