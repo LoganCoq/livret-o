@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-  {% for o in options %}
-    <li>
-      <a href="#" class="buttonhomestudent">{{o}}</a>
-    </li>
-  {% endfor%}
+    <ul>
+        {% for o in options %}
+            <li>
+                <a href="#" class="buttonhome">{{ o }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
