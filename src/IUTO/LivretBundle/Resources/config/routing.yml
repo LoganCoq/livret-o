@@ -6,3 +6,15 @@ iuto_livret_homepage:
 iuto_livret_studenthomepage:
     path: /{id}
     defaults: { _controller: IUTOLivretBundle:Base:base }
+#==================ROUTE MODULE PROFESSEUR===========#
+iuto_livret_chiefhomepage:
+    path: /{id}
+    defaults: { _controller: IUTOLivretBundle:Base:base }
+#==================ROUTE MODULE CHEF DEPARTEMENT===========#
+iuto_livret_chiefhomepage:
+    path: /{id}
+    defaults: { _controller: IUTOLivretBundle:Base:base }
+#==================ROUTE MODULE COMMUNICATIONN=============#
+iuto_livret_communicationhomepage:
+    path: /{id}
+    defaults: { _controller: IUTOLivretBundle:Base:base }
