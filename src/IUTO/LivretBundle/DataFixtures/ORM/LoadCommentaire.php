@@ -18,14 +18,14 @@ class LoadCommentaire implements FixtureInterface
         $commentaire->setContenu("Bonjour, je ne sais pas à quoi correspond votre projet.");
         $commentaire->setReponse("Bonjour, le projet correspond à ... vous pouvez le lire dès à présent");
         $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByIntituleProjet("Faire la vaisselle"));
-        $commentaire->setsetPersonnel($manager->getRepository(Personnel::class)->findOneByMailPers("sebastien.limet@univ-orleans.fr"));
+        $commentaire->setPersonnel($manager->getRepository(Personnel::class)->findOneByMailPers("sebastien.limet@univ-orleans.fr"));
 
         $manager->persist($commentaire);
 
         $commentaire = new Commentaire();
         $commentaire->setContenu("Bonjour, vous pouvez supprmier la partie sur l'explication de l'implémentation.");
         $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByIntituleProjet("Faire la vaisselle"));
-        $commentaire->setsetPersonnel($manager->getRepository(Personnel::class)->findOneByMailPers("denys.duchier@univ-orleans.fr"));
+        $commentaire->setPersonnel($manager->getRepository(Personnel::class)->findOneByMailPers("denys.duchier@univ-orleans.fr"));
 
         $manager->persist($commentaire);
 
