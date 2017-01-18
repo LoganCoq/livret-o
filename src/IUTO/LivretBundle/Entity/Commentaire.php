@@ -105,4 +105,54 @@ class Commentaire
     {
         return $this->reponse;
     }
+
+
+
+    /**
+     * Set projet
+     *
+     * @param \IUTO\LivretBundle\Entity\Projet $projet
+     *
+     * @return Commentaire
+     */
+    public function setProjet(\IUTO\LivretBundle\Entity\Projet $projet)
+    {
+        $this->projet = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Get projet
+     *
+     * @return \IUTO\LivretBundle\Entity\Projet
+     */
+    public function getProjet()
+    {
+        return $this->projet;
+    }
+
+    /**
+     * Set personnel
+     *
+     * @param \IUTO\LivretBundle\Entity\Personnel $personnel
+     *
+     * @return Commentaire
+     */
+    public function setPersonnel(\IUTO\LivretBundle\Entity\Personnel $personnel)
+    {
+        $this->personnel = $personnel;
+
+        return $this;
+    }
+
+    /**
+     * Get personnel
+     *
+     * @return \IUTO\LivretBundle\Entity\Personnel
+     */
+    public function getPersonnel()
+    {
+        return $this->personnel;
+    }
 }
