@@ -1,13 +1,55 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <title>
+        {% block title %}
+            {% if statutCAS=='étudiant' %} {#CAS = étudiant#}
+                Connecté en tant qu'{{ statutCAS }}
+            {% else %} {#CAS = professeur ou chef de département ou service communication#}
+                Connecté en tant que {{ statutCAS }}
+            {% endif %}
+        {% endblock %}
+    </title>
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.min.css  ') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap-overload.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/src.css') }}">
+    {% endblock %}
+</head>
+
+<body background="{{ asset('assets/images/cork-wallet.png') }}">
+{% block body %}
+    {% block navbar %}
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <nav id="spy">
+                    <ul class="sidebar-nav nav">
+                        <li class="sidebar-brand active">
+                            <p id="statutCAS">
+                                {{ statutCAS|capitalize }}
+                            </p>
+                        </li>
+                        <br/>
+                        {% for i in info %}
+                            <li class="sidebar-brand options">
+                                <a href="#">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    {% endblock %}
+    {% block page %}
+        <div id="content">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
 </html>
