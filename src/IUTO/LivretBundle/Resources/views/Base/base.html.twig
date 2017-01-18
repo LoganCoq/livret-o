@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8"/>
     <title>
@@ -20,29 +20,34 @@
 </head>
 
 <body background="{{ asset('assets/images/cork-wallet.png') }}">
-<div id="wrapper">
-    <div id="sidebar-wrapper" class="">
-        <nav id="spy">
-            <ul class="sidebar-nav nav">
-                <li class="sidebar-brand active">
-                    <p id="statutCAS">
-                        {{ statutCAS|capitalize }}
-                    </p>
-                </li>
-                </br>
-                </br>
-                {% for option in info %}
-                    <li class="sidebar-brand options">
-                        <a href="#">{{ option }}</a>
-                    </li>
-                {% endfor %}
-                </li>
-            </ul>
-        </nav>
-    </div>
-
-
-    {% block body %}{% endblock %}
-    {% block javascripts %}{% endblock %}
+{% block body %}
+    {% block navbar %}
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <nav id="spy">
+                    <ul class="sidebar-nav nav">
+                        <li class="sidebar-brand active">
+                            <p id="statutCAS">
+                                {{ statutCAS|capitalize }}
+                            </p>
+                        </li>
+                        <br/>
+                        {% for option in info %}
+                            <li class="sidebar-brand options">
+                                <a href="#">{{ option }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    {% endblock %}
+    {% block page %}
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    {% endblock %}
+{% endblock %}
+{% block javascripts %}{% endblock %}
 </body>
 </html>
