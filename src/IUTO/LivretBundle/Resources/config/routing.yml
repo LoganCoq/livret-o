@@ -18,3 +18,7 @@ iuto_livret_chiefhomepage:
 iuto_livret_communicationhomepage:
     path: /{id}
     defaults: { _controller: IUTOLivretBundle:Communication:communicationhome }
+#==================ROUTE MODULE CORRECTION PROF===========#
+iuto_livret_correctionProf1:
+    path: /correctionProf1
+    defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher1 }
