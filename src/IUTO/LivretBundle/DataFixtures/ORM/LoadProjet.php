@@ -5,6 +5,7 @@ namespace IUTO\LivretBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use IUTO\LivretBundle\Entity\Personnel;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Entity\Etudiant;
 
@@ -33,6 +34,13 @@ class LoadProjet implements FixtureInterface
             $projet->addEtudiant($etu1);
         if ($etu2)
             $projet->addEtudiant($etu2);
+
+        $pers1 = $manager->getRepository(Personnel::class)->findOneByMailPers("sebastien.limet@univ-olreans.fr");
+        $pers2 = $manager->getRepository(Personnel::class)->fincOneByMailPers("toto.titi@univ-olreans.fr");
+
+        $projet->addPersonnel($pers1);
+        $projet->addPersonnel($pers2);
+
 
         $manager->persist($projet);
         $manager->flush();
