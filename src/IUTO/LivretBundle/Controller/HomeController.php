@@ -4,10 +4,10 @@ namespace IUTO\LivretBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class HomeController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('IUTOLivretBundle:Default:index.html.twig');
+        return $this->render('IUTOLivretBundle:Home:index.html.twig');
     }
 }
