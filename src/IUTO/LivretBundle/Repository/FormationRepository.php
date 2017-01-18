@@ -12,14 +12,14 @@ class FormationRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findYearDebut()
     {
-        $query = $this->_em->createQuery('SELECT YEAR(f.dateDebut) from Fonction f');
+        $query = $this->_em->createQuery('SELECT YEAR(f.dateDebut) from Formation f');
 
         return $query->getSingleResult();
     }
 
     public function findYearFin()
     {
-        $query = $this->_em->createQuery('SELECT YEAR(f.dateFin) from Fonction f');
+        $query = $this->_em->createQuery('SELECT YEAR(f.dateFin) from Formation f');
 
         return $query->getSingleResult();
     }
