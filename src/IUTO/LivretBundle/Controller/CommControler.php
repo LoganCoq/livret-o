@@ -9,6 +9,6 @@ class CommController extends Controller
 {
   public function commAction()
   {
-    return $this->render('IUTOLivretBundle:Comm:comm.html.twig', array('statutCAS' => 'Service de communication', 'options' => array('Générer livrets', 'Créer un édito', 'Corriger des projets')));
+    return $this->render('IUTOLivretBundle:Communication:communicationhome.html.twig', array('statutCAS' => 'Service de communication', 'options' => array('Générer un livret', 'Créer un édito', 'Corriger des comptes-rendus de projets')));
   }
 }

@@ -21,4 +21,4 @@ var/logs/dev.log
 *.lock
 composer.json
 composer.lock
-.gitignore
+/app/config/parameters.yml

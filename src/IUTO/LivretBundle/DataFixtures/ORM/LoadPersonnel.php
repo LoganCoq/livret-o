@@ -16,9 +16,32 @@ class LoadPersonnel implements FixtureInterface
         $personnel = new Personnel();
         $personnel->setNomPers("Cleuziou");
         $personnel->setPrenomPers("Guillaume");
-        $personnel->setMailPers("guillaume.cleuziou@univ-olreans.fr");
+        $personnel->setMailPers("guillaume.cleuziou@univ-orleans.fr");
         $personnel->setFonction($manager->getRepository(Fonction::class)->findOneByNomFonction("Chef de departement"));
 
+        $manager->persist($personnel);
+
+        $personnel = new Personnel();
+        $personnel->setNomPers("Limet");
+        $personnel->setPrenomPers("Sebastien");
+        $personnel->setMailPers("sebastien.limet@univ-orleans.fr");
+        $personnel->setFonction($manager->getRepository(Fonction::class)->findOneByNomFonction("Enseignant"));
+
+        $manager->persist($personnel);
+
+        $personnel = new Personnel();
+        $personnel->setNomPers("Duchier");
+        $personnel->setPrenomPers("Denys");
+        $personnel->setMailPers("denys.duchier@univ-orleans.fr");
+        $personnel->setFonction($manager->getRepository(Fonction::class)->findOneByNomFonction("Enseignant"));
+
+        $manager->persist($personnel);
+
+        $personnel = new Personnel();
+        $personnel->setNomPers("Titi");
+        $personnel->setPrenomPers("Toto");
+        $personnel->setMailPers("toto.titi@univ-orleans.fr");
+        $personnel->setFonction($manager->getRepository(Fonction::class)->findOneByNomFonction("Service communication"));
 
         $manager->persist($personnel);
 
