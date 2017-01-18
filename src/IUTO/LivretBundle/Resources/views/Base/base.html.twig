@@ -11,19 +11,41 @@
             {% endif %}
           {% endblock %}
         </title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% block stylesheets %}
+          <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
+          <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.min.css  ') }}">
+          <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap-overload.css') }}">
+          <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/src.css') }}">
+        {% endblock %}
     </head>
+
     <body>
-      <nav id="menu-principal">
-        <button id = "boutonStatutCAS"> <a href="#">{{statutCAS}}</a> </button>
-        <ul>
-          {% for option in info %}
-                <li> <a href="#">{{option}}</a> </li>
-          {% endfor%}
-        </ul>
-      </nav>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+      <div id="wrapper">
+          <div id="sidebar-wrapper" class="">
+              <nav id="spy">
+                  <ul class="sidebar-nav nav">
+                      <li class="sidebar-brand active">
+                        <a href="">
+                          {{statutCAS|capitalize}}
+                        </a>
+                      </li>
+                        {% for option in info %}
+                          <li class="sidebar-brand options">
+                            <a href="#">{{option}}</a>
+                          </li>
+                        {% endfor%}
+                      </li>
+                  </ul>
+              </nav>
+          </div>
+
+
+
+
+
+
+
+      {% block body %}{% endblock %}
+      {% block javascripts %}{% endblock %}
     </body>
 </html>

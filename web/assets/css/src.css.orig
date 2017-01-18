@@ -21,15 +21,7 @@ body {
     width: 35%;
     height: 9em;
     margin: 0% 3%;
-    background-color: #eaeaea;
-}
-
-#btn_accueil:hover {
-    font-size: 210%;
-    width: 35%;
-    height: 9em;
-    margin: 0% 3%;
-    background-color: #cbcbcb;
+<<<<<<< HEAD
 }
 
 #wrapper {
@@ -60,3 +52,15 @@ body {
  background: rgba(255,255,255,0.2);
  text-decoration: none;
 }
+=======
+    background-color: #eaeaea;
+}
+
+#btn_accueil:hover {
+    font-size: 210%;
+    width: 35%;
+    height: 9em;
+    margin: 0% 3%;
+    background-color: #cbcbcb;
+}
+>>>>>>> victor/master
