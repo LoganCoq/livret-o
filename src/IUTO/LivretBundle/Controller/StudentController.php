@@ -3,7 +3,6 @@
 namespace IUTO\LivretBundle\Controller;
 
 use IUTO\LivretBundle\Entity\Etudiant;
-use IUTO\LivretBundle\Entity\Formation;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,13 +47,38 @@ class StudentController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('iuto_livret_studenthomepage', array(
-                'statutCAS' => 'étudiant',
+                    'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Correction compte rendu'),
                     'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'))
             );
         }
 
         return $this->render('IUTOLivretBundle:Student:createProject.html.twig',
+            array('form' => $form->createView(),
+                'statutCAS' => 'étudiant', 'info' => array('Créer un compte rendu', 'Correction compte rendu'),
+                'info' => array('Créer un compte rendu', 'Correction compte rendu'),
+                'routing_info' => array('/create/project', '#')));
+
+    }
+
+    public function completeProjectAction(Request $request, Projet $projet)
+    {
+        $form = $this->createForm(ProjetCompleteType::class, $projet);//TODO
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($projet);
+            $em->flush();
+
+            return $this->redirectToRoute('iuto_livret_studenthomepage', array(
+                    'statutCAS' => 'étudiant',
+                    'info' => array('Créer un compte rendu', 'Correction compte rendu'),
+                    'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'))
+            );
+        }
+
+        return $this->render('IUTOLivretBundle:Student:completeProject.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'étudiant', 'info' => array('Créer un compte rendu', 'Correction compte rendu'),
                 'info' => array('Créer un compte rendu', 'Correction compte rendu'),
