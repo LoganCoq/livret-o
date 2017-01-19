@@ -6,12 +6,16 @@
 
 body,
 footer {
-  font-family: Arial;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    margin-top: 0;
 }
 
 .buttons_accueil {
     text-align: center;
-    margin: 5% 5% 0px 5%;
+    margin: 5% 5% 0 5%;
 }
 
 #btn_accueil {
@@ -27,46 +31,45 @@ footer {
 }
 
 #wrapper {
- padding-left: 250px;
+    padding-left: 250px;
 }
 
 #sidebar-wrapper {
- margin-left: -250px;
- left: 250px;
- width: 250px;
- background: #000;
- position: fixed;
- height: 100%;
- overflow-y: auto;
- z-index: 1000;
- transition: all 0.4s ease 0s;
+    margin-left: -250px;
+    left: 250px;
+    width: 250px;
+    background: #000;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: all 0.4s ease 0s;
 }
 
 .sidebar-nav li a {
- color: #FFF;
- height: 65px;
- line-height: 60px;
- font-size: 18px;
- text-align: center;
+    color: #FFF;
+    height: 65px;
+    line-height: 60px;
+    font-size: 18px;
+    text-align: center;
 }
 
-#statutCAS{
-  color: #000;
-  height: 50px;
-  line-height: 60px;
-  font-size: 18px;
-  text-align: center;
+#statutCAS {
+    color: #000;
+    height: 50px;
+    line-height: 60px;
+    font-size: 18px;
+    text-align: center;
 }
 
 .sidebar-nav li a:hover {
-
     background-color: #cbcbcb;
 }
 
 .sidebar-nav li.active {
- color: #fff;
- background: #820063;
- text-decoration: none;
+    color: #fff;
+    background: #820063;
+    text-decoration: none;
 }
 
 #content {
@@ -81,18 +84,29 @@ footer {
     padding: 8px 20px;
     line-height: 3em;
     border-radius: 6px;
+    font-size: 1.4em;
+    margin: 0 2em;
+    white-space: nowrap;
 }
 
 .buttonhome:hover {
     background-color: #b9b9b9;
     text-decoration: none;
     color: #000000;
-    padding: 8px 20px;
-    line-height: 3em;
-    border-radius: 6px;
 }
 
 ul {
     list-style: none;
     padding: 0;
+}
+
+.h1_home {
+    margin-bottom: 2.5em;
+    font-size: 3em;
+}
+
+.div_home {
+    text-align: center;
+    padding-top: 77vh;
+    transform: translateY(-50%);
 }

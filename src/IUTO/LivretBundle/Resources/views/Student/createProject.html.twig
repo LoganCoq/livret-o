@@ -1,12 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block content %}
     <div class="form">
           <div class="form-group row">
               <label for="title" class="col-2 col-form-label">Titre</label>
               <div class="col-2">
                   <input class="form-control" type="text" value="Projet" id="title">
               </div>
+          </div>
+          <div class="form-group row">
+            <label for="participant" class="col-2 col-form-label">Participants</label>
+            <div class="col-2">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button">Go!</button>
+                </span>
+              </div>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  {% for item in participants %}
+                    <button class="dropdown-item" type="button">{{item}}</button>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
           </div>
           <div class="form-group row">
               <label for="anneeDebut" class="col-2 col-form-label">Annee</label>

@@ -1,11 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <ul>
+    <div class="div_home">
+        <h1 class="h1_home"> {{ statutCAS|capitalize }} </h1>
         {% for o in options %}
-            <li>
-                <a href="#" class="buttonhome">{{ o }}</a>
-            </li>
+            <a href="#" class="buttonhome">{{ o }}</a>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}
