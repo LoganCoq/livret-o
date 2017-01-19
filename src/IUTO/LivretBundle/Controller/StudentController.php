@@ -28,10 +28,10 @@ class StudentController extends Controller
 
         $formation = $formation->getTypeFormation();
 
-        return $this->render('IUTOLivretBundle:Student:createProject.html.twig',array('formation' => $formation,
-            'departement' => $departement, 'anneeDebut' => $anneeDebut, 'anneeFin' => $anneeFin,
-            'statutCAS' => 'étudiant', 'info' => array('Créer un compte rendu', 'Correction compte rendu'),
-            'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'))
+        return $this->render('IUTOLivretBundle:Student:createProject.html.twig', array('formation' => $formation,
+                'departement' => $departement, 'anneeDebut' => $anneeDebut, 'anneeFin' => $anneeFin,
+                'statutCAS' => 'étudiant', 'info' => array('Créer un compte rendu', 'Correction compte rendu'),
+                'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'))
         );
     }
 }
