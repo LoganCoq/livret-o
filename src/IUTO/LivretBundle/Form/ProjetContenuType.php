@@ -20,7 +20,9 @@ class ProjetContenuType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('descripProjet', TextType::class)
+        ->add('descripProjet', TextType::class, array(
+          'label' => 'Description du projet'
+        ))
         ->add('bilanProjet', TextType::class);
     }
 
