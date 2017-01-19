@@ -2,11 +2,17 @@
 
 namespace IUTO\LivretBundle\Form;
 
+use IUTO\LivretBundle\Entity\Etudiant;
+use IUTO\LivretBundle\Entity\Personnel;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjetType extends AbstractType
+class ProjetModifType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -17,7 +23,6 @@ class ProjetType extends AbstractType
         ->add('intituleProjet', TextType::class)
         ->add('dateDebut', DateType::class)
         ->add('dateFin', DateType::class)
-        ->add('departement', TextType::class)
         ->add('etudiants', TextType::class)
         ->add('personnels', TextType::class)        ;
     }
