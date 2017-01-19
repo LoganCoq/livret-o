@@ -8,8 +8,9 @@ use Doctrine\Common\Persistence\ObjectManager;
 use IUTO\LivretBundle\Entity\Departement;
 use IUTO\LivretBundle\Entity\Formation;
 use IUTO\LivretBundle\Entity\Etudiant;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class LoadFormation implements FixtureInterface
+class LoadFormation implements FixtureInterface,DependentFixtureInterface
 {
     // Dans l'argument de la méthode load, l'objet $manager est l'EntityManager
     public function load(ObjectManager $manager)
@@ -95,5 +96,8 @@ class LoadFormation implements FixtureInterface
         $manager->persist($formation);
 
         $manager->flush();
+    }
+    function getDependencies(){
+      return array(LoadDepartement::class);
     }
 }
