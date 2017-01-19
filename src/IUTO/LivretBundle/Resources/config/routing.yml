@@ -20,7 +20,7 @@ iuto_livret_communicationhomepage:
     defaults: { _controller: IUTOLivretBundle:Communication:communicationhome }
 #==================ROUTE MODULE CORRECTION PROF===========#
 iuto_livret_correctionProf1:
-    path: /correctionProf1
+    path: /{id}/correctionProf1
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher1 }
 #==================ROUTE MODULE CreateProject=============#
 iuto_livret_createProject:
