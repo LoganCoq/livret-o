@@ -19,4 +19,12 @@ class CommunicationController extends Controller
         return $this->render('IUTOLivretBundle:Chief:communicationedito.html.twig');
 
     }
+
+    public function communicationgenerationlivretAction()
+
+    {
+
+        return $this->render('IUTOLivretBundle:Chief:communicationgenerationlivret.html.twig');
+
+    }
 }
