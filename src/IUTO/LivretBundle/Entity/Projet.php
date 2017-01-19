@@ -94,6 +94,9 @@ class Projet
      */
     private $personnels;
 
+    public $nomDep;
+    public $listeEtudiants;
+
     /**
      * Get id
      *
