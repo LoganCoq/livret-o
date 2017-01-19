@@ -6,40 +6,10 @@
 {% endblock %}
 
 {% block body %}
-  <h1> Infromation du projet </h1>
-    <div class="form">
-          <div class="form-group row">
-              <label for="title" class="col-2 col-form-label">Titre</label>
-              <div class="col-2">
-                  <input class="form-control" type="text" value="Projet" id="title">
-              </div>
-          </div>
-          <div class="form-group row">
-              <label for="anneeDebut" class="col-2 col-form-label">Annee</label>
-              <div class="col-2">
-                  <input class="form-control" type="text" value={{anneeDebut}} id="annee">
-              </div>
-          </div>
-          <div class="form-group row">
-              <label for="departement" class="col-2 col-form-label">Departement</label>
-              <div class="col-2">
-                  <input class="form-control" type="text" value={{departement}} id="departement" disabled>
-              </div>
-          </div>
-          <div class="form-group row">
-              <label for="formation" class="col-2 col-form-label">Formation</label>
-              <div class="col-2">
-                  <input class="form-control" type="text" value={{formation}} id="formation" disabled>
-              </div>
-          </div>
-          <div class="form-group row">
-              <label for="professeur" class="col-2 col-form-label">Professeur</label>
-              <div class="col-2">
-                  <input class="form-control" type="text" value={{formation}} id="formation" disabled>
-              </div>
-          </div>
-    </div>
-
+  <h1> Information du projet </h1>
+    {% block content %}
+    {{form(form)}}
+    {% endblock %}
     <div class="commentaires">
 
     </div>
