@@ -20,23 +20,33 @@ class ProjetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('intituleProjet', TextType::class)
-            ->add('dateDebut', DateType::class)
-            ->add('dateFin', DateType::class)
-            ->add('dept', TextType::class, array('mapped' => false))
+            ->add('intituleProjet', TextType::class, array(
+                'label' => 'Intitulé du projet'
+            ))
+            ->add('dateDebut', DateType::class, array(
+                'label' => 'Date de début'
+            ))
+            ->add('dateFin', DateType::class, array(
+                'label' => 'Date de fin'
+            ))
+            ->add('nomDep', TextType::class, array(
+                'disabled' => true,
+                'label' => 'Département'))
             ->add('etudiants', EntityType::class, array(
                 'class' => Etudiant::class,
                 'choice_label' => function($etudiant) {
                     return $etudiant->getNomEtu() . ' ' . $etudiant->getPrenomEtu();
                 },
                 'multiple' => true,
-//                'choices' => $options['listeEtudiants'],
+//                'choices' => $options['listeEtudiants'], TODO
             ))
             ->add('personnels', EntityType::class, array(
                 'class' => Personnel::class,
                 'choice_label' => function($personnel) {
                     return $personnel->getNomPers() . ' ' . $personnel->getPrenomPers();
-                }))
+                },
+                'multiple' => true,
+            ))
             ->add('submit', SubmitType::class);
     }
 

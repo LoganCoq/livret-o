@@ -98,6 +98,13 @@ class Projet
     public $listeEtudiants;
 
     /**
+     * @return string
+     */
+    public function setNomDpt($nom){
+        $this->nomDep = $nom;
+    }
+
+    /**
      * Get id
      *
      * @return int

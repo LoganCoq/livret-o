@@ -2,6 +2,8 @@
 
 namespace IUTO\LivretBundle\Repository;
 
+use IUTO\LivretBundle\Entity\Etudiant;
+
 /**
  * FormationRepository
  *
@@ -23,4 +25,12 @@ class FormationRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getSingleResult();
     }
+
+    public  function findAllEtudiantByFormation($id)
+    {
+        $query = $this->_em
+            ->createQuery('SELECT e from IUTOLivretBundle:Etudiant e NATURAL JOIN Formation f WHERE f.id = :id')
+            ->setParameter('id', $id);
+    }
+
 }
