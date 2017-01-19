@@ -183,4 +183,20 @@ class Formation
     {
         return $this->departement;
     }
+
+    /**
+     * @return int
+     */
+    public function getYearDebut()
+    {
+        return (int)$this->dateDebut->format('Y');
+    }
+
+    /**
+     * @return int
+     */
+    public function getYearFin()
+    {
+        return (int)$this->dateFin->format('Y');
+    }
 }

@@ -7,8 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TeacherController extends Controller
 {
-  public function teacherAction()
+  public function teacherhomeAction()
   {
-    return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig', array('statutCAS' => 'professeur', 'options' => array('Voir les demandes de correction de projets', 'Voir les projets validés')));
+      return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig', array('statutCAS' => 'professeur', 'info' => array('Demandes de correction', 'Projets validés'),'options' => array('Voir les demande de correction de projets', 'Voir les projets validés')));
   }
 }
