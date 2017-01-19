@@ -48,27 +48,27 @@ class TeacherController extends Controller
         $commentaires = $manager->getRepository(Commentaire::class)->findOneByProjet($projet);
         $contenu = $commentaires->getContenu();
 
-      return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig', array('formation',
-              'departement' => $departement,
-              'anneeDebut' => $anneeDebut,
-              'titre' => $titre,
-              'etudiants' => $etudiants,
-              'professeur' => $professeur
+        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig', array('formation',
+            'departement' => $departement,
+            'anneeDebut' => $anneeDebut,
+            'titre' => $titre,
+            'etudiants' => $etudiants,
+            'professeur' => $professeur,
               'commentaires' => $contenu));
     }
-    public function correctionTeacher3($idTeacher,$idProjet)
-    {
-      $repository = $this
-          ->getDoctrine()
-          ->getManager()
-          ->getRepository('IUTOLivretBundle:')
-      ;
-      $projet = $repository->findOneById($idProjet);
-      $presentation = $projet->getDescripProjet();
-      $resultats = $projet->getBilanProjet();
 
-      return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
-              array('presentation' => $presentation,
-              'resultats' => $resultats));
+    public function correctionTeacher3($idTeacher, $idProjet)
+    {
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('IUTOLivretBundle:');
+        $projet = $repository->findOneById($idProjet);
+        $presentation = $projet->getDescripProjet();
+        $resultats = $projet->getBilanProjet();
+
+        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
+            array('presentation' => $presentation,
+                'resultats' => $resultats));
     }
 }
