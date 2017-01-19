@@ -70,3 +70,7 @@ iuto_livret_communicationgenerationlivret:
 iuto_livret_communicationvalidationCR:
     path: /communication/generation
     defaults: { _controller: IUTOLivretBundle:Communication:communicationvalidationCR }
+
+iuto_livret_pdfgenerator:
+  path: /generate/{id}
+  defaults: { _controller: IUTOLivretBundle:PDFGenerator:generator}
