@@ -55,7 +55,20 @@ class TeacherController extends Controller
               'etudiants' => $etudiants,
               'professeur' => $professeur
               'commentaires' => $contenu));
+    }
+    public function correctionTeacher3($idTeacher,$idProjet)
+    {
+      $repository = $this
+          ->getDoctrine()
+          ->getManager()
+          ->getRepository('IUTOLivretBundle:')
+      ;
+      $projet = $repository->findOneById($idProjet);
+      $presentation = $projet->getDescripProjet();
+      $resultats = $projet->getBilanProjet();
 
-
+      return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
+              array('presentation' => $presentation,
+              'resultats' => $resultats));
     }
 }
