@@ -24,8 +24,8 @@ iuto_livret_teacherhomepage:
 
 #==========CORRECTION1=====#
 iuto_livret_correctionProf1:
-    path: /{id}/correctionProf1
-    defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher1 }
+    path: /{projet}/correctionProf1
+    defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher2 }
 
 
 #==================ROUTES MODULE CHEF DEPARTEMENT==========#
@@ -55,3 +55,8 @@ iuto_livret_communicationEdito:
 iuto_livret_communicationgenerationlivret:
     path: /communication/generation
     defaults: { _controller: IUTOLivretBundle:Communication:communicationgenerationlivret }
+
+#=====GENERATION VALIDATION CR COMM=====#
+iuto_livret_communicationvalidationCR:
+    path: /communication/generation
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationvalidationCR }

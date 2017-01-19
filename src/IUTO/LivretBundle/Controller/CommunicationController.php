@@ -29,4 +29,13 @@ class CommunicationController extends Controller
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
             'routing_info' => array('/communication/generation', '/communication/edito', '#')));
     }
+
+    public function communicationvalidationCRAction()
+    {
+        return $this->render('IUTOLivretBundle:Communication:communicationvalidationCR.html.twig', array('statutCAS' => 'service de communication',
+            'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+            'options' => array('Apercu du compte rendu', 'Renvoyer la correction aux élèves', 'Valider','Retour'),
+            'routing_info' => array('#', '/communication/edito', '#'),
+            'routing_options' => array('#', '#', '/communication/edito')));
+    }
 }
