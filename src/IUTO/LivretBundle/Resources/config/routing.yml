@@ -1,36 +1,58 @@
+#==================ROUTE HOME==============================#
 iuto_livret_homepage:
     path:     /
     defaults: { _controller: IUTOLivretBundle:Home:index }
 
+
 #==================ROUTES MODULE ETUDIANT==================#
+#==========HOME============#
 iuto_livret_studenthomepage:
     path: /etudiant
     defaults: { _controller: IUTOLivretBundle:Student:studenthome }
-#==================ROUTE MODULE PROFESSEUR===========#
-iuto_livret_teacherhomepage:
-    path: /professeur
-    defaults: { _controller: IUTOLivretBundle:Teacher:teacherhome }
-#==================ROUTE MODULE CHEF DEPARTEMENT===========#
-iuto_livret_chiefhomepage:
-    path: /chef
-    defaults: { _controller: IUTOLivretBundle:Chief:chiefhome }
-#==================ROUTE MODULE COMMUNICATIONN=============#
-iuto_livret_communicationhomepage:
-    path: /communication
-    defaults: { _controller: IUTOLivretBundle:Communication:communicationhome }
-#==================ROUTE MODULE CORRECTION PROF===========#
-iuto_livret_correctionProf1:
-    path: /{id}/correctionProf1
-    defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher1 }
-#==================ROUTE MODULE CreateProject=============#
+
+#==========CREER PROJET====#
 iuto_livret_createProject:
     path: /create/project
     defaults: { _controller: IUTOLivretBundle:Student:createProject }
-#==================ROUTE MODULE createPres=============#
+
+
+#==================ROUTES MODULE PROFESSEUR================#
+#==========HOME============#
+iuto_livret_teacherhomepage:
+    path: /professeur
+    defaults: { _controller: IUTOLivretBundle:Teacher:teacherhome }
+
+#==========CORRECTION1=====#
+iuto_livret_correctionProf1:
+    path: /{id}/correctionProf1
+    defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher1 }
+
+
+#==================ROUTES MODULE CHEF DEPARTEMENT==========#
+#==========HOME============#
+iuto_livret_chiefhomepage:
+    path: /chef
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefhome }
+
+#==========PRESENTATION====#
 iuto_livret_chiefPresentation:
-    path: /chief/presentation
-    defaults: { _controller: IUTOLivretBundle:Chief:chiefpresentation }
-#==================ROUTE MODULE communicationEdito=============#
+    path: /chef/presentation
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefPresentation }
+
+
+#==================ROUTES MODULE COMMUNICATIONN============#
+#==========HOME============#
+iuto_livret_communicationhomepage:
+    path: /communication
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationhome }
+
+#==========EDITO===========#
 iuto_livret_communicationEdito:
     path: /communication/edito
     defaults: { _controller: IUTOLivretBundle:Chief:communicationedito }
+
+#=====GENERATION LIVRET====#
+iuto_livret_communicationgenerationlivret:
+    path: /communication/generation
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationgenerationlivret }
+  

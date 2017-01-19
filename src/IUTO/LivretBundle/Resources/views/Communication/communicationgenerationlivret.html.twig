@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+    <div class="form">
+
+        <label for="participant" class="col-2 col-form-label">Département</label>
+
+            <select id="departement">
+                <option value="info">Informatique</option>
+                <option value="gea">GEA</option>
+                <option value="gmp">GMP</option>
+                <option value="chimie">Chimie</option>
+                <option value="gte">GTE</option>
+                <option value="clio">CLIO</option>
+
+            </select>
+
+        <label for="participant" class="col-2 col-form-label">Année</label>
+
+        <div class="form-group row">
+            <select id="annee">
+                <option value="1A">1ere Année</option>
+                <option value="2A">2e année</option>
+                <option value="LP">Licence Pro</option>
+                <option value="AS">Année Speciale</option>
+
+            </select>
+        </div>
+    </div>
+{% endblock %}

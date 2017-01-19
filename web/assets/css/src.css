@@ -9,6 +9,10 @@ footer {
     font-family: Arial, sans-serif;
 }
 
+h1 {
+    margin-top: 0;
+}
+
 .buttons_accueil {
     text-align: center;
     margin: 5% 5% 0 5%;
@@ -97,7 +101,6 @@ ul {
 }
 
 .h1_home {
-    margin-top: 0;
     margin-bottom: 2.5em;
     font-size: 3em;
 }
