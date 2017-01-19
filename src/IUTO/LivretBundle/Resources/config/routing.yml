@@ -45,3 +45,8 @@ iuto_livret_chiefPresentation:
 iuto_livret_communicationhomepage:
     path: /communication
     defaults: { _controller: IUTOLivretBundle:Communication:communicationhome }
+
+#==========EDITO============#
+iuto_livret_communicationEdito:
+    path: /communication/edito
+    defaults: { _controller: IUTOLivretBundle:Chief:communicationedito }

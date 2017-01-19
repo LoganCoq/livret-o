@@ -11,4 +11,12 @@ class CommunicationController extends Controller
     {
         return $this->render('IUTOLivretBundle:Communication:communicationhome.html.twig', array('statutCAS' => 'service de communication', 'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'), 'options' => array('Générer des livrets au format PDF', 'Corriger des projets', 'Créer l\'édito du directeur')));
     }
+
+    public function communicationeditoAction()
+
+    {
+
+        return $this->render('IUTOLivretBundle:Chief:communicationedito.html.twig');
+
+    }
 }
