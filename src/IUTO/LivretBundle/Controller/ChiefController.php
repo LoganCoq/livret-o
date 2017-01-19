@@ -3,7 +3,6 @@
 namespace IUTO\LivretBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
 class ChiefController extends Controller
 {
@@ -15,8 +14,6 @@ class ChiefController extends Controller
   public function chiefPresentationAction()
 
   {
-
-
-  
+      return $this->render('IUTOLivretBundle:Chief:chiefpresentation.html.twig');
  }
 } 
