@@ -56,7 +56,10 @@ class TeacherController extends Controller
         }
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
-            array('form' => $form->createView()));
+            array('form' => $form->createView(),
+            'statutCAS' => 'professeur',
+            'info' => array('Demandes de correction', 'Projets validés'),
+            ));
     }
 
     public function correctionTeacher3Action($idTeacher, $idProjet)
