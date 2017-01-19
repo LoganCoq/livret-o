@@ -5,6 +5,7 @@ namespace IUTO\LivretBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetModifType;
+use IUTO\LivretBundle\Form\ProjetContenuType;
 
 
 class TeacherController extends Controller
@@ -64,18 +65,31 @@ class TeacherController extends Controller
             ));
     }
 
-    public function correctionTeacher3Action($idTeacher, $idProjet)
+    public function correctionTeacher3Action(Projet $projet)
     {
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('IUTOLivretBundle:');
-        $projet = $repository->findOneById($idProjet);
-        $presentation = $projet->getDescripProjet();
-        $resultats = $projet->getBilanProjet();
+        // $repository = $this
+        //     ->getDoctrine()
+        //     ->getManager()
+        //     ->getRepository('IUTOLivretBundle:');
+        // $projet = $repository->findOneById($idProjet);
+        // $presentation = $projet->getDescripProjet();
+        // $resultats = $projet->getBilanProjet();
+
+        $form = $this->createForm(ProjetContenuType::class, $projet);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+          $this->getDoctrine()->getManager()->flush();
+
+          return $this->redirectToRoute('');
+        }
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
-            array('presentation' => $presentation,
-                'resultats' => $resultats));
+            array('form' => $form->createView(),
+            'statutCAS' => 'professeur',
+            'info' => array('Demandes de correction', 'Projets validés'),
+            'routing_info' => array('#', '#'),
+            'routing_options' => array('#', '#')
+            ));
     }
 }
