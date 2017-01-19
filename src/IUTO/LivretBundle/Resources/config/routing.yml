@@ -29,4 +29,8 @@ iuto_livret_createProject:
 #==================ROUTE MODULE createPres=============#
 iuto_livret_chiefPresentation:
     path: /chief/presentation
-    defaults: { _controller: IUTOLivretBundle:Chief:chiefPresentation }
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefpresentation }
+#==================ROUTE MODULE communicationEdito=============#
+iuto_livret_communicationEdito:
+    path: /communication/edito
+    defaults: { _controller: IUTOLivretBundle:Chief:communicationedito }
