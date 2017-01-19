@@ -58,5 +58,5 @@ iuto_livret_communicationgenerationlivret:
 
 #=====GENERATION VALIDATION CR COMM=====#
 iuto_livret_communicationvalidationCR:
-    path: /communication/generation
+    path: /communication/validation
     defaults: { _controller: IUTOLivretBundle:Communication:communicationvalidationCR }
