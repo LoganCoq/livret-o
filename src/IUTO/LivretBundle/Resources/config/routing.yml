@@ -20,9 +20,17 @@ iuto_livret_communicationhomepage:
     defaults: { _controller: IUTOLivretBundle:Communication:communicationhome }
 #==================ROUTE MODULE CORRECTION PROF===========#
 iuto_livret_correctionProf1:
-    path: /correctionProf1
+    path: /{id}/correctionProf1
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher1 }
 #==================ROUTE MODULE CreateProject=============#
 iuto_livret_createProject:
     path: /create/project
     defaults: { _controller: IUTOLivretBundle:Student:createProject }
+#==================ROUTE MODULE createPres=============#
+iuto_livret_chiefPresentation:
+    path: /chief/presentation
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefpresentation }
+#==================ROUTE MODULE communicationEdito=============#
+iuto_livret_communicationEdito:
+    path: /communication/edito
+    defaults: { _controller: IUTOLivretBundle:Chief:communicationedito }

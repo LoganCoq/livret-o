@@ -1,13 +1,11 @@
-{% extends base.html.twig %}
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8"/>
-  <title>Correction projets</title>
-</head>
-<body>
-<h1> Demandes de correction de projets </h1>
+{% extends 'base.html.twig' %}
+{% block title %}
+    Correction projets
+{% endblock %}
 {% block content %}
+
+<h1> Demandes de correction de projets </h1>
+{% if projets|length > 0 %}
 <p> Choisir un projet à corriger :</p>
 <form>
   <select name="nom" size="1">
@@ -17,6 +15,8 @@
   </select>
 </form>
 <input type="submit" value="Suivant"/>
+{% else %}
+    Il n'y a aucun projets à corriger
+{% endif %}
+
 {% endblock %}
-</body>
-</html>
