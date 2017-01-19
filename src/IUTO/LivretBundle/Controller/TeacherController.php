@@ -3,6 +3,8 @@
 namespace IUTO\LivretBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use IUTO\LivretBundle\Entity\Projet;
+use IUTO\LivretBundle\Form\ProjetModifType;
 
 
 class TeacherController extends Controller
@@ -28,36 +30,36 @@ class TeacherController extends Controller
 
     }
 
-    public function correctionTeacher2($idTeacher, $idProjet)
+    public function correctionTeacher2Action(Projet $projet)
     {
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('IUTOLivretBundle:Projet');
-        $projet = $repository->findOneById($idProjet);
-        $titre = $projet->getIntituleProjet();
-        $etudiants = $projet->getEtudiants();
-        $anneeDebut = $projet->getDateDebut();
-        $anneeFin = $projet->getDateFin();
+    //     $titre = $projet->getIntituleProjet();
+    //     $etudiants = $projet->getEtudiants();
+    //     $anneeDebut = $projet->getDateDebut();
+    //     $anneeFin = $projet->getDateFin();
+    //
+    //     $infos = $manager->getRepository(Etudiant::class)->findOneByNomEtu($etudiants[0]->getNomEtu());
+    //     $formation = $infos->getFormation()[0];
+    //     $departement = $formation->getDepartement()->getNomDpt();
+    //     $professeur = $projet->getPersonnels();
 
-        $infos = $manager->getRepository(Etudiant::class)->findOneByNomEtu($etudiants[0]);
-        $formation = $infos->getFormation()[0];
-        $departement = $formation->getDepartement()->getNomDpt();
-        $professeur = $projet->getPersonnels();
+        // $commentaires = $manager->getRepository(Commentaire::class)->findOneByProjet($projet);
+        // $contenu = $commentaires->getContenu();
 
-        $commentaires = $manager->getRepository(Commentaire::class)->findOneByProjet($projet);
-        $contenu = $commentaires->getContenu();
+        $form = $this->createForm(ProjetModifType::class, $projet);
+        // $form->handleRequest($request);
 
-        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig', array('formation',
-            'departement' => $departement,
-            'anneeDebut' => $anneeDebut,
-            'titre' => $titre,
-            'etudiants' => $etudiants,
-            'professeur' => $professeur,
-              'commentaires' => $contenu));
+        if ($form->isSubmitted() && $form->isValid())
+        {
+          $this->getDoctrine()->getManager()->flush();
+
+          return $this->redirectToRoute('');
+        }
+
+        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
+            array('form' => $form->createView()));
     }
 
-    public function correctionTeacher3($idTeacher, $idProjet)
+    public function correctionTeacher3Action($idTeacher, $idProjet)
     {
         $repository = $this
             ->getDoctrine()
