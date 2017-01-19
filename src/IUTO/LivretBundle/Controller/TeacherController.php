@@ -5,6 +5,7 @@ namespace IUTO\LivretBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetModifType;
+use IUTO\LivretBundle\Form\ProjetContenuType;
 
 
 class TeacherController extends Controller
