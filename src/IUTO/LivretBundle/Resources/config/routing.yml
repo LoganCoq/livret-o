@@ -25,6 +25,11 @@ iuto_livret_teacherhomepage:
 #==========CORRECTION1=====#
 iuto_livret_correctionProf1:
     path: /{projet}/correctionProf1
+    defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher1 }
+
+#==========CORRECTION2=====#
+iuto_livret_correctionProf2:
+    path: /{projet}/correctionProf2
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher2 }
 
 

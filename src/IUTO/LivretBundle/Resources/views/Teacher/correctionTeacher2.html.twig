@@ -5,12 +5,9 @@
   <title>Correction projets</title>
 {% endblock %}
 
-{% block body %}
-  <h1> Information du projet </h1>
-    {% block content %}
-    {{form(form)}}
-    {% endblock %}
-    <div class="commentaires">
 
-    </div>
-{% endblock %}
+  {% block content %}
+    <h1> Information du projet </h1>
+      {% form_theme form 'bootstrap_3_layout.html.twig' %}
+      {{ form(form) }}
+  {% endblock %}
