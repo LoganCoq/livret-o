@@ -26,3 +26,7 @@ iuto_livret_correctionProf1:
 iuto_livret_createProject:
     path: /create/project
     defaults: { _controller: IUTOLivretBundle:Student:createProject }
+#==================ROUTE MODULE createPres=============#
+iuto_livret_chiefPresentation:
+    path: /chief/presentation
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefPresentation }
