@@ -17,4 +17,6 @@ class ChiefController extends Controller
   {
 
 
-  }}
+  
+ }
+} 
