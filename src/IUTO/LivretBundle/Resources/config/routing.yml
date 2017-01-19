@@ -36,7 +36,7 @@ iuto_livret_chiefhomepage:
 
 #==========PRESENTATION====#
 iuto_livret_chiefPresentation:
-    path: /chief/presentation
+    path: /chef/presentation
     defaults: { _controller: IUTOLivretBundle:Chief:chiefPresentation }
 
 
@@ -46,8 +46,7 @@ iuto_livret_communicationhomepage:
     path: /communication
     defaults: { _controller: IUTOLivretBundle:Communication:communicationhome }
 
-#==========EDITO============#
+#==========EDITO===========#
 iuto_livret_communicationEdito:
     path: /communication/edito
     defaults: { _controller: IUTOLivretBundle:Chief:communicationedito }
-  

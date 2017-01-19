@@ -32,9 +32,9 @@
                             </p>
                         </li>
                         <br/>
-                        {% for i in info %}
+                        {% for i in range(0, info|length - 1) %}
                             <li class="sidebar-brand options">
-                                <a href="#">{{ i }}</a>
+                                <a href="{{ routing_info[i] }}">{{ info[i] }}</a>
                             </li>
                         {% endfor %}
                     </ul>
