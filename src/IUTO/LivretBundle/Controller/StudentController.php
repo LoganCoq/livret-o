@@ -5,7 +5,7 @@ namespace IUTO\LivretBundle\Controller;
 use IUTO\LivretBundle\Entity\Etudiant;
 use IUTO\LivretBundle\Entity\Formation;
 use IUTO\LivretBundle\Entity\Projet;
-use IUTO\LivretBundle\Form\ProjetType;
+use IUTO\LivretBundle\Form\ProjetCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -39,7 +39,7 @@ class StudentController extends Controller
         $projet->setValiderProjet(false);
 //        $listeEtudiants = $manager->getRepository(Formation::class)->findAllEtudiantByFormation($formation->getId());
 
-        $form = $this->createForm(ProjetType::class, $projet);//TODO
+        $form = $this->createForm(ProjetCreateType::class, $projet);//TODO
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
