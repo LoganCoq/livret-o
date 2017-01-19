@@ -50,3 +50,9 @@ iuto_livret_communicationhomepage:
 iuto_livret_communicationEdito:
     path: /communication/edito
     defaults: { _controller: IUTOLivretBundle:Chief:communicationedito }
+
+#=====GENERATION LIVRET====#
+iuto_livret_communicationgenerationlivret:
+    path: /communication/generation
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationgenerationlivret }
+  

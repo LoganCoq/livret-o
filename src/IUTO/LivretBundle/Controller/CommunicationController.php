@@ -22,4 +22,12 @@ class CommunicationController extends Controller
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
             'routing_info' => array('#', '#', '#')));
     }
+
+    public function communicationgenerationlivretAction()
+
+    {
+
+        return $this->render('IUTOLivretBundle:Chief:communicationgenerationlivret.html.twig');
+
+    }
 }
