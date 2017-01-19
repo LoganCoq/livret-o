@@ -64,18 +64,28 @@ class TeacherController extends Controller
             ));
     }
 
-    public function correctionTeacher3Action($idTeacher, $idProjet)
+    public function correctionTeacher3Action(Projet $projet)
     {
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('IUTOLivretBundle:');
-        $projet = $repository->findOneById($idProjet);
-        $presentation = $projet->getDescripProjet();
-        $resultats = $projet->getBilanProjet();
+        // $repository = $this
+        //     ->getDoctrine()
+        //     ->getManager()
+        //     ->getRepository('IUTOLivretBundle:');
+        // $projet = $repository->findOneById($idProjet);
+        // $presentation = $projet->getDescripProjet();
+        // $resultats = $projet->getBilanProjet();
+
+        $form = $this->createForm(ProjetContenuType::class, $projet);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+          $this->getDoctrine()->getManager()->flush();
+
+          return $this->redirectToRoute('');
+        }
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
-            array('presentation' => $presentation,
-                'resultats' => $resultats));
+            array('form' => $form->createView(),
+            'statusCAS' => 'professeur',
+            'info' => array('Demandes de correction', 'Projets validés')));
     }
 }
