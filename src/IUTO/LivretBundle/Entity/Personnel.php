@@ -157,4 +157,45 @@ class Personnel
         return $this->fonction;
     }
     
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add projet
+     *
+     * @param \IUTO\LivretBundle\Entity\Projet $projet
+     *
+     * @return Personnel
+     */
+    public function addProjet(\IUTO\LivretBundle\Entity\Projet $projet)
+    {
+        $this->projets[] = $projet;
+
+        return $this;
+    }
+
+    /**
+     * Remove projet
+     *
+     * @param \IUTO\LivretBundle\Entity\Projet $projet
+     */
+    public function removeProjet(\IUTO\LivretBundle\Entity\Projet $projet)
+    {
+        $this->projets->removeElement($projet);
+    }
+
+    /**
+     * Get projets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjets()
+    {
+        return $this->projets;
+    }
 }
