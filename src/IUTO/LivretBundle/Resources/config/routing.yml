@@ -32,6 +32,11 @@ iuto_livret_correctionProf2:
     path: /{projet}/correctionProf2
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher2 }
 
+#==========CORRECTION3=====#
+iuto_livret_correctionProf3:
+    path: /{projet}/correctionProf3
+    defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher3 }
+
 
 #==================ROUTES MODULE CHEF DEPARTEMENT==========#
 #==========HOME============#
