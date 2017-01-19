@@ -59,6 +59,8 @@ class TeacherController extends Controller
             array('form' => $form->createView(),
             'statutCAS' => 'professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
+            'routing_info' => array('#', '#'),
+            'routing_options' => array('#', '#')
             ));
     }
 
