@@ -2,8 +2,8 @@
     <meta charset="utf-8">
     <style>
         .etudiants {
-            text-align: right;
             margin-bottom: 15px;
+            margin-left: auto;
         }
 
         .entete_projet {
@@ -28,17 +28,43 @@
         .presentation_projet {
             margin-bottom: 15px;
         }
+
+        .conteneur {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        .fifty-percent {
+            width: 50%;
+        }
     </style>
 </head>
 <body>
-<div class="etudiants">
-    {% if etudiants is not empty %}
-        <p> Étudiants </p>
-        {% for etudiant in etudiants %}
-            <p> {{ etudiant }} </p>
-        {% endfor %}
-    {% endif %}
-</div>
+
+
+<table>
+    <tr>
+        <td class="fifty-percent">
+            <p> Note : Penser à gérer le fait que l'image change en fonction du dpt de réalisation du projet </p>
+            {#style="max-height: 50px" #}
+
+            <img src=".{{ asset('assets/images/Info.jpg') }}" alt="Logo IUT" style="max-height: 125px"/>
+        </td>
+        <td class="fifty-percent" style="text-align: right; vertical-align: top;">
+            {% if etudiants is not empty %}
+                <p> Étudiants </p>
+                {% for etudiant in etudiants %}
+                    <p> {{ etudiant }} </p>
+                {% endfor %}
+            {% endif %}
+        </td>
+    </tr>
+</table>
+
 <div class="entete_projet">
     <h1 class="titre"> {{ nom }} </h1>
     <p class="client"> À destination de {{ client }} </p>
