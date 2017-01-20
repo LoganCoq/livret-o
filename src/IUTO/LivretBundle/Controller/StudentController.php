@@ -71,18 +71,30 @@ class StudentController extends Controller
             $em->persist($projet);
             $em->flush();
 
-            return $this->redirectToRoute('iuto_livret_studenthomepage', array(
+            return $this->redirectToRoute('iuto_livret_confirmCompleteProject', array(
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Correction compte rendu'),
-                    'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'))
+                    'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'),
+                    'projet' => $projet->getId())
             );
         }
 
-        return $this->render('IUTOLivretBundle:Student:completeProject.html.twig',
-            array('form' => $form->createView(),
-                'statutCAS' => 'étudiant', 'info' => array('Créer un compte rendu', 'Correction compte rendu'),
-                'info' => array('Créer un compte rendu', 'Correction compte rendu'),
-                'routing_info' => array('/create/project', '#')));
+        return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
+            'form' => $form->createView(),
+            'statutCAS' => 'étudiant',
+            'info' => array('Créer un compte rendu', 'Correction compte rendu'),
+            'routing_info' => array('/create/project', '#')));
 
+    }
+
+    public function confirmCompleteProjectAction(Request $request, Projet $projet){
+
+        return $this->render('IUTOLivretBundle:Student:confirmCompleteProject.html.twig', array(
+            'statutCAS' => 'étudiant',
+            'info' => array('Créer un compte rendu', 'Correction compte rendu'),
+            'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'),
+            'routing_info' => array('/create/project', '#'),
+            'routing_options' => array('/create/project', '#'),
+            'projet' => $projet));
     }
 }
