@@ -65,4 +65,34 @@
     <h4 class="titre_info"> Bilan du projet </h4>
     <p> {{ bilan }} </p>
 </div>
+
+<page_footer>
+    <table>
+        <tr>
+            <td class="fifty-percent" style="vertical-align: bottom;">
+                {% if tuteurs is not empty %}
+                    <p>
+                        {% if tuteurs|length > 1 %}
+                            Encadrants :
+                        {% else %}
+                            Encadrant :
+                        {% endif %}
+                        {% for tuteur in tuteurs %}
+                            {% if tuteur == tuteurs|last %}
+                                {{ tuteur }}
+                            {% else %}
+                                {{ tuteur }},
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </td>
+            <td class="fifty-percent" style="text-align: right; vertical-align: bottom;">
+                <p> Note : Penser à gérer le fait que le dpt change en fonction du dpt de réalisation du projet ainsi
+                    que la promotion </p>
+                <p> Département informatique, Deuxième année </p>
+            </td>
+        </tr>
+    </table>
+</page_footer>
 </body>
