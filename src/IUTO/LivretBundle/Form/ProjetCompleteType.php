@@ -4,13 +4,12 @@ namespace IUTO\LivretBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use IUTO\LivretBundle\Entity\Projet;
+use Symfony\Component\Form\FormBuilderInterface;
 
-
-class ProjetCompleteTypeType extends AbstractType
+class ProjetCompleteType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -24,6 +23,7 @@ class ProjetCompleteTypeType extends AbstractType
             ->add('clientProjet', TextType::class)
             ->add('dateDebut', DateType::class)
             ->add('dateFin', DateType::class)
+            ->add('submit', SubmitType::class)
             ;
     }
 
