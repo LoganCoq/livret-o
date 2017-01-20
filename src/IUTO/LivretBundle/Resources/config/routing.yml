@@ -76,6 +76,13 @@ iuto_livret_communicationvalidationCR:
     path: /communication/validation
     defaults: { _controller: IUTOLivretBundle:Communication:communicationvalidationCR }
 
+#==================ROUTES MODULES ANNEXES============#
+#=====GENERATION PDF GENERATOR=====#
 iuto_livret_pdfgenerator:
   path: /generate/{id}
   defaults: { _controller: IUTOLivretBundle:PDFGenerator:generator}
+
+#=====LOGIN VIA CAS=====#
+iuto_livret_login:
+  path: /login
+  defaults: { _controller: IUTOLivretBundle:Login:login }
