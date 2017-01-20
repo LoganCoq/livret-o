@@ -10,3 +10,6 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: 41a64078d934f05e1dd169cd261fde6de425a092
+    cas_login_target: localhost:8000
+    cas_host: auth.univ-orleans.fr
+
