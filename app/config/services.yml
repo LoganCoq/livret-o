@@ -10,3 +10,11 @@ services:
 services:
     app.html2pdf:
         class: IUTO\LivretBundle\Service\HTML2PDF
+    ldap:
+        class: Symfony\Component\Ldap\LdapClient
+        arguments:
+            - ldap-univ.iut45.univ-orleans.fr   # host
+            - 636         # port
+            - 3           # version
+            - true       # SSL
+            - true        # TLS
