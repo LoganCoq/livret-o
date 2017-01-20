@@ -4,7 +4,7 @@ namespace IUTO\LivretBundle\Controller;
 
 use IUTO\LivretBundle\Entity\Etudiant;
 use IUTO\LivretBundle\Entity\Projet;
-use IUTO\LivretBundle\Form\ProjetCreateType;
+use IUTO\LivretBundle\Form\ProjetCompleteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
