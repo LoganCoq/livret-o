@@ -5,6 +5,7 @@ namespace IUTO\LivretBundle\Controller;
 use IUTO\LivretBundle\Entity\Etudiant;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetCompleteType;
+use IUTO\LivretBundle\Form\ProjetCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -46,6 +47,8 @@ class StudentController extends Controller
             $em->persist($projet);
             $em->flush();
 
+            $request->getSession()->getFlashBag()->add('notice', 'Projet bien ajouté.');
+
             return $this->redirectToRoute('iuto_livret_studenthomepage', array(
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Correction compte rendu'),
@@ -75,7 +78,8 @@ class StudentController extends Controller
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Correction compte rendu'),
                     'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'),
-                    'projet' => $projet->getId())
+                    'projet' => $projet->getId(),
+                    'routing_info' => array('/create/project', '#'))
             );
         }
 
@@ -87,7 +91,8 @@ class StudentController extends Controller
 
     }
 
-    public function confirmCompleteProjectAction(Request $request, Projet $projet){
+    public function confirmCompleteProjectAction(Request $request, Projet $projet)
+    {
 
         return $this->render('IUTOLivretBundle:Student:confirmCompleteProject.html.twig', array(
             'statutCAS' => 'étudiant',
@@ -95,6 +100,6 @@ class StudentController extends Controller
             'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'),
             'routing_info' => array('/create/project', '#'),
             'routing_options' => array('/create/project', '#'),
-            'projet' => $projet));
+            'projet' => $projet->getId()));
     }
 }
