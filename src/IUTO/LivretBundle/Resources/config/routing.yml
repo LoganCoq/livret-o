@@ -11,22 +11,22 @@ iuto_livret_connexion:
 #==================ROUTES MODULE ETUDIANT==================#
 #==========HOME============#
 iuto_livret_studenthomepage:
-    path: /etudiant
+    path: /{id}/etudiant
     defaults: { _controller: IUTOLivretBundle:Student:studenthome }
 
 #==========CREER PROJET====#
 iuto_livret_createProject:
-    path: /create/project
+    path: /{id}/create/project
     defaults: { _controller: IUTOLivretBundle:Student:createProject }
 
 #======COMPLETER PROJET====#
 iuto_livret_completeProject:
-    path: /{projet}/complete
+    path: /{id}/{projet}/complete
     defaults: { _controller: IUTOLivretBundle:Student:completeProject }
 
 #====VALIDER MODIFICATION===#
 iuto_livret_confirmCompleteProject:
-    path:  /{projet}/complete/confirm
+    path:  /{id}/{projet}/complete/confirm
     defaults: { _controller: IUTOLivretBundle:Student:confirmCompleteProject }
 
 #==================ROUTES MODULE PROFESSEUR================#
