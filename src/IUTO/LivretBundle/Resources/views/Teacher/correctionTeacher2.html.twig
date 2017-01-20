@@ -6,21 +6,21 @@
 {% endblock %}
 
 
-  {% block content %}
-    </br>
-    <h1> Informations du projet </h1>
-    </br>
-    <div class="formulaire">
+{% block content %}
+  </br>
+  <h1> Informations du projet </h1>
+  </br>
+  <div class="formulaire">
       {% form_theme form 'bootstrap_3_layout.html.twig' %}
       {{ form(form) }}
-    </div>
+  </div>
 
 
-    <div class="popup-box">
-    	<div class="popup-head">
-    		<div class="popup-head-left">
-    			Correction
-    		</div>
+  <div class="popup-box">
+      <div class="popup-head">
+          <div class="popup-head-left">
+              Correction
+          </div>
 
     	</div>
 
@@ -46,7 +46,6 @@
 
 
         	<!--SI ETUDIANT FAIRE MESSAGE À DROITE-->
-
           <div class="direct-chat-messages">
               <div class="chat-box-single-line">
             	   <abbr class="timestamp">DATE</abbr>
@@ -64,5 +63,5 @@
       <div class="reponseCorrection">
           <input type="text" value ="Veuillez tape une réponse suite à vos modifications"> </input>
       </div>
-
-  {% endblock %}
+  </div>
+{% endblock %}
