@@ -13,6 +13,14 @@
   <div class="formulaire">
       {% form_theme form 'bootstrap_3_layout.html.twig' %}
       {{ form(form) }}
+
+      <button type="button" class="btn btn-retour" href="">
+          <  Retour
+      </button>
+
+      <button type="button" class="btn btn-suivant" href="">
+          Suivant  >
+      </button>
   </div>
 
 
@@ -62,6 +70,9 @@
       </div>
       <div class="reponseCorrection">
           <input type="text" value ="Veuillez tape une réponse suite à vos modifications"> </input>
+          <button type="button" class="btn btn-envoyer-msg" href="">
+              Envoyer
+          </button>
       </div>
   </div>
 {% endblock %}
