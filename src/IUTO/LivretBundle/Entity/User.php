@@ -4,6 +4,7 @@ namespace IUTO\LivretBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
@@ -11,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="IUTO\LivretBundle\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var int
@@ -41,9 +42,15 @@ class User
 
     /**
      * @var string
-     * @ORM\Column(name="role", type="string", length=255, nullable=false)
+     * @ORM\Column(name="role", type="string", length=255)
      */
     private $role;
+
+    /**
+     * @var string
+     * @ORM\Column(name="idUniv", type="string", length=255, nullable=false, unique=true)
+     */
+    private $idUniv;
 
     /**
     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Formation", mappedBy="users")
@@ -52,11 +59,13 @@ class User
 
     /**
     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Projet", inversedBy="etudiants")
+    * @ORM\JoinTable(name="user_projetfaits")
     */
     private $projetFaits;
 
     /**
     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Projet", inversedBy="tuteurs")
+    * @ORM\JoinTable(name="user_projetsuivis")
     */
     private $projetSuivis;
 
@@ -167,6 +176,30 @@ class User
     }
 
     /**
+     * Set idUniv
+     *
+     * @param string $idUniv
+     *
+     * @return User
+     */
+    public function setIdUniv($idUniv)
+    {
+        $this->idUniv = $idUniv;
+
+        return $this;
+    }
+
+    /**
+     * Get idUniv
+     *
+     * @return string
+     */
+    public function getIdUniv()
+    {
+        return $this->idUniv;
+    }
+
+    /**
      * Add formation
      *
      * @param \IUTO\LivretBundle\Entity\Formation $formation
@@ -266,5 +299,30 @@ class User
     public function getProjetFaits()
     {
         return $this->projetFaits;
+    }
+
+    public function getRoles()
+    {
+        return $this->role;
+    }
+
+    public function getPassword()
+    {
+        return "";
+    }
+
+    public function getSalt()
+    {
+        return "";
+    }
+
+    public function getUsername()
+    {
+        return $this->idUniv;
+    }
+
+    public function eraseCredentials()
+    {
+        return;
     }
 }

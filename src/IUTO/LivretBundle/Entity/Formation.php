@@ -216,7 +216,7 @@ class Formation
      * @return Projet
      */
     public function addUser(\IUTO\LivretBundle\Entity\User $user)
-    {user
+    {
         $this->users[] = $user;
 
         return $this;
