@@ -56,7 +56,7 @@ iuto_livret_chiefPresentation:
 
 #==========LISTE====#
 iuto_livret_chiefliste:
-    path: /chef/liste
+    path: /chef/{nomDep}/liste
     defaults: { _controller: IUTOLivretBundle:Chief:chiefliste }
 
 

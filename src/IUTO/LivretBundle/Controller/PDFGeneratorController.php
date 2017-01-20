@@ -33,7 +33,7 @@ class PDFGeneratorController extends Controller
         ['nom' => $nomP,
             'descrip' => $descripP,
             'bilan' => $bilanP,
-            'client' => $bilanP,
+            'client' => $clientP,
             'etudiants' => $etudiants,
             'tuteurs' => $tuteurs
 
