@@ -7,7 +7,58 @@
 
 
   {% block content %}
-    <h1> Information du projet </h1>
-      {% form_theme form 'bootstrap_3_layout.html.twig' %}
+    </br>
+    <h1> Informations du projet </h1>
+    </br>
+    <div class="formulaire">
       {{ form(form) }}
+    </div>
+
+
+    <div class="popup-box">
+    	<div class="popup-head">
+    		<div class="popup-head-left">
+    			Correction
+    		</div>
+
+    	</div>
+
+    	<div class="popup-messages">
+    	<!--IF PROF -->
+        		<div class="direct-chat-messages">
+                    	<div class="chat-box-single-line">
+    				<abbr class="timestamp">DATE</abbr>
+    			</div>
+    		<!-- Message. Default to the left -->
+                       	<div class="direct-chat-msg-left doted-border-left">
+                       		<div class="direct-chat-info clearfix">
+                            		<span class="direct-chat-name-left">Professeur</span>
+                          		</div>
+                          	<!-- /.direct-chat-img -->
+                         		<div class="direct-chat-text-left">
+                           			 Commentaire professeur
+                          		</div>
+    			</div>
+    		</div>
+
+
+    	<!--IF ETUDIANT -->
+
+        		<div class="direct-chat-messages">
+                    	<div class="chat-box-single-line">
+    				<abbr class="timestamp">DATE</abbr>
+    			</div>
+    		<!-- Message. Default to the left -->
+                       	<div class="direct-chat-msg-right doted-border-right">
+                       		<div class="direct-chat-info-right clearfix">
+                            		<span class="direct-chat-name-right">Etudiant</span>
+                          		</div>
+                          	<!-- /.direct-chat-img -->
+                         		<div class="direct-chat-text-right">
+                           			 Réponse étudiant
+                          		</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
   {% endblock %}
