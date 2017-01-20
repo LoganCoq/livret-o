@@ -15,6 +15,11 @@ iuto_livret_createProject:
     path: /create/project
     defaults: { _controller: IUTOLivretBundle:Student:createProject }
 
+#======COMPLETER PROJET====#
+iuto_livret_completeProject:
+    path: /{projet}/complete
+    defaults: { _controller: IUTOLivretBundle:Student:completeProject }
+
 
 #==================ROUTES MODULE PROFESSEUR================#
 #==========HOME============#
@@ -51,7 +56,7 @@ iuto_livret_chiefPresentation:
 
 #==========LISTE====#
 iuto_livret_chiefliste:
-    path: /chef/liste
+    path: /chef/{nomDep}/liste
     defaults: { _controller: IUTOLivretBundle:Chief:chiefliste }
 
 

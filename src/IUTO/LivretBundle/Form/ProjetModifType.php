@@ -20,11 +20,21 @@ class ProjetModifType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('intituleProjet', TextType::class)
-        ->add('dateDebut', DateType::class)
-        ->add('dateFin', DateType::class)
-        ->add('etudiants', TextType::class)
-        ->add('personnels', TextType::class)        ;
+        ->add('intituleProjet', TextType::class, array(
+          'label' => 'Intitulé du projet'
+        ))
+        ->add('dateDebut', DateType::class, array(
+          'label' => 'Date de début'
+        ))
+        ->add('dateFin', DateType::class, array(
+          'label' => 'Date de fin'
+        ))
+        ->add('etudiants', TextType::class, array(
+          'label' => 'Étudiants'
+        ))
+        ->add('personnels', TextType::class, array(
+          'label' => 'Professeur(s)'
+        ))        ;
     }
 
     /**
