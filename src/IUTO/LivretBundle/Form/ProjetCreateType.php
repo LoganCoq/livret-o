@@ -47,7 +47,9 @@ class ProjetCreateType extends AbstractType
                 },
                 'multiple' => true,
             ))
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Créer'
+            ));
     }
 
     /**

@@ -7,24 +7,28 @@ iuto_livret_homepage:
 #==================ROUTES MODULE ETUDIANT==================#
 #==========HOME============#
 iuto_livret_studenthomepage:
-    path: /etudiant
+    path: /{id}/etudiant
     defaults: { _controller: IUTOLivretBundle:Student:studenthome }
 
 #==========CREER PROJET====#
 iuto_livret_createProject:
-    path: /create/project
+    path: /{id}/create/project
     defaults: { _controller: IUTOLivretBundle:Student:createProject }
 
 #======COMPLETER PROJET====#
 iuto_livret_completeProject:
-    path: /{projet}/complete
+    path: /{id}/{projet}/complete
     defaults: { _controller: IUTOLivretBundle:Student:completeProject }
 
+#====VALIDER MODIFICATION===#
+iuto_livret_confirmCompleteProject:
+    path:  /{id}/{projet}/complete/confirm
+    defaults: { _controller: IUTOLivretBundle:Student:confirmCompleteProject }
 
 #==================ROUTES MODULE PROFESSEUR================#
 #==========HOME============#
 iuto_livret_teacherhomepage:
-    path: /professeur/{id}
+    path: /{id}/professeur
     defaults: { _controller: IUTOLivretBundle:Teacher:teacherhome }
 
 #==========CORRECTION1=====#
@@ -46,17 +50,17 @@ iuto_livret_correctionProf3:
 #==================ROUTES MODULE CHEF DEPARTEMENT==========#
 #==========HOME============#
 iuto_livret_chiefhomepage:
-    path: /chef
+    path: /{id}/chef
     defaults: { _controller: IUTOLivretBundle:Chief:chiefhome }
 
 #==========PRESENTATION====#
 iuto_livret_chiefPresentation:
-    path: /chef/presentation
+    path: /{id}/chef/presentation
     defaults: { _controller: IUTOLivretBundle:Chief:chiefPresentation }
 
 #==========LISTE====#
 iuto_livret_chiefliste:
-    path: /chef/{nomDep}/liste
+    path: /{id}/chef/{nomDep}/liste
     defaults: { _controller: IUTOLivretBundle:Chief:chiefliste }
 
 

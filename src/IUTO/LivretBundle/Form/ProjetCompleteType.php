@@ -24,22 +24,32 @@ class ProjetCompleteType extends AbstractType
             ))
             ->add('descripProjet', TextareaType::class, array(
                 'label' => 'Description',
+                'required' => false,
             ))
             ->add('bilanProjet', TextareaType::class, array(
                 'label' => 'Bilan du projet',
+                'required' => false,
             ))
             ->add('clientProjet', TextType::class, array(
-                'label' => 'Client'
+                'label' => 'Client',
+                'required' => false,
             ))
             ->add('motsClesProjet', CollectionType::class, array( //TODO
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
-                'prototype_data' => 'New Tag Placeholder'
+                'prototype_data' => 'New Tag Placeholder',
+                'required' => false,
             ))
-            ->add('dateDebut', DateType::class)
-            ->add('dateFin', DateType::class)
-            ->add('submit', SubmitType::class)
+            ->add('dateDebut', DateType::class, array(
+                'label' => 'Date de début',
+            ))
+            ->add('dateFin', DateType::class, array(
+                'label' => 'Date de fin',
+            ))
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Enregistrer',
+            ))
             ;
     }
 
