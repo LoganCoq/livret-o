@@ -15,8 +15,9 @@ class TeacherController extends Controller
         return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig', array('statutCAS' => 'professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
-            'routing_info' => array('#', '#'),
-            'routing_options' => array('#', '#')));
+            'routing_statutCAShome' => array(' /{projet}/correctionProf1', '#'),
+            'routing_info' => array('/correctionProf1', '#'),
+            'routing_options' => array('/correctionProf1', '#')));
     }
 
     public function correctionTeacher1Action($id)

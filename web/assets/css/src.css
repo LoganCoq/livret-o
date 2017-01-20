@@ -58,7 +58,7 @@ h1 {
 }
 
 #statutCAS {
-    color: #000;
+    color: #FFF;
     height: 50px;
     line-height: 60px;
     font-size: 18px;
@@ -67,6 +67,7 @@ h1 {
 
 .sidebar-nav li a:hover {
     background-color: #252424;
+    text-decoration: none;
 }
 
 .sidebar-nav li.active {
