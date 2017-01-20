@@ -60,7 +60,7 @@ iuto_livret_chiefPresentation:
 
 #==========LISTE====#
 iuto_livret_chiefliste:
-    path: /chef/liste
+    path: /chef/{nomDep}/liste
     defaults: { _controller: IUTOLivretBundle:Chief:chiefliste }
 
 
@@ -84,7 +84,25 @@ iuto_livret_communicationgenerationlivret:
 iuto_livret_communicationvalidationCR:
     path: /communication/validation
     defaults: { _controller: IUTOLivretBundle:Communication:communicationvalidationCR }
+#=====SELECTION PROJET A CORRIGER=====#
+iuto_livret_choixProjet:
+    path: /communication/selection
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationChoix}
+
+#=====SELECTION PROJET VALIDE=====#
+iuto_livret_choixProjet:
+    path: /communication/selectionvalide
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationChoixValide}
+
+#==================ROUTES MODULES ANNEXES============#
+#=====GENERATION PDF GENERATOR=====#
+
 
 iuto_livret_pdfgenerator:
   path: /generate/{id}
   defaults: { _controller: IUTOLivretBundle:PDFGenerator:generator}
+
+#=====LOGIN VIA CAS=====#
+iuto_livret_login:
+  path: /login
+  defaults: { _controller: IUTOLivretBundle:Login:login }
