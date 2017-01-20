@@ -3,6 +3,10 @@ iuto_livret_homepage:
     path:     /
     defaults: { _controller: IUTOLivretBundle:Home:index }
 
+iuto_livret_connexion:
+    path: /connexion
+    defaults: { _controller: IUTOLivretBundle:Connexion:connexion}
+
 
 #==================ROUTES MODULE ETUDIANT==================#
 #==========HOME============#
