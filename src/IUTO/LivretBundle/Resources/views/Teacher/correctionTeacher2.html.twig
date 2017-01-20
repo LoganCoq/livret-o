@@ -11,6 +11,7 @@
     <h1> Informations du projet </h1>
     </br>
     <div class="formulaire">
+      {% form_theme form 'bootstrap_3_layout.html.twig' %}
       {{ form(form) }}
     </div>
 
@@ -23,46 +24,45 @@
 
     	</div>
 
+
+      <!-- A FAIRE : BOUCLE FOR SUR TOUS LES MESSAGES ENREGISTRES-->
+
     	<div class="popup-messages">
-    	<!--IF PROF -->
-        		<div class="direct-chat-messages">
-                    	<div class="chat-box-single-line">
-    				<abbr class="timestamp">DATE</abbr>
-    			</div>
-    		<!-- Message. Default to the left -->
-                       	<div class="direct-chat-msg-left">
-                       		<div class="direct-chat-info clearfix">
-                            		<span class="direct-chat-name-left">Professeur</span>
-                          		</div>
-                          	<!-- /.direct-chat-img -->
-                         		<div class="direct-chat-text-left">
-                           			 Commentaire professeur
-                          		</div>
-    			</div>
-    		</div>
+
+          <!--SI PROF FAIRE MSG À GAUCHE -->
+          <div class="direct-chat-messages">
+              <div class="chat-box-single-line">
+    	            <abbr class="timestamp">DATE</abbr>
+    	        </div>
+              <div class="direct-chat-msg-left">
+                  <div class="direct-chat-info clearfix">
+                      <span class="direct-chat-name-left">Professeur</span>
+                  </div>
+                  <div class="direct-chat-text-left">
+                      Commentaire professeur
+                  </div>
+    	        </div>
+    	    </div>
 
 
-    	<!--IF ETUDIANT -->
+        	<!--SI ETUDIANT FAIRE MESSAGE À DROITE-->
 
-        		<div class="direct-chat-messages">
-                    	<div class="chat-box-single-line">
-    				              <abbr class="timestamp">DATE</abbr>
-    			            </div>
-    		<!-- Message. Default to the left -->
-                      <div class="direct-chat-msg-right">
-                        <div class="direct-chat-info-right clearfix">
-                        	<span class="direct-chat-name-right">Etudiant</span>
-                        </div>
-                        <!-- /.direct-chat-img -->
-                        <div class="direct-chat-text-right">
-                        	 Réponse étudiant
-                        </div>
-    			  </div>
-    		</div>
-    	</div>
-      <div class="reponseCorrection">
-         <textarea> Veuillez tape une réponse suite à vos modifications </textarea>
+          <div class="direct-chat-messages">
+              <div class="chat-box-single-line">
+            	   <abbr class="timestamp">DATE</abbr>
+            	</div>
+              <div class="direct-chat-msg-right">
+                  <div class="direct-chat-info-right clearfix">
+                      <span class="direct-chat-name-right">Etudiant</span>
+                  </div>
+                  <div class="direct-chat-text-right">
+                      Réponse étudiant
+                  </div>
+            	</div>
+        	</div>
       </div>
-    </div>
+      <div class="reponseCorrection">
+          <input type="text" value ="Veuillez tape une réponse suite à vos modifications"> </input>
+      </div>
 
   {% endblock %}
