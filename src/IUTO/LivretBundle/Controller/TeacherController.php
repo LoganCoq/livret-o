@@ -15,7 +15,7 @@ class TeacherController extends Controller
         return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig', array('statutCAS' => 'professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
-            'routing_statutCAShome' => array('', '#'),
+            'routing_statutCAShome' => '/'.$id.'/professeur',
             'routing_info' => array('/'.$id.'/correctionProf1', '#'),
             'routing_options' => array('/'.$id.'/correctionProf1', '#')));
     }
@@ -31,25 +31,14 @@ class TeacherController extends Controller
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array('id' => $id,
             'statutCAS' => 'professeur',
             'projets' => $projets,
+            'routing_statutCAShome' => '/'.$id.'/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'routing_info' => array('/'.$id.'/correctionProf1', '#')));
 
     }
 
-    public function correctionTeacher2Action(Projet $projet)
+    public function correctionTeacher2Action($id, Projet $projet)
     {
-        //     $titre = $projet->getIntituleProjet();
-        //     $etudiants = $projet->getEtudiants();
-        //     $anneeDebut = $projet->getDateDebut();
-        //     $anneeFin = $projet->getDateFin();
-        //
-        //     $infos = $manager->getRepository(Etudiant::class)->findOneByNomEtu($etudiants[0]->getNomEtu());
-        //     $formation = $infos->getFormation()[0];
-        //     $departement = $formation->getDepartement()->getNomDpt();
-        //     $professeur = $projet->getPersonnels();
-
-        // $commentaires = $manager->getRepository(Commentaire::class)->findOneByProjet($projet);
-        // $contenu = $commentaires->getContenu();
 
         $form = $this->createForm(ProjetModifType::class, $projet);
         // $form->handleRequest($request);
@@ -64,21 +53,14 @@ class TeacherController extends Controller
             array('form' => $form->createView(),
                 'statutCAS' => 'professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('#', '#'),
+                'routing_statutCAShome' => '/'.$id.'/professeur',
+                'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#')
             ));
     }
 
-    public function correctionTeacher3Action(Projet $projet)
+    public function correctionTeacher3Action($id, Projet $projet)
     {
-        // $repository = $this
-        //     ->getDoctrine()
-        //     ->getManager()
-        //     ->getRepository('IUTOLivretBundle:');
-        // $projet = $repository->findOneById($idProjet);
-        // $presentation = $projet->getDescripProjet();
-        // $resultats = $projet->getBilanProjet();
-
         $form = $this->createForm(ProjetContenuType::class, $projet);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -90,8 +72,9 @@ class TeacherController extends Controller
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'professeur',
+                'routing_statutCAShome' => '/'.$id.'/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('#', '#'),
+                'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#')
             ));
     }

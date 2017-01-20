@@ -63,9 +63,11 @@ h1 {
     line-height: 60px;
     font-size: 18px;
     text-align: center;
+
+    background-color: FFF;
 }
 
-.sidebar-nav li a:hover {
+.sidebar-nav>li>a:hover {
     background-color: #252424;
     text-decoration: none;
 }
