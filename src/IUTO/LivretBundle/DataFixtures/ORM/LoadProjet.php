@@ -6,9 +6,8 @@ namespace IUTO\LivretBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use IUTO\LivretBundle\Entity\Personnel;
+use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Entity\Projet;
-use IUTO\LivretBundle\Entity\Etudiant;
 
 
 
@@ -55,6 +54,6 @@ class LoadProjet implements FixtureInterface, DependentFixtureInterface
      */
     function getDependencies()
     {
-        return array(LoadPersonnel::class);
+        return array(LoadUser::class);
     }
 }

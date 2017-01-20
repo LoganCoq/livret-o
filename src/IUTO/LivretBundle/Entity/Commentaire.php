@@ -29,23 +29,25 @@ class Commentaire
     private $contenu;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="reponse", type="text", nullable=true)
+     * @ORM\Column(name="date", type="date")
      */
-    private $reponse;
+    private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Projet")
-     * @ORM\JoinColumn(nullable=false)
+     * @var string
+     *
+     * @ORM\Column(name="reponse", type="text", nullable=false)
      */
+
     private $projet;
 
     /**
-     * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Personnel")
+     * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $personnel;
+    private $user;
 
 
     /**
@@ -83,30 +85,28 @@ class Commentaire
     }
 
     /**
-     * Set reponse
+     * Set date
      *
-     * @param string $reponse
+     * @param \DateTime $date
      *
      * @return Commentaire
      */
-    public function setReponse($reponse)
+    public function setDate($date)
     {
-        $this->reponse = $reponse;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get reponse
+     * Get date
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getReponse()
+    public function getDate()
     {
-        return $this->reponse;
+        return $this->date;
     }
-
-
 
     /**
      * Set projet
@@ -133,26 +133,26 @@ class Commentaire
     }
 
     /**
-     * Set personnel
+     * Set user
      *
-     * @param \IUTO\LivretBundle\Entity\Personnel $personnel
+     * @param \IUTO\LivretBundle\Entity\User $user
      *
      * @return Commentaire
      */
-    public function setPersonnel(\IUTO\LivretBundle\Entity\Personnel $personnel)
+    public function setUser(\IUTO\LivretBundle\Entity\User $user)
     {
-        $this->personnel = $personnel;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get personnel
+     * Get user
      *
-     * @return \IUTO\LivretBundle\Entity\Personnel
+     * @return \IUTO\LivretBundle\Entity\User
      */
-    public function getPersonnel()
+    public function getUser()
     {
-        return $this->personnel;
+        return $this->user;
     }
 }

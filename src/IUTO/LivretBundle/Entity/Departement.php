@@ -63,4 +63,3 @@ class Departement
         return $this->nomDpt;
     }
 }
-

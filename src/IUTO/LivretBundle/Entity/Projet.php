@@ -85,16 +85,17 @@ class Projet
     private $dateFin;
 
     /**
-    * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Etudiant", mappedBy="projets")
+    * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\User", mappedBy="projetFaits")
     */
     private $etudiants;
 
     /**
-     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Personnel", mappedBy="projets")
+     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\User", mappedBy="projetSuivis")
      */
-    private $personnels;
+    private $tuteurs;
 
     public $nomDep;
+
     public $listeEtudiants;
 
     /**
@@ -287,7 +288,7 @@ class Projet
     public function __construct()
     {
         $this->etudiants = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->personnels = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tuteur = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -341,11 +342,11 @@ class Projet
     /**
      * Add etudiant
      *
-     * @param \IUTO\LivretBundle\Entity\Etudiant $etudiant
+     * @param \IUTO\LivretBundle\Entity\User $etudiant
      *
      * @return Projet
      */
-    public function addEtudiant(\IUTO\LivretBundle\Entity\Etudiant $etudiant)
+    public function addEtudiant(\IUTO\LivretBundle\Entity\User $etudiant)
     {
         $this->etudiants[] = $etudiant;
 
@@ -355,9 +356,9 @@ class Projet
     /**
      * Remove etudiant
      *
-     * @param \IUTO\LivretBundle\Entity\Etudiant $etudiant
+     * @param \IUTO\LivretBundle\Entity\User $etudiant
      */
-    public function removeEtudiant(\IUTO\LivretBundle\Entity\Etudiant $etudiant)
+    public function removeEtudiant(\IUTO\LivretBundle\Entity\User $etudiant)
     {
         $this->etudiants->removeElement($etudiant);
     }
@@ -373,36 +374,36 @@ class Projet
     }
 
     /**
-     * Add personnel
+     * Add tuteur
      *
-     * @param \IUTO\LivretBundle\Entity\Personnel $personnel
+     * @param \IUTO\LivretBundle\Entity\User $tuteur
      *
      * @return Projet
      */
-    public function addPersonnel(\IUTO\LivretBundle\Entity\Personnel $personnel)
+    public function addTuteur(\IUTO\LivretBundle\Entity\User $tuteur)
     {
-        $this->personnels[] = $personnel;
+        $this->tuteurs[] = $tuteur;
 
         return $this;
     }
 
     /**
-     * Remove personnel
+     * Remove tuteur
      *
-     * @param \IUTO\LivretBundle\Entity\Personnel $personnel
+     * @param \IUTO\LivretBundle\Entity\User $tuteur
      */
-    public function removePersonnel(\IUTO\LivretBundle\Entity\Personnel $personnel)
+    public function removeTuteur(\IUTO\LivretBundle\Entity\User $tuteur)
     {
-        $this->personnels->removeElement($personnel);
+        $this->tuteurs->removeElement($tuteur);
     }
 
     /**
-     * Get personnels
+     * Get tuteurs
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPersonnels()
+    public function getTuteurs()
     {
-        return $this->personnels;
+        return $this->tuteurs;
     }
 }
