@@ -48,4 +48,14 @@ class CommunicationController extends Controller
             'routing_options' => array('/communication/validation', '/communication')));
 
     }
+
+    public function communicationChoixValideAction()
+    {
+        return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array('statutCAS' => 'service de communication',
+            'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+            'options' => array('Valider','Retour'),
+            'routing_info' => array('/generate/1', '/communication', '#'),
+            'routing_options' => array('/generate/1', '/communication')));
+
+    }
 }
