@@ -117,15 +117,30 @@ ul {
 /* =====
  CSS partie commentaire pour correction
    ===== */
-
+   .formulaire{
+     float:left;
+   }
    .popup-box {
        background-color: #ffffff;
        border: 1px solid #b0b0b0;
        height: 520px;
-       position: fixed;
-       right: 70px;
+       right: 0px;
        width: 300px;
        font-family: 'Open Sans', sans-serif;
+       float:right;
+       position: fixed;
+       top: 0;
+   }
+
+   .reponseCorrection{
+     border: 1px solid #b0b0b0;
+     right: 0px;
+     width: 300px;
+     height: 70px;
+     font-family: 'Open Sans', sans-serif;
+     float:right;
+     position: fixed;
+     bottom: 4;
    }
 
    .popup-box .popup-head {
@@ -152,19 +167,27 @@ ul {
 
 
    .popup-box .popup-messages {
-       background: #778899 none repeat scroll 0 0;
+       background: rgb(68, 25, 25) none repeat scroll 0 0;
        height: 475px;
        overflow: auto;
+   }
+
+   .direct-chat-messages-left {
+       overflow: auto;
+       padding: 10px;
+       transform: translate(0px, 0px);
    }
 
    .direct-chat-messages-right {
        overflow: auto;
        padding: 10px;
        transform: translate(0px, 0px);
+       float:right;
+
    }
 
    .popup-messages abbr.timestamp {
-       background: #778899  none repeat scroll 0 0;
+       background: rgb(68, 25, 25)  none repeat scroll 0 0;
        color: #fff;
        padding: 0 11px;
    }
@@ -185,7 +208,7 @@ ul {
    .direct-chat-name-left {
    	font-size: 15px;
    	font-weight: 600;
-   	margin: 0 0 0 49px !important;
+   	margin: 0 0 0 29px !important;
    	color: #fff;
    	opacity: 0.9;
    }
@@ -193,7 +216,7 @@ ul {
    .direct-chat-name-right {
    	font-size: 15px;
    	font-weight: 600;
-   	margin: 0 0 0 49px !important;
+   	margin: 0 29px 0 0px !important;
    	color: #fff;
    	opacity: 0.9;
    	float : right;
@@ -210,56 +233,12 @@ ul {
        float : right;
    }
 
-   .doted-border-left::after {
-       background: transparent none repeat scroll 0 0 !important;
-       border-right: 2px dotted #fff !important;
-       bottom: 0;
-       content: "";
-       left: 17px;
-       margin: 0;
-       position: absolute;
-       top: 0;
-       width: 2px;
-       display: inline;
-       z-index: -2;
-   }
-
-   .doted-border-right::after {
-       background: transparent none repeat scroll 0 0 !important;
-       border-right: 2px dotted #fff !important;
-       bottom: 0;
-       content: "";
-       left: 17px;
-       margin: 0;
-       position: absolute;
-       top: 0;
-       width: 2px;
-       display: inline;
-       z-index: -2;
-       float : right;
-   }
-
-   .direct-chat-text-right{
-       background: #dfece7 none repeat scroll 0 0;
-       border: 1px solid #dfece7;
-       border-radius: 2px;
-       color: #1f2121;
-       float: right;
-   }
-
-   .direct-chat-text-left{
-       background: #dfece7 none repeat scroll 0 0;
-       border: 1px solid #dfece7;
-       border-radius: 2px;
-       color: #1f2121;
-   }
-
    .direct-chat-text-left {
        background: #d2d6de none repeat scroll 0 0;
        border: 1px solid #d2d6de;
        border-radius: 5px;
        color: #444;
-       margin: 5px 0 0 50px;
+       margin: 0 30px;
        padding: 5px 10px;
        position: relative;
    }
@@ -269,7 +248,7 @@ ul {
        border: 1px solid #d2d6de;
        border-radius: 5px;
        color: #444;
-       margin: 5px 0 0 50px;
+       margin: 0 30px;
        padding: 5px 10px;
        position: relative;
        float: right;
