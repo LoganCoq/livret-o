@@ -15,7 +15,7 @@ class TeacherController extends Controller
         return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig', array('statutCAS' => 'professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
-            'routing_statutCAShome' => '/professeur'.$id,
+            'routing_statutCAShome' => '/'.$id.'/professeur',
             'routing_info' => array('/'.$id.'/correctionProf1', '#'),
             'routing_options' => array('/'.$id.'/correctionProf1', '#')));
     }
@@ -31,6 +31,7 @@ class TeacherController extends Controller
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array('id' => $id,
             'statutCAS' => 'professeur',
             'projets' => $projets,
+            'routing_statutCAShome' => '/'.$id.'/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'routing_info' => array('/'.$id.'/correctionProf1', '#')));
 
@@ -52,7 +53,7 @@ class TeacherController extends Controller
             array('form' => $form->createView(),
                 'statutCAS' => 'professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_statutCAShome' => '/professeur'.$id,
+                'routing_statutCAShome' => '/'.$id.'/professeur',
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#')
             ));
@@ -71,6 +72,7 @@ class TeacherController extends Controller
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'professeur',
+                'routing_statutCAShome' => '/'.$id.'/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#')

@@ -24,7 +24,7 @@ iuto_livret_completeProject:
 #==================ROUTES MODULE PROFESSEUR================#
 #==========HOME============#
 iuto_livret_teacherhomepage:
-    path: /professeur/{id}
+    path: /{id}/professeur
     defaults: { _controller: IUTOLivretBundle:Teacher:teacherhome }
 
 #==========CORRECTION1=====#
