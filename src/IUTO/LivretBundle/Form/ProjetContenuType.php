@@ -23,7 +23,9 @@ class ProjetContenuType extends AbstractType
         ->add('descripProjet', TextType::class, array(
           'label' => 'Description du projet'
         ))
-        ->add('bilanProjet', TextType::class);
+        ->add('bilanProjet', TextType::class, array(
+          'label' => 'Bilan du projet'
+        ));
     }
 
     /**
