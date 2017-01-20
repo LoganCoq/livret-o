@@ -50,17 +50,17 @@ iuto_livret_correctionProf3:
 #==================ROUTES MODULE CHEF DEPARTEMENT==========#
 #==========HOME============#
 iuto_livret_chiefhomepage:
-    path: /chef
+    path: /{id}/chef
     defaults: { _controller: IUTOLivretBundle:Chief:chiefhome }
 
 #==========PRESENTATION====#
 iuto_livret_chiefPresentation:
-    path: /chef/presentation
+    path: /{id}/chef/presentation
     defaults: { _controller: IUTOLivretBundle:Chief:chiefPresentation }
 
 #==========LISTE====#
 iuto_livret_chiefliste:
-    path: /chef/{nomDep}/liste
+    path: /{id}/chef/{nomDep}/liste
     defaults: { _controller: IUTOLivretBundle:Chief:chiefliste }
 
 
