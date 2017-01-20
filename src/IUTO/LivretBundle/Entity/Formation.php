@@ -55,6 +55,11 @@ class Formation
     private $departement;
 
     /**
+    * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\User", inversedBy="formations")
+    */
+    private $users;
+
+    /**
      * Get id
      *
      * @return int
@@ -199,4 +204,50 @@ class Formation
     {
         return (int)$this->dateFin->format('Y');
     }
+
+
+
+
+    /**
+     * Add user
+     *
+     * @param \IUTO\LivretBundle\Entity\User $user
+     *
+     * @return Projet
+     */
+    public function addUser(\IUTO\LivretBundle\Entity\User $user)
+    {user
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \IUTO\LivretBundle\Entity\User $user
+     */
+    public function removeUser(\IUTO\LivretBundle\Entity\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+
+
+
+
+
+
+
+
 }
