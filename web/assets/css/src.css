@@ -118,159 +118,157 @@ ul {
  CSS partie commentaire pour correction
    ===== */
 
-   .popup-box {
-       background-color: #ffffff;
-       border: 1px solid #b0b0b0;
-       height: 520px;
-       position: fixed;
-       right: 70px;
-       width: 300px;
-       font-family: 'Open Sans', sans-serif;
-   }
+.popup-box {
+    background-color: #ffffff;
+    border: 1px solid #b0b0b0;
+    height: 520px;
+    position: fixed;
+    right: 70px;
+    width: 300px;
+    font-family: 'Open Sans', sans-serif;
+}
 
-   .popup-box .popup-head {
-       background-color: #fff;
-       clear: both;
-       color: #7b7b7b;
-       display: inline-table;
-       font-size: 21px;
-       padding: 7px 10px;
-       width: 100%;
-       font-family: Oswald;
-   }
+.popup-box .popup-head {
+    background-color: #fff;
+    clear: both;
+    color: #7b7b7b;
+    display: inline-table;
+    font-size: 21px;
+    padding: 7px 10px;
+    width: 100%;
+    font-family: Oswald;
+}
 
-   .bg_none i {
-       border: 1px solid #ff6701;
-       border-radius: 25px;
-       color: #ff6701;
-       font-size: 17px;
-       height: 33px;
-       line-height: 30px;
-       width: 33px;
-   }
+.bg_none i {
+    border: 1px solid #ff6701;
+    border-radius: 25px;
+    color: #ff6701;
+    font-size: 17px;
+    height: 33px;
+    line-height: 30px;
+    width: 33px;
+}
 
+.popup-box .popup-messages {
+    background: #778899 none repeat scroll 0 0;
+    height: 475px;
+    overflow: auto;
+}
 
+.direct-chat-messages-right {
+    overflow: auto;
+    padding: 10px;
+    transform: translate(0px, 0px);
+}
 
-   .popup-box .popup-messages {
-       background: #778899 none repeat scroll 0 0;
-       height: 475px;
-       overflow: auto;
-   }
+.popup-messages abbr.timestamp {
+    background: #778899 none repeat scroll 0 0;
+    color: #fff;
+    padding: 0 11px;
+}
 
-   .direct-chat-messages-right {
-       overflow: auto;
-       padding: 10px;
-       transform: translate(0px, 0px);
-   }
+.popup-messages .chat-box-single-line {
+    border-bottom: 1px solid #a4c6b5;
+    height: 12px;
+    margin: 7px 0 20px;
+    position: relative;
+    text-align: center;
+}
 
-   .popup-messages abbr.timestamp {
-       background: #778899  none repeat scroll 0 0;
-       color: #fff;
-       padding: 0 11px;
-   }
+.popup-messages {
+    color: #fff;
+    opacity: 0.6;
+}
 
-   .popup-messages .chat-box-single-line {
-       border-bottom: 1px solid #a4c6b5;
-       height: 12px;
-       margin: 7px 0 20px;
-       position: relative;
-       text-align: center;
-   }
+.direct-chat-name-left {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 0 49px !important;
+    color: #fff;
+    opacity: 0.9;
+}
 
-   .popup-messages {
-       color: #fff;
-       opacity: 0.6;
-   }
+.direct-chat-name-right {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 0 49px !important;
+    color: #fff;
+    opacity: 0.9;
+    float: right;
+}
 
-   .direct-chat-name-left {
-   	font-size: 15px;
-   	font-weight: 600;
-   	margin: 0 0 0 49px !important;
-   	color: #fff;
-   	opacity: 0.9;
-   }
+.direct-chat-msg-left {
+    margin-bottom: 10px;
+    position: relative;
+}
 
-   .direct-chat-name-right {
-   	font-size: 15px;
-   	font-weight: 600;
-   	margin: 0 0 0 49px !important;
-   	color: #fff;
-   	opacity: 0.9;
-   	float : right;
-   }
+.direct-chat-msg-right {
+    margin-bottom: 10px;
+    position: relative;
+    float: right;
+}
 
-   .direct-chat-msg-left {
-       margin-bottom: 10px;
-       position: relative;
-   }
+.doted-border-left::after {
+    background: transparent none repeat scroll 0 0 !important;
+    border-right: 2px dotted #fff !important;
+    bottom: 0;
+    content: "";
+    left: 17px;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    width: 2px;
+    display: inline;
+    z-index: -2;
+}
 
-   .direct-chat-msg-right {
-       margin-bottom: 10px;
-       position: relative;
-       float : right;
-   }
+.doted-border-right::after {
+    background: transparent none repeat scroll 0 0 !important;
+    border-right: 2px dotted #fff !important;
+    bottom: 0;
+    content: "";
+    left: 17px;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    width: 2px;
+    display: inline;
+    z-index: -2;
+    float: right;
+}
 
-   .doted-border-left::after {
-       background: transparent none repeat scroll 0 0 !important;
-       border-right: 2px dotted #fff !important;
-       bottom: 0;
-       content: "";
-       left: 17px;
-       margin: 0;
-       position: absolute;
-       top: 0;
-       width: 2px;
-       display: inline;
-       z-index: -2;
-   }
+.direct-chat-text-right {
+    background: #dfece7 none repeat scroll 0 0;
+    border: 1px solid #dfece7;
+    border-radius: 2px;
+    color: #1f2121;
+    float: right;
+}
 
-   .doted-border-right::after {
-       background: transparent none repeat scroll 0 0 !important;
-       border-right: 2px dotted #fff !important;
-       bottom: 0;
-       content: "";
-       left: 17px;
-       margin: 0;
-       position: absolute;
-       top: 0;
-       width: 2px;
-       display: inline;
-       z-index: -2;
-       float : right;
-   }
+.direct-chat-text-left {
+    background: #dfece7 none repeat scroll 0 0;
+    border: 1px solid #dfece7;
+    border-radius: 2px;
+    color: #1f2121;
+}
 
-   .direct-chat-text-right{
-       background: #dfece7 none repeat scroll 0 0;
-       border: 1px solid #dfece7;
-       border-radius: 2px;
-       color: #1f2121;
-       float: right;
-   }
+.direct-chat-text-left {
+    background: #d2d6de none repeat scroll 0 0;
+    border: 1px solid #d2d6de;
+    border-radius: 5px;
+    color: #444;
+    margin: 5px 0 0 50px;
+    padding: 5px 10px;
+    position: relative;
+}
 
-   .direct-chat-text-left{
-       background: #dfece7 none repeat scroll 0 0;
-       border: 1px solid #dfece7;
-       border-radius: 2px;
-       color: #1f2121;
-   }
-
-   .direct-chat-text-left {
-       background: #d2d6de none repeat scroll 0 0;
-       border: 1px solid #d2d6de;
-       border-radius: 5px;
-       color: #444;
-       margin: 5px 0 0 50px;
-       padding: 5px 10px;
-       position: relative;
-   }
-
-   .direct-chat-text-right {
-       background: #d2d6de none repeat scroll 0 0;
-       border: 1px solid #d2d6de;
-       border-radius: 5px;
-       color: #444;
-       margin: 5px 0 0 50px;
-       padding: 5px 10px;
-       position: relative;
-       float: right;
-   }
+.direct-chat-text-right {
+    background: #d2d6de none repeat scroll 0 0;
+    border: 1px solid #d2d6de;
+    border-radius: 5px;
+    color: #444;
+    margin: 5px 0 0 50px;
+    padding: 5px 10px;
+    position: relative;
+    float: right;
+}
