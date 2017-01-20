@@ -49,13 +49,13 @@ class StudentController extends Controller
             return $this->redirectToRoute('iuto_livret_studenthomepage', array(
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Correction compte rendu'),
-                    'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'))
+                    'options' => array('Créer un compte rendu', ' Voir corrections compte-rendu'))
             );
         }
 
         return $this->render('IUTOLivretBundle:Student:createProject.html.twig',
             array('form' => $form->createView(),
-                'statutCAS' => 'étudiant', 'info' => array('Créer un compte rendu', 'Correction compte rendu'),
+                'statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Correction compte rendu'),
                 'routing_info' => array('/create/project', '#')));
 
@@ -80,9 +80,8 @@ class StudentController extends Controller
 
         return $this->render('IUTOLivretBundle:Student:completeProject.html.twig',
             array('form' => $form->createView(),
-                'statutCAS' => 'étudiant', 'info' => array('Créer un compte rendu', 'Correction compte rendu'),
+                'statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Correction compte rendu'),
                 'routing_info' => array('/create/project', '#')));
-
     }
 }
