@@ -20,6 +20,10 @@ iuto_livret_completeProject:
     path: /{projet}/complete
     defaults: { _controller: IUTOLivretBundle:Student:completeProject }
 
+#====VALIDER MODIFICATION===#
+iuto_livret_confirmCompleteProject:
+    path:  /{projet}/complete/confirm
+    defaults: { _controller: IUTOLivretBundle:Student:confirmCompleteProject }
 
 #==================ROUTES MODULE PROFESSEUR================#
 #==========HOME============#
