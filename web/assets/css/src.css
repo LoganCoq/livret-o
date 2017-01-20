@@ -58,15 +58,18 @@ h1 {
 }
 
 #statutCAS {
-    color: #000;
+    color: #FFF;
     height: 50px;
     line-height: 60px;
     font-size: 18px;
     text-align: center;
+
+    background-color: FFF;
 }
 
-.sidebar-nav li a:hover {
-    background-color: #cbcbcb;
+.sidebar-nav>li>a:hover {
+    background-color: #252424;
+    text-decoration: none;
 }
 
 .sidebar-nav li.active {
@@ -119,29 +122,38 @@ ul {
    ===== */
 .formulaire {
     float: left;
+    width: 70%;
+}
+
+.btn-retour{
+    float: left;
+}
+
+.btn-suivant{
+    float: right;
 }
 
 .popup-box {
     background-color: #ffffff;
     border: 1px solid #b0b0b0;
-    height: 520px;
+    height: 80%;
     right: 0px;
-    width: 300px;
+    width: 22%;
     font-family: 'Open Sans', sans-serif;
     float: right;
     position: fixed;
-    top: 0;
+    top: 0%;
 }
 
 .reponseCorrection {
     border: 1px solid #b0b0b0;
     right: 0px;
-    width: 300px;
-    height: 70px;
+    width: 22%;
+    height: 12%;
     font-family: 'Open Sans', sans-serif;
     float: right;
     position: fixed;
-    bottom: 4;
+    bottom: 8%;
 }
 
 .popup-box .popup-head {

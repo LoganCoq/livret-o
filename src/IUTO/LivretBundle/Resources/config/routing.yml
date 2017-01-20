@@ -20,26 +20,30 @@ iuto_livret_completeProject:
     path: /{projet}/complete
     defaults: { _controller: IUTOLivretBundle:Student:completeProject }
 
+#====VALIDER MODIFICATION===#
+iuto_livret_confirmCompleteProject:
+    path:  /{projet}/complete/confirm
+    defaults: { _controller: IUTOLivretBundle:Student:confirmCompleteProject }
 
 #==================ROUTES MODULE PROFESSEUR================#
 #==========HOME============#
 iuto_livret_teacherhomepage:
-    path: /professeur
+    path: /{id}/professeur
     defaults: { _controller: IUTOLivretBundle:Teacher:teacherhome }
 
 #==========CORRECTION1=====#
 iuto_livret_correctionProf1:
-    path: /{projet}/correctionProf1
+    path: /{id}/correctionProf1
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher1 }
 
 #==========CORRECTION2=====#
 iuto_livret_correctionProf2:
-    path: /{projet}/correctionProf2
+    path: /{id}/{projet}/correctionProf2
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher2 }
 
 #==========CORRECTION3=====#
 iuto_livret_correctionProf3:
-    path: /{projet}/correctionProf3
+    path: /{id}/{projet}/correctionProf3
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher3 }
 
 
