@@ -13,6 +13,11 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+#        l3_firewall:
+#            pattern: ^/
+#            security: true
+#            cas: false
+
         main:
             anonymous: ~
             # activate different ways to authenticate
