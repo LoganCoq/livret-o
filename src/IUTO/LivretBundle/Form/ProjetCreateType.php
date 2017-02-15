@@ -33,7 +33,7 @@ class ProjetCreateType extends AbstractType
                 'disabled' => true,
                 'label' => 'Département'))
             ->add('etudiants', EntityType::class, array(
-                'class' => Etudiant::class,
+                'class' => User::class,
                 'choice_label' => function($etudiant) {
                     return $etudiant->getNomEtu() . ' ' . $etudiant->getPrenomEtu();
                 },
@@ -41,7 +41,7 @@ class ProjetCreateType extends AbstractType
 //                'choices' => $options['listeEtudiants'], TODO
             ))
             ->add('personnels', EntityType::class, array(
-                'class' => Personnel::class,
+                'class' => User::class,
                 'choice_label' => function($personnel) {
                     return $personnel->getNomPers() . ' ' . $personnel->getPrenomPers();
                 },
