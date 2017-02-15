@@ -18,7 +18,7 @@ class LoadCommentaire implements FixtureInterface, DependentFixtureInterface
     {
         $commentaire = new Commentaire();
         $commentaire->setContenu("Bonjour, je ne sais pas à quoi correspond votre projet.");
-        $date = new \DateTime();
+        $commentaire -> setDate(new \DateTime());
         $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByClientProjet("Soukaïna El Abdellaoui"));
         $commentaire->setUser($manager->getRepository(User::class)->findOneByMailUser("sebastien.limet@univ-orleans.fr"));
 
@@ -26,7 +26,7 @@ class LoadCommentaire implements FixtureInterface, DependentFixtureInterface
 
         $commentaire = new Commentaire();
         $commentaire->setContenu("Bonjour, il correspond à faire le ménage");
-        $date = new \DateTime();
+        $commentaire -> setDate(new \DateTime());
         $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByClientProjet("Soukaïna El Abdellaoui"));
         $commentaire->setUser($manager->getRepository(User::class)->findOneByMailUser("quentin.zerguini@etu.univ-orleans.fr"));
 
@@ -34,7 +34,7 @@ class LoadCommentaire implements FixtureInterface, DependentFixtureInterface
 
         $commentaire = new Commentaire();
         $commentaire->setContenu("Mais non pas du tout Quentin, c'est pour faire la vaisselle chez Sou");
-        $date = new \DateTime();
+        $commentaire -> setDate(new \DateTime());
         $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByClientProjet("Soukaïna El Abdellaoui"));
         $commentaire->setUser($manager->getRepository(User::class)->findOneByMailUser("juliette.dubernet@etu.univ-orleans.fr"));
 

@@ -4,6 +4,9 @@ security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
+#        main:
+#            class: IUTO\LivretBundle\Entity\User
+#            property: idUniv
         in_memory:
             memory: ~
 
@@ -19,7 +22,9 @@ security:
 #            cas: false
 
         main:
-            anonymous: ~
+            pattern: ^/
+            anonymous: true
+            provider: main
             # activate different ways to authenticate
 
             # http_basic: ~
