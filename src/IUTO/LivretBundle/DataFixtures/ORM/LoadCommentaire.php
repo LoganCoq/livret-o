@@ -9,7 +9,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Projet;
-use IUTO\LivretBundle\Entity\Uer;
+use IUTO\LivretBundle\Entity\User;
 
 class LoadCommentaire implements FixtureInterface, DependentFixtureInterface
 {
@@ -19,27 +19,24 @@ class LoadCommentaire implements FixtureInterface, DependentFixtureInterface
         $commentaire = new Commentaire();
         $commentaire->setContenu("Bonjour, je ne sais pas à quoi correspond votre projet.");
         $date = new \DateTime();
-        $formation->setDate($date);
-        $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByIntituleProjet("Faire la vaisselle"));
-        $commentaire->setUser($manager->getRepository(User::class)->findOneByMailPers("sebastien.limet@univ-orleans.fr"));
+        $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByClientProjet("Soukaïna El Abdellaoui"));
+        $commentaire->setUser($manager->getRepository(User::class)->findOneByMailUser("sebastien.limet@univ-orleans.fr"));
 
         $manager->persist($commentaire);
 
         $commentaire = new Commentaire();
         $commentaire->setContenu("Bonjour, il correspond à faire le ménage");
         $date = new \DateTime();
-        $formation->setDate($date);
-        $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByIntituleProjet("Faire la vaisselle"));
-        $commentaire->setUser($manager->getRepository(User::class)->findOneByMailPers("quentin.zerguini@univ-orleans.fr"));
+        $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByClientProjet("Soukaïna El Abdellaoui"));
+        $commentaire->setUser($manager->getRepository(User::class)->findOneByMailUser("quentin.zerguini@etu.univ-orleans.fr"));
 
         $manager->persist($commentaire);
 
         $commentaire = new Commentaire();
         $commentaire->setContenu("Mais non pas du tout Quentin, c'est pour faire la vaisselle chez Sou");
         $date = new \DateTime();
-        $formation->setDate($date);
-        $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByIntituleProjet("Faire la vaisselle"));
-        $commentaire->setUser($manager->getRepository(User::class)->findOneByMailPers("juliette.dubernet@univ-orleans.fr"));
+        $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByClientProjet("Soukaïna El Abdellaoui"));
+        $commentaire->setUser($manager->getRepository(User::class)->findOneByMailUser("juliette.dubernet@etu.univ-orleans.fr"));
 
         $manager->persist($commentaire);
 

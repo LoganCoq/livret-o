@@ -94,6 +94,11 @@ class Projet
      */
     private $tuteurs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="IUTO\LivretBundle\Entity\Commentaire", mappedBy="projet")
+     */
+    private $commentaires;
+
     public $nomDep;
 
     public $listeEtudiants;

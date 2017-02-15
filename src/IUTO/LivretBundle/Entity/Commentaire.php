@@ -36,9 +36,8 @@ class Commentaire
     private $date;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="reponse", type="text", nullable=false)
+     * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Projet")
+     * @ORM\JoinColumn(nullable=false)
      */
 
     private $projet;
