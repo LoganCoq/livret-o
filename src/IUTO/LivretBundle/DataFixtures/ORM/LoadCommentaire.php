@@ -9,7 +9,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Projet;
-use IUTO\LivretBundle\Entity\Personnel;
+use IUTO\LivretBundle\Entity\User;
 
 class LoadCommentaire implements FixtureInterface, DependentFixtureInterface
 {
@@ -18,19 +18,27 @@ class LoadCommentaire implements FixtureInterface, DependentFixtureInterface
     {
         $commentaire = new Commentaire();
         $commentaire->setContenu("Bonjour, je ne sais pas à quoi correspond votre projet.");
-        $commentaire->setReponse("Bonjour, le projet correspond à ... vous pouvez le lire dès à présent");
-        $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByIntituleProjet("Faire la vaisselle"));
-        $commentaire->setPersonnel($manager->getRepository(Personnel::class)->findOneByMailPers("sebastien.limet@univ-orleans.fr"));
+        $date = new \DateTime();
+        $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByClientProjet("Soukaïna El Abdellaoui"));
+        $commentaire->setUser($manager->getRepository(User::class)->findOneByMailUser("sebastien.limet@univ-orleans.fr"));
 
         $manager->persist($commentaire);
 
         $commentaire = new Commentaire();
-        $commentaire->setContenu("Bonjour, vous pouvez supprmier la partie sur l'explication de l'implémentation.");
-        $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByIntituleProjet("Faire la vaisselle"));
-        $commentaire->setPersonnel($manager->getRepository(Personnel::class)->findOneByMailPers("denys.duchier@univ-orleans.fr"));
+        $commentaire->setContenu("Bonjour, il correspond à faire le ménage");
+        $date = new \DateTime();
+        $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByClientProjet("Soukaïna El Abdellaoui"));
+        $commentaire->setUser($manager->getRepository(User::class)->findOneByMailUser("quentin.zerguini@etu.univ-orleans.fr"));
 
         $manager->persist($commentaire);
 
+        $commentaire = new Commentaire();
+        $commentaire->setContenu("Mais non pas du tout Quentin, c'est pour faire la vaisselle chez Sou");
+        $date = new \DateTime();
+        $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByClientProjet("Soukaïna El Abdellaoui"));
+        $commentaire->setUser($manager->getRepository(User::class)->findOneByMailUser("juliette.dubernet@etu.univ-orleans.fr"));
+
+        $manager->persist($commentaire);
 
         $manager->flush();
     }
@@ -43,6 +51,6 @@ class LoadCommentaire implements FixtureInterface, DependentFixtureInterface
      */
     function getDependencies()
     {
-        return array(LoadPersonnel::class,LoadProjet::class );
+        return array(LoadUser::class,LoadProjet::class );
     }
 }

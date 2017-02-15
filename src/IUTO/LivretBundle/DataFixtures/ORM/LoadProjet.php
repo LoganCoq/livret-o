@@ -6,9 +6,8 @@ namespace IUTO\LivretBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use IUTO\LivretBundle\Entity\Personnel;
+use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Entity\Projet;
-use IUTO\LivretBundle\Entity\Etudiant;
 
 
 
@@ -29,18 +28,18 @@ class LoadProjet implements FixtureInterface, DependentFixtureInterface
         $projet->setDateFin(new \DateTime(date('Y').'12-31'));
 
 
-        $etu1 = $manager->getRepository(Etudiant::class)->findOneByNomEtu("Zerguini");
-        $etu2 = $manager->getRepository(Etudiant::class)->findOneByNomEtu("Dubernet");
+        $etu1 = $manager->getRepository(User::class)->findOneByNomUser("Zerguini");
+        $etu2 = $manager->getRepository(User::class)->findOneByNomUser("Dubernet");
         if ($etu1)
             $projet->addEtudiant($etu1);
         if ($etu2)
             $projet->addEtudiant($etu2);
 
-        $pers1 = $manager->getRepository(Personnel::class)->findOneByMailPers("sebastien.limet@univ-orleans.fr");
-        $pers2 = $manager->getRepository(Personnel::class)->findOneByMailPers("toto.titi@univ-orleans.fr");
+        $pers1 = $manager->getRepository(User::class)->findOneByMailUser("sebastien.limet@univ-orleans.fr");
+        $pers2 = $manager->getRepository(User::class)->findOneByMailUser("guillaume.cleuziou@univ-orleans.fr");
 
-        $projet->addPersonnel($pers1);
-        $projet->addPersonnel($pers2);
+        $projet->addTuteur($pers1);
+        $projet->addTuteur($pers2);
 
 
         $manager->persist($projet);
@@ -55,6 +54,6 @@ class LoadProjet implements FixtureInterface, DependentFixtureInterface
      */
     function getDependencies()
     {
-        return array(LoadPersonnel::class);
+        return array(LoadUser::class);
     }
 }
