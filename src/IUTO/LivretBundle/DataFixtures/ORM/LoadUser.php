@@ -15,22 +15,13 @@ class LoadUser implements FixtureInterface, DependentFixtureInterface
     // Dans l'argument de la méthode load, l'objet $manager est l'EntityManager
     public function load(ObjectManager $manager)
     {
-        $formation = new Formation();
-        $formation->setTypeFormation("2A");
-        $formation->setSemestre(2);
-        $formation->setDepartement($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique"));
-        $dateDebut = new \DateTime();
-        $dateFin = new \DateTime();
-        $formation->setDateDebut($dateDebut);
-        $formation->setDateFin($dateFin);
-
         $user = new User();
         $user->setPrenomUser("Juliette");
         $user->setNomUser("Dubernet");
         $user->setMailUser("juliette.dubernet@etu.univ-orleans.fr");
         $user->setRole("Etudiant");
         $user->setIdUniv("o05462");
-        $user->addFormation($formation);
+        $user->addFormation($manager->getRepository(Formation::class)->findOneBy(array("departement" => ($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique")), "typeFormation" => "1A")));
 
         $manager->persist($user);
 
@@ -40,19 +31,10 @@ class LoadUser implements FixtureInterface, DependentFixtureInterface
         $user->setMailUser("quentin.zerguini@etu.univ-orleans.fr");
         $user->setRole("Etudiant");
         $user->setIdUniv("o05684");
-        $user->addFormation($formation);
+        $user->addFormation($manager->getRepository(Formation::class)->findOneBy(array("departement" => ($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique")), "typeFormation" => "2A")));
 
-        $manager->persist($formation);
         $manager->persist($user);
 
-        $formation = new Formation();
-        $formation->setTypeFormation("prof info");
-        $formation->setSemestre(1);
-        $formation->setDepartement($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique"));
-        $dateDebut = new \DateTime();
-        $dateFin = new \DateTime();
-        $formation->setDateDebut($dateDebut);
-        $formation->setDateFin($dateFin);
 
         $user = new User();
         $user->setNomUser("Cleuziou");
@@ -60,7 +42,7 @@ class LoadUser implements FixtureInterface, DependentFixtureInterface
         $user->setMailUser("guillaume.cleuziou@univ-orleans.fr");
         $user->setRole("Chef de departement");
         $user->setIdUniv("p35468");
-        $user->addFormation($formation);
+        $user->addFormation($manager->getRepository(Formation::class)->findOneBy(array("departement" => ($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique")), "typeFormation" => "prof")));
 
         $manager->persist($user);
 
@@ -70,74 +52,8 @@ class LoadUser implements FixtureInterface, DependentFixtureInterface
         $user->setMailUser("sebastien.limet@univ-orleans.fr");
         $user->setRole("Enseignant");
         $user->setIdUniv("p54681");
-        $user->addFormation($formation);
-
-        $manager->persist($formation);
+        $user->addFormation($manager->getRepository(Formation::class)->findOneBy(array("departement" => ($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique")), "typeFormation" => "prof")));
         $manager->persist($user);
-
-        $formation = new Formation();
-        $formation->setTypeFormation("1A");
-        $formation->setSemestre(1);
-        $formation->setDepartement($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique"));
-        $dateDebut = new \DateTime();
-        $dateFin = new \DateTime();
-        $formation->setDateDebut($dateDebut);
-        $formation->setDateFin($dateFin);
-
-        $manager->persist($formation);
-
-        $formation = new Formation();
-        $formation->setTypeFormation("1A");
-        $formation->setSemestre(2);
-        $formation->setDepartement($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique"));
-        $dateDebut = new \DateTime();
-        $dateFin = new \DateTime();
-        $formation->setDateDebut($dateDebut);
-        $formation->setDateFin($dateFin);
-
-        $manager->persist($formation);
-
-        $formation = new Formation();
-        $formation->setTypeFormation("2A");
-        $formation->setSemestre(1);
-        $formation->setDepartement($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique"));
-        $dateDebut = new \DateTime();
-        $dateFin = new \DateTime();
-        $formation->setDateDebut($dateDebut);
-        $formation->setDateFin($dateFin);
-
-        $manager->persist($formation);
-
-        $formation = new Formation();
-        $formation->setTypeFormation("2A");
-        $formation->setSemestre(2);
-        $formation->setDepartement($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique"));
-        $dateDebut = new \DateTime();
-        $dateFin = new \DateTime();
-        $formation->setDateDebut($dateDebut);
-        $formation->setDateFin($dateFin);
-
-        $manager->persist($formation);
-
-        $formation = new Formation();
-        $formation->setTypeFormation("1A");
-        $formation->setSemestre(1);
-        $formation->setDepartement($manager->getRepository(Departement::class)->findOneByNomDpt("GEA"));
-        $dateDebut = new \DateTime();
-        $dateFin = new \DateTime();
-        $formation->setDateDebut($dateDebut);
-        $formation->setDateFin($dateFin);
-
-        $manager->persist($formation);
-
-        $formation = new Formation();
-        $formation->setTypeFormation("1A");
-        $formation->setSemestre(2);
-        $formation->setDepartement($manager->getRepository(Departement::class)->findOneByNomDpt("GEA"));
-        $dateDebut = new \DateTime();
-        $dateFin = new \DateTime();
-        $formation->setDateDebut($dateDebut);
-        $formation->setDateFin($dateFin);
 
 
         $manager->flush();
