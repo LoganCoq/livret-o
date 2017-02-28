@@ -272,3 +272,7 @@ ul {
 .statCAS:hover {
     text-decoration: none;
 }
+
+.nav > li > a {
+    padding: 0.2em 0.7em 0 0.7em
+}
