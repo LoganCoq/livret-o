@@ -25,8 +25,8 @@ class TeacherController extends Controller
         $repository = $this
             ->getDoctrine()
             ->getManager()
-            ->getRepository('IUTOLivretBundle:Personnel');
-        $projets = $repository->findOneById($id)->getProjets();
+            ->getRepository('IUTOLivretBundle:User');
+        $projets = $repository->findOneById($id)->getProjetSuivis();
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array('id' => $id,
             'statutCAS' => 'professeur',
