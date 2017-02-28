@@ -2,7 +2,7 @@
 
 namespace IUTO\LivretBundle\Controller;
 
-use IUTO\LivretBundle\Entity\Etudiant;
+use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetCompleteType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
@@ -27,7 +27,7 @@ class StudentController extends Controller
         $projet = new Projet();
 
         $manager = $this->getDoctrine()->getManager();
-        $etudiant = $manager->getRepository(Etudiant::class)->findOneByNomEtu("Dubernet"); //TODO recuperation cas
+        $etudiant = $manager->getRepository(User::class)->findOneByNomUser("Dubernet"); //TODO recuperation cas
         $formation = $etudiant->getFormation()[0];
         $anneeDebut = $formation->getDateDebut();
         $anneeFin = $formation->getDateFin();
