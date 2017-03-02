@@ -69,6 +69,17 @@ class LoadFormation implements FixtureInterface,DependentFixtureInterface
         $formation->setDateFin($dateFin);
 
         $manager->persist($formation);
+
+        $formation = new Formation();
+        $formation->setTypeFormation("prof");
+        $formation->setSemestre(1);
+        $formation->setDepartement($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique"));
+        $dateDebut = new \DateTime();
+        $dateFin = new \DateTime();
+        $formation->setDateDebut($dateDebut);
+        $formation->setDateFin($dateFin);
+
+        $manager->persist($formation);
         $manager->flush();
     }
     function getDependencies(){

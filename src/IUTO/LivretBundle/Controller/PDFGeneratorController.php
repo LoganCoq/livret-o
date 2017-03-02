@@ -16,15 +16,15 @@ class PDFGeneratorController extends Controller
             ->getDoctrine()
             ->getManager()
             ->getRepository('IUTOLivretBundle:Projet');
-        $projet = $repository->findOneById($id);
 
+        $projet = $repository->findOneById($id);
 
         $nomP = $projet->getIntituleProjet();
         $descripP = $projet->getDescripProjet();
         $bilanP = $projet->getBilanProjet();
         $clientP = $projet->getClientProjet();
         $etudiants = $projet->getEtudiants();
-        $tuteurs = $projet->getPersonnels();
+        $tuteurs = $projet->getTuteurs();
 
 
         $template = $this->renderView('::pdf.html.twig',

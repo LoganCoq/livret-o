@@ -30,10 +30,22 @@ class ConnexionController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository("IUTOLivretBundle:User")->findByIdUniv($numPersonne);
 
-
+        $manager = $this->getDoctrine()->getManager();
         if (!$user) {
-            // TODO aller chercher les infos avec LDAP et les ajouter
-            // définir $user sur l'util créé
+            $user = new User();
+            $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
+            $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
+            $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
+            $user->setRole($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
+            $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
+            if ($user->getRole()=="student"){
+                // TODO FORMATIONS
+            }
+
+
+
+            $manager->flush();
+            $user = $userC;
         } else {
             // TODO vérifier avec LDAP si les infos sont à jours
         }
