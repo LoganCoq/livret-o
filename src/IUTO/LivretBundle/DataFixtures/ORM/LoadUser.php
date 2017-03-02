@@ -23,7 +23,6 @@ class LoadUser implements FixtureInterface, DependentFixtureInterface
         $dateFin = new \DateTime();
         $formation->setDateDebut($dateDebut);
         $formation->setDateFin($dateFin);
-
         $user = new User();
         $user->setPrenomUser("Juliette");
         $user->setNomUser("Dubernet");
