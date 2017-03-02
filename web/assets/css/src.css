@@ -63,8 +63,8 @@ h1 {
     line-height: 60px;
     font-size: 18px;
     text-align: center;
-
-    background-color: FFF;
+    margin: 0;
+    background-color: #820063;
 }
 
 .sidebar-nav>li>a:hover {
@@ -137,17 +137,17 @@ ul {
     background-color: #ffffff;
     border: 1px solid #b0b0b0;
     height: 80%;
-    right: 0px;
+    right: 0;
     width: 22%;
     font-family: 'Open Sans', sans-serif;
     float: right;
     position: fixed;
-    top: 0%;
+    top: 0;
 }
 
 .reponseCorrection {
     border: 1px solid #b0b0b0;
-    right: 0px;
+    right: 0;
     width: 22%;
     height: 12%;
     font-family: 'Open Sans', sans-serif;
@@ -164,7 +164,7 @@ ul {
     font-size: 21px;
     padding: 7px 10px;
     width: 100%;
-    font-family: Oswald;
+    font-family: Oswald, serif;
 }
 
 .bg_none i {
@@ -227,7 +227,7 @@ ul {
 .direct-chat-name-right {
     font-size: 15px;
     font-weight: 600;
-    margin: 0 29px 0 0px !important;
+    margin: 0 29px 0 0 !important;
     color: #fff;
     opacity: 0.9;
     float: right;
@@ -263,4 +263,16 @@ ul {
     padding: 5px 10px;
     position: relative;
     float: right;
+}
+
+.statCAS {
+    padding: 1.1em 1.08em 0.6em 1.08em;
+}
+
+.statCAS:hover {
+    text-decoration: none;
+}
+
+.nav > li > a {
+    padding: 0.2em 0.7em 0 0.7em
 }
