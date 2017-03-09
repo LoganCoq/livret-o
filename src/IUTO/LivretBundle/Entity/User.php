@@ -242,7 +242,7 @@ class User implements UserInterface
      */
     public function addProjetSuivis(\IUTO\LivretBundle\Entity\Projet $projet)
     {
-        $this->projetSuivis[] = $projet;
+        $this->projetSuivis[]= $projet;
 
         return $this;
     }

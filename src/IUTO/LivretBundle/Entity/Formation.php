@@ -241,13 +241,4 @@ class Formation
     {
         return $this->users;
     }
-
-
-
-
-
-
-
-
-
 }
