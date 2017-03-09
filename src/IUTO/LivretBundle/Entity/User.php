@@ -230,7 +230,7 @@ class User implements UserInterface
      */
     public function getFormation()
     {
-        return $this->formation;
+        return $this->formations;
     }
 
     /**

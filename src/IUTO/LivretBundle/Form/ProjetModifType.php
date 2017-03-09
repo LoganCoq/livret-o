@@ -32,7 +32,7 @@ class ProjetModifType extends AbstractType
         ->add('etudiants', TextType::class, array(
           'label' => 'Étudiants'
         ))
-        ->add('personnels', TextType::class, array(
+        ->add('tuteurs', TextType::class, array(
           'label' => 'Professeur(s)'
         ))        ;
     }
