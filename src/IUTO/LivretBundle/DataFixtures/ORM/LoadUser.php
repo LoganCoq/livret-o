@@ -15,13 +15,24 @@ class LoadUser implements FixtureInterface, DependentFixtureInterface
     // Dans l'argument de la méthode load, l'objet $manager est l'EntityManager
     public function load(ObjectManager $manager)
     {
+        $formation = new Formation();
+        $formation->setTypeFormation("1A");
+        $formation->setSemestre(1);
+        $formation->setDepartement($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique"));
+        $dateDebut = new \DateTime();
+        $dateFin = new \DateTime();
+        $formation->setDateDebut($dateDebut);
+        $formation->setDateFin($dateFin);
+
+        $manager->persist($formation);
         $user = new User();
         $user->setPrenomUser("Juliette");
         $user->setNomUser("Dubernet");
         $user->setMailUser("juliette.dubernet@etu.univ-orleans.fr");
         $user->setRole("Etudiant");
         $user->setIdUniv("o05462");
-        $user->addFormation($manager->getRepository(Formation::class)->findOneBy(array("departement" => ($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique")), "typeFormation" => "1A")));
+        $user->addFormation($formation);
+        $formation->addUser($user);
 
         $manager->persist($user);
 
@@ -31,7 +42,9 @@ class LoadUser implements FixtureInterface, DependentFixtureInterface
         $user->setMailUser("quentin.zerguini@etu.univ-orleans.fr");
         $user->setRole("Etudiant");
         $user->setIdUniv("o05684");
-        $user->addFormation($manager->getRepository(Formation::class)->findOneBy(array("departement" => ($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique")), "typeFormation" => "2A")));
+        $formation = $manager->getRepository(Formation::class)->findOneBy(array("departement" => ($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique")), "typeFormation" => "2A"));
+        $user->addFormation($formation);
+        $formation->addUser($user);
 
         $manager->persist($user);
 
