@@ -411,4 +411,38 @@ class Projet
     {
         return $this->tuteurs;
     }
+
+    /**
+     * Add commentaire
+     *
+     * @param \IUTO\LivretBundle\Entity\Commentaire $commentaire
+     *
+     * @return Projet
+     */
+    public function addCommentaire(\IUTO\LivretBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param \IUTO\LivretBundle\Entity\Commentaire $commentaire
+     */
+    public function removeCommentaire(\IUTO\LivretBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
+    }
 }
