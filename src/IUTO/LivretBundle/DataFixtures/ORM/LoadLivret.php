@@ -21,6 +21,7 @@ class LoadLivret implements FixtureInterface
 
         if($projet)
             $livret->addProjet($projet);
+            $projet->addLivrets($livret);
 
         $manager->persist($livret);
         $manager->flush();

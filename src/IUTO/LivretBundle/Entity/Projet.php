@@ -99,6 +99,11 @@ class Projet
      */
     private $commentaires;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Commentaire", inversedBy="projets")
+     */
+    private $livrets;
+
     public $nomDep;
 
     public $listeEtudiants;
@@ -444,5 +449,39 @@ class Projet
     public function getCommentaires()
     {
         return $this->commentaires;
+    }
+
+    /**
+     * Add livret
+     *
+     * @param \IUTO\LivretBundle\Entity\Commentaire $livret
+     *
+     * @return Projet
+     */
+    public function addLivret(\IUTO\LivretBundle\Entity\Commentaire $livret)
+    {
+        $this->livrets[] = $livret;
+
+        return $this;
+    }
+
+    /**
+     * Remove livret
+     *
+     * @param \IUTO\LivretBundle\Entity\Commentaire $livret
+     */
+    public function removeLivret(\IUTO\LivretBundle\Entity\Commentaire $livret)
+    {
+        $this->livrets->removeElement($livret);
+    }
+
+    /**
+     * Get livrets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLivrets()
+    {
+        return $this->livrets;
     }
 }

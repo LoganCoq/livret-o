@@ -51,14 +51,22 @@ class Livret
     private $editoLivret;
 
     /**
-    * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Projet", cascade={"persist"})
+    * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Projet", mappedBy="livrets")
     */
     private $projets;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -159,13 +167,6 @@ class Livret
     public function getEditoLivret()
     {
         return $this->editoLivret;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->projets = new ArrayCollection();
     }
 
     /**
