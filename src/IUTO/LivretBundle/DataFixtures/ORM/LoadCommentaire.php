@@ -19,7 +19,8 @@ class LoadCommentaire implements FixtureInterface, DependentFixtureInterface
         $commentaire = new Commentaire();
         $commentaire->setContenu("Bonjour, je ne sais pas à quoi correspond votre projet.");
         $commentaire -> setDate(new \DateTime());
-        $commentaire->setProjet($manager->getRepository(Projet::class)->findOneByClientProjet("Soukaïna El Abdellaoui"));
+        $projet = $manager->getRepository(Projet::class)->findOneByClientProjet("Soukaïna El Abdellaoui");
+        $commentaire->setProjet($projet);
         $commentaire->setUser($manager->getRepository(User::class)->findOneByMailUser("sebastien.limet@univ-orleans.fr"));
 
         $manager->persist($commentaire);

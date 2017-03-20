@@ -32,14 +32,19 @@ class LoadProjet implements FixtureInterface, DependentFixtureInterface
         $etu2 = $manager->getRepository(User::class)->findOneByNomUser("Dubernet");
         if ($etu1)
             $projet->addEtudiant($etu1);
+            $etu1->addProjetFait($projet);
         if ($etu2)
             $projet->addEtudiant($etu2);
+            $etu2->addProjetFait($projet);
 
         $pers1 = $manager->getRepository(User::class)->findOneByMailUser("sebastien.limet@univ-orleans.fr");
         $pers2 = $manager->getRepository(User::class)->findOneByMailUser("guillaume.cleuziou@univ-orleans.fr");
 
         $projet->addTuteur($pers1);
+        $pers1->addProjetSuivi($projet);
+
         $projet->addTuteur($pers2);
+        $pers2->addProjetSuivi($projet);
 
 
         $manager->persist($projet);
