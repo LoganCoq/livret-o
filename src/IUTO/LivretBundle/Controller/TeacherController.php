@@ -68,7 +68,9 @@ class TeacherController extends Controller
                 'routing_statutCAShome' => '/'.$id.'/professeur',
                 'commentaires' => $commentaires,
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
-                'routing_options' => array('#', '#')
+                'routing_options' => array('#', '#'),
+                'pagePrec' => $this->redirectToRoute('/'.$id.'/correctionProf1'),
+                'pageSuiv' => $this->redirectToRoute('/'.$id.'/correctionProf3')
             ));
     }
 
@@ -95,7 +97,9 @@ class TeacherController extends Controller
                 'routing_statutCAShome' => '/'.$id.'/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
-                'routing_options' => array('#', '#')
+                'routing_options' => array('#', '#'),
+                'pagePrec' => $this->redirectToRoute('/'.$id.'/correctionProf2'),
+                'pageSuiv' => $this->redirectToRoute('/'.$id.'/correctionProf1')
             ));
     }
 }
