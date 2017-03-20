@@ -1,15 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <div class="div_projects">
-        <h1>Projets :</h1>
-        {% if projets|length > 0 %}
-            {% for projet in projets %}
-                <h2>{{ projet.intituleProjet }}</h2>
-                <a href="/{{ id }}/{{ projet.id }}/complete" class="buttonhome">Voir correction projet</a>
+    <div class="list-group">
+        <h1 class="">Projets :</h1>
+        <h2><small>Projets en cours</small></h2>
+        {% if projetsSuivis|length > 0 %}
+            <ul class="list-group">
+            {% for projet in projetsSuivis %}
+                <li class="list-group-item">
+                    Intitulé du projet : {{ projet.intituleProjet }}
+                    <a href="/{{ id }}/{{ projet.id }}/complete" class="list-group-item">
+                        Voir les corrections du projet
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>Vous n'avez pas de projets en cours.</p>
+        {% endif %}
+        <h2><small>Projets finis</small></h2>
+        {% if projetsFinis|length > 0 %}
+            {% for projet in projetsFinis %}
+                <a href="/{{ id }}/{{ projet.id }}/complete" class="list-group-item list-group-item-success">
+                    Intitulé du projet : {{ projet.intituleProjet }}
+                </a>
             {% endfor %}
         {% else %}
-            <p>Vous n'avez pas de projets.</p>
+            <p>Vous n'avez pas de projets finis.</p>
         {% endif %}
     </div>
 {% endblock %}
