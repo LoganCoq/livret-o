@@ -28,7 +28,7 @@ class StudentController extends Controller
 
         $manager = $this->getDoctrine()->getManager();
         $etudiant = $manager->getRepository(User::class)->findOneByNomUser("Dubernet"); //TODO recuperation cas
-        $formation = $etudiant->getFormation()[0];
+        $formation = $etudiant->getFormations()[0];
         $anneeDebut = $formation->getDateDebut();
         $anneeFin = $formation->getDateFin();
         $departement = $formation->getDepartement()->getNomDpt();
