@@ -58,7 +58,7 @@ class User implements UserInterface
     private $formations;
 
     /**
-    * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Projet", inversedBy="etudiants")
+    * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Projet", inversedBy="etudiants",cascade={"persist"})
     * @ORM\JoinTable(name="user_projetfaits")
     */
     private $projetFaits;
