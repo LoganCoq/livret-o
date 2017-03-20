@@ -111,6 +111,16 @@ class Projet
     }
 
     /**
+     * Get nomDepartement
+     *
+     * @return string
+     */
+    public function getNomDpt()
+    {
+        return $this->nomDep;
+    }
+
+    /**
      * Get id
      *
      * @return int
