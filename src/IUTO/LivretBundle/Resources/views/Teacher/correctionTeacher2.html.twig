@@ -36,43 +36,51 @@
       <!-- A FAIRE : BOUCLE FOR SUR TOUS LES MESSAGES ENREGISTRES-->
 
     	<div class="popup-messages">
+      {% for com in commentaires %}
 
           <!--SI PROF FAIRE MSG À GAUCHE -->
+          {% if user.role=="Enseignant" %}
           <div class="direct-chat-messages">
               <div class="chat-box-single-line">
-    	            <abbr class="timestamp">DATE</abbr>
+    	            <abbr class="timestamp"> {{com.date}} </abbr>
     	        </div>
               <div class="direct-chat-msg-left">
                   <div class="direct-chat-info clearfix">
-                      <span class="direct-chat-name-left">Professeur</span>
+                      <span class="direct-chat-name-left"> {{user.role}} </span>
                   </div>
                   <div class="direct-chat-text-left">
-                      Commentaire professeur
+                      {{com.contenu}}
                   </div>
     	        </div>
-    	    </div>
+          </div>
+          {% endif %}
 
 
         	<!--SI ETUDIANT FAIRE MESSAGE À DROITE-->
+          {% if user.role=="Etudiant" %}
           <div class="direct-chat-messages">
               <div class="chat-box-single-line">
-            	   <abbr class="timestamp">DATE</abbr>
-            	</div>
-              <div class="direct-chat-msg-right">
-                  <div class="direct-chat-info-right clearfix">
-                      <span class="direct-chat-name-right">Etudiant</span>
+    	            <abbr class="timestamp"> {{com.date}} </abbr>
+    	        </div>
+              <div class="direct-chat-msg-left">
+                  <div class="direct-chat-info clearfix">
+                      <span class="direct-chat-name-left"> {{user.role}} </span>
                   </div>
-                  <div class="direct-chat-text-right">
-                      Réponse étudiant
+                  <div class="direct-chat-text-left">
+                      {{com.contenu}}
                   </div>
-            	</div>
-        	</div>
+    	        </div>
+          </div>
+          {% endif %}
       </div>
+
       <div class="reponseCorrection">
           <input type="text" value ="Veuillez tape une réponse suite à vos modifications"> </input>
           <button type="button" class="btn btn-envoyer-msg" href="">
               Envoyer
           </button>
+
+      {% endfor %}
       </div>
   </div>
 {% endblock %}
