@@ -98,8 +98,8 @@ class TeacherController extends Controller
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#'),
-                'pagePrec' => $this->redirectToRoute('/'.$id.'/'.$projet.'/correctionProf2'),
-                'pageSuiv' => $this->redirectToRoute('/'.$id.'/correctionProf1')
+                'pagePrec' => array('/'.$id.'/'.$projet.'/correctionProf2', '#'),
+                'pageSuiv' => array('/'.$id.'/correctionProf1', '#')
             ));
     }
 }
