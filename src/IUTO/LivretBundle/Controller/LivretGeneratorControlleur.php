@@ -5,6 +5,7 @@ namespace IUTO\LivretBundle\Controller;
 use IUTO\LivretBundle\Service\HTML2PDF;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use IUTO\LivretBundle\Entity\Livret;
 use IUTO\LivretBundle\Entity\Projet;
 
 
@@ -12,10 +13,17 @@ class LivretGeneratorController extends Controller
 {
     public function LivretGeneratorAction($departementsSelectionnes, $formationsSelectionnees, $dateDebutSelection, $dateFinSelection)
     {
-        $repository = $this
+        $manager = $this
             ->getDoctrine()
-            ->getManager()
+            ->getManager();
+        $repository = $manager
             ->getRepository('IUTOLivretBundle:Projet');
+
+        $livret = new Livret();
+        $livret->setIntituleLivret("Projet département Informatique");
+        $livret->setDateCreationLivret(new \DateTime());
+        $livret->setEditoLivret("Le département informatique ils sont au dessus.");
+        //creation d'un nouveau livret pour la bd
 
         $projets = $repository->findAll();
         //recuperation de tous les projets de la BD
@@ -44,6 +52,10 @@ class LivretGeneratorController extends Controller
                       $tuteurs = $projet->getTuteurs();
                       //recuperation des infos du projet
 
+                      $projet->addLivrets($livret);
+                      $livret->addProjet($projet);
+                      //ajout de la relation livret/projet
+
                       $template = $this->renderView('::pdf.html.twig',
                           ['nom' => $nomP,
                               'descrip' => $descripP,
@@ -62,6 +74,9 @@ class LivretGeneratorController extends Controller
             }
           }
         }
+        $manager->persist($livret);
+        $manager->flush();
+        //ajout du livret dans la BD
         return $html2pdf;
         //retourne le livret
     }
