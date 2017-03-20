@@ -95,9 +95,9 @@ class Projet
     private $tuteurs;
 
     /**
-     * @ORM\OneToMany(targetEntity="IUTO\LivretBundle\Entity\Commentaire", mappedBy="projet")
+     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Commentaire", inversedBy="projets")
      */
-    private $commentaires;
+    private $livrets;
 
     public $nomDep;
 
@@ -413,36 +413,36 @@ class Projet
     }
 
     /**
-     * Add commentaire
+     * Add livret
      *
-     * @param \IUTO\LivretBundle\Entity\Commentaire $commentaire
+     * @param \IUTO\LivretBundle\Entity\Commentaire $livret
      *
      * @return Projet
      */
-    public function addCommentaire(\IUTO\LivretBundle\Entity\Commentaire $commentaire)
+    public function addLivret(\IUTO\LivretBundle\Entity\Commentaire $livret)
     {
-        $this->commentaires[] = $commentaire;
+        $this->livrets[] = $livret;
 
         return $this;
     }
 
     /**
-     * Remove commentaire
+     * Remove livret
      *
-     * @param \IUTO\LivretBundle\Entity\Commentaire $commentaire
+     * @param \IUTO\LivretBundle\Entity\Commentaire $livret
      */
-    public function removeCommentaire(\IUTO\LivretBundle\Entity\Commentaire $commentaire)
+    public function removeLivret(\IUTO\LivretBundle\Entity\Commentaire $livret)
     {
-        $this->commentaires->removeElement($commentaire);
+        $this->livrets->removeElement($livret);
     }
 
     /**
-     * Get commentaires
+     * Get livrets
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCommentaires()
+    public function getLivrets()
     {
-        return $this->commentaires;
+        return $this->livrets;
     }
 }
