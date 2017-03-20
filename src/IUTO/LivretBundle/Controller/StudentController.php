@@ -26,6 +26,7 @@ class StudentController extends Controller
     {
         $projet = new Projet();
 
+        // Recuperation de l'étudiant connecté
         $manager = $this->getDoctrine()->getManager();
         $etudiant = $manager->getRepository(User::class)->findOneByNomUser("Dubernet"); //TODO recuperation cas
         $formation = $etudiant->getFormations()[0];
@@ -41,21 +42,24 @@ class StudentController extends Controller
         $projet->setValiderProjet(false);
 //        $listeEtudiants = $manager->getRepository(Formation::class)->findAllEtudiantByFormation($formation->getId());
 
-        $form = $this->createForm(ProjetCreateType::class, $projet);//TODO
+        $form = $this->createForm(ProjetCreateType::class, $projet, ['annee' => 2017]);//TODO changer l'année
         $form->handleRequest($request);
 
+        //verifie si le formulaire est valide ou pas
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($projet);
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('notice', 'Projet bien ajouté.');
+            $request->getSession()->getFlashBag()->add('success', 'Projet bien ajouté.');
 
             return $this->redirectToRoute('iuto_livret_studenthomepage', array(
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Correction compte rendu'),
                     'options' => array('Créer un compte rendu', ' Voir corrections compte-rendu'),
-                    'routing_statutCAShome' => '/'.$id.'/etudiant',)
+                    'routing_info' => array('/'.$id.'/etudiant', '#'),
+                    'routing_statutCAShome' => '/'.$id.'/etudiant',
+                    'id' => $id,)
             );
         }
 

@@ -242,20 +242,8 @@ class Formation
         return $this->users;
     }
 
-
-
-
-
-
-
-
-
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 }

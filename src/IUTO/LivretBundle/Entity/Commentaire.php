@@ -36,7 +36,7 @@ class Commentaire
     private $date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Projet", inversedBy="commentaires")
+     * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Projet")
      *
      * @ORM\JoinColumn(nullable=false)
      */
