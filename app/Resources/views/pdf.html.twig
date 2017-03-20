@@ -43,9 +43,11 @@
         <td class="fifty-percent" style="text-align: right; vertical-align: top;">
             {% if etudiants is not empty %}
                 <p> Étudiants </p>
+                <p>
                 {% for etudiant in etudiants %}
-                    <p> {{ etudiant }} </p>
+                    {{ etudiant.prenomUser }} {{ etudiant.nomUser }}<br/>
                 {% endfor %}
+                </p>
             {% endif %}
         </td>
     </tr>
@@ -79,9 +81,9 @@
                         {% endif %}
                         {% for tuteur in tuteurs %}
                             {% if tuteur == tuteurs|last %}
-                                {{ tuteur }}
+                                {{ tuteur.prenomUser }} {{ tuteur.nomUser }}
                             {% else %}
-                                {{ tuteur }},
+                                {{ tuteur.prenomUser }} {{ tuteur.nomUser }},
                             {% endif %}
                         {% endfor %}
                     </p>
