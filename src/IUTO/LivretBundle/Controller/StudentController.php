@@ -59,6 +59,15 @@ class StudentController extends Controller
         //verifie si le formulaire est valide ou pas
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            foreach ( $projet->getEtudiants() as $etu ){
+                $etu->addProjetFait($projet);
+                $em->persist($etu);
+            }
+            foreach ( $projet->getTuteurs() as $tut){
+                $tut->addProjetSuivi($projet);
+                $em->persist($tut);
+            }
+
             $em->persist($projet);
             $em->flush();
 
@@ -90,14 +99,29 @@ class StudentController extends Controller
     public function chooseProjectAction(Request $request, $id)
     {
         $manager = $this->getDoctrine()->getManager();
-        $projets = $manager->getRepository(User::class)->findOneById($id)->getProjetFaits();
+        $repositoryUser = $manager->getRepository(User::class);
+        $projets = $repositoryUser->findOneById($id)->getProjetFaits();
+        $projetsSuivis = array();
+        $projetsFinis = array();
+        foreach ( $projets as $proj ){
+            if ( $proj->getValiderProjet() == 1){
+                $projetsFinis[] = $proj;
+            }
+            else{
+                $projetsSuivis[] = $proj;
+            }
+        }
+
+
 
         return $this->render('IUTOLivretBundle:Student:chooseProject.html.twig',
             array('statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Correction compte rendu'),
                 'routing_info' => array('/'.$id.'/create/project', '#'),
                 'routing_statutCAShome' => '/'.$id.'/etudiant',
-                'id' => $id, 'projets' => $projets)
+                'id' => $id,
+                'projetsFinis' => $projetsFinis,
+                'projetsSuivis' => $projetsSuivis,)
         );
     }
 
