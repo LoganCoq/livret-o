@@ -42,7 +42,7 @@ class TeacherController extends Controller
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array('id' => $id,
             'statutCAS' => 'professeur',
-            'projets' => $projets,
+            'projets' => $nomProjets,
             'routing_statutCAShome' => '/'.$id.'/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'routing_info' => array('/'.$id.'/correctionProf1', '#')));
@@ -51,7 +51,7 @@ class TeacherController extends Controller
 
     public function correctionTeacher2Action($id, Projet $projet)
     {
- 
+
         $form = $this->createForm(ProjetModifType::class, $projet);
         // $form->handleRequest($request);
 
@@ -64,54 +64,17 @@ class TeacherController extends Controller
         //$intitule = $projet->getIntituleProjet();
 
         //$repository = $this
-          //  ->getDoctrine()
-           // ->getManager()
-            //->getRepository('IUTOLivretBundle:Commentaire');
+        //  ->getDoctrine()
+        // ->getManager()
+        //->getRepository('IUTOLivretBundle:Commentaire');
         //$commentaires = $repository->findOneByProjet($idProjet);
-
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('IUTOLivretBundle:Projet');
-      //  $commentaires = $repository->findOneById($id)->getCommentaires();
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_statutCAShome' => '/'.$id.'/professeur',
-          //      'commentaires' => $commentaires,
-                'routing_options' => array('#', '#'),
-                'pagePrec' => array('/'.$id.'/correctionProf1'),
-                'pageSuiv' => array('/'.$id.'/'.$idProjet.'/correctionProf3')
-            ));
-    }
-
-    public function correctionTeacher3Action($id, Projet $projet)
-    {
-        $form = $this->createForm(ProjetContenuType::class, $projet);
-
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('');
-        }
-        $idProjet = $projet->getId();
-
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('IUTOLivretBundle:Commentaire');
-        $commentaires = $repository->findOneByProjet($idProjet);
-        $idProjet = $projet->getId();
-
-        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
-            array('form' => $form->createView(),
-                'statutCAS' => 'professeur',
-                'commentaires' => $commentaires,
-                'routing_statutCAShome' => '/'.$id.'/professeur',
-                'info' => array('Demandes de correction', 'Projets validés'),
+                //      'commentaires' => $commentaires,
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#'),
                 'pagePrec' => array('/'.$id.'/correctionProf1'),
