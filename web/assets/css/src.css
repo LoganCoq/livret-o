@@ -67,7 +67,7 @@ h1 {
     background-color: #820063;
 }
 
-.sidebar-nav>li>a:hover {
+.sidebar-nav > li > a:hover {
     background-color: #252424;
     text-decoration: none;
 }
@@ -125,11 +125,11 @@ ul {
     width: 70%;
 }
 
-.btn-retour{
+.btn-retour {
     float: left;
 }
 
-.btn-suivant{
+.btn-suivant {
     float: right;
 }
 
@@ -286,4 +286,10 @@ ul {
 .annee {
     width: 12em;
     height: 3em;
+}
+
+.form-control {
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
