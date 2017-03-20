@@ -22,8 +22,8 @@ class TeacherController extends Controller
             'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
             'routing_statutCAShome' => '/'.$id.'/professeur',
             'routing_info' => array('/'.$id.'/correctionProf1', '#'),
-            'routing_options' => array('/'.$id.'/correctionProf1',
-            'names' => $names, '#')));
+            'routing_options' => array('/'.$id.'/correctionProf1'),
+            'names' => $names, '#'));
     }
 
     public function correctionTeacher1Action($id)
@@ -55,11 +55,18 @@ class TeacherController extends Controller
             return $this->redirectToRoute('');
         }
 
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('IUTOLivretBundle:Projet');
+        $commentaires = $repository->findOneById($id)->getCommentaires();
+
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_statutCAShome' => '/'.$id.'/professeur',
+                'commentaires' => $commentaires,
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#')
             ));
@@ -75,9 +82,16 @@ class TeacherController extends Controller
             return $this->redirectToRoute('');
         }
 
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('IUTOLivretBundle:Projet');
+        $commentaires = $repository->findOneById($id)->getCommentaires();
+
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'professeur',
+                'commentaires' => $commentaires,
                 'routing_statutCAShome' => '/'.$id.'/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
