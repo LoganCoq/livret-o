@@ -12,12 +12,18 @@ class TeacherController extends Controller
 {
     public function teacherhomeAction($id)
     {
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('IUTOLivretBundle:User');
+        $names = $repository->findOneById($id)->getUsername();
         return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig', array('statutCAS' => 'professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
             'routing_statutCAShome' => '/'.$id.'/professeur',
             'routing_info' => array('/'.$id.'/correctionProf1', '#'),
-            'routing_options' => array('/'.$id.'/correctionProf1', '#')));
+            'routing_options' => array('/'.$id.'/correctionProf1',
+            'names' => $names, '#')));
     }
 
     public function correctionTeacher1Action($id)

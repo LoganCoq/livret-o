@@ -69,10 +69,45 @@ class User implements UserInterface
     */
     private $projetSuivis;
 
+
+    public function getRoles()
+    {
+        return $this->role;
+    }
+
+    public function getPassword()
+    {
+        return "";
+    }
+
+    public function getSalt()
+    {
+        return "";
+    }
+
+    public function getUsername()
+    {
+        return $this->idUniv;
+    }
+
+    public function eraseCredentials()
+    {
+        return;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->formations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->projetFaits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->projetSuivis = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -224,71 +259,37 @@ class User implements UserInterface
     }
 
     /**
-     * Get formation
+     * Get formations
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getFormation()
+    public function getFormations()
     {
         return $this->formations;
     }
 
     /**
-     * Add projetSuivis
+     * Add projetFait
      *
-     * @param \IUTO\LivretBundle\Entity\Projet $projet
+     * @param \IUTO\LivretBundle\Entity\Projet $projetFait
      *
      * @return User
      */
-    public function addProjetSuivis(\IUTO\LivretBundle\Entity\Projet $projet)
+    public function addProjetFait(\IUTO\LivretBundle\Entity\Projet $projetFait)
     {
-        $this->projetSuivis[] = $projet;
+        $this->projetFaits[] = $projetFait;
 
         return $this;
     }
 
     /**
-     * Remove projetSuivis
+     * Remove projetFait
      *
-     * @param \IUTO\LivretBundle\Entity\Projet $projet
+     * @param \IUTO\LivretBundle\Entity\Projet $projetFait
      */
-    public function removeProjetSuivis(\IUTO\LivretBundle\Entity\Projet $projet)
+    public function removeProjetFait(\IUTO\LivretBundle\Entity\Projet $projetFait)
     {
-        $this->projetSuivis->removeElement($projet);
-    }
-
-    /**
-     * Get projetSuivis
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProjetSuivis()
-    {
-        return $this->projetSuivis;
-    }
-
-    /**
-     * Add projetFaits
-     *
-     * @param \IUTO\LivretBundle\Entity\Projet $projet
-     *
-     * @return User
-     */
-    public function addProjetFaits(\IUTO\LivretBundle\Entity\Projet $projet)
-    {
-        $this->projetFaits[] = $projet;
-
-        return $this;
-    }
-
-    /**
-     * Remove projetFaits
-     *
-     * @param \IUTO\LivretBundle\Entity\Projet $projet
-     */
-    public function removeProjetFaits(\IUTO\LivretBundle\Entity\Projet $projet)
-    {
-        $this->projetFaits->removeElement($projet);
+        $this->projetFaits->removeElement($projetFait);
     }
 
     /**
@@ -301,28 +302,37 @@ class User implements UserInterface
         return $this->projetFaits;
     }
 
-    public function getRoles()
+    /**
+     * Add projetSuivi
+     *
+     * @param \IUTO\LivretBundle\Entity\Projet $projetSuivi
+     *
+     * @return User
+     */
+    public function addProjetSuivi(\IUTO\LivretBundle\Entity\Projet $projetSuivi)
     {
-        return $this->role;
+        $this->projetSuivis[] = $projetSuivi;
+
+        return $this;
     }
 
-    public function getPassword()
+    /**
+     * Remove projetSuivi
+     *
+     * @param \IUTO\LivretBundle\Entity\Projet $projetSuivi
+     */
+    public function removeProjetSuivi(\IUTO\LivretBundle\Entity\Projet $projetSuivi)
     {
-        return "";
+        $this->projetSuivis->removeElement($projetSuivi);
     }
 
-    public function getSalt()
+    /**
+     * Get projetSuivis
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProjetSuivis()
     {
-        return "";
-    }
-
-    public function getUsername()
-    {
-        return $this->idUniv;
-    }
-
-    public function eraseCredentials()
-    {
-        return;
+        return $this->projetSuivis;
     }
 }
