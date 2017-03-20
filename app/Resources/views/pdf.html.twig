@@ -37,16 +37,25 @@
 <table>
     <tr>
         <td class="fifty-percent">
-            <p> Note : Penser à gérer le fait que l'image change en fonction du dpt de réalisation du projet </p>
-            <img src=".{{ asset('assets/images/Info.jpg') }}" alt="Logo IUT" style="max-height: 125px"/>
+            {% if departement == 'Informatique' %}
+                <img src=".{{ asset('assets/images/Info.jpg') }}" alt="Logo IUT" style="max-height: 125px"/>
+            {% else %}
+                <img src=".{{ asset('assets/images/' ~ departement ~ '.jpg') }}" alt="Logo IUT"
+                     style="max-height: 125px"/>
+            {% endif %}
         </td>
         <td class="fifty-percent" style="text-align: right; vertical-align: top;">
             {% if etudiants is not empty %}
-                <p> Étudiants </p>
                 <p>
-                {% for etudiant in etudiants %}
-                    {{ etudiant.prenomUser }} {{ etudiant.nomUser }}<br/>
-                {% endfor %}
+                    {% if etudiants|length > 1 %}
+                        Étudiants
+                    {% else %}
+                        Étudiant
+                    {% endif %}
+                    <br/>
+                    {% for etudiant in etudiants %}
+                        {{ etudiant.prenomUser }} {{ etudiant.nomUser }}<br/>
+                    {% endfor %}
                 </p>
             {% endif %}
         </td>
@@ -90,9 +99,23 @@
                 {% endif %}
             </td>
             <td class="fifty-percent" style="text-align: right; vertical-align: bottom;">
-                <p> Note : Penser à gérer le fait que le dpt change en fonction du dpt de réalisation du projet ainsi
-                    que la promotion </p>
-                <p> Département informatique, Deuxième année </p>
+                <p>
+                    Département
+                    {% if departement == "Informatique" or departement == "Chimie" %}
+                        {{ departement|lower }},
+                    {% else %}
+                        {{ departement }},
+                    {% endif %}
+                    {% if formation == "1A" %}
+                        Première année
+                    {% elseif formation == "2A" %}
+                        Deuxième année
+                    {% elseif formation == "LP" %}
+                        Licence professionnelle
+                    {% else %}
+                        Année spéciale
+                    {% endif %}
+                </p>
             </td>
         </tr>
     </table>

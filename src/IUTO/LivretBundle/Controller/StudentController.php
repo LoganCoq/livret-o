@@ -13,13 +13,23 @@ class StudentController extends Controller
 {
     public function studenthomeAction($id)
     {
+        $manager = $this->getDoctrine()->getManager();
+        $idP = $manager->getRepository(User::class)->findOneById($id)->getProjetFaits()[0]->getId();
+
         return $this->render('IUTOLivretBundle:Student:studenthome.html.twig', array(
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Correction compte rendu'),
-            'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'),
+            'options' => array('Créer un compte rendu',
+                'Voir corrections compte-rendu',
+                'Voir mes projets'),
             'routing_info' => array('/'.$id.'/create/project', '#'),
-            'routing_options' => array('/'.$id.'/create/project', '#'),
-            'routing_statutCAShome' => '/'.$id.'/etudiant',));
+            'routing_options' => array('/'.$id.'/create/project',
+                '/'.$id.'/'.$idP.'/complete',
+                '/'.$id.'/choose/project',
+                '#'),
+            'routing_statutCAShome' => '/'.$id.'/etudiant',
+                'id' => $id,)
+        );
     }
 
     public function createProjectAction(Request $request, $id)
@@ -28,7 +38,7 @@ class StudentController extends Controller
 
         // Recuperation de l'étudiant connecté
         $manager = $this->getDoctrine()->getManager();
-        $etudiant = $manager->getRepository(User::class)->findOneByNomUser("Dubernet"); //TODO recuperation cas
+        $etudiant = $manager->getRepository(User::class)->findOneById($id); //TODO recuperation cas
         $formation = $etudiant->getFormations()[0];
         $anneeDebut = $formation->getDateDebut();
         $anneeFin = $formation->getDateFin();
@@ -40,6 +50,7 @@ class StudentController extends Controller
         $projet->setDateDebut($anneeDebut);
         $projet->setMarquantProjet(false);
         $projet->setValiderProjet(false);
+        $projet->addEtudiant($etudiant);
 //        $listeEtudiants = $manager->getRepository(Formation::class)->findAllEtudiantByFormation($formation->getId());
 
         $form = $this->createForm(ProjetCreateType::class, $projet, ['annee' => 2017]);//TODO changer l'année
@@ -50,6 +61,8 @@ class StudentController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($projet);
             $em->flush();
+
+//            $idP = $etudiant->getProjetSuivis()[0]->getId();
 
             $request->getSession()->getFlashBag()->add('success', 'Projet bien ajouté.');
 
@@ -68,12 +81,29 @@ class StudentController extends Controller
                 'statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Correction compte rendu'),
                 'routing_info' => array('/'.$id.'/create/project', '#'),
-                'routing_statutCAShome' => '/'.$id.'/etudiant',));
+                'routing_statutCAShome' => '/'.$id.'/etudiant',
+                'id' => $id,)
+        );
 
     }
 
-    public function completeProjectAction(Request $request, Projet $projet, $id)
+    public function chooseProjectAction(Request $request, $id)
     {
+        $manager = $this->getDoctrine()->getManager();
+        $projets = $manager->getRepository(User::class)->findOneById($id)->getProjetFaits();
+
+        return $this->render('IUTOLivretBundle:Student:chooseProject.html.twig',
+            array('statutCAS' => 'étudiant',
+                'info' => array('Créer un compte rendu', 'Correction compte rendu'),
+                'routing_info' => array('/'.$id.'/create/project', '#'),
+                'routing_statutCAShome' => '/'.$id.'/etudiant',
+                'id' => $id, 'projets' => $projets)
+        );
+    }
+
+    public function completeProjectAction(Request $request, $id, Projet $projet)
+    {
+
         $form = $this->createForm(ProjetCompleteType::class, $projet);//TODO
         $form->handleRequest($request);
 
@@ -89,7 +119,7 @@ class StudentController extends Controller
                     'projet' => $projet->getId(),
                     'routing_info' => array('/'.$id.'/create/project', '#'),
                     'routing_statutCAShome' => '/'.$id.'/etudiant',
-                    'id' => $id,)
+                    'id' => $id, )
             );
         }
 
@@ -98,8 +128,8 @@ class StudentController extends Controller
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Correction compte rendu'),
             'routing_info' => array('/'.$id.'/create/project', '#'),
-            'routing_statutCAShome' => '/'.$id.'/etudiant',));
-
+            'routing_statutCAShome' => '/'.$id.'/etudiant',)
+        );
     }
 
     public function confirmCompleteProjectAction(Request $request, Projet $projet, $id)
@@ -112,6 +142,7 @@ class StudentController extends Controller
             'routing_info' => array('/'.$id.'/create/project', '#'),
             'routing_options' => array('/'.$id.'/create/project', '#'),
             'routing_statutCAShome' => '/'.$id.'/etudiant',
-            'projet' => $projet->getId()));
+            'projet' => $projet->getId())
+        );
     }
 }

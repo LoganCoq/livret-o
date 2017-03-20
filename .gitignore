@@ -22,3 +22,4 @@ var/logs/dev.log
 composer.json
 composer.lock
 /app/config/parameters.yml
+/.git/.MERGE_MSG.swp
