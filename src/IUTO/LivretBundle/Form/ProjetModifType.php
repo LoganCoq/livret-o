@@ -2,13 +2,15 @@
 
 namespace IUTO\LivretBundle\Form;
 
-use IUTO\LivretBundle\Entity\Etudiant;
-use IUTO\LivretBundle\Entity\Personnel;
+use Doctrine\Common\Collections\Collection;
+use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,12 +31,32 @@ class ProjetModifType extends AbstractType
         ->add('dateFin', DateType::class, array(
           'label' => 'Date de fin'
         ))
-        ->add('etudiants', TextType::class, array(
-          'label' => 'Étudiants'
+        ->add('etudiants', EntityType::class, array(
+            'class' => User::class,
+            'choice_label' => function (User $etudiant) {
+                return $etudiant->getNomUser() . ' ' . $etudiant->getPrenomUser();
+            },
+            'multiple' => true,
+//               'choices' => $options['listeEtudiants'], TODO
+            'query_builder' => function (UserRepository $er) use ($options) {
+                $options;
+                return $er->createQueryBuilder('u')
+                    ->select('u')
+                    ->where("u.role = 'Etudiant'");
+            }
         ))
-        ->add('tuteurs', TextType::class, array(
-          'label' => 'Professeur(s)'
-        ))        ;
+        ->add('tuteurs', EntityType::class, array(
+            'class' => User::class,
+            'choice_label' => function (User $personnel) {
+                return $personnel->getNomUser() . ' ' . $personnel->getPrenomUser();
+            },
+            'multiple' => true,
+            'query_builder' => function (UserRepository $er) {
+                return $er->createQueryBuilder('u')
+                    ->select('u')
+                    ->where("u.role <> 'Etudiant'");
+            }
+        ))       ;
     }
 
     /**
