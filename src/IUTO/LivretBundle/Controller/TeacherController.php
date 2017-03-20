@@ -97,7 +97,21 @@ class TeacherController extends Controller
 
             return $this->redirectToRoute('');
         }
+        $idProjet = $projet->getId();
 
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('IUTOLivretBundle:Commentaire');
+        $commentaires = $repository->findOneByProjet($idProjet);
+        $idProjet = $projet->getId();
+
+        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
+            array('form' => $form->createView(),
+                'statutCAS' => 'professeur',
+                'commentaires' => $commentaires,
+                'routing_statutCAShome' => '/'.$id.'/professeur',
+                'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#'),
                 'pagePrec' => array('/'.$id.'/correctionProf1'),
