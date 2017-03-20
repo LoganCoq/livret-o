@@ -15,16 +15,28 @@ class LoadUser implements FixtureInterface, DependentFixtureInterface
     // Dans l'argument de la méthode load, l'objet $manager est l'EntityManager
     public function load(ObjectManager $manager)
     {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        $formation = new Formation();
+        $formation->setTypeFormation("2A");
+        $formation->setSemestre(2);
+=======
         $formation = new Formation();
         $formation->setTypeFormation("1A");
         $formation->setSemestre(1);
+>>>>>>> dbce54f47620b80254f0b0713bfb0c9a86805dd1
         $formation->setDepartement($manager->getRepository(Departement::class)->findOneByNomDpt("Informatique"));
         $dateDebut = new \DateTime();
         $dateFin = new \DateTime();
         $formation->setDateDebut($dateDebut);
         $formation->setDateFin($dateFin);
+<<<<<<< HEAD
+=======
+>>>>>>> 8c629a733c3b2aef977553a2e4d3f6382fa9ae31
+=======
 
         $manager->persist($formation);
+>>>>>>> dbce54f47620b80254f0b0713bfb0c9a86805dd1
         $user = new User();
         $user->setPrenomUser("Juliette");
         $user->setNomUser("Dubernet");
