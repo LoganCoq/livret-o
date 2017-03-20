@@ -54,6 +54,7 @@ class TeacherController extends Controller
 
             return $this->redirectToRoute('');
         }
+        $idProjet = $projet->getId();
 
         $repository = $this
             ->getDoctrine()
@@ -69,8 +70,8 @@ class TeacherController extends Controller
                 'commentaires' => $commentaires,
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#'),
-                'pagePrec' => $this->redirectToRoute('/'.$id.'/correctionProf1'),
-                'pageSuiv' => $this->redirectToRoute('/'.$id.'/correctionProf3')
+                'pagePrec' => array('/'.$id.'/correctionProf1'),
+                'pageSuiv' => array('/'.$id.'/'.$idProjet.'/correctionProf3')
             ));
     }
 
@@ -78,17 +79,18 @@ class TeacherController extends Controller
     {
         $form = $this->createForm(ProjetContenuType::class, $projet);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('');
         }
 
-        //$repository = $this
-          //  ->getDoctrine()
-            //->getManager()
-            //->getRepository('IUTOLivretBundle:Projet');
-        //$commentaires = $repository->findOneById($id)->getCommentaires();
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('IUTOLivretBundle:Projet');
+        $idProjet = $projet->getId();
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
             array('form' => $form->createView(),
@@ -98,7 +100,7 @@ class TeacherController extends Controller
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#'),
-                'pagePrec' => array('/'.$id.'/'.$projet.'/correctionProf2', '#'),
+                'pagePrec' => array('/'.$id.'/'.$idProjet.'/correctionProf2', '#'),
                 'pageSuiv' => array('/'.$id.'/correctionProf1', '#')
             ));
     }
