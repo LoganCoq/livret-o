@@ -38,15 +38,21 @@
     <tr>
         <td class="fifty-percent">
             <p> Note : Penser à gérer le fait que l'image change en fonction du dpt de réalisation du projet </p>
+            <p> {{ departement }} </p>
             <img src=".{{ asset('assets/images/Info.jpg') }}" alt="Logo IUT" style="max-height: 125px"/>
         </td>
         <td class="fifty-percent" style="text-align: right; vertical-align: top;">
             {% if etudiants is not empty %}
-                <p> Étudiants </p>
                 <p>
-                {% for etudiant in etudiants %}
-                    {{ etudiant.prenomUser }} {{ etudiant.nomUser }}<br/>
-                {% endfor %}
+                    {% if etudiants|length > 1 %}
+                        Étudiants
+                    {% else %}
+                        Étudiant
+                    {% endif %}
+                    <br/>
+                    {% for etudiant in etudiants %}
+                        {{ etudiant.prenomUser }} {{ etudiant.nomUser }}<br/>
+                    {% endfor %}
                 </p>
             {% endif %}
         </td>
