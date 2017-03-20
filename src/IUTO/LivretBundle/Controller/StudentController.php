@@ -14,21 +14,22 @@ class StudentController extends Controller
     public function studenthomeAction($id)
     {
         $manager = $this->getDoctrine()->getManager();
-        $idP = $manager->getRepository(User::class)->findOneById($id)->getProjetFaits()[0]->getId();
+        $user = $manager->getRepository(User::class)->findOneById($id);
 
         return $this->render('IUTOLivretBundle:Student:studenthome.html.twig', array(
             'statutCAS' => 'étudiant',
-            'info' => array('Créer un compte rendu', 'Correction compte rendu'),
+            'info' => array('Créer un compte rendu', 'Voir mes projets'),
             'options' => array('Créer un compte rendu',
-                'Voir corrections compte-rendu',
                 'Voir mes projets'),
-            'routing_info' => array('/'.$id.'/create/project', '#'),
+            'routing_info' => array('/'.$id.'/create/project',
+                '/'.$id.'/choose/project',
+                '#'),
             'routing_options' => array('/'.$id.'/create/project',
-                '/'.$id.'/'.$idP.'/complete',
                 '/'.$id.'/choose/project',
                 '#'),
             'routing_statutCAShome' => '/'.$id.'/etudiant',
-                'id' => $id,)
+                'id' => $id,
+                'user' => $user,)
         );
     }
 
@@ -77,9 +78,11 @@ class StudentController extends Controller
 
             return $this->redirectToRoute('iuto_livret_studenthomepage', array(
                     'statutCAS' => 'étudiant',
-                    'info' => array('Créer un compte rendu', 'Correction compte rendu'),
-                    'options' => array('Créer un compte rendu', ' Voir corrections compte-rendu'),
-                    'routing_info' => array('/'.$id.'/etudiant', '#'),
+                    'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                    'options' => array('Créer un compte rendu', ' Voir mes projets'),
+                    'routing_info' => array('/'.$id.'/etudiant',
+                        '/'.$id.'/choose/project',
+                        '#',),
                     'routing_statutCAShome' => '/'.$id.'/etudiant',
                     'id' => $id,)
             );
@@ -88,8 +91,10 @@ class StudentController extends Controller
         return $this->render('IUTOLivretBundle:Student:createProject.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'étudiant',
-                'info' => array('Créer un compte rendu', 'Correction compte rendu'),
-                'routing_info' => array('/'.$id.'/create/project', '#'),
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_info' => array('/'.$id.'/create/project',
+                    '/'.$id.'/choose/project',
+                    '#',),
                 'routing_statutCAShome' => '/'.$id.'/etudiant',
                 'id' => $id,)
         );
@@ -116,8 +121,10 @@ class StudentController extends Controller
 
         return $this->render('IUTOLivretBundle:Student:chooseProject.html.twig',
             array('statutCAS' => 'étudiant',
-                'info' => array('Créer un compte rendu', 'Correction compte rendu'),
-                'routing_info' => array('/'.$id.'/create/project', '#'),
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_info' => array('/'.$id.'/create/project',
+                    '/'.$id.'/choose/project',
+                    '#',),
                 'routing_statutCAShome' => '/'.$id.'/etudiant',
                 'id' => $id,
                 'projetsFinis' => $projetsFinis,
@@ -138,10 +145,12 @@ class StudentController extends Controller
 
             return $this->redirectToRoute('iuto_livret_confirmCompleteProject', array(
                     'statutCAS' => 'étudiant',
-                    'info' => array('Créer un compte rendu', 'Correction compte rendu'),
-                    'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'),
+                    'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                    'options' => array('Créer un compte rendu', 'Voir mes projets'),
                     'projet' => $projet->getId(),
-                    'routing_info' => array('/'.$id.'/create/project', '#'),
+                    'routing_info' => array('/'.$id.'/create/project',
+                        '/'.$id.'/choose/project',
+                        '#',),
                     'routing_statutCAShome' => '/'.$id.'/etudiant',
                     'id' => $id, )
             );
@@ -150,8 +159,10 @@ class StudentController extends Controller
         return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
             'form' => $form->createView(),
             'statutCAS' => 'étudiant',
-            'info' => array('Créer un compte rendu', 'Correction compte rendu'),
-            'routing_info' => array('/'.$id.'/create/project', '#'),
+            'info' => array('Créer un compte rendu', 'Voir mes projets'),
+            'routing_info' => array('/'.$id.'/create/project',
+                '/'.$id.'/choose/project',
+                '#',),
             'routing_statutCAShome' => '/'.$id.'/etudiant',)
         );
     }
@@ -161,10 +172,14 @@ class StudentController extends Controller
 
         return $this->render('IUTOLivretBundle:Student:confirmCompleteProject.html.twig', array(
             'statutCAS' => 'étudiant',
-            'info' => array('Créer un compte rendu', 'Correction compte rendu'),
-            'options' => array('Créer un compte rendu', 'Voir corrections compte-rendu'),
-            'routing_info' => array('/'.$id.'/create/project', '#'),
-            'routing_options' => array('/'.$id.'/create/project', '#'),
+            'info' => array('Créer un compte rendu', 'Voir mes projets'),
+            'options' => array('Créer un compte rendu', 'Voir mes projets'),
+            'routing_info' => array('/'.$id.'/create/project',
+                '/'.$id.'/choose/project',
+                '#',),
+            'routing_options' => array('/'.$id.'/create/project',
+                '/'.$id.'/choose/project',
+                '#',),
             'routing_statutCAShome' => '/'.$id.'/etudiant',
             'projet' => $projet->getId())
         );
