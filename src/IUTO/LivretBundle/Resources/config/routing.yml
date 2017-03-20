@@ -80,7 +80,7 @@ iuto_livret_communicationEdito:
     defaults: { _controller: IUTOLivretBundle:Communication:communicationedito }
 
 #==========EDITOPDF===========#
-iuto_livret_communicationEdito:
+iuto_livret_communicationEditoPrevisualiser:
     path: /communication/editoprevisualiser
     defaults: { _controller: IUTOLivretBundle:EditoGenerator:generator }
 
