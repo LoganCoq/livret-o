@@ -19,9 +19,10 @@ class LoadLivret implements FixtureInterface
 
         $projet = $manager->getRepository(Projet::class)->findOneByIntituleProjet("Faire la vaisselle");
 
-        if($projet)
+        if($projet){
             $livret->addProjet($projet);
             $projet->addLivrets($livret);
+          }
 
         $manager->persist($livret);
         $manager->flush();

@@ -95,11 +95,6 @@ class Projet
     private $tuteurs;
 
     /**
-     * @ORM\OneToMany(targetEntity="IUTO\LivretBundle\Entity\Commentaire", mappedBy="projet")
-     */
-    private $commentaires;
-
-    /**
      * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Commentaire", inversedBy="projets")
      */
     private $livrets;
@@ -415,40 +410,6 @@ class Projet
     public function getTuteurs()
     {
         return $this->tuteurs;
-    }
-
-    /**
-     * Add commentaire
-     *
-     * @param \IUTO\LivretBundle\Entity\Commentaire $commentaire
-     *
-     * @return Projet
-     */
-    public function addCommentaire(\IUTO\LivretBundle\Entity\Commentaire $commentaire)
-    {
-        $this->commentaires[] = $commentaire;
-
-        return $this;
-    }
-
-    /**
-     * Remove commentaire
-     *
-     * @param \IUTO\LivretBundle\Entity\Commentaire $commentaire
-     */
-    public function removeCommentaire(\IUTO\LivretBundle\Entity\Commentaire $commentaire)
-    {
-        $this->commentaires->removeElement($commentaire);
-    }
-
-    /**
-     * Get commentaires
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCommentaires()
-    {
-        return $this->commentaires;
     }
 
     /**
