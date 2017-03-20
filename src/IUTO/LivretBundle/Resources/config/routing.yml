@@ -95,7 +95,7 @@ iuto_livret_communicationgenerationlivret:
     defaults: { _controller: IUTOLivretBundle:Communication:communicationgenerationlivret }
 
 #=====GENERER LIVRET====#
-iuto_livret_communicationgenerationlivret:
+iuto_livret_communicationLivretGenerator:
     path: /communication/generation/livretGenere
     defaults: { _controller: IUTOLivretBundle:Communication:LivretGeneratorController }
 
