@@ -19,6 +19,11 @@ iuto_livret_createProject:
     path: /{id}/create/project
     defaults: { _controller: IUTOLivretBundle:Student:createProject }
 
+#==========CREER PROJET====#
+iuto_livret_chooseProject:
+    path: /{id}/choose/project
+    defaults: { _controller: IUTOLivretBundle:Student:chooseProject }
+
 #======COMPLETER PROJET====#
 iuto_livret_completeProject:
     path: /{id}/{projet}/complete
@@ -78,6 +83,11 @@ iuto_livret_communicationhomepage:
 iuto_livret_communicationEdito:
     path: /communication/edito
     defaults: { _controller: IUTOLivretBundle:Communication:communicationedito }
+
+#==========EDITOPDF===========#
+iuto_livret_communicationEdito:
+    path: /communication/editoprevisualiser
+    defaults: { _controller: IUTOLivretBundle:EditoGenerator:generator }
 
 #=====GENERATION LIVRET====#
 iuto_livret_communicationgenerationlivret:

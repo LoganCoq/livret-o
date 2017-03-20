@@ -25,7 +25,8 @@ class PDFGeneratorController extends Controller
         $clientP = $projet->getClientProjet();
         $etudiants = $projet->getEtudiants();
         $tuteurs = $projet->getTuteurs();
-
+        $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
+        $departement = $etudiants{0}->getFormations(){0}->getDepartement()->getNomDpt();
 
         $template = $this->renderView('::pdf.html.twig',
             ['nom' => $nomP,
@@ -33,7 +34,9 @@ class PDFGeneratorController extends Controller
                 'bilan' => $bilanP,
                 'client' => $clientP,
                 'etudiants' => $etudiants,
-                'tuteurs' => $tuteurs
+                'tuteurs' => $tuteurs,
+                'formation' => $formation,
+                'departement' => $departement,
             ]);
 
         $html2pdf = $this->get('app.html2pdf');
