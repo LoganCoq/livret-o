@@ -37,17 +37,17 @@ class CommunicationController extends Controller
     {
         return $this->render('IUTOLivretBundle:Communication:communicationvalidationCR.html.twig', array('statutCAS' => 'service de communication',
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
-            'options' => array('Apercu du compte rendu', 'Renvoyer la correction aux élèves', 'Valider','Retour'),
+            'options' => array('Apercu du compte rendu', 'Renvoyer la correction aux élèves', 'Valider', 'Retour'),
             'routing_info' => array('#', '/communication/validation', '#'),
             'routing_statutCAShome' => '/communication',
-            'routing_options' => array('/generate/1', '#', '/communication/validation','communication/selection'))); //"generate/1" a changer en id
+            'routing_options' => array('/generate/1', '#', '/communication/validation', 'communication/selection'))); //"generate/1" a changer en id
     }
 
     public function communicationChoixAction()
     {
         return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array('statutCAS' => 'service de communication',
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
-            'options' => array('Valider','Retour'),
+            'options' => array('Valider', 'Retour'),
             'routing_info' => array('/communication/validation', '/communication', '#'),
             'routing_statutCAShome' => '/communication',
             'routing_options' => array('/communication/validation', '/communication')));
@@ -58,7 +58,7 @@ class CommunicationController extends Controller
     {
         return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array('statutCAS' => 'service de communication',
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
-            'options' => array('Valider','Retour'),
+            'options' => array('Valider', 'Retour'),
             'routing_info' => array('/generate/1', '/communication', '#'),
             'routing_statutCAShome' => '/communication',
             'routing_options' => array('/generate/1', '/communication')));

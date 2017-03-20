@@ -1,5 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Oswald:400,300);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url('https://fonts.googleapis.com/css?family=Oswald:400,300');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 .title_accueil {
     text-align: center;
@@ -274,5 +274,16 @@ ul {
 }
 
 .nav > li > a {
-    padding: 0.2em 0.7em 0 0.7em
+    padding: 0.2em 0.7em 0 0.7em;
+}
+
+.nav > li > a:focus {
+    padding: 0.2em 0.7em 0 0.7em;
+    background-color: #000;
+}
+
+.departement,
+.annee {
+    width: 12em;
+    height: 3em;
 }
