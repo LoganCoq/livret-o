@@ -1,0 +1,59 @@
+<head>
+    <meta charset="utf-8">
+    <style>
+        .entete_projet {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .titre {
+            font-size: 45px;
+            white-space: nowrap;
+            margin-bottom: 0;
+        }
+
+        .client {
+            margin-top: 0;
+        }
+
+        .titre_info {
+            margin-bottom: 0;
+        }
+
+        .presentation_projet {
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        .fifty-percent {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <td class="fifty-percent">
+            
+            <img src=".{{ asset('assets/images/Info.jpg') }}" alt="Logo IUT" style="max-height: 125px"/>
+        </td>
+
+    </tr>
+</table>
+
+<div class="entete_projet">
+    <h1 class="titre"> Mot du directeur </h1>
+
+</div>
+
+<div class="presentation_projet">
+
+    <p> {{ texte }} </p>
+</div>
+
+
+
+</body>
