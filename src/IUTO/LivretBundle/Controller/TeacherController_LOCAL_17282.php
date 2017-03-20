@@ -33,16 +33,10 @@ class TeacherController extends Controller
             ->getManager()
             ->getRepository('IUTOLivretBundle:User');
         $projets = $repository->findOneById($id)->getProjetSuivis();
-        $nomProjets = array();
-        foreach($projets as $elem){
-            array_push($nomProjets, $elem->getIntituleProjet());
-        };
-
-
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array('id' => $id,
             'statutCAS' => 'professeur',
-            'projets' => $nomProjets,
+            'projets' => $projets,
             'routing_statutCAShome' => '/'.$id.'/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'routing_info' => array('/'.$id.'/correctionProf1', '#')));
@@ -53,32 +47,27 @@ class TeacherController extends Controller
     {
 
         $form = $this->createForm(ProjetModifType::class, $projet);
+        // $form->handleRequest($request);
 
-        //if ($form->isSubmitted() && $form->isValid()) {
-          //  $this->getDoctrine()->getManager()->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
 
-           // return $this->redirectToRoute('');
-        //}
+            return $this->redirectToRoute('');
+        }
         $idProjet = $projet->getId();
 
-<<<<<<< HEAD
         $repository = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('IUTOLivretBundle:Projet');
       //  $commentaires = $repository->findOneById($id)->getCommentaires();
 
-=======
->>>>>>> grey/master
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_statutCAShome' => '/'.$id.'/professeur',
-<<<<<<< HEAD
               //  'commentaires' => $commentaires,
-=======
->>>>>>> grey/master
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#'),
                 'pagePrec' => array('/'.$id.'/correctionProf1'),
