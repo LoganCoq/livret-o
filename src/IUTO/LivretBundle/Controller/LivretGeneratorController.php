@@ -11,8 +11,10 @@ use IUTO\LivretBundle\Entity\Projet;
 
 class LivretGeneratorController extends Controller
 {
-    public function LivretGeneratorAction($departementsSelectionnes, $formationsSelectionnees, $dateDebutSelection, $dateFinSelection)
+    public function communicationgenerationlivretAction()
     {
+        //$infos = $this>get('request');
+
         $manager = $this
             ->getDoctrine()
             ->getManager();
@@ -68,7 +70,7 @@ class LivretGeneratorController extends Controller
                               'tuteurs' => $tuteurs
                           ]);
                           //creation du template
-                          
+
                       $html2pdf->writeHTML($template);
                       //ajout de la page au livret
                     }

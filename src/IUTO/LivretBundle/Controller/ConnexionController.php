@@ -22,7 +22,8 @@ class ConnexionController extends Controller
     public function connexionAction()
     {
 
-        $numPersonne = "p7184";
+
+        $numPersonne = "p51955";
 
         $config = array(
             'host' => 'ldap-univ.iut45.univ-orleans.fr',
