@@ -31,8 +31,13 @@ iuto_livret_completeProject:
 
 #====VALIDER MODIFICATION===#
 iuto_livret_confirmCompleteProject:
-    path:  /{id}/{projet}/complete/confirm
+    path:  /{id}/{projet}/validate
     defaults: { _controller: IUTOLivretBundle:Student:confirmCompleteProject }
+
+#====VOIR PROJET FINI=======#
+iuto_livret_finishedProject:
+    path: /{id}/{projet}/finishedProject
+    defaults: { _controller: IUTOLivretBundle:Student:viewFinishedProject }
 
 #==================ROUTES MODULE PROFESSEUR================#
 #==========HOME============#
@@ -94,17 +99,23 @@ iuto_livret_communicationgenerationlivret:
     path: /communication/generation
     defaults: { _controller: IUTOLivretBundle:Communication:communicationgenerationlivret }
 
+#=====GENERER LIVRET====#
+iuto_livret_communicationLivretGenerator:
+    path: /communication/generation/livretGenere
+    defaults: { _controller: IUTOLivretBundle:Communication:LivretGeneratorController }
+
 #=====GENERATION VALIDATION CR=====#
 iuto_livret_communicationvalidationCR:
     path: /communication/validation
     defaults: { _controller: IUTOLivretBundle:Communication:communicationvalidationCR }
+    
 #=====SELECTION PROJET A CORRIGER=====#
-iuto_livret_choixProjet:
+iuto_livret_communicationChoixProjet:
     path: /communication/selection
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChoix}
 
 #=====SELECTION PROJET VALIDE=====#
-iuto_livret_choixProjet:
+iuto_livret_communicationValidationChoix:
     path: /communication/selectionvalide
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChoixValide}
 
