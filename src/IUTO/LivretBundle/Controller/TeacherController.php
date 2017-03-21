@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetModifType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class TeacherController extends Controller
@@ -33,21 +34,27 @@ class TeacherController extends Controller
             ->getManager()
             ->getRepository('IUTOLivretBundle:User');
         $projets = $repository->findOneById($id)->getProjetSuivis();
+        $nomProjets = array();
+        foreach($projets as $elem){
+            array_push($nomProjets, $elem->getIntituleProjet());
+        };
+
+
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array('id' => $id,
             'statutCAS' => 'professeur',
-            'projets' => $projets,
+            'projets' => $nomProjets,
             'routing_statutCAShome' => '/'.$id.'/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'routing_info' => array('/'.$id.'/correctionProf1', '#')));
 
     }
 
-    public function correctionTeacher2Action($id, Projet $projet)
+    public function correctionTeacher2Action(Request $request, $id, Projet $projet)
     {
 
         $form = $this->createForm(ProjetModifType::class, $projet);
-        // $form->handleRequest($request);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
@@ -59,8 +66,8 @@ class TeacherController extends Controller
         $repository = $this
             ->getDoctrine()
             ->getManager()
-            ->getRepository('IUTOLivretBundle:Projet');
-        $commentaires = $repository->findOneById($id)->getCommentaires();
+            ->getRepository('IUTOLivretBundle:Commentaire');
+        $commentaires = $repository->findOneByProjet($idProjet);
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
             array('form' => $form->createView(),
@@ -75,9 +82,10 @@ class TeacherController extends Controller
             ));
     }
 
-    public function correctionTeacher3Action($id, Projet $projet)
+    public function correctionTeacher3Action(Request $request, $id, Projet $projet)
     {
         $form = $this->createForm(ProjetContenuType::class, $projet);
+        $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -86,22 +94,25 @@ class TeacherController extends Controller
             return $this->redirectToRoute('');
         }
 
+        $idProjet = $projet->getId();
+
         $repository = $this
             ->getDoctrine()
             ->getManager()
-            ->getRepository('IUTOLivretBundle:Projet');
+            ->getRepository('IUTOLivretBundle:Commentaire');
+        $commentaires = $repository->findOneByProjet($idProjet);
         $idProjet = $projet->getId();
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'professeur',
-                //'commentaires' => $commentaires,
+                'commentaires' => $commentaires,
                 'routing_statutCAShome' => '/'.$id.'/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#'),
-                'pagePrec' => array('/'.$id.'/'.$idProjet.'/correctionProf2', '#'),
-                'pageSuiv' => array('/'.$id.'/correctionProf1', '#')
+                'pagePrec' => array('/'.$id.'/'.$idProjet.'/correctionProf2'),
+                'pageSuiv' => array('/'.$id.'/correctionProf1')
             ));
     }
 }

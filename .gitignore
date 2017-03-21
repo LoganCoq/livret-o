@@ -23,3 +23,8 @@ composer.json
 composer.lock
 /app/config/parameters.yml
 /.git/.MERGE_MSG.swp
+.DS_Store
+src/.DS_Store
+src/IUTO/.DS_Store
+src/IUTO/LivretBundle/.DS_Store
+src/IUTO/LivretBundle/Controller/.DS_Store
