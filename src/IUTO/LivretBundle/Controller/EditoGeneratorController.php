@@ -6,7 +6,6 @@ use IUTO\LivretBundle\Entity\Livret;
 use IUTO\LivretBundle\Service\HTML2PDF;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use IUTO\LivretBundle\Entity\Projet;
 
 
 class EditoGeneratorController extends Controller
@@ -15,13 +14,14 @@ class EditoGeneratorController extends Controller
     public function EditoFormAction(Form $form)
     {
         // On crée un objet Advert
-        $edito = new EditoGenerator();
+        $edito = new Advert();
 
         // On crée le FormBuilder grâce au service form factory
         $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $edito);
 
         // On ajoute les champs de l'entité que l'on veut à notre formulaire
-        $formBuilder->add('texte',   TextareaType::class);
+        $formBuilder->add('texte',   TextareaType::class)
+            ->add('Visualiser',      SubmitType::class);
 
         // À partir du formBuilder, on génère le formulaire
         $form = $formBuilder->getForm();
@@ -52,6 +52,8 @@ Curabitur quis vestibulum augue, bibendum rhoncus metus. Vestibulum quis velit n
 Curabitur eu lectus at dui porta sodales. Aliquam porttitor, velit ac ullamcorper suscipit, ligula massa sodales ipsum, vel mollis purus purus id erat. Nullam vitae ultricies metus. Phasellus quam massa, rutrum et fringilla et, consequat id quam. Morbi non ante ut ante dapibus euismod. Quisque enim dolor, iaculis in lobortis vitae, dictum non nibh. Fusce vel turpis laoreet, placerat turpis et, accumsan leo. Morbi faucibus augue egestas, finibus mi mattis, pellentesque elit. Quisque ex augue, laoreet non tortor ut, maximus cursus ex. Pellentesque pellentesque lobortis neque ut volutpat. Etiam ac tellus congue, fringilla velit et, rutrum elit. Nulla justo quam, consectetur et erat et, gravida venenatis justo. Nam auctor erat vel ex varius, id vulputate nulla congue.
 
 Nullam sed elementum leo. Sed faucibus magna felis, eu suscipit augue lacinia id. Nullam pulvinar fringilla tellus, nec convallis magna ultricies ultrices. Nunc non tristique tellus. Vestibulum dignissim hendrerit consequat. Cras malesuada pellentesque lectus sit amet tincidunt. Sed nec ex id turpis congue gravida eget vitae tellus. Etiam ex diam, efficitur a placerat in, tempus ut eros. ";
+
+
         $template = $this->renderView('::edito.html.twig',
             [
                 'texte' => $texte,

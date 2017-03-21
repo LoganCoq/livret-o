@@ -2,6 +2,7 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use IUTO\LivretBundle\Entity\Livret;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -69,5 +70,15 @@ class CommunicationController extends Controller
             'routing_statutCAShome' => '/communication',
             'routing_options' => array('/generate/1', '/communication')));
 
+    }
+
+    public function communicationSelectionlivretAction($id)
+    {
+        $livrects = $this->getDoctrine()->getRepository('IUTOLivretBundle:Livret')->findBy(['id' => $id]);
+        return $this->render('IUTOLivretBundle:Communication:communicationSelectionLivret.html.twig', array('statutCAS' => 'service de communication',
+            'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+            'routing_info' => array('#', '#', '#', '#', '#'),
+            'routing_statutCAShome' => '/communication',
+            'livrets' => $livrects));
     }
 }
