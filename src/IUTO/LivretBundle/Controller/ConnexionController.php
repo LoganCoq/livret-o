@@ -22,7 +22,7 @@ class ConnexionController extends Controller
     public function connexionAction()
     {
 
-        $numPersonne = "o2151178";
+        $numPersonne = "p7184";
 
         $config = array(
             'host' => 'ldap-univ.iut45.univ-orleans.fr',
@@ -74,7 +74,7 @@ class ConnexionController extends Controller
             $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
             $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
             $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
-            $user->setRole($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
+            $user->setRole("ROLE_".$infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
             $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
             if ($user->getRole()=="student"){
                 $codeFormation = $infosPersonne->getAttribute("unrcEtape")[0];
