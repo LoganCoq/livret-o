@@ -11,8 +11,10 @@ use IUTO\LivretBundle\Entity\Projet;
 
 class LivretGeneratorController extends Controller
 {
-    public function LivretGeneratorAction($departementsSelectionnes, $formationsSelectionnees, $dateDebutSelection, $dateFinSelection)
+    public function communicationgenerationlivretAction()
     {
+        //$infos = $this>get('request');
+
         $manager = $this
             ->getDoctrine()
             ->getManager();

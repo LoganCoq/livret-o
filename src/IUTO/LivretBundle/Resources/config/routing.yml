@@ -107,13 +107,13 @@ iuto_livret_communicationgenerationlivret:
 #=====GENERER LIVRET====#
 iuto_livret_communicationLivretGenerator:
     path: /communication/generation/livretGenere
-    defaults: { _controller: IUTOLivretBundle:Communication:LivretGeneratorController }
+    defaults: { _controller: IUTOLivretBundle:LivretGenerator:communicationgenerationlivret }
 
 #=====GENERATION VALIDATION CR=====#
 iuto_livret_communicationvalidationCR:
     path: /communication/validation
     defaults: { _controller: IUTOLivretBundle:Communication:communicationvalidationCR }
-    
+
 #=====SELECTION PROJET A CORRIGER=====#
 iuto_livret_communicationChoixProjet:
     path: /communication/selection
