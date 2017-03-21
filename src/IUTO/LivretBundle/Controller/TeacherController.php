@@ -115,4 +115,16 @@ class TeacherController extends Controller
                 'pageSuiv' => array('/'.$id.'/correctionProf1')
             ));
     }
+
+    public function correctionTeacher4Action(Request $request, $id, Projet $projet)
+    {
+
+        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
+            array('id' => $id,
+                'statutCAS' => 'professeur',
+                'routing_statutCAShome' => '/'.$id.'/professeur',
+                'info' => array('Demandes de correction', 'Projets validés'),
+                'routing_info' => array('/'.$id.'/correctionProf1', '#')));
+    }
+
 }
