@@ -184,4 +184,21 @@ class StudentController extends Controller
             'projet' => $projet->getId())
         );
     }
+
+    public function viewFinishedProjectAction(Request $request, Projet $projet, $id){
+
+        return $this->render('IUTOLivretBundle:Student:finishedProject.html.twig', array(
+                'statutCAS' => 'étudiant',
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'options' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_info' => array('/'.$id.'/create/project',
+                    '/'.$id.'/choose/project',
+                    '#',),
+                'routing_options' => array('/'.$id.'/create/project',
+                    '/'.$id.'/choose/project',
+                    '#',),
+                'routing_statutCAShome' => '/'.$id.'/etudiant',
+                'projet' => $projet
+        ));
+    }
 }
