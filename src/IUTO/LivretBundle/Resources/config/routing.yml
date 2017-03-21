@@ -31,8 +31,13 @@ iuto_livret_completeProject:
 
 #====VALIDER MODIFICATION===#
 iuto_livret_confirmCompleteProject:
-    path:  /{id}/{projet}/complete/confirm
+    path:  /{id}/{projet}/validate
     defaults: { _controller: IUTOLivretBundle:Student:confirmCompleteProject }
+
+#====VOIR PROJET FINI=======#
+iuto_livret_finishedProject:
+    path: /{id}/{projet}/finishedProject
+    defaults: { _controller: IUTOLivretBundle:Student:viewFinishedProject }
 
 #==================ROUTES MODULE PROFESSEUR================#
 #==========HOME============#
