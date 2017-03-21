@@ -54,9 +54,9 @@ class ChiefController extends Controller
         return $this->render('IUTOLivretBundle:Teacher:correctionChief1.html.twig', array('id' => $id,
             'statutCAS' => 'Chef de département',
             'projets' => $nomProjets,
-            'routing_statutCAShome' => '/'.$id.'/professeur',
+            'routing_statutCAShome' => '/'.$id.'/chef',
             'info' => array('Demandes de correction', 'Projets validés'),
-            'routing_info' => array('/'.$id.'/correctionProf1', '#')));
+            'routing_info' => array('/'.$id.'/correctionChief1', '#')));
 
     }
 
@@ -83,7 +83,7 @@ class ChiefController extends Controller
             array('form' => $form->createView(),
                 'statutCAS' => 'Chef de département',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_statutCAShome' => '/'.$id.'/professeur',
+                'routing_statutCAShome' => '/'.$id.'/chef',
                 'commentaires' => $commentaires,
                 'routing_info' => array('/'.$id.'/correctionChief1', '#'),
                 'routing_options' => array('#', '#'),
@@ -117,12 +117,12 @@ class ChiefController extends Controller
             array('form' => $form->createView(),
                 'statutCAS' => 'Chef de département',
                 'commentaires' => $commentaires,
-                'routing_statutCAShome' => '/'.$id.'/professeur',
+                'routing_statutCAShome' => '/'.$id.'/chef',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/'.$id.'/correctionChief1', '#'),
                 'routing_options' => array('#', '#'),
                 'pagePrec' => array('/'.$id.'/'.$idProjet.'/correctionChief2'),
-                'pageSuiv' => array('/'.$id.'/correctionProf1')
+                'pageSuiv' => array('/'.$id.'/correctionChief1')
             ));
     }
 } 
