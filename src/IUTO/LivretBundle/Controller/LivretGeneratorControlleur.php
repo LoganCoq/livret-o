@@ -68,7 +68,7 @@ class LivretGeneratorController extends Controller
                               'tuteurs' => $tuteurs
                           ]);
                           //creation du template
-                          
+
                       $html2pdf->writeHTML($template);
                       //ajout de la page au livret
                     }
