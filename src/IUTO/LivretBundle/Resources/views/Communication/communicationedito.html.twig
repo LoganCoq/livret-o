@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 
-
 {% block content %}
     <div class="div_home">
         <div class="form">
@@ -11,8 +10,14 @@
 
             <br/>
 
-            <a href="#" class="buttonhome">Visualiser</a>
-            <a href="#" class="buttonhome">Valider</a>
+
+            {% for o in range(0, options|length - 1) %}
+                <a href="{{ routing_options[o] }}" class="buttonhome">{{ options[o] }}</a>
+            {% endfor %}
+
+
         </div>
+
+
     </div>
 {% endblock %}

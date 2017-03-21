@@ -2,80 +2,85 @@
 
 
 {% block title %}
-    <title>Correction projets</title>
+  <title>Correction projets</title>
 {% endblock %}
 
 
 {% block content %}
-   </br>
-   <h1> Informations du projet </h1>
-   </br>
+  </br>
+  <h1> Informations du projet </h1>
+  </br>
+  <div class="formulaire">
+      {% form_theme form 'bootstrap_3_layout.html.twig' %}
+      {{ form(form) }}
 
-    <div class="formulaire">
-        {% form_theme form 'bootstrap_3_layout.html.twig' %}
-        {{ form(form) }}
-        <button type="button" class="btn btn-retour" href="">
-            <  Retour
-        </button>
-        <button type="button" class="btn btn-suivant" href="">
-            Suivant  >
-        </button>
-    </div>
+      <button type="button" class="btn btn-retour" href="">
+          <  Retour
+      </button>
 
-    <div class="popup-box">
-        <div class="popup-head">
-            <div class="popup-head-left">
-                Correction
-            </div>
-        </div>
+      <button type="button" class="btn btn-suivant" href="">
+          Suivant  >
+      </button>
+  </div>
 
 
-        <!-- A FAIRE : BOUCLE FOR SUR TOUS LES MESSAGES ENREGISTRES-->
-        <div class="popup-messages">
-            {% for com in commentaires %}
-            <!--SI PROF FAIRE MSG À GAUCHE -->
-            {% if user.role=="Enseignant" %}
-                <div class="direct-chat-messages">
-                    <div class="chat-box-single-line">
-                        <abbr class="timestamp"> {{com.date}} </abbr>
-                    </div>
-                    <div class="direct-chat-msg-left">
-                        <div class="direct-chat-info clearfix">
-                            <span class="direct-chat-name-left"> {{user.role}} </span>
-                        </div>
-                        <div class="direct-chat-text-left">
-                            {{com.contenu}}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
+  <div class="popup-box">
+      <div class="popup-head">
+          <div class="popup-head-left">
+              Correction
+          </div>
 
-            <!--SI ETUDIANT FAIRE MESSAGE À DROITE-->
-            {% if user.role=="Etudiant" %}
-                <div class="direct-chat-messages">
-                    <div class="chat-box-single-line">
-                        <abbr class="timestamp"> {{com.date}} </abbr>
-                    </div>
-                    <div class="direct-chat-msg-left">
-                        <div class="direct-chat-info clearfix">
-                            <span class="direct-chat-name-left"> {{user.role}} </span>
-                        </div>
-                        <div class="direct-chat-text-left">
-                            {{com.contenu}}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-
-        <div class="reponseCorrection">
-            <input type="text" value ="Veuillez tape une réponse suite à vos modifications"> </input>
-            <button type="button" class="btn btn-envoyer-msg" href="">
-                Envoyer
-            </button>
-            {% endfor %}
-        </div>
-    </div>
+    	</div>
 
 
+      <!-- A FAIRE : BOUCLE FOR SUR TOUS LES MESSAGES ENREGISTRES-->
+
+    	<div class="popup-messages">
+      {% for com in commentaires %}
+
+          <!--SI PROF FAIRE MSG À GAUCHE -->
+          {% if user.role=="Enseignant" %}
+          <div class="direct-chat-messages">
+              <div class="chat-box-single-line">
+    	            <abbr class="timestamp"> {{com.date}} </abbr>
+    	        </div>
+              <div class="direct-chat-msg-left">
+                  <div class="direct-chat-info clearfix">
+                      <span class="direct-chat-name-left"> {{user.role}} </span>
+                  </div>
+                  <div class="direct-chat-text-left">
+                      {{com.contenu}}
+                  </div>
+    	        </div>
+          </div>
+          {% endif %}
+
+
+        	<!--SI ETUDIANT FAIRE MESSAGE À DROITE-->
+          {% if user.role=="Etudiant" %}
+          <div class="direct-chat-messages">
+              <div class="chat-box-single-line">
+    	            <abbr class="timestamp"> {{com.date}} </abbr>
+    	        </div>
+              <div class="direct-chat-msg-left">
+                  <div class="direct-chat-info clearfix">
+                      <span class="direct-chat-name-left"> {{user.role}} </span>
+                  </div>
+                  <div class="direct-chat-text-left">
+                      {{com.contenu}}
+                  </div>
+    	        </div>
+          </div>
+          {% endif %}
+      </div>
+
+      <div class="reponseCorrection">
+          <input type="text" value ="Veuillez taper une réponse suite à vos modifications"> </input>
+          <button type="button" class="btn btn-envoyer-msg" href="">
+              Envoyer
+          </button>
+
+      {% endfor %}
+      </div>
+  </div>
 {% endblock %}
