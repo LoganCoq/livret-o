@@ -1,5 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    {{ livrets.intituleLivret }}
+    <div class="div_home">
+
+    <h1 class="h1_home"> Génération de livret </h1>
+
+    <div class="form">
+    <form>
+        <option>{{ livrets.intituleLivret }}</option>
+
+    </br></br></br></br></br>
+
+        {% for o in range(0, options|length - 1) %}
+            <a href="{{ routing_options[o] }}" class="buttonhome">{{ options[o] }}</a>
+        {% endfor %}
+    </form>
+    </div>
+    </div>
 {% endblock %}
