@@ -34,11 +34,12 @@ class ProjetCreateType extends AbstractType
                 'label' => 'Département'))
             ->add('etudiants', EntityType::class, array(
                 'class' => User::class,
+                'label' => 'Etudiants',
+//                TODO ajouter information touche ctrl
                 'choice_label' => function (User $etudiant) {
                     return $etudiant->getNomUser() . ' ' . $etudiant->getPrenomUser();
                 },
                 'multiple' => true,
-//                'choices' => $options['listeEtudiants'], TODO
                 'query_builder' => function (UserRepository $er) use ($options) {
                     $options;
                     return $er->createQueryBuilder('u')
@@ -48,6 +49,7 @@ class ProjetCreateType extends AbstractType
             ))
             ->add('tuteurs', EntityType::class, array(
                 'class' => User::class,
+                'label' => 'Tuteurs',
                 'choice_label' => function (User $personnel) {
                     return $personnel->getNomUser() . ' ' . $personnel->getPrenomUser();
                 },
@@ -55,7 +57,7 @@ class ProjetCreateType extends AbstractType
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->select('u')
-                        ->where("u.role <> 'Etudiant' and u.role <> 'student'");
+                        ->where("u.role <> 'Etudiant' and u.role <> 'student' and u.role <> 'employee'");
                 }
             ))
             ->add('submit', SubmitType::class, array(
