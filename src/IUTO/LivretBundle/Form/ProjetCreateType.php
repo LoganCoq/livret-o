@@ -40,6 +40,11 @@ class ProjetCreateType extends AbstractType
                     return $etudiant->getNomUser() . ' ' . $etudiant->getPrenomUser();
                 },
                 'multiple' => true,
+                'attr' => [
+                    'class' => 'selectpicker',
+                    'data-live-search' => true,
+                    'data-width' => 'auto',
+                ],
                 'query_builder' => function (UserRepository $er) use ($options) {
                     $options;
                     return $er->createQueryBuilder('u')
@@ -54,6 +59,11 @@ class ProjetCreateType extends AbstractType
                     return $personnel->getNomUser() . ' ' . $personnel->getPrenomUser();
                 },
                 'multiple' => true,
+                'attr' => [
+                    'class' => 'selectpicker',
+                    'data-live-search' => true,
+                    'data-width' => 'auto',
+                ],
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->select('u')
