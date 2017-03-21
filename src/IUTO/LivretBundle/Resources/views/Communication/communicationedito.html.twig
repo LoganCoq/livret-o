@@ -10,9 +10,7 @@
 
             <br/>
 
-        {#    <div class="form">
-                {{ form(form) }}
-            </div>#}
+
             {% for o in range(0, options|length - 1) %}
                 <a href="{{ routing_options[o] }}" class="buttonhome">{{ options[o] }}</a>
             {% endfor %}
