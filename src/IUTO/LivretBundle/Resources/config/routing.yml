@@ -7,9 +7,14 @@ iuto_livret_connexion:
     path: /connexion
     defaults: { _controller: IUTOLivretBundle:Connexion:connexion}
 
+iuto_livret_logout:
+    path: /logout
+    defaults: { _controller: IUTOLivretBundle:Logout:logout}
+
 
 #==================ROUTES MODULE ETUDIANT==================#
 #==========HOME============#
+
 iuto_livret_studenthomepage:
     path: /{id}/etudiant
     defaults: { _controller: IUTOLivretBundle:Student:studenthome }
@@ -118,6 +123,11 @@ iuto_livret_communicationChoixProjet:
 iuto_livret_communicationValidationChoix:
     path: /communication/selectionvalide
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChoixValide}
+
+
+iuto_livret_communicationSelectionLivret:
+    path: /communication/selectionlivret
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationSelectionLivret}
 
 #==================ROUTES MODULES ANNEXES============#
 #=====GENERATION PDF GENERATOR=====#
