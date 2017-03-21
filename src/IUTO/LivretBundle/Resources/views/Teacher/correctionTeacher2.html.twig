@@ -14,13 +14,13 @@
       {% form_theme form 'bootstrap_3_layout.html.twig' %}
       {{ form(form) }}
 
-      <button type="button" class="btn btn-retour" href="">
+      <a type="button" class="btn btn-retour" href="http://localhost:8000/4/correctionProf1">
           <  Retour
-      </button>
+      </a>
 
-      <button type="button" class="btn btn-suivant" href="">
+      <a type="button" class="btn btn-suivant" href="http://localhost:8000/4/1/correctionProf3">
           Suivant  >
-      </button>
+      </a>
   </div>
 
 
@@ -74,13 +74,13 @@
           {% endif %}
       </div>
 
+      {% endfor %}
+
       <div class="reponseCorrection">
           <input type="text" value ="Veuillez taper une réponse suite à vos modifications"> </input>
           <button type="button" class="btn btn-envoyer-msg" href="">
               Envoyer
           </button>
-
-      {% endfor %}
       </div>
   </div>
 {% endblock %}
