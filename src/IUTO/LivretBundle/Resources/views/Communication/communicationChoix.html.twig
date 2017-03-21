@@ -4,7 +4,7 @@
 
     <div class="div_home">
         <h1 class="h1_home"> {{ statutCAS|capitalize }} - Choix de projet a corriger </h1>
-	<h2>	Ajouter liste deroulante </h2>
+        <h2>	Ajouter liste deroulante </h2>
         {% for o in range(0, options|length - 1) %}
             <a href="{{ routing_options[o] }}" class="buttonhome">{{ options[o] }}</a>
         {% endfor %}

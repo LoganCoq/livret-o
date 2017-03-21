@@ -85,7 +85,7 @@ iuto_livret_communicationEdito:
     defaults: { _controller: IUTOLivretBundle:Communication:communicationedito }
 
 #==========EDITOPDF===========#
-iuto_livret_communicationEdito:
+iuto_livret_communicationEditoPrevisualiser:
     path: /communication/editoprevisualiser
     defaults: { _controller: IUTOLivretBundle:EditoGenerator:generator }
 
@@ -99,12 +99,12 @@ iuto_livret_communicationvalidationCR:
     path: /communication/validation
     defaults: { _controller: IUTOLivretBundle:Communication:communicationvalidationCR }
 #=====SELECTION PROJET A CORRIGER=====#
-iuto_livret_choixProjet:
+iuto_livret_communicationChoixProjet:
     path: /communication/selection
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChoix}
 
 #=====SELECTION PROJET VALIDE=====#
-iuto_livret_choixProjet:
+iuto_livret_communicationValidationChoix:
     path: /communication/selectionvalide
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChoixValide}
 
