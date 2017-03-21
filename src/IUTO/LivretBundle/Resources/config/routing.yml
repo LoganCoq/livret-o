@@ -103,6 +103,7 @@ iuto_livret_communicationLivretGenerator:
 iuto_livret_communicationvalidationCR:
     path: /communication/validation
     defaults: { _controller: IUTOLivretBundle:Communication:communicationvalidationCR }
+    
 #=====SELECTION PROJET A CORRIGER=====#
 iuto_livret_communicationChoixProjet:
     path: /communication/selection

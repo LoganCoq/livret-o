@@ -38,12 +38,15 @@ class LivretGeneratorController extends Controller
             foreach ($formationsSelectionnes as $cpt3 => $formationSelectionnee) {
               if($formation->getTypeFormation() == $formationSelectionnee){
                 //chaque projet qui a le bon type de formation
+
                 $dateDeFormation = $formation->getDateDebut();
                 if(($dateDeFormation>=$dateDebutSelection)&&($dateDebutSelection<=$dateFinSelection)){
                   //chaque projet qui a le bon type de formation à la bonne date
+
                   foreach ($departementsSelectionnes as $cpt4 => $departmentSelectionne) {
                     if ($formation->getDepartement()->getNomDpt()==$departementSelectionne) {
                       //chaque projet qui a le bon type de formation à la bonne date et le bon department
+
                       $nomP = $projet->getIntituleProjet();
                       $descripP = $projet->getDescripProjet();
                       $bilanP = $projet->getBilanProjet();
@@ -65,6 +68,7 @@ class LivretGeneratorController extends Controller
                               'tuteurs' => $tuteurs
                           ]);
                           //creation du template
+                          
                       $html2pdf->writeHTML($template);
                       //ajout de la page au livret
                     }
