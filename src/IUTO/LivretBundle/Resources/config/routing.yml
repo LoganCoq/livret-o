@@ -119,6 +119,11 @@ iuto_livret_communicationValidationChoix:
     path: /communication/selectionvalide
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChoixValide}
 
+
+iuto_livret_communicationSelectionLivret:
+    path: /communication/selectionlivret
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationSelectionLivret}
+
 #==================ROUTES MODULES ANNEXES============#
 #=====GENERATION PDF GENERATOR=====#
 
