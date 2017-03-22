@@ -133,4 +133,15 @@ class ChiefController extends Controller
             'routing_statutCAShome' => '/chef',
             'routing_info' => array('/chef/generation', '/chef/edito', '#')));
     }
+
+    public function presentationDptAction()
+    {
+        return $this->render('IUTOLivretBundle:Chief:presentationDpt.html.twig', array('statutCAS' => 'Chef de département',
+            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'projets du département', 'Ajouter un projet'),
+            'options' => array('Visualiser','valider'),
+            'routing_statutCAShome' => '/chef',
+            'routing_info' => array('/communication/generation', '/chef/edito', '#'),
+            'routing_options' => array('/chef/editoprevisualiser','/chef')));
+
+    }
 } 
