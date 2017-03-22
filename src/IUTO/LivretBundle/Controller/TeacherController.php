@@ -40,12 +40,17 @@ class TeacherController extends Controller
         //    array_push($nomProjets, $elem->getIntituleProjet());
         //};
 
+        $projetsValides = array();
+        foreach($projets as $elem){
+            if ($elem->getValiderProjet() == 1)
+            array_push($projetsValides, $elem);
+        };
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array(
             'id' => $id,
             'statutCAS' => 'professeur',
             //'projets' => $nomProjets,
-            'projets' => $projets,
+            'projets' => $projetsValides,
             'routing_statutCAShome' => '/'.$id.'/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'routing_info' => array('/'.$id.'/correctionProf1', '#'),

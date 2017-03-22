@@ -14,11 +14,12 @@
                     {% for projet in projets %}
                         <li class="list-group-item" style="padding: 1%; margin: 1%">
                             <a href="/{{ id }}/{{ projet.id }}/correctionProf2" class="list-group-item">
-                                {{ projet.intituleProjet }}
+                                    {{ projet.intituleProjet }}
                             </a>
                         </li>
                     {% endfor %}
                 </ul>
+
             {% else %}
                 <p>Vous n'avez pas de projets en cours.</p>
             {% endif %}
