@@ -117,8 +117,6 @@ class StudentController extends Controller
             }
         }
 
-
-
         return $this->render('IUTOLivretBundle:Student:chooseProject.html.twig',
             array('statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
@@ -137,6 +135,7 @@ class StudentController extends Controller
 
         $form = $this->createForm(ProjetCompleteType::class, $projet);//TODO
         $form->handleRequest($request);
+        $manager = $this->getDoctrine()->getManager();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -147,12 +146,13 @@ class StudentController extends Controller
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
                     'options' => array('Créer un compte rendu', 'Voir mes projets'),
-                    'projet' => $projet->getId(),
                     'routing_info' => array('/'.$id.'/create/project',
                         '/'.$id.'/choose/project',
                         '#',),
                     'routing_statutCAShome' => '/'.$id.'/etudiant',
-                    'id' => $id, )
+                    'id' => $id,
+                    'projet' => $projet->getId(),
+                )
             );
         }
 
@@ -163,11 +163,12 @@ class StudentController extends Controller
             'routing_info' => array('/'.$id.'/create/project',
                 '/'.$id.'/choose/project',
                 '#',),
-            'routing_statutCAShome' => '/'.$id.'/etudiant',)
+            'routing_statutCAShome' => '/'.$id.'/etudiant',
+            )
         );
     }
 
-    public function confirmCompleteProjectAction(Request $request, Projet $projet, $id)
+    public function confirmCompleteProjectAction($id, Projet $projet)
     {
 
         return $this->render('IUTOLivretBundle:Student:confirmCompleteProject.html.twig', array(
@@ -181,7 +182,8 @@ class StudentController extends Controller
                 '/'.$id.'/choose/project',
                 '#',),
             'routing_statutCAShome' => '/'.$id.'/etudiant',
-            'projet' => $projet->getId())
+            'id' => $id,
+            'projet' => $projet)
         );
     }
 

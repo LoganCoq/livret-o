@@ -14,7 +14,7 @@ class EditoGeneratorController extends Controller
     public function EditoFormAction(Form $form)
     {
         // On crée un objet Advert
-        $edito = new EditoGenerator();
+        $edito = new Advert();
 
         // On crée le FormBuilder grâce au service form factory
         $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $edito);

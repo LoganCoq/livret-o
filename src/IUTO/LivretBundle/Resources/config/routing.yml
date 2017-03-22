@@ -7,9 +7,14 @@ iuto_livret_connexion:
     path: /connexion
     defaults: { _controller: IUTOLivretBundle:Connexion:connexion}
 
+iuto_livret_logout:
+    path: /logout
+    defaults: { _controller: IUTOLivretBundle:Logout:logout}
+
 
 #==================ROUTES MODULE ETUDIANT==================#
 #==========HOME============#
+
 iuto_livret_studenthomepage:
     path: /{id}/etudiant
     defaults: { _controller: IUTOLivretBundle:Student:studenthome }
@@ -60,6 +65,11 @@ iuto_livret_correctionProf3:
     path: /{id}/{projet}/correctionProf3
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher3 }
 
+#==========CORRECTION4=====#
+iuto_livret_correctionProf4:
+    path: /{id}/{projet}/correctionProf4
+    defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher4 }
+
 
 #==================ROUTES MODULE CHEF DEPARTEMENT==========#
 #==========HOME============#
@@ -76,6 +86,26 @@ iuto_livret_chiefPresentation:
 iuto_livret_chiefliste:
     path: /{id}/chef/{nomDep}/liste
     defaults: { _controller: IUTOLivretBundle:Chief:chiefliste }
+
+#==========CORRECTION1=====#
+iuto_livret_correctionChief1:
+    path: /{id}/correctionChief1
+    defaults: { _controller: IUTOLivretBundle:Teacher:correctionChief1 }
+
+#==========CORRECTION2=====#
+iuto_livret_correctionChief2:
+    path: /{id}/{projet}/correctionChief2
+    defaults: { _controller: IUTOLivretBundle:Teacher:correctionChief2 }
+
+#==========CORRECTION3=====#
+iuto_livret_correctionChief3:
+    path: /{id}/{projet}/correctionChief3
+    defaults: { _controller: IUTOLivretBundle:Teacher:correctionChief3 }
+
+#==========CORRECTION4=====#
+iuto_livret_correctionChief4:
+    path: /{id}/{projet}/correctionChief4
+    defaults: { _controller: IUTOLivretBundle:Teacher:correctionChief4 }
 
 
 #==================ROUTES MODULE COMMUNICATIONN============#
@@ -102,13 +132,13 @@ iuto_livret_communicationgenerationlivret:
 #=====GENERER LIVRET====#
 iuto_livret_communicationLivretGenerator:
     path: /communication/generation/livretGenere
-    defaults: { _controller: IUTOLivretBundle:Communication:LivretGeneratorController }
+    defaults: { _controller: IUTOLivretBundle:LivretGenerator:communicationgenerationlivret }
 
 #=====GENERATION VALIDATION CR=====#
 iuto_livret_communicationvalidationCR:
     path: /communication/validation
     defaults: { _controller: IUTOLivretBundle:Communication:communicationvalidationCR }
-    
+
 #=====SELECTION PROJET A CORRIGER=====#
 iuto_livret_communicationChoixProjet:
     path: /communication/selection

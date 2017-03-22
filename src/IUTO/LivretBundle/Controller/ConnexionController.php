@@ -22,6 +22,7 @@ class ConnexionController extends Controller
     public function connexionAction()
     {
 
+
         $numPersonne = "p51955";
 
         $config = array(
@@ -74,7 +75,7 @@ class ConnexionController extends Controller
             $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
             $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
             $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
-            $user->setRole($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
+            $user->setRole("ROLE_".$infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
             $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
             if ($user->getRole()=="student"){
                 $codeFormation = $infosPersonne->getAttribute("unrcEtape")[0];
@@ -124,7 +125,7 @@ class ConnexionController extends Controller
         if (strcmp($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0],"student")==0){
             return $this->redirectToRoute("iuto_livret_studenthomepage",array("id" => $id));
         }
-        else if(strcmp($user->getRoles(),"employee")==0){
+        else if(strcmp($user->getRoles(),"ROLE_employee")==0){
             return $this->redirectToRoute("iuto_livret_communicationhomepage",array("id" => $id));
         }
         else {
