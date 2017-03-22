@@ -39,13 +39,13 @@
 
             {% for o in range(0, commentaires|length - 1) %}
 
-          <!--SI PROF FAIRE MSG À GAUCHE attention : changer Enseigant par ROLE_faculty et ROLE_student-->
-                  {% if commentaires[o][0]=="Enseignant" %}
+            <!--SI PROF FAIRE MSG À GAUCHE attention : changer Enseigant par ROLE_faculty et ROLE_student-->
+            {% if commentaires[o][0]=="Enseignant" %}
 
-                      <div class="direct-chat-messages">
-                          <div class="chat-box-single-line">
-                                <abbr class="timestamp"> {{commentaires[o][2]}} </abbr>
-                            </div>
+                <div class="direct-chat-messages">
+                    <div class="chat-box-single-line">
+                        <abbr class="timestamp"> {{ commentaires[o][2] }} </abbr>
+                    </div>
                           <div class="direct-chat-msg-left">
                               <div class="direct-chat-info clearfix">
                                   <span class="direct-chat-name-left"> {{commentaires[o][0]}} </span>
