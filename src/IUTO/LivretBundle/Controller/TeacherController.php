@@ -22,8 +22,8 @@ class TeacherController extends Controller
             'info' => array('Demandes de correction', 'Projets validés'),
             'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
             'routing_statutCAShome' => '/'.$id.'/professeur',
-            'routing_info' => array('/'.$id.'/correctionProf1', '#'),
-            'routing_options' => array('/'.$id.'/correctionProf1', '#'),
+            'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
+            'routing_options' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
             'names' => $names, '#'));
     }
 
@@ -49,13 +49,11 @@ class TeacherController extends Controller
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array(
             'id' => $id,
             'statutCAS' => 'professeur',
-            //'projets' => $nomProjets,
             'projets' => $projetsValides,
             'routing_statutCAShome' => '/'.$id.'/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
-            'routing_info' => array('/'.$id.'/correctionProf1', '#'),
+            'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
             'pagePrec' => '/'.$id.'/professeur',
-            //'pageSuiv' => '/'.$id.'/'.$idProjet.'/correctionProf4'
         ));
 
     }
@@ -85,7 +83,7 @@ class TeacherController extends Controller
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_statutCAShome' => '/'.$id.'/professeur',
                 'commentaires' => $commentaires,
-                'routing_info' => array('/'.$id.'/correctionProf1', '#'),
+                'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
                 'routing_options' => array('#', '#'),
                 'pagePrec' => '/'.$id.'/correctionProf1',
                 'pageSuiv' => '/'.$id.'/'.$idProjet.'/correctionProf3'
@@ -118,7 +116,7 @@ class TeacherController extends Controller
                 'commentaires' => $commentaires,
                 'routing_statutCAShome' => '/'.$id.'/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/'.$id.'/correctionProf1', '#'),
+                'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
                 'routing_options' => array('#', '#'),
                 'pagePrec' => '/'.$id.'/'.$idProjet.'/correctionProf2',
                 'pageSuiv' => '/'.$id.'/'.$idProjet.'/correctionProf4'
@@ -134,9 +132,40 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/'.$id.'/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/'.$id.'/correctionProf1', '#'),
+                'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
                 'pagePrec' => '/'.$id.'/'.$idProjet.'/correctionProf3'
                 ));
+    }
+
+    public function projetsValidesTeacher1Action(Request $request, $id)
+    {
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('IUTOLivretBundle:User');
+        $projets = $repository->findOneById($id)->getProjetSuivis();
+
+        //$nomProjets = array();
+        //foreach($projets as $elem){
+        //    array_push($nomProjets, $elem->getIntituleProjet());
+        //};
+
+        $projetsValides = array();
+        foreach($projets as $elem){
+            if ($elem->getValiderProjet() == 0)
+                array_push($projetsValides, $elem);
+        };
+
+        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array(
+            'id' => $id,
+            'statutCAS' => 'professeur',
+            'projets' => $projetsValides,
+            'routing_statutCAShome' => '/'.$id.'/professeur',
+            'info' => array('Demandes de correction', 'Projets validés'),
+            'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
+            'pagePrec' => '/'.$id.'/professeur',
+        ));
+
     }
 
 }
