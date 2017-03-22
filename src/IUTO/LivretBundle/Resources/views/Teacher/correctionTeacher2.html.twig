@@ -2,86 +2,93 @@
 
 
 {% block title %}
-  <title>Correction projets</title>
+    Correction projets
 {% endblock %}
 
 
 {% block content %}
-  </br>
-  <h1> Informations du projet </h1>
-  </br>
-  <div class="formulaire">
-      {% form_theme form 'bootstrap_3_layout.html.twig' %}
-      {{ form(form) }}
+    </br>
+    <h1> Informations du projet </h1>
+    </br>
 
-      <a type="button" class="btn btn-retour" href="{{ pagePrec }}">
-          <  Retour
-      </a>
+    <div class="formulaire">
+        {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {{ form(form) }}
 
-      <a type="button" class="btn btn-suivant" href="{{ pageSuiv }}">
-          Suivant  >
-      </a>
-  </div>
+        <a type="button" class="btn btn-retour" href="{{ pagePrec }}">
+            < Retour
+        </a>
 
-
-  <div class="popup-box">
-      <div class="popup-head">
-          <div class="popup-head-left">
-              Correction
-          </div>
-
-    	</div>
+        <a type="button" class="btn btn-suivant" href="{{ pageSuiv }}">
+            Suivant >
+        </a>
+    </div>
 
 
-      <!-- A FAIRE : BOUCLE FOR SUR TOUS LES MESSAGES ENREGISTRES-->
+    <div class="popup-box">
+        <div class="popup-head">
+            <div class="popup-head-left">
+                Correction
+            </div>
+        </div>
 
-    	<div class="popup-messages">
-            {% for com in commentaires %}
 
-          <!--SI PROF FAIRE MSG À GAUCHE attention : changer Enseigant par ROLE_faculty et ROLE_student-->
-                  {#{% if commentaires[o][0]=="Enseignant" %}#}
+        <!-- A FAIRE : BOUCLE FOR SUR TOUS LES MESSAGES ENREGISTRES-->
 
-                      <div class="direct-chat-messages">
-                          <div class="chat-box-single-line">
-                                <abbr class="timestamp"> {{ com[2]|date('d-m-Y') }} </abbr>
+        <div class="popup-messages">
+
+
+            <div class="direct-chat-messages">
+                {% for o in range(0, commentaires|length - 1) %}
+                    {% if o != 0 %}
+                        {% if commentaires[o][2] != commentaires[o-1][2] %}
+                            <div class="chat-box-single-line">
+                                <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
                             </div>
-                          <div class="direct-chat-msg-left">
-                              <div class="direct-chat-info clearfix">
-                                  <span class="direct-chat-name-left"> {{com[0]}} </span>
-                              </div>
-                              <div class="direct-chat-text-left">
-                                  {{com[1]}}
-                              </div>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if o == 0 %}
+                        <div class="chat-box-single-line">
+                            <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
+                        </div>
+                    {% endif %}
+
+                    {% if commentaires[o][3] == "Enseignant" %}
+                        <div class="direct-chat-msg-left">
+                            <div class="direct-chat-info clearfix">
+                                <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
                             </div>
-                      </div>
-                  {#{% endif %}#}
-
-
-                  {#  <!--SI ETUDIANT FAIRE MESSAGE À DROITE-->
-                  {% if user.role=="Etudiant" %}
-                  <div class="direct-chat-messages">
-                      <div class="chat-box-single-line">
-                            <abbr class="timestamp"> com.date </abbr>
+                            <div class="direct-chat-text-left">
+                                {{ commentaires[o][1] }}
+                            </div>
                         </div>
-                      <div class="direct-chat-msg-left">
-                          <div class="direct-chat-info clearfix">
-                              <span class="direct-chat-name-left"> {{user.role}} </span>
-                          </div>
-                          <div class="direct-chat-text-left">
-                              com
-                          </div>
+                    {% endif %}
+
+                    {% if commentaires[o][3] == "Etudiant" %}
+                        <div class="direct-chat-msg-right">
+                        <div class="direct-chat-info-right clearfix">
+                            <span class="direct-chat-name-right">{{ commentaires[o][0] }}</span>
                         </div>
-                  </div>
-                  {% endif %}
-              </div>#}
+                        <div class="direct-chat-text-right">
+                            {{ commentaires[o][1] }}
+                        </div>
+                    {% endif %}
+                    </div>
 
-              {% endfor %}
 
-              <div class="reponseCorrection">
-                  <input type="text" value ="Veuillez taper une réponse suite à vos modifications"> </input>
-                  <button type="button" class="btn btn-envoyer-msg" href="">
-                      Envoyer
-                  </button>
-              </div>
-  </div>
+                {% endfor %}
+            </div>
+
+            <div class="reponseCorrection">
+                <input type="text" value="Veuillez taper une réponse suite à vos modifications"> </input>
+                <button type="button" class="btn btn-envoyer-msg" href="">
+                    Envoyer
+                </button>
+            </div>
+
+        </div>
+    </div>
+
 {% endblock %}
+

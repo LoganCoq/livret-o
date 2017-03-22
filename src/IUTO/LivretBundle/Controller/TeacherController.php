@@ -78,9 +78,10 @@ class TeacherController extends Controller
         foreach($com as $elem){
             $x=array();
             $user = $elem->getUser();
-            array_push($x, $user->getRole());
+            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
+            array_push($x, $user->getRole());
             array_push($commentaires, $x);
 
         };
