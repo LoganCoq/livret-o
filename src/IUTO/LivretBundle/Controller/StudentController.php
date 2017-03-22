@@ -7,7 +7,9 @@ use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetCompleteType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class StudentController extends Controller
 {
@@ -44,15 +46,11 @@ class StudentController extends Controller
         $anneeDebut = $formation->getDateDebut();
         $anneeFin = $formation->getDateFin();
         $departement = $formation->getDepartement()->getNomDpt();
-//        $formation = $formation->getTypeFormation();
 
         $projet->setNomDpt($departement);
-        $projet->setDateFin($anneeFin);
-        $projet->setDateDebut($anneeDebut);
         $projet->setMarquantProjet(false);
         $projet->setValiderProjet(false);
         $projet->addEtudiant($etudiant);
-//        $listeEtudiants = $manager->getRepository(Formation::class)->findAllEtudiantByFormation($formation->getId());
 
         $form = $this->createForm(ProjetCreateType::class, $projet, ['annee' => 2017]);//TODO changer l'année
         $form->handleRequest($request);
@@ -60,6 +58,10 @@ class StudentController extends Controller
         //verifie si le formulaire est valide ou pas
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $dateD = \DateTime::createFromFormat('mm/dd/yyyy', $form["dateDebut"]->getData());
+            $dateF = \DateTime::createFromFormat('mm/dd/yyyy', $form["dateFin"]->getData());
+            $projet->setDateDebut(new \DateTime($dateD));
+            $projet->setDateFin(new \DateTime($dateF));
             foreach ( $projet->getEtudiants() as $etu ){
                 $etu->addProjetFait($projet);
                 $em->persist($etu);
@@ -71,8 +73,6 @@ class StudentController extends Controller
 
             $em->persist($projet);
             $em->flush();
-
-//            $idP = $etudiant->getProjetSuivis()[0]->getId();
 
             $request->getSession()->getFlashBag()->add('success', 'Projet bien ajouté.');
 
