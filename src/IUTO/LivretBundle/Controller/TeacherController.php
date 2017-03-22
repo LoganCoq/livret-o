@@ -27,7 +27,7 @@ class TeacherController extends Controller
             'names' => $names, '#'));
     }
 
-    public function correctionTeacher1Action($id)
+    public function correctionTeacher1Action(Request $request, User $id)
     {
         $repository = $this
             ->getDoctrine()
@@ -41,7 +41,8 @@ class TeacherController extends Controller
 
 
 
-        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array('id' => $id,
+        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array(
+            'id' => $id,
             'statutCAS' => 'professeur',
             'projets' => $nomProjets,
             'routing_statutCAShome' => '/'.$id.'/professeur',
