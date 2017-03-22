@@ -74,22 +74,28 @@ class TeacherController extends Controller
         $user = $repository->findOneById($id);
         $role = $user->getRole();
 
+
         $repository2 = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('IUTOLivretBundle:Commentaire');
-        $commentaires = $repository2->findOneByProjet($idProjet);
-        $contenu = $commentaires->getContenu();
-        $date = $commentaires->getDate();
+        $com = $repository2->findOneByProjet($idProjet);
+
+        $commentaires = array();
+        foreach($com as $elem){
+            $x = array();
+            array_push($x, $elem->getUser());
+            array_push($x, $elem->getContenu());
+            array_push($x, $elem->getDate());
+            array_push($commentaires, $x);
+        };
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_statutCAShome' => '/'.$id.'/professeur',
-                'commentaires' => array('ta gueule','tu me casse les couilles','fuck'),
-                'date' => $date,
-                'role' => $role,
+                'commentaires' => $commentaires,
                 'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
                 'routing_options' => array('#', '#'),
                 'pagePrec' => '/'.$id.'/correctionProf1',
