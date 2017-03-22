@@ -2,6 +2,7 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use Doctrine\ORM\Query\Expr\Select;
 use IUTO\LivretBundle\Entity\Livret;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
@@ -82,5 +83,30 @@ class CommunicationController extends Controller
             'livrets' => $this->getDoctrine()->getRepository('IUTOLivretBundle:Livret')->findOneById(1),
             'routing_options' => array('/communication/edito', '/communication')));
 
+    }
+
+    public function communicationLivretTransfererAction()
+    {
+        // On crée un objet Advert
+        $livret = new CommunicationController();
+
+        // On crée le FormBuilder grâce au service form factory
+        $formBuilder = $this->get('form.factory')->createBuilder(FormType::class, $livret);
+
+        // On ajoute les champs de l'entité que l'on veut à notre formulaire
+        $formBuilder
+            ->add('choixlivret',   Select::class)
+
+            ->add('Valider',      SubmitType::class)
+        ;
+
+        // À partir du formBuilder, on génère le formulaire
+        $form = $formBuilder->getForm();
+
+        // On passe la méthode createView() du formulaire à la vue
+        // afin qu'elle puisse afficher le formulaire toute seule
+        return $this->render('IUTOLivretBundle:Livret:communicationSelectionLivret.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }
