@@ -67,27 +67,22 @@ class TeacherController extends Controller
         }
         $idProjet = $projet->getId();
 
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('IUTOLivretBundle:User');
-        $user = $repository->findOneById($id);
-        $role = $user->getRole();
-
 
         $repository2 = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('IUTOLivretBundle:Commentaire');
-        $com = $repository2->findOneByProjet($idProjet);
+        $com = $repository2->findByProjet($projet);
 
         $commentaires = array();
         foreach($com as $elem){
-            $x = array();
-            array_push($x, $elem->getUser());
+            $x=array();
+            $user = $elem->getUser();
+            array_push($x, $user->getRole());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
             array_push($commentaires, $x);
+
         };
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
@@ -117,11 +112,21 @@ class TeacherController extends Controller
 
         $idProjet = $projet->getId();
 
-        $repository = $this
+        $repository2 = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('IUTOLivretBundle:Commentaire');
-        $commentaires = $repository->findOneByProjet($idProjet);
+        $com = $repository2->findByProjet($projet);
+
+        $commentaires = array();
+        foreach($com as $elem){
+            $x=array();
+            $user = $elem->getUser();
+            array_push($x, $user->getRole());
+            array_push($x, $elem->getContenu());
+            array_push($commentaires, $x);
+
+        };
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
             array('form' => $form->createView(),
