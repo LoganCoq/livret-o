@@ -70,8 +70,15 @@ class TeacherController extends Controller
         $repository = $this
             ->getDoctrine()
             ->getManager()
+            ->getRepository('IUTOLivretBundle:User');
+        $user = $repository->findOneById($id);
+        $role = $user->getRole();
+
+        $repository2 = $this
+            ->getDoctrine()
+            ->getManager()
             ->getRepository('IUTOLivretBundle:Commentaire');
-        $commentaires = $repository->findOneByProjet($idProjet);
+        $commentaires = $repository2->findOneByProjet($idProjet);
         $contenu = $commentaires->getContenu();
         $date = $commentaires->getDate();
 
@@ -80,8 +87,9 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_statutCAShome' => '/'.$id.'/professeur',
-                'commentaires' => $contenu,
+                'commentaires' => array('ta gueule','tu me casse les couilles','fuck'),
                 'date' => $date,
+                'role' => $role,
                 'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
                 'routing_options' => array('#', '#'),
                 'pagePrec' => '/'.$id.'/correctionProf1',
