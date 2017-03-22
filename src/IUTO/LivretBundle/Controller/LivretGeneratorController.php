@@ -12,11 +12,11 @@ use IUTO\LivretBundle\Entity\Projet;
 
 class LivretGeneratorController extends Controller
 {
-    public function communicationgenerationlivretAction(Request $request, $livret)
+    public function communicationgenerationlivretAction()
     {
-        //$infos = $this>get('request');
-        print($request);
-        $form = $this->createForm(ProjetModifType::class, $livret);
+        if(!empty($_POST)){
+          $departmentSelectionnes = $_POST["departement"];
+        }
 
         $manager = $this
             ->getDoctrine()
@@ -89,4 +89,4 @@ class LivretGeneratorController extends Controller
         return $html2pdf;
         //retourne le livret
     }
-}
+  }
