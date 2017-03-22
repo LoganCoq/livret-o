@@ -81,7 +81,7 @@ class TeacherController extends Controller
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_statutCAShome' => '/'.$id.'/professeur',
                 'commentaires' => $contenu,
-                'date' => $date;
+                'date' => $date,
                 'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
                 'routing_options' => array('#', '#'),
                 'pagePrec' => '/'.$id.'/correctionProf1',
