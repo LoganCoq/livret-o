@@ -1,21 +1,42 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+{% endblock %}
+
 {% block content %}
     <div class="div_home">
 
-    <h1 class="h1_home"> Génération de livret </h1>
+        <h1 class="h1_home"> Génération de livret </h1>
 
-    <div class="form">
-    <form>
-        <select>
-        <option>{{ livrets.intituleLivret }}</option>
-        </select>
-    </br></br></br></br></br>
+        <div class="form">
+            <form>
+                <label> Créer un édito pour ces livrets </label>
+                <br/>
+                <select class="selectpicker" data-live-search="true" multiple="multiple"
+                        name="livret" title="Aucun livret sélectionné">
+                    {% for livret in livrets %}
+                        <option value="{{ livret.id }}"> {{ livret.intituleLivret }} </option>
+                    {% endfor %}
+                </select>
 
-        {% for o in range(0, options|length - 1) %}
-            <a href="{{ routing_options[o] }}" class="buttonhome">{{ options[o] }}</a>
-        {% endfor %}
-    </form>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+
+                {% for o in range(0, options|length - 1) %}
+                    <a href="{{ routing_options[o] }}" class="buttonhome">{{ options[o] }}</a>
+                {% endfor %}
+            </form>
+        </div>
     </div>
-    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 {% endblock %}
