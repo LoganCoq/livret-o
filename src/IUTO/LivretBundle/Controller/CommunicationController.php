@@ -80,7 +80,7 @@ class CommunicationController extends Controller
             'options' => array('Valider', 'Retour'),
             'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#'),
             'routing_statutCAShome' => '/communication',
-            'livrets' => $this->getDoctrine()->getRepository('IUTOLivretBundle:Livret')->findOneById(1),
+            'livrets' => $this->getDoctrine()->getRepository('IUTOLivretBundle:Livret')->findAll(),
             'routing_options' => array('/communication/edito', '/communication')));
 
     }
@@ -105,7 +105,7 @@ class CommunicationController extends Controller
 
         // On passe la méthode createView() du formulaire à la vue
         // afin qu'elle puisse afficher le formulaire toute seule
-        return $this->render('IUTOLivretBundle:Livret:communicationSelectionLivret.html.twig', array(
+        return $this->render('IUTOLivretBundle:Communication:communicationSelectionLivret.html.twig', array(
             'form' => $form->createView(),
         ));
     }

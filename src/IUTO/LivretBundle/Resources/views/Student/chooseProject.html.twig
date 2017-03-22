@@ -1,17 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    {#TODO style#}
-    <div class="list-group" style="padding: 2%">
+    <div class="list-group" style="padding: 2em">
         <h1 class="">Projets :</h1>
-        <div style="padding: 2%">
+        <div style="padding: 1em">
             <h2><small>Projets en cours</small></h2>
             {% if projetsSuivis|length > 0 %}
                 <ul class="list-group">
                 {% for projet in projetsSuivis %}
-                    <li class="list-group-item" style="padding: 1%; margin: 1%">
+                    <li class="list-group-item" style="padding: 1em; margin: 0.5em">
                         Intitulé du projet : {{ projet.intituleProjet }}
-                        <a href="/{{ id }}/{{ projet.id }}/complete" class="list-group-item">
+                        <a href="/{{ id }}/{{ projet.id }}/complete" class="list-group-item" style="margin: 1em">
                             Voir les corrections du projet
                         </a>
                     </li>
@@ -21,7 +20,7 @@
                 <p>Vous n'avez pas de projets en cours.</p>
             {% endif %}
         </div>
-        <div style="padding: 2%">
+        <div style="padding: 1em">
             <h2><small>Projets finis</small></h2>
             {% if projetsFinis|length > 0 %}
                 {% for projet in projetsFinis %}
