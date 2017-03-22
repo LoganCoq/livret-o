@@ -14,6 +14,7 @@ class LivretGeneratorController extends Controller
     public function communicationgenerationlivretAction()
     {
         //$infos = $this>get('request');
+        $form = $this->createForm($projet);
 
         $manager = $this
             ->getDoctrine()
