@@ -27,7 +27,7 @@ class TeacherController extends Controller
             'names' => $names, '#'));
     }
 
-    public function correctionTeacher1Action(Request $request, $id)
+    public function correctionTeacher1Action($id)
     {
         $repository = $this
             ->getDoctrine()
@@ -35,10 +35,6 @@ class TeacherController extends Controller
             ->getRepository('IUTOLivretBundle:User');
         $projets = $repository->findOneById($id)->getProjetSuivis();
 
-        //$nomProjets = array();
-        //foreach($projets as $elem){
-        //    array_push($nomProjets, $elem->getIntituleProjet());
-        //};
 
         $projetsValides = array();
         foreach($projets as $elem){
@@ -145,10 +141,7 @@ class TeacherController extends Controller
             ->getRepository('IUTOLivretBundle:User');
         $projets = $repository->findOneById($id)->getProjetSuivis();
 
-        //$nomProjets = array();
-        //foreach($projets as $elem){
-        //    array_push($nomProjets, $elem->getIntituleProjet());
-        //};
+
 
         $projetsValides = array();
         foreach($projets as $elem){
