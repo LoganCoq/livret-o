@@ -11,6 +11,10 @@ iuto_livret_logout:
     path: /logout
     defaults: { _controller: IUTOLivretBundle:Logout:logout}
 
+iuto_livret_public:
+    path: /public
+    defaults: {_controller: IUTOLivretBundle:Public:public }
+
 
 #==================ROUTES MODULE ETUDIANT==================#
 #==========HOME============#
@@ -70,6 +74,10 @@ iuto_livret_correctionProf4:
     path: /{id}/{projet}/correctionProf4
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher4 }
 
+#==========PROJETS VALIDES1=====#
+iuto_livret_projetsValides1:
+    path: /{id}/projetsValides1
+    defaults: { _controller: IUTOLivretBundle:Teacher:projetsValidesTeacher1 }
 
 #==================ROUTES MODULE CHEF DEPARTEMENT==========#
 #==========HOME============#

@@ -21,8 +21,8 @@ class ConnexionController extends Controller
 {
     public function connexionAction()
     {
-
-
+        // $numPersonne = "o2151178";
+        //$numPersonne = "p2171";
         $numPersonne = "p51955";
 
         $config = array(
