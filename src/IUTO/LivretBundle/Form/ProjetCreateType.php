@@ -23,11 +23,19 @@ class ProjetCreateType extends AbstractType
             ->add('intituleProjet', TextType::class, array(
                 'label' => 'Intitulé du projet'
             ))
-            ->add('dateDebut', DateType::class, array(
-                'label' => 'Date de début'
+            ->add('dateDebut', TextType::class, array(
+                'label' => 'Date de début',
+                'attr' => [
+                    'data-provide' => 'datepicker',
+                    'class' => 'datepicker',
+            ],
             ))
-            ->add('dateFin', DateType::class, array(
-                'label' => 'Date de fin'
+            ->add('dateFin', TextType::class, array(
+                'label' => 'Date de fin',
+                'attr' => [
+                    'data-provide' => 'datepicker',
+                    'class' => 'datepicker',
+                ],
             ))
             ->add('nomDep', TextType::class, array(
                 'disabled' => true,
@@ -49,7 +57,7 @@ class ProjetCreateType extends AbstractType
                     $options;
                     return $er->createQueryBuilder('u')
                         ->select('u')
-                        ->where("u.role = 'Etudiant' or u.role = 'student'");
+                        ->where("u.role = 'Etudiant' or u.role = 'ROLE_student'");
                 }
             ))
             ->add('tuteurs', EntityType::class, array(
@@ -67,7 +75,7 @@ class ProjetCreateType extends AbstractType
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->select('u')
-                        ->where("u.role <> 'Etudiant' and u.role <> 'student' and u.role <> 'employee'");
+                        ->where("u.role <> 'Etudiant' and u.role <> 'ROLE_student' and u.role <> 'ROLE_employee'");
                 }
             ))
             ->add('submit', SubmitType::class, array(
