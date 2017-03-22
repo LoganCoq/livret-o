@@ -27,24 +27,25 @@ class TeacherController extends Controller
             'names' => $names, '#'));
     }
 
-    public function correctionTeacher1Action(Request $request, User $id)
+    public function correctionTeacher1Action(Request $request, $id)
     {
         $repository = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('IUTOLivretBundle:User');
         $projets = $repository->findOneById($id)->getProjetSuivis();
-        $nomProjets = array();
-        foreach($projets as $elem){
-            array_push($nomProjets, $elem->getIntituleProjet());
-        };
 
+        //$nomProjets = array();
+        //foreach($projets as $elem){
+        //    array_push($nomProjets, $elem->getIntituleProjet());
+        //};
 
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array(
             'id' => $id,
             'statutCAS' => 'professeur',
-            'projets' => $nomProjets,
+            //'projets' => $nomProjets,
+            'projets' => $projets,
             'routing_statutCAShome' => '/'.$id.'/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'routing_info' => array('/'.$id.'/correctionProf1', '#'),
