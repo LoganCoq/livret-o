@@ -5,16 +5,18 @@ namespace IUTO\LivretBundle\Controller;
 use IUTO\LivretBundle\Service\HTML2PDF;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use IUTO\LivretBundle\Entity\Livret;
 use IUTO\LivretBundle\Entity\Projet;
 
 
 class LivretGeneratorController extends Controller
 {
-    public function communicationgenerationlivretAction()
+    public function communicationgenerationlivretAction(Request $request, $livret)
     {
         //$infos = $this>get('request');
-        $form = $this->createForm($projet);
+        print($request);
+        $form = $this->createForm(ProjetModifType::class, $livret);
 
         $manager = $this
             ->getDoctrine()
