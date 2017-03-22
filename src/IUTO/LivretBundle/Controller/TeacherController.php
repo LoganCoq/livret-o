@@ -77,8 +77,8 @@ class TeacherController extends Controller
                 'commentaires' => $commentaires,
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#'),
-                'pagePrec' => array('/'.$id.'/correctionProf1'),
-                'pageSuiv' => array('/'.$id.'/'.$idProjet.'/correctionProf3')
+                'pagePrec' => '/'.$id.'/correctionProf1',
+                'pageSuiv' => '/'.$id.'/'.$idProjet.'/correctionProf3'
             ));
     }
 
@@ -101,7 +101,6 @@ class TeacherController extends Controller
             ->getManager()
             ->getRepository('IUTOLivretBundle:Commentaire');
         $commentaires = $repository->findOneByProjet($idProjet);
-        $idProjet = $projet->getId();
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
             array('form' => $form->createView(),
@@ -111,20 +110,23 @@ class TeacherController extends Controller
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/'.$id.'/correctionProf1', '#'),
                 'routing_options' => array('#', '#'),
-                'pagePrec' => array('/'.$id.'/'.$idProjet.'/correctionProf2'),
-                'pageSuiv' => array('/'.$id.'/correctionProf1')
+                'pagePrec' => '/'.$id.'/'.$idProjet.'/correctionProf2',
+                'pageSuiv' => '/'.$id.'/'.$idProjet.'/correctionProf4'
             ));
     }
 
     public function correctionTeacher4Action(Request $request, $id, Projet $projet)
     {
+        $idProjet = $projet->getId();
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
             array('id' => $id,
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/'.$id.'/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/'.$id.'/correctionProf1', '#')));
+                'routing_info' => array('/'.$id.'/correctionProf1', '#'),
+                'pagePrec' => '/'.$id.'/'.$idProjet.'/correctionProf3'
+                ));
     }
 
 }
