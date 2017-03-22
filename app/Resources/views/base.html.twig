@@ -4,11 +4,7 @@
     <meta charset="UTF-8"/>
     <title>
         {% block title %}
-            {% if statutCAS=='étudiant' %} {#CAS = étudiant#}
-                Connecté en tant qu'{{ statutCAS }}
-            {% else %} {#CAS = professeur ou chef de département ou service communication#}
-                Connecté en tant que {{ statutCAS }}
-            {% endif %}
+            Livret'O
         {% endblock %}
     </title>
     {% block stylesheets %}
@@ -41,6 +37,7 @@
                 </nav>
                 <div style="position:absolute ;bottom: 5%; width: 100%;text-align:center">
                     <img src="{{ asset('assets/images/IUTO_transp.png') }}" alt="Logo IUT" style="max-height: 125px"/>
+                    {% if statutCAS != "Public" %}
                     <a href="{{ path('iuto_livret_logout') }}">
                         {#TODO style#}
                         <button type="button" class="btn btn-danger" style="width: 100%">
@@ -48,6 +45,7 @@
                             Déconnexion
                         </button>
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
