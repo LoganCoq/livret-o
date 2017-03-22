@@ -22,7 +22,8 @@ class ConnexionController extends Controller
     public function connexionAction()
     {
 
-        $numPersonne = "p51955";
+
+        $numPersonne = "o2151178";
 
         $config = array(
             'host' => 'ldap-univ.iut45.univ-orleans.fr',
@@ -76,7 +77,7 @@ class ConnexionController extends Controller
             $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
             $user->setRole("ROLE_".$infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
             $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
-            if ($user->getRole()=="student"){
+            if ($user->getRole()=="ROLE_student"){
                 $codeFormation = $infosPersonne->getAttribute("unrcEtape")[0];
                 $infForm = $corresLDAP[$codeFormation];
                 $formation = $manager->getRepository(Formation::class)->findOneBy(array("departement" => ($manager->getRepository(Departement::class)->findOneByNomDpt($infForm[0])), "typeFormation" => $infForm[0]));

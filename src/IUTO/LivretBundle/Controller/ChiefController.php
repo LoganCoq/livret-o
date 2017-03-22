@@ -55,7 +55,7 @@ class ChiefController extends Controller
             'statutCAS' => 'Chef de département',
             'projets' => $nomProjets,
             'routing_statutCAShome' => '/'.$id.'/chef',
-            'info' => array('Demandes de correction', 'Projets validés'),
+            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
             'routing_info' => array('/'.$id.'/correctionChief1', '#')));
 
     }
@@ -82,7 +82,7 @@ class ChiefController extends Controller
         return $this->render('IUTOLivretBundle:Teacher:correctionChief2.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'Chef de département',
-                'info' => array('Demandes de correction', 'Projets validés'),
+                'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
                 'routing_statutCAShome' => '/'.$id.'/chef',
                 'commentaires' => $commentaires,
                 'routing_info' => array('/'.$id.'/correctionChief1', '#'),
@@ -118,11 +118,30 @@ class ChiefController extends Controller
                 'statutCAS' => 'Chef de département',
                 'commentaires' => $commentaires,
                 'routing_statutCAShome' => '/'.$id.'/chef',
-                'info' => array('Demandes de correction', 'Projets validés'),
+                'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
                 'routing_info' => array('/'.$id.'/correctionChief1', '#'),
                 'routing_options' => array('#', '#'),
                 'pagePrec' => array('/'.$id.'/'.$idProjet.'/correctionChief2'),
                 'pageSuiv' => array('/'.$id.'/correctionChief1')
             ));
+    }
+
+    public function genLivretChiefAction()
+    {
+        return $this->render('IUTOLivretBundle:Chief:genLivretChief.html.twig', array('statutCAS' => 'Chef de département',
+            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
+            'routing_statutCAShome' => '/chef',
+            'routing_info' => array('/chef/generation', '/chef/edito', '#')));
+    }
+
+    public function presentationDptAction()
+    {
+        return $this->render('IUTOLivretBundle:Chief:presentationDpt.html.twig', array('statutCAS' => 'Chef de département',
+            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'projets du département', 'Ajouter un projet'),
+            'options' => array('Visualiser','valider'),
+            'routing_statutCAShome' => '/chef',
+            'routing_info' => array('/communication/generation', '/chef/edito', '#'),
+            'routing_options' => array('/chef/editoprevisualiser','/chef')));
+
     }
 } 
