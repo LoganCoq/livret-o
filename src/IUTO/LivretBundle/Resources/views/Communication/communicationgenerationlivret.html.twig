@@ -28,8 +28,8 @@
     <div class="div_home">
         <h1 class="h1_home"> Génération de livret </h1>
 
-        <div class="form">
-            <form method=post>
+        <div class="form" action="/communication/generation/livretGenere">
+            <form method="POST">
                 <div>
                     <label>Sélectionner les départements</label><br/>
                     <select class="selectpicker departement" data-live-search="true" multiple="multiple"
@@ -73,7 +73,7 @@
 
                 <br/><br/>
 
-                <a href="/communication/generation/livretGenere" class="buttonhome" type="submit">Générer PDF</a>
+                <a class="buttonhome" type="submit">Générer PDF</a>
             </form>
         </div>
         {{ parent() }}

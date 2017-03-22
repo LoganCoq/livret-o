@@ -12,11 +12,14 @@ use IUTO\LivretBundle\Entity\Projet;
 
 class LivretGeneratorController extends Controller
 {
-    public function communicationgenerationlivretAction()
+    public function communicationgenerationlivretAction(Request $request)
     {
-        if(!empty($_POST)){
-          $departmentSelectionnes = $_POST["departement"];
-        }
+        //liste des departments
+        //liste des formations
+        //dateDeb
+        //dateFin
+        $formationsSelectionnes = $request->get('annee');
+        $departementsSelectionnes = $request->get('departement')->getClientData();
 
         $manager = $this
             ->getDoctrine()
@@ -37,10 +40,10 @@ class LivretGeneratorController extends Controller
         $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
         //preparation du PDF
 
-        foreach ($projets as $cpt => $projet) {
+        foreach ($projets as $projet) {
           $toutesLesFormations = $projet->getEtudiants()[0]->getFormations();
-          foreach ($toutesLesFormation as $cpt2 => $formation) {
-            foreach ($formationsSelectionnes as $cpt3 => $formationSelectionnee) {
+          foreach ($toutesLesFormations as $formation) {
+            foreach ($formationsSelectionnes as $formationSelectionnee) {
               if($formation->getTypeFormation() == $formationSelectionnee){
                 //chaque projet qui a le bon type de formation
 
@@ -48,7 +51,7 @@ class LivretGeneratorController extends Controller
                 if(($dateDeFormation>=$dateDebutSelection)&&($dateDebutSelection<=$dateFinSelection)){
                   //chaque projet qui a le bon type de formation à la bonne date
 
-                  foreach ($departementsSelectionnes as $cpt4 => $departmentSelectionne) {
+                  foreach ($departementsSelectionnes as $departmentSelectionne) {
                     if ($formation->getDepartement()->getNomDpt()==$departementSelectionne) {
                       //chaque projet qui a le bon type de formation à la bonne date et le bon department
 
