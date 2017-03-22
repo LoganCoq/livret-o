@@ -4,24 +4,24 @@
 {% endblock %}
 {% block content %}
 
-     <div class="list-group" style="padding: 2%">
-        <h1 class="">Correction de projets </h1>
+    <div class="list-group" style="padding: 2%">
+        <h1 class="">Projets validés </h1>
         <div style="padding: 2%">
-            <h2><small>Choisir un projet à corriger</small></h2>
+            <h2><small>Choisir un projet validé</small></h2>
 
             {% if projets|length > 0 %}
                 <ul class="list-group">
                     {% for projet in projets %}
                         <li class="list-group-item" style="padding: 1%; margin: 1%">
                             <a href="/{{ id }}/{{ projet.id }}/correctionProf2" class="list-group-item">
-                                    {{ projet.intituleProjet }}
+                                {{ projet.intituleProjet }}
                             </a>
                         </li>
                     {% endfor %}
                 </ul>
 
             {% else %}
-                <p>Vous n'avez pas de projets en cours.</p>
+                <p>Vous n'avez pas de projet validé.</p>
             {% endif %}
         </div>
 

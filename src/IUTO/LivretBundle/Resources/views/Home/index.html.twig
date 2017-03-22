@@ -22,8 +22,10 @@
                             onclick="window.location.href='{{ onclick }}'"> Utilisateurs de l'université <br/>
                         (personnels et étudiants)
                     </button>
-                    <button type="button" class="btn btn-default" id="btn_accueil"> Public</button>
+                    <button type="button" class="btn btn-default" id="btn_accueil"
+                            onclick="window.location.href='{{ modulePublic }}'"> Public</button>
                 </div>
+                <div style="text-align:center"><img src="{{ asset('assets/images/IUTO_transp.png') }}" alt="Logo IUT" style="max-height: 200px"/></div>
             {% endblock %}
         </div>
     {% endblock %}

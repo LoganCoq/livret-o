@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Ldap\Adapter\ExtLdap\Adapter;
 use Symfony\Component\Ldap\Ldap;
-use Symfony\Component\Ldap\Enty;
+use Symfony\Component\Ldap\Entry;
 use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Entity\Formation;
 use IUTO\LivretBundle\Entity\Departement;
@@ -22,8 +22,9 @@ class ConnexionController extends Controller
     public function connexionAction()
     {
 
-        //etu = o2151178
         //com = p51955
+        // $numPersonne = "o2151178";
+        // $numPersonne = "p2171";
         $numPersonne = "p51955";
 
         $config = array(
