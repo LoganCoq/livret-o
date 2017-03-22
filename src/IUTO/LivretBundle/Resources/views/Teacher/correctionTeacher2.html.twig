@@ -38,9 +38,11 @@
     	<div class="popup-messages">
       {% for com in commentaires %}
 
-          <!--SI PROF FAIRE MSG À GAUCHE -->
+          <!--SI PROF FAIRE MSG À GAUCHE attention : changer Enseigant par ROLE_faculty-->
           {% if user.role=="Enseignant" %}
-          <div class="direct-chat-messages">
+
+
+                <div class="direct-chat-messages">
               <div class="chat-box-single-line">
     	            <abbr class="timestamp"> {{com.date}} </abbr>
     	        </div>

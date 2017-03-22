@@ -14,7 +14,12 @@
     {% endfor %}
   </select>
 </form>
-<input type="submit" value="Suivant"/>
+
+    <a type="button" class="btn btn-retour" href="{{ pagePrec }}">
+        <  Retour
+    </a>
+
+
 {% else %}
     Il n'y a aucun projets à corriger
 {% endif %}
