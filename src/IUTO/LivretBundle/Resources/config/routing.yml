@@ -11,6 +11,10 @@ iuto_livret_logout:
     path: /logout
     defaults: { _controller: IUTOLivretBundle:Logout:logout}
 
+iuto_livret_public:
+    path: /public
+    defaults: {_controller: IUTOLivretBundle:Public:public }
+
 
 #==================ROUTES MODULE ETUDIANT==================#
 #==========HOME============#
