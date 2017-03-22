@@ -156,7 +156,7 @@ class TeacherController extends Controller
                 array_push($projetsValides, $elem);
         };
 
-        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array(
+        return $this->render('IUTOLivretBundle:Teacher:projetsValidesTeacher1.html.twig', array(
             'id' => $id,
             'statutCAS' => 'professeur',
             'projets' => $projetsValides,
