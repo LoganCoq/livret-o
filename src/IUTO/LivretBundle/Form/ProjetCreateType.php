@@ -79,7 +79,10 @@ class ProjetCreateType extends AbstractType
                 }
             ))
             ->add('submit', SubmitType::class, array(
-                'label' => 'Créer'
+                'label' => 'Créer',
+                'attr' => [
+                    'onclick' => "return confirm('Etes vous sûr ?')",
+                ]
             ));
     }
 
