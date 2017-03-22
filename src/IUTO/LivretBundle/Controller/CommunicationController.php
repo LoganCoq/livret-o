@@ -19,14 +19,14 @@ class CommunicationController extends Controller
             'options' => array('Générer des livrets au format PDF', 'Corriger des projets', 'Créer l\'édito du directeur'),
             'routing_info' => array('/communication/generation', '/communication/edito', '#'),
             'routing_statutCAShome' => '/communication',
-            'routing_options' => array('/communication/generation', '#', '/communication/selectionlivret/1')));
+            'routing_options' => array('/communication/generation', '#', '/communication/selectionlivret')));
     }
 
     public function communicationeditoAction()
     {
         return $this->render('IUTOLivretBundle:Communication:communicationedito.html.twig', array('statutCAS' => 'service de communication',
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
-            'options' => array('Visualiser','valider'),
+            'options' => array('Visualiser','Valider'),
             'routing_statutCAShome' => '/communication',
             'routing_info' => array('/communication/generation', '/communication/edito', '#'),
             'routing_options' => array('/communication/editoprevisualiser','/communication')));
