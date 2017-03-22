@@ -22,7 +22,7 @@ class ConnexionController extends Controller
     public function connexionAction()
     {
 
-        $numPersonne = "p7184";
+        $numPersonne = "p51955";
 
         $config = array(
             'host' => 'ldap-univ.iut45.univ-orleans.fr',
@@ -124,7 +124,7 @@ class ConnexionController extends Controller
         if (strcmp($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0],"student")==0){
             return $this->redirectToRoute("iuto_livret_studenthomepage",array("id" => $id));
         }
-        else if(strcmp($user->getRoles(),"employee")==0){
+        else if(strcmp($user->getRoles(),"ROLE_employee")==0){
             return $this->redirectToRoute("iuto_livret_communicationhomepage",array("id" => $id));
         }
         else {

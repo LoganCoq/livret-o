@@ -9,10 +9,10 @@ security:
 #            property: idUniv
         in_memory:
             memory: ~
-#    access_control:
-#            - { path: /etudiant, roles: ROLE_student }
-#            - { path: /professeur, roles: ROLE_faculty }
-#            - { path: ^/communication, roles: ROLE_employee }
+    access_control:
+            - { path: /etudiant, roles: ROLE_student }
+            - { path: /professeur, roles: ROLE_faculty }
+            - { path: ^/communication, roles: ROLE_employee }
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
