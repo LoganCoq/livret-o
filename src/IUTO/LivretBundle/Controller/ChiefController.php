@@ -33,7 +33,18 @@ class ChiefController extends Controller
 
     public function chieflisteAction($nomDep, $id)
     {
-        $projects = $this->getDoctrine()->getRepository('IUTOLivretBundle:Projet')->findBy(['id' => $nomDep]);
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('IUTOLivretBundle:Projet');
+        $projets = $repository->findBy(['id' => $nomDep]);
+
+        $projects = array();
+        foreach($projets as $elem){
+            $nom = $projets->getIntitule();
+            array_push($projects, $nom);
+        };
+
         return $this->render('IUTOLivretBundle:Chief:chiefliste.html.twig', array(
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
