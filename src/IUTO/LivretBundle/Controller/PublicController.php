@@ -14,7 +14,7 @@ class PublicController extends Controller
     {
         return $this->render('IUTOLivretBundle:Public:indexPublic.html.twig',array('routing_statutCAShome' => 'public','statutCAS' => 'Public',
             'info' => array('Voir les projets',"A propos de l'IUT'O"),
-            'routing_info' => array('/public/projets','public/iuto')
+            'routing_info' => array('/public/projets','/public/iuto')
             ));
     }
 
