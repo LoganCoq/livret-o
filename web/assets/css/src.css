@@ -107,7 +107,7 @@ ul {
 }
 
 .h1_home {
-    margin-bottom: 2.5em;
+    margin-bottom: 1.5em;
     font-size: 3em;
 }
 
@@ -292,4 +292,19 @@ ul {
     width: auto;
     margin-left: auto;
     margin-right: auto;
+}
+
+.buttonform,
+.buttonform:focus {
+    background-color: #c3c3c3;
+    color: #000000;
+    border-radius: 6px;
+    font-size: 1.4em;
+    margin: 0 2em;
+    white-space: nowrap;
+}
+
+.buttonform:hover {
+    background-color: #b9b9b9;
+    color: #000000;
 }

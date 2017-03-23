@@ -41,15 +41,12 @@ class CommunicationController extends Controller
                 $manager->persist($livret);
                 $manager->flush();
             }
-            if ($form->get('previsualiser')->isClicked())
-            {
-                $session->set('edito',$ed = $form['editoLivret']->getData());
+            if ($form->get('previsualiser')->isClicked()) {
+                $session->set('edito', $ed = $form['editoLivret']->getData());
                 return $this->redirectToRoute('iuto_livret_communicationEditoPrevisualiser');
             }
             return $this->redirectToRoute('/');
         }
-
-
 
 
         return $this->render('IUTOLivretBundle:Communication:communicationedito.html.twig', array('statutCAS' => 'service de communication',
@@ -123,10 +120,8 @@ class CommunicationController extends Controller
 
         // On ajoute les champs de l'entité que l'on veut à notre formulaire
         $formBuilder
-            ->add('choixlivret',   Select::class)
-
-            ->add('Valider',      SubmitType::class)
-        ;
+            ->add('choixlivret', Select::class)
+            ->add('Valider', SubmitType::class);
 
         // À partir du formBuilder, on génère le formulaire
         $form = $formBuilder->getForm();
