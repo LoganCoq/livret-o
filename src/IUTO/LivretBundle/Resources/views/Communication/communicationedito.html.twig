@@ -2,21 +2,15 @@
 
 {% block content %}
     <div class="div_home">
+        <h1 class="h1_home"> Édito </h1>
         <div class="form">
-            <h1 class="h1_home"> Édito </h1>
 
             {% form_theme form 'bootstrap_3_layout.html.twig' %}
             {{ form(form) }}
 
-
             {% for o in range(0, options|length - 1) %}
                 <a href="{{ routing_options[o] }}" class="buttonhome">{{ options[o] }}</a>
             {% endfor %}
-
-
-
         </div>
-
-
     </div>
 {% endblock %}
