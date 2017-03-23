@@ -51,7 +51,7 @@ class ChiefController extends Controller
 
 
 
-        return $this->render('IUTOLivretBundle:Teacher:correctionChief1.html.twig', array('id' => $id,
+        return $this->render('IUTOLivretBundle:Chief:correctionChief1.html.twig', array('id' => $id,
             'statutCAS' => 'Chef de département',
             'projets' => $nomProjets,
             'routing_statutCAShome' => '/'.$id.'/chef',
@@ -79,7 +79,7 @@ class ChiefController extends Controller
             ->getRepository('IUTOLivretBundle:Commentaire');
         $commentaires = $repository->findOneByProjet($idProjet);
 
-        return $this->render('IUTOLivretBundle:Teacher:correctionChief2.html.twig',
+        return $this->render('IUTOLivretBundle:Chief:correctionChief2.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'Chef de département',
                 'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
@@ -113,7 +113,7 @@ class ChiefController extends Controller
         $commentaires = $repository->findOneByProjet($idProjet);
         $idProjet = $projet->getId();
 
-        return $this->render('IUTOLivretBundle:Teacher:correctionChief3.html.twig',
+        return $this->render('IUTOLivretBundle:Chief:correctionChief3.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'Chef de département',
                 'commentaires' => $commentaires,

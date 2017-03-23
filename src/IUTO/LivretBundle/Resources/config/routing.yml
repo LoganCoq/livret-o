@@ -93,22 +93,22 @@ iuto_livret_chiefliste:
 #==========CORRECTION1=====#
 iuto_livret_correctionChief1:
     path: /{id}/correctionChief1
-    defaults: { _controller: IUTOLivretBundle:Teacher:correctionChief1 }
+    defaults: { _controller: IUTOLivretBundle:Chief:correctionChief1 }
 
 #==========CORRECTION2=====#
 iuto_livret_correctionChief2:
     path: /{id}/{projet}/correctionChief2
-    defaults: { _controller: IUTOLivretBundle:Teacher:correctionChief2 }
+    defaults: { _controller: IUTOLivretBundle:Chief:correctionChief2 }
 
 #==========CORRECTION3=====#
 iuto_livret_correctionChief3:
     path: /{id}/{projet}/correctionChief3
-    defaults: { _controller: IUTOLivretBundle:Teacher:correctionChief3 }
+    defaults: { _controller: IUTOLivretBundle:Chief:correctionChief3 }
 
 #==========CORRECTION4=====#
 iuto_livret_correctionChief4:
     path: /{id}/{projet}/correctionChief4
-    defaults: { _controller: IUTOLivretBundle:Teacher:correctionChief4 }
+    defaults: { _controller: IUTOLivretBundle:Chief:correctionChief4 }
 
 
 #==================ROUTES MODULE COMMUNICATIONN============#
