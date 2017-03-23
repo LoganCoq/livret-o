@@ -5,10 +5,8 @@
         <div class="form">
             <h1 class="h1_home"> Édito </h1>
 
-            <textarea class="form-control" rows="20" cols="100" id="édito" title="Édito"
-                      placeholder="Veuillez écrire votre édito ici..."></textarea>
-
-            <br/>
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form(form) }}
 
 
             {% for o in range(0, options|length - 1) %}

@@ -11,11 +11,6 @@ iuto_livret_logout:
     path: /logout
     defaults: { _controller: IUTOLivretBundle:Logout:logout}
 
-iuto_livret_public:
-    path: /public
-    defaults: {_controller: IUTOLivretBundle:Public:public }
-
-
 #==================ROUTES MODULE ETUDIANT==================#
 #==========HOME============#
 
@@ -98,22 +93,22 @@ iuto_livret_chiefliste:
 #==========CORRECTION1=====#
 iuto_livret_correctionChief1:
     path: /{id}/correctionChief1
-    defaults: { _controller: IUTOLivretBundle:Teacher:correctionChief1 }
+    defaults: { _controller: IUTOLivretBundle:Chief:correctionChief1 }
 
 #==========CORRECTION2=====#
 iuto_livret_correctionChief2:
     path: /{id}/{projet}/correctionChief2
-    defaults: { _controller: IUTOLivretBundle:Teacher:correctionChief2 }
+    defaults: { _controller: IUTOLivretBundle:Chief:correctionChief2 }
 
 #==========CORRECTION3=====#
 iuto_livret_correctionChief3:
     path: /{id}/{projet}/correctionChief3
-    defaults: { _controller: IUTOLivretBundle:Teacher:correctionChief3 }
+    defaults: { _controller: IUTOLivretBundle:Chief:correctionChief3 }
 
 #==========CORRECTION4=====#
 iuto_livret_correctionChief4:
     path: /{id}/{projet}/correctionChief4
-    defaults: { _controller: IUTOLivretBundle:Teacher:correctionChief4 }
+    defaults: { _controller: IUTOLivretBundle:Chief:correctionChief4 }
 
 
 #==================ROUTES MODULE COMMUNICATIONN============#
@@ -174,3 +169,18 @@ iuto_livret_pdfgenerator:
 iuto_livret_login:
   path: /login
   defaults: { _controller: IUTOLivretBundle:Login:login }
+
+#==================ROUTES MODULES PUBLIC============#
+#=====INDEX MODULE PUBLIC=====#
+iuto_livret_public:
+    path: /public
+    defaults: {_controller: IUTOLivretBundle:Public:public }
+
+#=====INDEX MODULE PUBLIC=====#
+iuto_livret_publicProjet:
+    path: /public/projets
+    defaults: {_controller: IUTOLivretBundle:Public:projets}
+
+iuto_livret_iutoProjet:
+    path: /public/iuto
+    defaults: {_controller: IUTOLivretBundle:Public:iuto}

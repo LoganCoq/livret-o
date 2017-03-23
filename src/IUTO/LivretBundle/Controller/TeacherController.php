@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetModifType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
+use IUTO\LivretBundle\Form\CommentaireCreateType;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -65,28 +66,43 @@ class TeacherController extends Controller
 
             return $this->redirectToRoute('');
         }
-        $idProjet = $projet->getId();
 
-
-        $repository2 = $this
+        $repository = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('IUTOLivretBundle:Commentaire');
-        $com = $repository2->findByProjet($projet);
+        $com = $repository->findByProjet($projet);
+
+        $form2 = $this->createForm(CommentaireCreateType::class, $com);
+        $form2->handleRequest($request);
+
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('');
+        }
+
+
+        $idProjet = $projet->getId();
+
+
+
 
         $commentaires = array();
         foreach($com as $elem){
             $x=array();
             $user = $elem->getUser();
-            array_push($x, $user->getRole());
+            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
+            array_push($x, $user->getRole());
             array_push($commentaires, $x);
 
         };
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
             array('form' => $form->createView(),
+                'formCom' => $form2->createView(),
                 'statutCAS' => 'professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_statutCAShome' => '/'.$id.'/professeur',
