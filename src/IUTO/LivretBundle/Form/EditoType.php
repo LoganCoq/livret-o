@@ -29,13 +29,17 @@ class EditoType extends AbstractType
                 )
             ))
             ->add('submit', SubmitType::class, array(
-                'label' => 'Valider'
+                'label' => 'Valider',
+                'attr' => array(
+                    'class' => 'buttonform'
+                )
             ))
             ->add('previsualiser', SubmitType::class, array(
-                    'label' => 'Prévisualiser'
+                    'label' => 'Prévisualiser',
+                    'attr' => array(
+                        'class' => 'buttonform'
+                    )
                 )
-
-
             );
     }
 
