@@ -37,7 +37,6 @@ class ProjetModifType extends AbstractType
                 return $etudiant->getNomUser() . ' ' . $etudiant->getPrenomUser();
             },
             'multiple' => true,
-//               'choices' => $options['listeEtudiants'], TODO
             'query_builder' => function (UserRepository $er) use ($options) {
                 $options;
                 return $er->createQueryBuilder('u')

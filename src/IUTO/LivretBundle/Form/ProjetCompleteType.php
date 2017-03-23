@@ -38,11 +38,14 @@ class ProjetCompleteType extends AbstractType
             ->add('motsClesProjet', CollectionType::class, array( //TODO mots clés
                 'allow_add' => true,
                 'allow_delete' => true,
+                'entry_type' => TextType::class,
+                'entry_options' => array(
+
+                ),
                 'prototype' => true,
                 'prototype_data' => 'New Tag Placeholder',
                 'required' => false,
             ))
-//            TODO datepicker
             ->add('dateDebut', TextType::class, array(
                 'label' => 'Date de début',
                 'attr' => [
@@ -50,7 +53,6 @@ class ProjetCompleteType extends AbstractType
                     'class' => 'datepicker',
                 ],
             ))
-//            TODO datepicker
             ->add('dateFin', TextType::class, array(
                 'label' => 'Date de fin',
                 'attr' => [

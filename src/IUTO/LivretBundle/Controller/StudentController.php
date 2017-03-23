@@ -57,7 +57,7 @@ class StudentController extends Controller
         $projet->addEtudiant($etudiant);
 
         // création du formulaire de création d'un projet
-        $form = $this->createForm(ProjetCreateType::class, $projet, ['annee' => 2017]);//TODO changer l'année
+        $form = $this->createForm(ProjetCreateType::class, $projet, ['annee' => $formation->getYearDebut()]);//TODO changer l'année
         $form->handleRequest($request);
 
         //verifie si le formulaire est valide ou pas
@@ -148,7 +148,7 @@ class StudentController extends Controller
     {
 
         //creation du formulaire pour completer un projet
-        $form = $this->createForm(ProjetCompleteType::class, $projet);//TODO
+        $form = $this->createForm(ProjetCompleteType::class, $projet);
 
 
         $form['dateDebut']->setData($projet->getDateDebut()->format('m/d/Y'));
