@@ -149,13 +149,24 @@ class StudentController extends Controller
 
         //creation du formulaire pour completer un projet
         $form = $this->createForm(ProjetCompleteType::class, $projet);//TODO
+
+
+        $form['dateDebut']->setData($projet->getDateDebut()->format('m/d/Y'));
+        $form['dateFin']->setData($projet->getDateFin()->format('m/d/Y'));
+
         $form->handleRequest($request);
         $manager = $this->getDoctrine()->getManager();
+
+
 
         // vérification de la validité du formulaire et si il à été envoyer
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+            $dateD = \DateTime::createFromFormat('mm/dd/yyyy', $form["dateDebut"]->getData());
+            $dateF = \DateTime::createFromFormat('mm/dd/yyyy', $form["dateFin"]->getData());
+            $projet->setDateDebut(new \DateTime($dateD));
+            $projet->setDateFin(new \DateTime($dateF));
             // enregistrement des modifications dans la base de données
             $em->persist($projet);
             $em->flush();
