@@ -15,32 +15,32 @@ iuto_livret_logout:
 #==========HOME============#
 
 iuto_livret_studenthomepage:
-    path: /{id}/etudiant
+    path: /etudiant
     defaults: { _controller: IUTOLivretBundle:Student:studenthome }
 
 #==========CREER PROJET====#
 iuto_livret_createProject:
-    path: /{id}/create/project
+    path: /create/project
     defaults: { _controller: IUTOLivretBundle:Student:createProject }
 
 #==========CREER PROJET====#
 iuto_livret_chooseProject:
-    path: /{id}/choose/project
+    path: /choose/project
     defaults: { _controller: IUTOLivretBundle:Student:chooseProject }
 
 #======COMPLETER PROJET====#
 iuto_livret_completeProject:
-    path: /{id}/{projet}/complete
+    path: /{projet}/complete
     defaults: { _controller: IUTOLivretBundle:Student:completeProject }
 
 #====VALIDER MODIFICATION===#
 iuto_livret_confirmCompleteProject:
-    path:  /{id}/{projet}/validate
+    path:  /{projet}/validate
     defaults: { _controller: IUTOLivretBundle:Student:confirmCompleteProject }
 
 #====VOIR PROJET FINI=======#
 iuto_livret_finishedProject:
-    path: /{id}/{projet}/finishedProject
+    path: /{projet}/finishedProject
     defaults: { _controller: IUTOLivretBundle:Student:viewFinishedProject }
 
 #==================ROUTES MODULE PROFESSEUR================#
