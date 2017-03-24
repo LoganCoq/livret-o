@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    {{ projets.intituleProjet }}
+    {{ projets|length }}
+    {%  for nom in projets %}
+        {{ nom }}
+    {% endfor %}
 {% endblock %}

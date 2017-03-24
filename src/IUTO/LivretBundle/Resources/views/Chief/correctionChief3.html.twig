@@ -14,11 +14,11 @@
         {% form_theme form 'bootstrap_3_layout.html.twig' %}
         {{ form(form) }}
 
-        <a type="button" class="btn btn-retour" href="http://localhost:8000/4/1/correctionChief2">
+        <a type="button" class="btn btn-retour" href="{{ pagePrec }}">
             <  Retour
         </a>
 
-        <a type="button" class="btn btn-suivant" href="">
+        <a type="button" class="btn btn-suivant" href="{{ pageSuiv }}">
             Suivant  >
         </a>
 
@@ -44,10 +44,10 @@
                 </div>
                 <div class="direct-chat-msg-left">
                     <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name-left">Chef de département</span>
+                        <span class="direct-chat-name-left">Professeur</span>
                     </div>
                     <div class="direct-chat-text-left">
-                        Commentaire chef de département
+                        Commentaire professeur
                     </div>
                 </div>
             </div>
