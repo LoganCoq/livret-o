@@ -14,37 +14,45 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class StudentController extends Controller
 {
     // controlleur pour le home de l'étudiant connecté
-    public function studenthomeAction($id)
+    public function studenthomeAction()
     {
 
-        $manager = $this->getDoctrine()->getManager();
+
         // recupération de l'utilisateur connecté
-        $user = $manager->getRepository(User::class)->findOneById($id);
+        $manager = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $etudiant->getId();
+
 
         return $this->render('IUTOLivretBundle:Student:studenthome.html.twig', array(
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
             'options' => array('Créer un compte rendu',
                 'Voir mes projets'),
-            'routing_info' => array('/'.$id.'/create/project',
-                '/'.$id.'/choose/project',
+            'routing_info' => array('/create/project',
+                '/choose/project',
                 '#'),
-            'routing_options' => array('/'.$id.'/create/project',
-                '/'.$id.'/choose/project',
+            'routing_options' => array('/create/project',
+                '/choose/project',
                 '#'),
-            'routing_statutCAShome' => '/'.$id.'/etudiant',
+            'routing_statutCAShome' => '/etudiant',
                 'id' => $id,
-                'user' => $user,)
-        );
+                'user' => $etudiant,
+        ));
     }
 
-    public function createProjectAction(Request $request, $id)
+    public function createProjectAction(Request $request)
     {
         $projet = new Projet();
 
-        // Recuperation de l'étudiant connecté et des ses informations
         $manager = $this->getDoctrine()->getManager();
-        $etudiant = $manager->getRepository(User::class)->findOneById($id); //TODO recuperation cas
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $etudiant->getId();
+
+        // Recuperation de l'étudiant connecté et des ses informations
+
         $formation = $etudiant->getFormations()[0];
         $anneeDebut = $formation->getDateDebut();
         $anneeFin = $formation->getDateFin();
@@ -91,10 +99,10 @@ class StudentController extends Controller
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
                     'options' => array('Créer un compte rendu', ' Voir mes projets'),
-                    'routing_info' => array('/'.$id.'/etudiant',
-                        '/'.$id.'/choose/project',
+                    'routing_info' => array('/etudiant',
+                        '/choose/project',
                         '#',),
-                    'routing_statutCAShome' => '/'.$id.'/etudiant',
+                    'routing_statutCAShome' => '/etudiant',
                     'id' => $id,)
             );
         }
@@ -104,22 +112,25 @@ class StudentController extends Controller
             array('form' => $form->createView(),
                 'statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                'routing_info' => array('/'.$id.'/create/project',
-                    '/'.$id.'/choose/project',
+                'routing_info' => array('/create/project',
+                    '/choose/project',
                     '#',),
-                'routing_statutCAShome' => '/'.$id.'/etudiant',
+                'routing_statutCAShome' => '/etudiant',
                 'id' => $id,)
         );
 
     }
 
-    public function chooseProjectAction(Request $request, $id)
+    public function chooseProjectAction(Request $request)
     {
+
         $manager = $this->getDoctrine()->getManager();
-        $repositoryUser = $manager->getRepository(User::class);
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $etudiant->getId();
 
         // récuperation des projets d'un étudiant
-        $projets = $repositoryUser->findOneById($id)->getProjetFaits();
+        $projets = $etudiant->getProjetFaits();
         $projetsSuivis = array();
         $projetsFinis = array();
 
@@ -136,18 +147,23 @@ class StudentController extends Controller
         return $this->render('IUTOLivretBundle:Student:chooseProject.html.twig',
             array('statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                'routing_info' => array('/'.$id.'/create/project',
-                    '/'.$id.'/choose/project',
+                'routing_info' => array('/create/project',
+                    '/choose/project',
                     '#',),
-                'routing_statutCAShome' => '/'.$id.'/etudiant',
+                'routing_statutCAShome' => '/etudiant',
                 'id' => $id,
                 'projetsFinis' => $projetsFinis,
                 'projetsSuivis' => $projetsSuivis,)
         );
     }
 
-    public function completeProjectAction(Request $request, $id, Projet $projet)
+    public function completeProjectAction(Request $request, Projet $projet)
     {
+
+        $manager = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $etudiant->getId();
 
         //creation du formulaire pour completer un projet
         $form = $this->createForm(ProjetCompleteType::class, $projet);
@@ -181,10 +197,10 @@ class StudentController extends Controller
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
                     'options' => array('Créer un compte rendu', 'Voir mes projets'),
-                    'routing_info' => array('/'.$id.'/create/project',
-                        '/'.$id.'/choose/project',
+                    'routing_info' => array('/create/project',
+                        '/choose/project',
                         '#',),
-                    'routing_statutCAShome' => '/'.$id.'/etudiant',
+                    'routing_statutCAShome' => '/etudiant',
                     'id' => $id,
                     'projet' => $projet->getId(),
                 )
@@ -196,29 +212,36 @@ class StudentController extends Controller
             'form' => $form->createView(),
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
-            'routing_info' => array('/'.$id.'/create/project',
-                '/'.$id.'/choose/project',
+            'routing_info' => array('/create/project',
+                '/choose/project',
                 '#',),
-            'routing_statutCAShome' => '/'.$id.'/etudiant',
+            'routing_statutCAShome' => '/etudiant',
             )
         );
     }
 
     // vue d'apres ajout d'information à un projet pour voir le pdf ou le télécharger
-    public function confirmCompleteProjectAction($id, Projet $projet)
+    public function confirmCompleteProjectAction(Projet $projet)
     {
+
+        $manager = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $etudiant->getId();
+
 
         return $this->render('IUTOLivretBundle:Student:confirmCompleteProject.html.twig', array(
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
             'options' => array('Créer un compte rendu', 'Voir mes projets'),
-            'routing_info' => array('/'.$id.'/create/project',
-                '/'.$id.'/choose/project',
+            'routing_info' => array('/create/project',
+                '/choose/project',
                 '#',),
-            'routing_options' => array('/'.$id.'/create/project',
-                '/'.$id.'/choose/project',
+            'routing_options' => array(
+                '/create/project',
+                '/choose/project',
                 '#',),
-            'routing_statutCAShome' => '/'.$id.'/etudiant',
+            'routing_statutCAShome' => '/etudiant',
             'id' => $id,
             'projet' => $projet)
         );
@@ -231,13 +254,13 @@ class StudentController extends Controller
                 'statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
                 'options' => array('Créer un compte rendu', 'Voir mes projets'),
-                'routing_info' => array('/'.$id.'/create/project',
-                    '/'.$id.'/choose/project',
+                'routing_info' => array('/create/project',
+                    '/choose/project',
                     '#',),
-                'routing_options' => array('/'.$id.'/create/project',
-                    '/'.$id.'/choose/project',
+                'routing_options' => array('/create/project',
+                    '/choose/project',
                     '#',),
-                'routing_statutCAShome' => '/'.$id.'/etudiant',
+                'routing_statutCAShome' => '/etudiant',
                 'projet' => $projet
         ));
     }

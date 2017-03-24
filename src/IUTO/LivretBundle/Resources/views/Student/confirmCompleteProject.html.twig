@@ -1,5 +1,28 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        .div_confirm_complete {
+            width: 50em;
+            height: 10em;
+
+            position: absolute;
+            top:0;
+            bottom: 0;
+            left: 35em;
+            right: 0;
+
+            margin: auto;
+        }
+        .download_confirm {
+            margin-left: 3em;
+        }
+
+    </style>
+{% endblock %}
+
 {% block content %}
     {#TODO style + links#}
     {% if app.session.flashBag.has('success') %}
@@ -10,10 +33,11 @@
         </div>
     {% endif %}
     <div class="div_confirm_complete">
-        <a href="/generate/{{ projet.id }}" class="buttonhome btn-success">
+        <a href="/generate/{{ projet.id }}" class="btn btn-success apercu_confirm">
             Aperçu du compte rendu
         </a>
-        <a href="" class="btn btn-default">
+        <a href="" class="btn btn-default download_confirm">
+            <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
             Enregistrer sur l'ordinateur
         </a>
         {#<a href="" class="btn btn-warning">#}
@@ -21,3 +45,4 @@
         {#</a>#}
     </div>
 {% endblock %}
+

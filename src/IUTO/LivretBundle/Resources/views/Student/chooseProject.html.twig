@@ -10,7 +10,7 @@
                 {% for projet in projetsSuivis %}
                     <li class="list-group-item" style="padding: 1em; margin: 0.5em">
                         Intitulé du projet : {{ projet.intituleProjet }}
-                        <a href="/{{ id }}/{{ projet.id }}/complete" class="list-group-item" style="margin: 1em">
+                        <a href="/{{ projet.id }}/complete" class="list-group-item" style="margin: 1em">
                             Voir les corrections du projet
                         </a>
                     </li>
@@ -24,7 +24,7 @@
             <h2><small>Projets finis</small></h2>
             {% if projetsFinis|length > 0 %}
                 {% for projet in projetsFinis %}
-                    <a href="/{{ id }}/{{ projet.id }}/finishedProject" class="list-group-item list-group-item-success">
+                    <a href="/{{ projet.id }}/finishedProject" class="list-group-item list-group-item-success">
                         Intitulé du projet : {{ projet.intituleProjet }}
                     </a>
                 {% endfor %}
