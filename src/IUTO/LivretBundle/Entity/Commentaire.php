@@ -91,9 +91,9 @@ class Commentaire
      *
      * @return Commentaire
      */
-    public function setDate($date)
+    public function setDate()
     {
-        $this->date = $date;
+        $this->date = new \DateTime();
 
         return $this;
     }

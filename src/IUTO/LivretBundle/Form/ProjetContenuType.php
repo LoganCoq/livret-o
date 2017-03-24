@@ -2,10 +2,7 @@
 
 namespace IUTO\LivretBundle\Form;
 
-use IUTO\LivretBundle\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,10 +17,19 @@ class ProjetContenuType extends AbstractType
     {
         $builder
         ->add('descripProjet', TextType::class, array(
-          'label' => 'Description du projet'
+            'label' => 'Description du projet',
+            'required' => false,
         ))
         ->add('bilanProjet', TextType::class, array(
-          'label' => 'Bilan du projet'
+            'label' => 'Bilan du projet',
+            'required' => false,
+
+        ))
+        ->add('submit', SubmitType::class, array(
+            'label' => 'Enregistrer le contenu et envoyer en correction',
+            'attr' => [
+                'onclick' => "return confirm('Etes vous sûr ?')",
+            ],
         ));
     }
 

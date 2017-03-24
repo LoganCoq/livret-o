@@ -62,6 +62,9 @@ class ProjetCompleteType extends AbstractType
             ))
             ->add('submit', SubmitType::class, array(
                 'label' => 'Enregistrer modifications et envoyer en correction',
+                'attr' => [
+                    'onclick' => "return confirm('Etes vous sûr ?')",
+                ],
 //                'attr' => [
 //                    'data-toggle' => "confirmation",
 //                    'class' => "btn-default confirmation",

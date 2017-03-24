@@ -23,6 +23,11 @@ iuto_livret_createProject:
     path: /create/project
     defaults: { _controller: IUTOLivretBundle:Student:createProject }
 
+#======CONTENU PROJET======#
+iuto_livret_contenuProject:
+    path: /{projet}/contenu
+    defaults: { _controller: IUTOLivretBundle:Student:contenuProject }
+
 #==========CREER PROJET====#
 iuto_livret_chooseProject:
     path: /choose/project
@@ -85,9 +90,14 @@ iuto_livret_chiefPresentation:
     path: /{id}/chef/presentation
     defaults: { _controller: IUTOLivretBundle:Chief:chiefPresentation }
 
+#==========PRESENTATIONPDF===========#
+iuto_livret_chiefEditoPrevisualiser:
+    path: /chef/editoprevisualiser
+    defaults: { _controller: IUTOLivretBundle:PresentationGenerator:generator }
+
 #==========LISTE====#
 iuto_livret_chiefliste:
-    path: /{id}/chef/{nomDep}/liste
+    path: /{id}/chef/liste
     defaults: { _controller: IUTOLivretBundle:Chief:chiefliste }
 
 #==========CORRECTION1=====#

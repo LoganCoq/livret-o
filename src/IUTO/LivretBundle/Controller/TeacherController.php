@@ -8,6 +8,8 @@ use IUTO\LivretBundle\Form\ProjetModifType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use Symfony\Component\HttpFoundation\Request;
+use IUTO\LivretBundle\Entity\Commentaire;
+
 
 
 class TeacherController extends Controller
@@ -39,7 +41,7 @@ class TeacherController extends Controller
 
         $projetsValides = array();
         foreach($projets as $elem){
-            if ($elem->getValiderProjet() == 1)
+            if ($elem->getValiderProjet() == 0)
             array_push($projetsValides, $elem);
         };
 
@@ -64,7 +66,7 @@ class TeacherController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('');
+            return $this->redirectToRoute();
         }
 
         $repository = $this
@@ -72,21 +74,6 @@ class TeacherController extends Controller
             ->getManager()
             ->getRepository('IUTOLivretBundle:Commentaire');
         $com = $repository->findByProjet($projet);
-
-        $form2 = $this->createForm(CommentaireCreateType::class, $com);
-        $form2->handleRequest($request);
-
-        if ($form2->isSubmitted() && $form2->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('');
-        }
-
-
-        $idProjet = $projet->getId();
-
-
-
 
         $commentaires = array();
         foreach($com as $elem){
@@ -99,6 +86,44 @@ class TeacherController extends Controller
             array_push($commentaires, $x);
 
         };
+
+        $idProjet = $projet->getId();
+
+        $form2 = $this->createForm(CommentaireCreateType::class, $com);
+        $form2->handleRequest($request);
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            $comReponse = new Commentaire;
+            $comReponse->setDate();
+            $comReponse->setProjet($projet);
+            $repository2 = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('IUTOLivretBundle:User');
+            $user = $repository2->findOneById($id);
+            $comReponse->setUser($user);
+            $comReponse->setContenu($_POST['iuto_livretbundle_commentaire']['contenu']);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comReponse);
+            $em->flush();
+
+
+
+//            return $this->redirect('/'.$id.'/'.$idProjet.'/correctionProf2');
+
+            return $this->render( 'IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
+                                            array('form' => $form->createView(),
+                                                'formCom' => $form2->createView(),
+                                                'statutCAS' => 'professeur',
+                                                'info' => array('Demandes de correction', 'Projets validés'),
+                                                'routing_statutCAShome' => '/'.$id.'/professeur',
+                                                'commentaires' => $commentaires,
+                                                'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
+                                                'routing_options' => array('#', '#'),
+                                                'pagePrec' => '/'.$id.'/correctionProf1',
+                                                'pageSuiv' => '/'.$id.'/'.$idProjet.'/correctionProf3',
+                                          ));
+        }
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
             array('form' => $form->createView(),
@@ -159,16 +184,27 @@ class TeacherController extends Controller
 
     public function correctionTeacher4Action(Request $request, $id, Projet $projet)
     {
+        $manager = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+     //   $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+      //  $id = $etudiant->getId();
         $idProjet = $projet->getId();
 
-        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
-            array('id' => $id,
-                'statutCAS' => 'professeur',
-                'routing_statutCAShome' => '/'.$id.'/professeur',
-                'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
-                'pagePrec' => '/'.$id.'/'.$idProjet.'/correctionProf3'
-                ));
+
+        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig', array(
+            'id' => $id,
+            'statutCAS' => 'professeur',
+            'routing_statutCAShome' => '/'.$id.'/professeur',
+            'info' => array('Demandes de correction', 'Projets validés'),
+            'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
+            'pagePrec' => '/'.$id.'/'.$idProjet.'/correctionProf3',
+            'options' => array('Créer un compte rendu', 'Voir mes projets'),
+            'routing_options' => array('/create/project', '/choose/project', '#',),
+            'id' => $id,
+            'projet' => $projet
+        ));
+
+
     }
 
     public function projetsValidesTeacher1Action(Request $request, $id)
@@ -183,7 +219,7 @@ class TeacherController extends Controller
 
         $projetsValides = array();
         foreach($projets as $elem){
-            if ($elem->getValiderProjet() == 0)
+            if ($elem->getValiderProjet() == 1)
                 array_push($projetsValides, $elem);
         };
 

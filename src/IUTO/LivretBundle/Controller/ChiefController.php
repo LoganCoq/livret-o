@@ -8,50 +8,93 @@ use IUTO\LivretBundle\Form\ProjetModifType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use Symfony\Component\HttpFoundation\Request;
+use IUTO\LivretBundle\Form\PresentationType;
+use IUTO\LivretBundle\Entity\Livret;
 
 class ChiefController extends Controller
 {
     public function chiefhomeAction($id)
     {
+
         return $this->render('IUTOLivretBundle:Chief:chiefhome.html.twig', array(
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
             'options' => array('Générer un livret au format pdf', 'Modifier la présentation du département', 'Sélection des projets', 'Afficher la liste des projets du département', 'Ajouter un projet'),
-            'routing_info' => array('#', '/'.$id.'/chef/presentation', '/'.$id.'/correctionChief1', '/'.$id.'/chef/Info/liste', '#'),
-            'routing_options' => array('#', '/'.$id.'/chef/presentation', '/'.$id.'/correctionChief1', '/'.$id.'/chef/Info/liste', '#'),
+            'routing_info' => array('#', '/'.$id.'/chef/presentation', '/'.$id.'/correctionChief1', '/'.$id.'/chef/liste', '#'),
+            'routing_options' => array('#', '/'.$id.'/chef/presentation', '/'.$id.'/correctionChief1', '/'.$id.'/chef/liste', '#'),
             'routing_statutCAShome' => '/'.$id.'/chef',));
     }
 
-    public function chiefpresentationAction($id)
+    public function chiefpresentationAction(Request $request, $id)
     {
+        $session = $this->get('session');
+        $manager = $this->getDoctrine()->getManager();
+        $livret = $manager->getRepository(Livret::class)->findOneById($session->get("numEdito")); //TODO recuperation cas
+        $form = $this->createForm(PresentationType::class, $livret);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('submit')->isClicked()) {
+                $ed = $form['editoLivret']->getData();
+                $livret->setEditoLivret($ed);
+                $manager->persist($livret);
+                $manager->flush();
+            }
+            if ($form->get('previsualiser')->isClicked())
+            {
+                $session->set('edito',$ed = $form['editoLivret']->getData());
+                return $this->redirectToRoute('iuto_livret_chiefEditoPrevisualiser');
+            }
+            return $this->redirectToRoute('iuto_livret_chiefhomepage');
+        }
+
+
+
+
         return $this->render('IUTOLivretBundle:Chief:chiefpresentation.html.twig', array(
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('#', '/'.$id.'/chef/presentation', '#', '/'.$id.'/chef/Info/liste', '#'),
-            'routing_statutCAShome' => '/'.$id.'/chef',));
+            'options' => array('Visualiser'),
+            'routing_statutCAShome' => '/'.$id.'/chef',
+            'routing_info' => array('#', '/'.$id.'/chef/presentation', '/'.$id.'/correctionChief1', '/'.$id.'/chef/liste', '#'),
+            'routing_options' => array('/'.$id.'/chef/editoprevisualiser'),
+            'form' => $form->createView()));
     }
 
-    public function chieflisteAction($nomDep, $id)
+    public function chieflisteAction($id)
     {
+
         $repository = $this
             ->getDoctrine()
             ->getManager()
-            ->getRepository('IUTOLivretBundle:Projet');
-        $projets = $repository->findBy(['id' => $nomDep]);
+            ->getRepository('IUTOLivretBundle:User');
+        $formation = $repository->findOneById($id)->getFormations();
+        $f = array();
+        foreach($formation as $elem){
+            $fId = $elem->getDepartement();
+            array_push($f,$fId);
+        }
 
-        $projects = array();
-        foreach($projets as $elem){
-            $nom = $projets->getIntitule();
-            array_push($projects, $nom);
-        };
+        $nomDpt = array();
+        foreach ($f as $x){
+            $nom = $x->getNomDpt();
+            array_push($nomDpt,$nom);
+        }
 
-        return $this->render('IUTOLivretBundle:Chief:chiefliste.html.twig', array(
+        $manager = $this->getDoctrine()->getManager();
+        $projets = $manager->getRepository(Projet::class)->findAll();
+
+
+        return $this->render('IUTOLivretBundle:Chief:chiefliste.html.twig',array(
+            'routing_statutCAShome' => '/'.$id.'/chef',
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('#', '/'.$id.'/chef/presentation', '#', '/'.$id.'/chef/Info/liste', '#'),
-            'routing_statutCAShome' => '/'.$id.'/chef',
-            'projets' => $projects));
+            'routing_info' => array('#', '/'.$id.'/chef/presentation', '#', '/'.$id.'/chef/liste', '#'),
+            'departement' => $nomDpt,
+            'projets' => $projets
+        ));
+
     }
+
 
     public function correctionChief1Action($id)
     {
@@ -174,7 +217,7 @@ class ChiefController extends Controller
 
         return $this->render('IUTOLivretBundle:Chief:correctionChief4.html.twig',
             array('id' => $id,
-                'statutCAS' => 'professeur',
+                'statutCAS' => 'chef de département',
                 'routing_statutCAShome' => '/'.$id.'/chef',
                 'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
                 'routing_info' => array('#','/'.$id.'/correctionChief1','#', '/'.$id.'/chef','#'),
