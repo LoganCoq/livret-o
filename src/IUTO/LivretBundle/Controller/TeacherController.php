@@ -41,7 +41,7 @@ class TeacherController extends Controller
 
         $projetsValides = array();
         foreach($projets as $elem){
-            if ($elem->getValiderProjet() == 1)
+            if ($elem->getValiderProjet() == 0)
             array_push($projetsValides, $elem);
         };
 
@@ -184,16 +184,27 @@ class TeacherController extends Controller
 
     public function correctionTeacher4Action(Request $request, $id, Projet $projet)
     {
+        $manager = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+     //   $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+      //  $id = $etudiant->getId();
         $idProjet = $projet->getId();
 
-        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
-            array('id' => $id,
-                'statutCAS' => 'professeur',
-                'routing_statutCAShome' => '/'.$id.'/professeur',
-                'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
-                'pagePrec' => '/'.$id.'/'.$idProjet.'/correctionProf3'
-                ));
+
+        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig', array(
+            'id' => $id,
+            'statutCAS' => 'professeur',
+            'routing_statutCAShome' => '/'.$id.'/professeur',
+            'info' => array('Demandes de correction', 'Projets validés'),
+            'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
+            'pagePrec' => '/'.$id.'/'.$idProjet.'/correctionProf3',
+            'options' => array('Créer un compte rendu', 'Voir mes projets'),
+            'routing_options' => array('/create/project', '/choose/project', '#',),
+            'id' => $id,
+            'projet' => $projet
+        ));
+
+
     }
 
     public function projetsValidesTeacher1Action(Request $request, $id)
@@ -208,7 +219,7 @@ class TeacherController extends Controller
 
         $projetsValides = array();
         foreach($projets as $elem){
-            if ($elem->getValiderProjet() == 0)
+            if ($elem->getValiderProjet() == 1)
                 array_push($projetsValides, $elem);
         };
 
