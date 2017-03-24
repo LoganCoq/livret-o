@@ -71,10 +71,12 @@ class StudentController extends Controller
             $projet->setDateFin(new \DateTime($dateF));
             foreach ( $projet->getEtudiants() as $etu ){
                 $etu->addProjetFait($projet);
+                $projet->addEtudiant($etu);
                 $em->persist($etu);
             }
             foreach ( $projet->getTuteurs() as $tut){
                 $tut->addProjetSuivi($projet);
+                $projet->addTuteur($tut);
                 $em->persist($tut);
             }
 
@@ -170,6 +172,9 @@ class StudentController extends Controller
             // enregistrement des modifications dans la base de données
             $em->persist($projet);
             $em->flush();
+
+            $request->getSession()->getFlashBag()->add('success', 'Projet bien modifié.');
+
 
             // redirection une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_confirmCompleteProject', array(
