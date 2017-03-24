@@ -18,8 +18,10 @@ class LivretGeneratorController extends Controller
         //liste des formations
         //dateDeb
         //dateFin
-        $formationsSelectionnes = $request->get('annee');
-        $departementsSelectionnes = $request->get('departement')->getClientData();
+        $form = $this->createForm(ProjetCreateType::class, null, );//TODO changer l'année
+        $form->handleRequest($request);
+        //$formationsSelectionnes = $request->get('annee');
+        //$departementsSelectionnes = $request->get('departement')->getClientData();
 
         $manager = $this
             ->getDoctrine()
@@ -48,7 +50,7 @@ class LivretGeneratorController extends Controller
                 //chaque projet qui a le bon type de formation
 
                 $dateDeFormation = $formation->getDateDebut();
-                if(($dateDeFormation>=$dateDebutSelection)&&($dateDebutSelection<=$dateFinSelection)){
+                if(($dateDeFormation>=$dateDebutSelection)&&($dateDeFormation<=$dateFinSelection)){
                   //chaque projet qui a le bon type de formation à la bonne date
 
                   foreach ($departementsSelectionnes as $departmentSelectionne) {
