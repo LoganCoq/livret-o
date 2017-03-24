@@ -16,7 +16,8 @@
     {% block page %}
         <div id="contenthome">
             {% block content %}
-                <h1 class="title_accueil"> Bienvenue sur le générateur de livret de projets </h1>
+                <br/>
+                <div style="text-align:center"><img src="{{ asset('assets/images/livreto.png') }}" alt="Logo IUT" style="max-height: 200px"/></div>
                 <div class="buttons_accueil">
                     <button type="button" class="btn btn-default" id="btn_accueil"
                             onclick="window.location.href='{{ onclick }}'"> Utilisateurs de l'université <br/>
@@ -25,6 +26,7 @@
                     <button type="button" class="btn btn-default" id="btn_accueil"
                             onclick="window.location.href='{{ modulePublic }}'"> Public</button>
                 </div>
+                <br/>
                 <div style="text-align:center"><img src="{{ asset('assets/images/IUTO_transp.png') }}" alt="Logo IUT" style="max-height: 200px"/></div>
             {% endblock %}
         </div>
