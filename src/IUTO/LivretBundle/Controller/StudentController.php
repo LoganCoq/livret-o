@@ -11,6 +11,7 @@ use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class StudentController extends Controller
 {
@@ -70,10 +71,12 @@ class StudentController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             // récupération de la date et changement de son format
-            $dateD = \DateTime::createFromFormat('mm/dd/yyyy', $form["dateDebut"]->getData());
-            $dateF = \DateTime::createFromFormat('mm/dd/yyyy', $form["dateFin"]->getData());
-            $projet->setDateDebut(new \DateTime($dateD));
-            $projet->setDateFin(new \DateTime($dateF));
+
+            $dateFormD = $form['dateDebut']->getData();
+            $dateFormF = $form['dateFin']->getData();
+
+            $projet->setDateDebut(new \DateTime($dateFormD));
+            $projet->setDateFin(new \DateTime($dateFormF));
 
             // ajout des etudiant au projet et du projet aux étudiant
             foreach ( $projet->getEtudiants() as $etu ){
@@ -221,10 +224,11 @@ class StudentController extends Controller
         // vérification de la validité du formulaire et si il à été envoyer
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $dateD = \DateTime::createFromFormat('mm/dd/yyyy', $form["dateDebut"]->getData());
-            $dateF = \DateTime::createFromFormat('mm/dd/yyyy', $form["dateFin"]->getData());
-            $projet->setDateDebut(new \DateTime($dateD));
-            $projet->setDateFin(new \DateTime($dateF));
+            $dateFormD = $form['dateDebut']->getData();
+            $dateFormF = $form['dateFin']->getData();
+
+            $projet->setDateDebut(new \DateTime($dateFormD));
+            $projet->setDateFin(new \DateTime($dateFormF));
             // enregistrement des modifications dans la base de données
             $em->persist($projet);
             $em->flush();
