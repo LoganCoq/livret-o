@@ -52,8 +52,6 @@ class StudentController extends Controller
 
         // Recuperation des informations de l'étudiant
         $formation = $etudiant->getFormations()[0];
-        $anneeDebut = $formation->getDateDebut();
-        $anneeFin = $formation->getDateFin();
         $departement = $formation->getDepartement()->getNomDpt();
 
         // remplissage des données de bases du projet
