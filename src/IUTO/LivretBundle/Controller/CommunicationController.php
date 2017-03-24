@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CommunicationController extends Controller
 {
 
+
     public function communicationhomeAction()
     {
         return $this->render('IUTOLivretBundle:Communication:communicationhome.html.twig', array('statutCAS' => 'service de communication',
@@ -138,7 +139,7 @@ class CommunicationController extends Controller
                             ]);
                             //creation du template
 
-                        $html2pdf->writeHTML($template);
+                        $html2pdf->create($template);
                         //ajout de la page au livret
                       }
                     }
