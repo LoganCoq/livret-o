@@ -6,6 +6,7 @@ use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetCompleteType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
+use IUTO\LivretBundle\Form\ProjetContenuType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,6 +94,54 @@ class StudentController extends Controller
             $em->flush();
 
             // affichage d'un message de confirmation que le projet à bien été créer
+
+
+            return $this->redirectToRoute('iuto_livret_contenuProject', array(
+                    'statutCAS' => 'étudiant',
+                    'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                    'options' => array('Créer un compte rendu', ' Voir mes projets'),
+                    'routing_info' => array('/etudiant',
+                        '/choose/project',
+                        '#',),
+                    'routing_statutCAShome' => '/etudiant',
+                    'id' => $id,
+                    'projet' => $projet->getId())
+            );
+        }
+
+        // affichage de la page du formulaire
+        return $this->render('IUTOLivretBundle:Student:createProject.html.twig',
+            array('form' => $form->createView(),
+                'statutCAS' => 'étudiant',
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_info' => array('/create/project',
+                    '/choose/project',
+                    '#',),
+                'routing_statutCAShome' => '/etudiant',
+                'id' => $id,)
+        );
+    }
+
+    public function contenuProjectAction(Request $request, Projet $projet)
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $etudiant->getId();
+
+
+        $form = $this->createForm(ProjetContenuType::class, $projet);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            // enregistrement des données dans la base
+            $em->persist($projet);
+            $em->flush();
+
+            // affichage d'un message de confirmation que le projet à bien été créer
             $request->getSession()->getFlashBag()->add('success', 'Projet bien ajouté.');
 
             return $this->redirectToRoute('iuto_livret_studenthomepage', array(
@@ -108,17 +157,17 @@ class StudentController extends Controller
         }
 
         // affichage de la page du formulaire
-        return $this->render('IUTOLivretBundle:Student:createProject.html.twig',
+        return $this->render('IUTOLivretBundle:Student:contenuProject.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
                 'routing_info' => array('/create/project',
-                    '/choose/project',
-                    '#',),
+                   '/choose/project',
+                   '#',),
                 'routing_statutCAShome' => '/etudiant',
-                'id' => $id,)
-        );
-
+                'id' => $id,
+                'projet' => $projet->getId())
+            );
     }
 
     public function chooseProjectAction(Request $request)

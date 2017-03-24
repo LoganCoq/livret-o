@@ -23,6 +23,11 @@ iuto_livret_createProject:
     path: /create/project
     defaults: { _controller: IUTOLivretBundle:Student:createProject }
 
+#======CONTENU PROJET======#
+iuto_livret_contenuProject:
+    path: /{projet}/contenu
+    defaults: { _controller: IUTOLivretBundle:Student:contenuProject }
+
 #==========CREER PROJET====#
 iuto_livret_chooseProject:
     path: /choose/project
