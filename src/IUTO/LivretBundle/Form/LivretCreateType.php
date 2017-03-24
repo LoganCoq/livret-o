@@ -27,12 +27,12 @@ class LivretCreateType extends AbstractType
                 'attr' => [
                   'class' => 'selectpicker departement',
                   'data-live-search' => 'true',
-                  'multiple' => 'multiple',
                   'name' => 'departement',
                   'data-selected-text-format' => 'count > 5',
                   'data-count-selected-text' => 'Tous les départements',
                   'title' => 'Aucun département sélectionné'
                   ],
+                  'multiple' => true,
                   'choices' => array(
                     'Informatique' => 'Informatique',
                     'GMP' => 'GMP',
@@ -47,12 +47,12 @@ class LivretCreateType extends AbstractType
                 'attr' => [
                   'class' => 'selectpicker annee',
                   'data-live-search' => 'true',
-                  'multiple' => 'true',
                   'name' => 'annee',
                   'data-selected-text-format' => 'count > 3',
                   'data-count-selected-text' => 'Toutes les promotions',
                   'title' => 'Aucune promotion sélectionnée'
                   ],
+                  'multiple' => true,
                   'choices' => array(
                     '1A' => '1A',
                     '2A' => '2A',
