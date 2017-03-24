@@ -43,7 +43,6 @@ class ProjetCreateType extends AbstractType
             ->add('etudiants', EntityType::class, array(
                 'class' => User::class,
                 'label' => 'Etudiants',
-//                TODO ajouter information touche ctrl
                 'choice_label' => function (User $etudiant) {
                     return $etudiant->getNomUser() . ' ' . $etudiant->getPrenomUser();
                 },

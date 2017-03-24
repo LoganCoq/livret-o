@@ -21,16 +21,25 @@ class EditoType extends AbstractType
     {
         $builder
             ->add('editoLivret', TextareaType::class, array(
-                'label' => 'Edito du directeur'
+                'label' => 'Edito du directeur',
+                'attr' => array(
+                    'placeholder' => 'Veuillez écrire l\'édito ici...',
+                    'rows' => 15,
+                    'cols' => 100
+                )
             ))
-                ->add('submit', SubmitType::class, array(
-                    'label'=>'Valider'
-                    ))
-                    ->add('previsualiser', SubmitType::class,array(
-                        'label' => 'Prévisualiser'
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Valider',
+                'attr' => array(
+                    'class' => 'buttonform'
+                )
+            ))
+            ->add('previsualiser', SubmitType::class, array(
+                    'label' => 'Prévisualiser',
+                    'attr' => array(
+                        'class' => 'buttonform'
                     )
-
-
+                )
             );
     }
 
