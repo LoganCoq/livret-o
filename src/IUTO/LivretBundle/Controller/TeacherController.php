@@ -87,7 +87,16 @@ class TeacherController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $proj = new Projet();
+
+            $proj -> setIntituleProjet($_POST['iuto_livretbundle_projet']['intituleProjet']);
+            $proj -> setDateDebut($_POST['iuto_livretbundle_projet']['dateDebut']);
+            $proj -> setDateFin($_POST['iuto_livretbundle_projet']['dateFin']);
+
+            $em2 = $this->getDoctrine()->getManager();
+            $em2->persist($proj);
+            $em2->flush();
+
 
             return $this->redirectToRoute();
         }
@@ -115,20 +124,33 @@ class TeacherController extends Controller
         $form2 = $this->createForm(CommentaireCreateType::class, $com);
         $form2->handleRequest($request);
         if ($form2->isSubmitted() && $form2->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $comReponse = new Commentaire;
+            $comReponse->setDate();
+            $comReponse->setProjet($projet);
+            $repository2 = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('IUTOLivretBundle:User');
+            $user = $repository2->findOneById($id);
+            $comReponse->setUser($user);
+            $comReponse->setContenu($_POST['iuto_livretbundle_commentaire']['contenu']);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comReponse);
+            $em->flush();
 
             return $this->render( 'IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
-                                            array('form' => $form->createView(),
-                                                'formCom' => $form2->createView(),
-                                                'statutCAS' => 'professeur',
-                                                'info' => array('Demandes de correction', 'Projets validés'),
-                                                'routing_statutCAShome' => '/professeur',
-                                                'commentaires' => $commentaires,
-                                                'routing_info' => array('/correctionProf1', '/projetsValides1'),
-                                                'routing_options' => array('#', '#'),
-                                                'pagePrec' => '/correctionProf1',
-                                                'pageSuiv' => '/'.$idProjet.'/correctionProf3'
-                                          ));
+                array('form' => $form->createView(),
+                    'formCom' => $form2->createView(),
+                    'statutCAS' => 'professeur',
+                    'info' => array('Demandes de correction', 'Projets validés'),
+                    'routing_statutCAShome' => '/professeur',
+                    'commentaires' => $commentaires,
+                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                    'routing_options' => array('#', '#'),
+                    'pagePrec' => '/correctionProf1',
+                    'pageSuiv' => '/'.$idProjet.'/correctionProf3',
+                ));
         }
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
@@ -187,9 +209,22 @@ class TeacherController extends Controller
         $form2 = $this->createForm(CommentaireCreateType::class, $com);
         $form2->handleRequest($request);
         if ($form2->isSubmitted() && $form2->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $comReponse = new Commentaire;
+            $comReponse->setDate();
+            $comReponse->setProjet($projet);
+            $repository2 = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('IUTOLivretBundle:User');
+            $user = $repository2->findOneById($id);
+            $comReponse->setUser($user);
+            $comReponse->setContenu($_POST['iuto_livretbundle_commentaire']['contenu']);
 
-            return $this->render( 'IUTOLivretBundle:Teacher:correctionTeacher3.html.twig',
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comReponse);
+            $em->flush();
+
+            return $this->render( 'IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
                 array('form' => $form->createView(),
                     'formCom' => $form2->createView(),
                     'statutCAS' => 'professeur',
@@ -198,8 +233,8 @@ class TeacherController extends Controller
                     'commentaires' => $commentaires,
                     'routing_info' => array('/correctionProf1', '/projetsValides1'),
                     'routing_options' => array('#', '#'),
-                    'pagePrec' => '/'.$idProjet.'/correctionProf2',
-                    'pageSuiv' => '/'.$idProjet.'/correctionProf4'
+                    'pagePrec' => '/correctionProf1',
+                    'pageSuiv' => '/'.$idProjet.'/correctionProf3',
                 ));
         }
 
@@ -248,10 +283,15 @@ class TeacherController extends Controller
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+
             if($projet->getValiderProjet()==0){
                 $projet->setValiderProjet(1);
             }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($projet);
+            $em->flush();
+
             return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig',
                 array(
                     'form' => $form->createView(),
@@ -266,8 +306,6 @@ class TeacherController extends Controller
                     'projet' => $idProjet,
                 ));
         }
-
-
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
             array(
