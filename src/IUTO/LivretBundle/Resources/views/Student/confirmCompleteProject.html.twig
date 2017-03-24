@@ -24,7 +24,6 @@
 {% endblock %}
 
 {% block content %}
-    {#TODO style + links#}
     {% if app.session.flashBag.has('success') %}
         <div class="alert alert-success">
             {% for msg in app.session.flashBag.get('success') %}
