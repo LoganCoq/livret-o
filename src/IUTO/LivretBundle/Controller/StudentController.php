@@ -171,6 +171,9 @@ class StudentController extends Controller
             $em->persist($projet);
             $em->flush();
 
+            $request->getSession()->getFlashBag()->add('success', 'Projet bien modifié.');
+
+
             // redirection une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_confirmCompleteProject', array(
                     'statutCAS' => 'étudiant',
