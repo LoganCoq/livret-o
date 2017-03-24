@@ -92,7 +92,24 @@ class TeacherController extends Controller
         $form2 = $this->createForm(CommentaireCreateType::class, $com);
         $form2->handleRequest($request);
         if ($form2->isSubmitted() && $form2->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $comReponse = new Commentaire;
+            $comReponse->setDate();
+            $comReponse->setProjet($projet);
+            $repository2 = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('IUTOLivretBundle:User');
+            $user = $repository2->findOneById($id);
+            $comReponse->setUser($user);
+            $comReponse->setContenu($_POST['iuto_livretbundle_commentaire']['contenu']);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comReponse);
+            $em->flush();
+
+
+
+//            return $this->redirect('/'.$id.'/'.$idProjet.'/correctionProf2');
 
             return $this->render( 'IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
                                             array('form' => $form->createView(),
@@ -104,7 +121,7 @@ class TeacherController extends Controller
                                                 'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
                                                 'routing_options' => array('#', '#'),
                                                 'pagePrec' => '/'.$id.'/correctionProf1',
-                                                'pageSuiv' => '/'.$id.'/'.$idProjet.'/correctionProf3'
+                                                'pageSuiv' => '/'.$id.'/'.$idProjet.'/correctionProf3',
                                           ));
         }
 

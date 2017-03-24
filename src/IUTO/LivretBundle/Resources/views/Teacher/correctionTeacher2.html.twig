@@ -54,7 +54,7 @@
                         </div>
                     {% endif %}
 
-                    {% if commentaires[o][3] == "Enseignant" %}
+                    {% if commentaires[o][3] == "Etudiant" %}
                         <div class="direct-chat-msg-left">
                             <div class="direct-chat-info clearfix">
                                 <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
@@ -65,7 +65,7 @@
                         </div>
                     {% endif %}
 
-                    {% if commentaires[o][3] == "Etudiant" %}
+                    {% if commentaires[o][3] == "Enseignant" %}
                         <div class="direct-chat-msg-right">
                         <div class="direct-chat-info-right clearfix">
                             <span class="direct-chat-name-right">{{ commentaires[o][0] }}</span>
@@ -78,13 +78,16 @@
 
 
                 {% endfor %}
+
+                    {#<div class="reponseCorrection">#}
+                        {#{% form_theme form 'bootstrap_3_layout.html.twig' %}#}
+                        {#{{ form(formCom) }}#}
+                    {#</div>#}
+
             </div>
 
+
             <div class="reponseCorrection">
-                {#<input type="text" value="Veuillez taper une réponse suite à vos modifications"> </input>#}
-                {#<button type="button" class="btn btn-envoyer-msg" href="">#}
-                    {#Envoyer#}
-                {#</button>#}
                 {% form_theme form 'bootstrap_3_layout.html.twig' %}
                 {{ form(formCom) }}
             </div>
