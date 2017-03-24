@@ -3,6 +3,7 @@
 namespace IUTO\LivretBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -34,21 +35,38 @@ class ProjetCompleteType extends AbstractType
                 'label' => 'Client',
                 'required' => false,
             ))
-            ->add('motsClesProjet', CollectionType::class, array( //TODO
+            ->add('motsClesProjet', CollectionType::class, array( //TODO mots clés
                 'allow_add' => true,
                 'allow_delete' => true,
+                'entry_type' => TextType::class,
+                'entry_options' => array(
+
+                ),
                 'prototype' => true,
                 'prototype_data' => 'New Tag Placeholder',
                 'required' => false,
             ))
-            ->add('dateDebut', DateType::class, array(
+            ->add('dateDebut', TextType::class, array(
                 'label' => 'Date de début',
+                'attr' => [
+                    'data-provide' => 'datepicker',
+                    'class' => 'datepicker',
+                ],
             ))
-            ->add('dateFin', DateType::class, array(
+            ->add('dateFin', TextType::class, array(
                 'label' => 'Date de fin',
+                'attr' => [
+                    'data-provide' => 'datepicker',
+                    'class' => 'datepicker',
+                ],
             ))
             ->add('submit', SubmitType::class, array(
-                'label' => 'Enregistrer',
+                'label' => 'Enregistrer modifications et envoyer en correction',
+//                'attr' => [
+//                    'data-toggle' => "confirmation",
+//                    'class' => "btn-default confirmation",
+//                    'style' => "margin: 2em 10em;",
+//                ],
             ))
             ;
     }

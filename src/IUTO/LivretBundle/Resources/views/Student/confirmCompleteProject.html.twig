@@ -2,9 +2,22 @@
 
 {% block content %}
     {#TODO style + links#}
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="div_confirm_complete">
-        <a href="/generate/{{ projet.id }}" class="buttonhome btn-success">Aperçu du compte rendu</a>
-        <a href="" class="btn btn-default">Enregistrer sur l'ordinateur</a>
-        <a href="" class="btn btn-warning">Terminer et envoyer en correction</a>
+        <a href="/generate/{{ projet.id }}" class="buttonhome btn-success">
+            Aperçu du compte rendu
+        </a>
+        <a href="" class="btn btn-default">
+            Enregistrer sur l'ordinateur
+        </a>
+        {#<a href="" class="btn btn-warning">#}
+            {#Terminer et envoyer en correction#}
+        {#</a>#}
     </div>
 {% endblock %}
