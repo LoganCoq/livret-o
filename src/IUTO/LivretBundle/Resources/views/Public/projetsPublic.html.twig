@@ -9,8 +9,9 @@
 {% endblock %}
 
 {% block content %}
-    {{ dump() }}
     <div class="div_home">
+        <h1 class="h1_home"> Voir les projets </h1>
+
         <select id="selectionDpt" class="selectpicker form-control" data-live-search="data-live-search"
                 data-width="auto" multiple="multiple" title="Aucun département sélectionné">
             {% for d in dpt %}
@@ -25,9 +26,12 @@
             {% endfor %}
         </select>
 
+        <br/>
+
         <ul id="listeProjets">
             {% for p in projets %}
-                <li><a href="/generate/{{ p.id }}" id="o{{ p.id }}">{{ p.intituleProjet }}</a></li>
+                <li class="projetPublicLi"><a class="projetPublic" href="/generate/{{ p.id }}"
+                                              id="o{{ p.id }}">{{ p.intituleProjet }}</a></li>
             {% endfor %}
         </ul>
     </div>
