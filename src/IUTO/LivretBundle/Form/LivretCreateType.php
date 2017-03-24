@@ -47,7 +47,7 @@ class LivretCreateType extends AbstractType
                 'attr' => [
                   'class' => 'selectpicker annee',
                   'data-live-search' => 'true',
-                  'multiple' => 'multiple',
+                  'multiple' => 'true',
                   'name' => 'annee',
                   'data-selected-text-format' => 'count > 3',
                   'data-count-selected-text' => 'Toutes les promotions',
