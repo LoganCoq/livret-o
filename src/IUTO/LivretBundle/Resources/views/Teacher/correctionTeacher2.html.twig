@@ -33,58 +33,56 @@
         </div>
 
 
-        <!-- A FAIRE : BOUCLE FOR SUR TOUS LES MESSAGES ENREGISTRES-->
-
         <div class="popup-messages">
 
-
             <div class="direct-chat-messages">
-                {% for o in range(0, commentaires|length - 1) %}
-                    {% if o != 0 %}
-                        {% if commentaires[o][2] != commentaires[o-1][2] %}
+
+                {% if commentaires|length > 0 %}
+                    {% for o in range(0, commentaires|length - 1) %}
+                        {% if o != 0 %}
+                            {% if commentaires[o][2] != commentaires[o-1][2] %}
+                                <div class="chat-box-single-line">
+                                    <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if o == 0 %}
                             <div class="chat-box-single-line">
                                 <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
                             </div>
                         {% endif %}
-                    {% endif %}
 
-                    {% if o == 0 %}
-                        <div class="chat-box-single-line">
-                            <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
-                        </div>
-                    {% endif %}
-
-                    {% if commentaires[o][3] == "Enseignant" %}
-                        <div class="direct-chat-msg-left">
-                            <div class="direct-chat-info clearfix">
-                                <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
+                        {% if commentaires[o][3] == "Etudiant" %}
+                            <div class="direct-chat-msg-left">
+                                <div class="direct-chat-info clearfix">
+                                    <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
+                                </div>
+                                <div class="direct-chat-text-left">
+                                    {{ commentaires[o][1] }}
+                                </div>
                             </div>
-                            <div class="direct-chat-text-left">
+                        {% endif %}
+
+                        {% if commentaires[o][3] == "Enseignant" %}
+                            <div class="direct-chat-msg-right">
+                            <div class="direct-chat-info-right clearfix">
+                                <span class="direct-chat-name-right">{{ commentaires[o][0] }}</span>
+                            </div>
+                            <div class="direct-chat-text-right">
                                 {{ commentaires[o][1] }}
                             </div>
+                        {% endif %}
                         </div>
-                    {% endif %}
-
-                    {% if commentaires[o][3] == "Etudiant" %}
-                        <div class="direct-chat-msg-right">
-                        <div class="direct-chat-info-right clearfix">
-                            <span class="direct-chat-name-right">{{ commentaires[o][0] }}</span>
-                        </div>
-                        <div class="direct-chat-text-right">
-                            {{ commentaires[o][1] }}
-                        </div>
-                    {% endif %}
-                    </div>
 
 
-                {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
             </div>
 
+
             <div class="reponseCorrection">
-                {#<input type="text" value="Veuillez taper une réponse suite à vos modifications"> </input>#}
-                {#<button type="button" class="btn btn-envoyer-msg" href="">#}
-                    {#Envoyer#}
-                {#</button>#}
                 {% form_theme form 'bootstrap_3_layout.html.twig' %}
                 {{ form(formCom) }}
             </div>

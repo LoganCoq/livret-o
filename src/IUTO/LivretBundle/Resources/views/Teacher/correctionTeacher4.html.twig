@@ -1,28 +1,54 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        .div_confirm_complete {
+            width: 50em;
+            height: 10em;
+
+            position: absolute;
+            top:0;
+            bottom: 0;
+            left: 35em;
+            right: 35em;
+
+            margin: auto;
+        }
+        .download_confirm {
+            margin-left: 3em;
+        }
+    </style>
+{% endblock %}
+
 {% block title %}
     Correction projets
 {% endblock %}
 
 {% block content %}
-    <h1> Texte à écrire </h1>
 
-    <div>
-        <button type="button" class="btn btn-envoyer-msg" href="">
-            Bouton 1
-        </button>
+    <h1> Finalisation du projet </h1>
 
-        <button type="button" class="btn btn-envoyer-msg" href="">
-            Bouton 2
-        </button>
+    <div class="div_confirm_complete">
+        <a href="/generate/{{ projet.id }}" class="btn btn-success apercu_confirm">
+            Aperçu du compte rendu
+        </a>
 
-        <button type="button" class="btn btn-envoyer-msg" href="">
-            Bouton 3
-        </button>
+        <a type="button" href="" class="btn btn-default download_confirm">
+            Renvoyer en correction
+        </a>
+        <a type="submit" href="" class="btn btn-warning">
+            Valider le compte-rendu
+        </a>
+        <a type="button" class="btn btn-retour" href="{{ pagePrec }}">
+            <  Retour
+        </a>
     </div>
 
-    <a type="button" class="btn btn-retour" href="{{ pagePrec }}">
-        <  Retour
-    </a>
-
 {% endblock %}
+
+
+
+
+

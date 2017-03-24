@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use IUTO\LivretBundle\Form\EditoType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
+use IUTO\LivretBundle\Form\LivretCreateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CommunicationController extends Controller
 {
+
 
     public function communicationhomeAction()
     {
@@ -62,26 +64,27 @@ class CommunicationController extends Controller
             'form' => $form->createView()));
     }
 
-    public function communicationgenerationlivretAction()
+    public function communicationgenerationlivretAction(Request $request2)
     {
         $form = $this->createForm(LivretCreateType::class);
         $form->handleRequest($request2);
+        $manager = $this
+            ->getDoctrine()
+            ->getManager();
+        $repository = $manager
+            ->getRepository('IUTOLivretBundle:Projet');
+
+        $livret = new Livret();
+        $livret->setIntituleLivret("livret test");
+        $livret->setDateCreationLivret(new \DateTime());
+        $livret->setEditoLivret("Si si la pharmacie ça marche");
+        //creation d'un nouveau livret pour la bd
+
         if ($form->isSubmitted() && $form->isValid()) {
           $dateDebutSelection = $form["dateDebut"]->getData();
           $dateFinSelection = $form["dateFin"]->getData();
           $formationsSelectionnes = $form["listeFormation"]->getData();
           $departementsSelectionnes = $form["listeDepartements"]->getData();
-          $manager = $this
-              ->getDoctrine()
-              ->getManager();
-          $repository = $manager
-              ->getRepository('IUTOLivretBundle:Projet');
-
-          $livret = new Livret();
-          $livret->setIntituleLivret("Projet département Informatique");
-          $livret->setDateCreationLivret(new \DateTime());
-          $livret->setEditoLivret("Le département informatique ils sont au dessus.");
-          //creation d'un nouveau livret pour la bd
 
           $projets = $repository->findAll();
           //recuperation de tous les projets de la BD
@@ -89,6 +92,7 @@ class CommunicationController extends Controller
           $html2pdf = $this->get('app.html2pdf');
           $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
           //preparation du PDF
+          echo "1";
 
           foreach ($projets as $projet) {
             $toutesLesFormations = $projet->getEtudiants()[0]->getFormations();
@@ -98,23 +102,28 @@ class CommunicationController extends Controller
                 if($formation->getTypeFormation() == $formationSelectionnee){
                   //chaque projet qui a le bon type de formation
 
+                  echo "2";
+
                   $dateDeFormation = $formation->getDateDebut();
                   if(($dateDeFormation>=$dateDebutSelection)&&($dateDeFormation<=$dateFinSelection)){
                     //chaque projet qui a le bon type de formation à la bonne date
+                    echo "3";
 
-                    foreach ($departementsSelectionnes as $departmentSelectionne) {
+                    foreach ($departementsSelectionnes as $departementSelectionne) {
                       if ($formation->getDepartement()->getNomDpt()==$departementSelectionne) {
                         //chaque projet qui a le bon type de formation à la bonne date et le bon department
 
+                        echo "ok";
                         $nomP = $projet->getIntituleProjet();
                         $descripP = $projet->getDescripProjet();
                         $bilanP = $projet->getBilanProjet();
                         $clientP = $projet->getClientProjet();
                         $etudiants = $projet->getEtudiants();
                         $tuteurs = $projet->getTuteurs();
+                        $departement = $formation->getDepartement()->getNomDpt();
                         //recuperation des infos du projet
 
-                        $projet->addLivrets($livret);
+                        $projet->addLivret($livret);
                         $livret->addProjet($projet);
                         //ajout de la relation livret/projet
 
@@ -124,11 +133,13 @@ class CommunicationController extends Controller
                                 'bilan' => $bilanP,
                                 'client' => $clientP,
                                 'etudiants' => $etudiants,
-                                'tuteurs' => $tuteurs
+                                'tuteurs' => $tuteurs,
+                                'departement' => $departement,
+                                'formation' => $formation->getTypeFormation()
                             ]);
                             //creation du template
 
-                        $html2pdf->writeHTML($template);
+                        $html2pdf->create($template);
                         //ajout de la page au livret
                       }
                     }
@@ -137,14 +148,13 @@ class CommunicationController extends Controller
               }
             }
           }
-          $manager->persist($livret);
-          $manager->flush();
         }
-
-        return $this->render('IUTOLivretBundle:Communication:communicationgenerationlivret.html.twig', array('form' => $form->createView(), 'statutCAS' => 'service de communication',
-            'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
-            'routing_statutCAShome' => '/communication',
-            'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#')));
+        $manager->persist($livret);
+        $manager->flush();
+        // return $this->render('IUTOLivretBundle:Communication:communicationgenerationlivret.html.twig', array('form' => $form->createView(), 'statutCAS' => 'service de communication',
+        //     'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+        //     'routing_statutCAShome' => '/communication',
+        //     'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#')));
     }
 
     public function communicationvalidationCRAction()
@@ -193,11 +203,9 @@ class CommunicationController extends Controller
                 ->add('choixLivret', ChoiceType::class, array(
                     'label' => 'Choix du Livret',
                     'attr' => [
-                        'class' => 'selectpicker departement',
+                        'class' => 'selectpicker',
                         'data-live-search' => 'true',
                         'name' => 'livret',
-                        'data-selected-text-format' => 'count > 5',
-                        'data-count-selected-text' => 'Tous les livrets',
                         'title' => 'Aucun livret sélectionné'
                     ],
                     'choices' =>$l
