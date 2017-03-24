@@ -71,10 +71,12 @@ class StudentController extends Controller
             $projet->setDateFin(new \DateTime($dateF));
             foreach ( $projet->getEtudiants() as $etu ){
                 $etu->addProjetFait($projet);
+                $projet->addEtudiant($etu);
                 $em->persist($etu);
             }
             foreach ( $projet->getTuteurs() as $tut){
                 $tut->addProjetSuivi($projet);
+                $projet->addTuteur($tut);
                 $em->persist($tut);
             }
 
