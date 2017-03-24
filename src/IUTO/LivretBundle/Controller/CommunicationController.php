@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 
 class CommunicationController extends Controller
 {
@@ -60,10 +59,10 @@ class CommunicationController extends Controller
             'form' => $form->createView()));
     }
 
-    public function communicationgenerationlivretAction(Request $request)
+    public function communicationgenerationlivretAction(Request $request2)
     {
         $form = $this->createForm(LivretCreateType::class);
-        $form->handleRequest($request);
+        $form->handleRequest($request2);
         if ($form->isSubmitted() && $form->isValid()) {
           $dateDebutSelection = $form["dateDebut"]->getData();
           $dateFinSelection = $form["dateFin"]->getData();
