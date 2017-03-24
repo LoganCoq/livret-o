@@ -51,32 +51,32 @@ iuto_livret_finishedProject:
 #==================ROUTES MODULE PROFESSEUR================#
 #==========HOME============#
 iuto_livret_teacherhomepage:
-    path: /{id}/professeur
+    path: /professeur
     defaults: { _controller: IUTOLivretBundle:Teacher:teacherhome }
 
 #==========CORRECTION1=====#
 iuto_livret_correctionProf1:
-    path: /{id}/correctionProf1
+    path: /correctionProf1
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher1 }
 
 #==========CORRECTION2=====#
 iuto_livret_correctionProf2:
-    path: /{id}/{projet}/correctionProf2
+    path: /{projet}/correctionProf2
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher2 }
 
 #==========CORRECTION3=====#
 iuto_livret_correctionProf3:
-    path: /{id}/{projet}/correctionProf3
+    path: /{projet}/correctionProf3
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher3 }
 
 #==========CORRECTION4=====#
 iuto_livret_correctionProf4:
-    path: /{id}/{projet}/correctionProf4
+    path: /{projet}/correctionProf4
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher4 }
 
 #==========PROJETS VALIDES1=====#
 iuto_livret_projetsValides1:
-    path: /{id}/projetsValides1
+    path: /projetsValides1
     defaults: { _controller: IUTOLivretBundle:Teacher:projetsValidesTeacher1 }
 
 #==================ROUTES MODULE CHEF DEPARTEMENT==========#
