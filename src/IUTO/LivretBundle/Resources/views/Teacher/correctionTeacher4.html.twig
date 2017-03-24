@@ -31,19 +31,26 @@
     <h1> Finalisation du projet </h1>
 
     <div class="div_confirm_complete">
-        <a href="/generate/{{ projet.id }}" class="btn btn-success apercu_confirm">
+        <a href="/generate/{{ projet }}" class="btn btn-success apercu_confirm">
             Aperçu du compte rendu
         </a>
 
         <a type="button" href="" class="btn btn-default download_confirm">
             Renvoyer en correction
         </a>
-        <a type="submit" href="" class="btn btn-warning">
+        {#<a type="submit" href="" class="btn btn-warning">
             Valider le compte-rendu
-        </a>
+        </a>#}
+
         <a type="button" class="btn btn-retour" href="{{ pagePrec }}">
             <  Retour
         </a>
+
+        <div class="formulaire">
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form(form) }}
+
+        </div>
     </div>
 
 {% endblock %}
