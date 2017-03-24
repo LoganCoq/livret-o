@@ -95,7 +95,7 @@ class Projet
     private $tuteurs;
 
     /**
-     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Commentaire", inversedBy="projets")
+     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Livret", inversedBy="projets")
      */
     private $livrets;
 
@@ -425,11 +425,11 @@ class Projet
     /**
      * Add livret
      *
-     * @param \IUTO\LivretBundle\Entity\Commentaire $livret
+     * @param \IUTO\LivretBundle\Entity\Livret $livret
      *
      * @return Projet
      */
-    public function addLivret(\IUTO\LivretBundle\Entity\Commentaire $livret)
+    public function addLivret(\IUTO\LivretBundle\Entity\Livret $livret)
     {
         $this->livrets[] = $livret;
 
@@ -439,9 +439,9 @@ class Projet
     /**
      * Remove livret
      *
-     * @param \IUTO\LivretBundle\Entity\Commentaire $livret
+     * @param \IUTO\LivretBundle\Entity\Livret $livret
      */
-    public function removeLivret(\IUTO\LivretBundle\Entity\Commentaire $livret)
+    public function removeLivret(\IUTO\LivretBundle\Entity\Livret $livret)
     {
         $this->livrets->removeElement($livret);
     }
