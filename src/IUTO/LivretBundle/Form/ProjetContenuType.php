@@ -24,13 +24,13 @@ class ProjetContenuType extends AbstractType
             'label' => 'Bilan du projet',
             'required' => false,
 
-        ));
-//        ->add('submit', SubmitType::class, array(
-//            'label' => 'Enregistrer le contenu et envoyer en correction',
+        ))
+        ->add('submit', SubmitType::class, array(
+            'label' => 'Enregistrer le contenu et envoyer en correction',
 //            'attr' => [
 //                'onclick' => "return confirm('Etes vous sûr ?')",
 //            ],
-//        ));
+        ));
     }
 
     /**
