@@ -19,9 +19,7 @@ class CommentaireCreateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('contenu', TextType::class, array(
-            'label' => 'Contenu',
-        ))
+        ->add('contenu', TextType::class)
         ->add('submit', SubmitType::class, array(
             'label' => 'Envoyer',
         ))
