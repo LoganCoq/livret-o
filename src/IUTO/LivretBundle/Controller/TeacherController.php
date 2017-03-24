@@ -88,7 +88,12 @@ class TeacherController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $proj = new Projet();
-
+            $proj -> setClientProjet($projet->getClientProjet());
+            $proj -> setIntituleProjet($projet->getIntituleProjet());
+            $proj -> setMarquantProjet($projet->getMarquantProjet());
+            $proj -> setMarquantProjet($projet->getMarquantProjet());
+            $proj -> setDateDebut($projet->getDateDebut());
+            $proj -> setDateFin($projet->getDateFin());
             $proj -> setIntituleProjet($_POST['iuto_livretbundle_projet']['intituleProjet']);
             $proj -> setDateDebut($_POST['iuto_livretbundle_projet']['dateDebut']);
             $proj -> setDateFin($_POST['iuto_livretbundle_projet']['dateFin']);
