@@ -248,7 +248,13 @@ class StudentController extends Controller
     }
 
     // controlleur pour voir le pdf d'un projet validé.
-    public function viewFinishedProjectAction(Request $request, Projet $projet, $id){
+    public function viewFinishedProjectAction(Request $request, Projet $projet){
+
+        $manager = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $etudiant->getId();
+
 
         return $this->render('IUTOLivretBundle:Student:finishedProject.html.twig', array(
                 'statutCAS' => 'étudiant',
