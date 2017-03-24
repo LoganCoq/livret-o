@@ -2,11 +2,13 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetCompleteType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
+use IUTO\LivretBundle\Form\CommentaireCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -52,8 +54,6 @@ class StudentController extends Controller
 
         // Recuperation des informations de l'étudiant
         $formation = $etudiant->getFormations()[0];
-        $anneeDebut = $formation->getDateDebut();
-        $anneeFin = $formation->getDateFin();
         $departement = $formation->getDepartement()->getNomDpt();
 
         // remplissage des données de bases du projet
@@ -246,11 +246,55 @@ class StudentController extends Controller
             );
         }
 
+        $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+
+        $commentaires = array();
+        foreach($com as $elem){
+            $x=array();
+            $user = $elem->getUser();
+            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $elem->getContenu());
+            array_push($x, $elem->getDate());
+            array_push($x, $user->getRole());
+            array_push($commentaires, $x);
+
+        };
+
+        $form2 = $this->createForm(CommentaireCreateType::class, $com);
+        $form2->handleRequest($request);
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            $comReponse = new Commentaire;
+            $comReponse->setDate();
+            $comReponse->setProjet($projet);
+            $repository2 = $this
+                ->getDoctrine()
+                ->getManager()
+                ->getRepository('IUTOLivretBundle:User');
+            $user = $repository2->findOneById($id);
+            $comReponse->setUser($user);
+            $comReponse->setContenu($_POST['iuto_livretbundle_commentaire']['contenu']);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comReponse);
+            $em->flush();
+
+            return $this->render('IUTOLivretBundle:Student:completeProject.html.twig',
+                array('form' => $form->createView(),
+                    'formCom' => $form2->createView(),
+                    'statutCAS' => 'etudiant',
+                    'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                    'routing_statutCAShome' => '/etudiant',
+                    'commentaires' => $commentaires,
+                    'routing_info' => array('/create/project', '/choose/project'),
+                ));
+        }
 
         return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
             'form' => $form->createView(),
+            'formCom' => $form2->createView(),
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
+            'commentaires' => $commentaires,
             'routing_info' => array('/create/project',
                 '/choose/project',
                 '#',),
