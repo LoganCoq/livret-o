@@ -1,8 +1,75 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css"/>
 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+{% endblock %}
 {% block content %}
-    {{ projets|length }}
-    {%  for nom in projets %}
-        {{ nom }}
-    {% endfor %}
+    <div class="div_home">
+
+        {{ departement[0] }}
+
+        <ul id="listeProjets">
+            {% for p in projets %}
+                <li><a href="/generate/{{ p.id }}" id="o{{ p.id }}">{{ p.intituleProjet }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script>
+        projets = Array();
+        {% for p in projets %}
+        a = new Array();
+        a.push({{ p.id }})
+        a.push("{{ p.etudiants[0].formations[0].departement.nomDpt }}");
+        a.push("{{ p.dateDebut|date('Y') }}")
+        projets.push(a);
+        {% endfor %}
+        liste = document.getElementById("listeProjets");
+        selDpt = document.getElementById("selectionDpt");
+        selDpt.onchange = function(evenement){
+            actualiserProjets();
+        }
+        selAnnee = document.getElementById("selectionAnnee");
+        selAnnee.onchange = function(evenement){
+            actualiserProjets();
+        }
+        allHidden();
+        actualiserProjets();
+        function actualiserProjets(){
+            dpt = {{ departement[0] }};
+            for (pro of projets)
+            {
+                if (dpt.includes(pro[1]))
+                {
+                    document.getElementById("o"+pro[0]).hidden = false;
+                }
+                else
+                {
+                    document.getElementById("o"+pro[0]).hidden = true;
+                }
+            }
+
+        }
+
+        function allHidden()
+        {
+            for (pro of projets)
+            {
+                document.getElementById("o"+pro[0]).hidden = true;
+            }
+        }
+
+    </script>
+
+
+
 {% endblock %}
