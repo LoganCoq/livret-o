@@ -40,19 +40,16 @@
             {#Valider le compte-rendu#}
         {#</a>#}
 
-        <a type="submit" href="" class="btn btn-warning">
-            {% form_theme form 'bootstrap_3_layout.html.twig' %}
-            {{ form(form) }}
-        </a>
+
 
         <a type="button" class="btn btn-retour" href="{{ pagePrec }}">
             <  Retour
         </a>
 
-        {#<div class="formulaire">#}
-            {#{% form_theme form 'bootstrap_3_layout.html.twig' %}#}
-            {#{{ form(form) }}#}
-        {#</div>#}
+        <div class="formulaire">
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form(form) }}
+        </div>
     </div>
 
 {% endblock %}
