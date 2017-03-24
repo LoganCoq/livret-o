@@ -181,7 +181,14 @@ class TeacherController extends Controller
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $proj = new Projet();
+
+            $proj -> setBilanProjet($_POST['iuto_livretbundle_projet']['bilanProjet']);
+            $proj -> setDescripProjet($_POST['iuto_livretbundle_projet']['descripProjet']);
+
+            $em2 = $this->getDoctrine()->getManager();
+            $em2->persist($proj);
+            $em2->flush();
 
             return $this->redirectToRoute('');
         }
