@@ -193,11 +193,9 @@ class CommunicationController extends Controller
                 ->add('choixLivret', ChoiceType::class, array(
                     'label' => 'Choix du Livret',
                     'attr' => [
-                        'class' => 'selectpicker departement',
+                        'class' => 'selectpicker',
                         'data-live-search' => 'true',
                         'name' => 'livret',
-                        'data-selected-text-format' => 'count > 5',
-                        'data-count-selected-text' => 'Tous les livrets',
                         'title' => 'Aucun livret sélectionné'
                     ],
                     'choices' =>$l
