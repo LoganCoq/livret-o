@@ -81,10 +81,12 @@
             </div>
 
             <div class="reponseCorrection">
-                <input type="text" value="Veuillez taper une réponse suite à vos modifications"> </input>
-                <button type="button" class="btn btn-envoyer-msg" href="">
-                    Envoyer
-                </button>
+                {#<input type="text" value="Veuillez taper une réponse suite à vos modifications"> </input>#}
+                {#<button type="button" class="btn btn-envoyer-msg" href="">#}
+                    {#Envoyer#}
+                {#</button>#}
+                {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                {{ form(formCom) }}
             </div>
 
         </div>

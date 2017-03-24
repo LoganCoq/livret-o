@@ -8,6 +8,8 @@ use IUTO\LivretBundle\Form\ProjetModifType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use Symfony\Component\HttpFoundation\Request;
+use IUTO\LivretBundle\Entity\Commentaire;
+
 
 
 class TeacherController extends Controller
@@ -64,7 +66,7 @@ class TeacherController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('');
+            return $this->redirectToRoute();
         }
 
         $repository = $this
@@ -72,21 +74,6 @@ class TeacherController extends Controller
             ->getManager()
             ->getRepository('IUTOLivretBundle:Commentaire');
         $com = $repository->findByProjet($projet);
-
-        $form2 = $this->createForm(CommentaireCreateType::class, $com);
-        $form2->handleRequest($request);
-
-        if ($form2->isSubmitted() && $form2->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('');
-        }
-
-
-        $idProjet = $projet->getId();
-
-
-
 
         $commentaires = array();
         foreach($com as $elem){
@@ -99,6 +86,27 @@ class TeacherController extends Controller
             array_push($commentaires, $x);
 
         };
+
+        $idProjet = $projet->getId();
+
+        $form2 = $this->createForm(CommentaireCreateType::class, $com);
+        $form2->handleRequest($request);
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->render( 'IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
+                                            array('form' => $form->createView(),
+                                                'formCom' => $form2->createView(),
+                                                'statutCAS' => 'professeur',
+                                                'info' => array('Demandes de correction', 'Projets validés'),
+                                                'routing_statutCAShome' => '/'.$id.'/professeur',
+                                                'commentaires' => $commentaires,
+                                                'routing_info' => array('/'.$id.'/correctionProf1', '/'.$id.'/projetsValides1'),
+                                                'routing_options' => array('#', '#'),
+                                                'pagePrec' => '/'.$id.'/correctionProf1',
+                                                'pageSuiv' => '/'.$id.'/'.$idProjet.'/correctionProf3'
+                                          ));
+        }
 
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
             array('form' => $form->createView(),
