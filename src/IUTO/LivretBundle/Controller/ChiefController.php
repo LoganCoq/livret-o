@@ -174,7 +174,7 @@ class ChiefController extends Controller
 
         return $this->render('IUTOLivretBundle:Chief:correctionChief4.html.twig',
             array('id' => $id,
-                'statutCAS' => 'professeur',
+                'statutCAS' => 'chef de département',
                 'routing_statutCAShome' => '/'.$id.'/chef',
                 'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
                 'routing_info' => array('#','/'.$id.'/correctionChief1','#', '/'.$id.'/chef','#'),
