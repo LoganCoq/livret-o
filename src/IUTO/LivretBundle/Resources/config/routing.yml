@@ -85,6 +85,11 @@ iuto_livret_chiefPresentation:
     path: /{id}/chef/presentation
     defaults: { _controller: IUTOLivretBundle:Chief:chiefPresentation }
 
+#==========PRESENTATIONPDF===========#
+iuto_livret_chiefEditoPrevisualiser:
+    path: /chef/editoprevisualiser
+    defaults: { _controller: IUTOLivretBundle:PresentationGenerator:generator }
+
 #==========LISTE====#
 iuto_livret_chiefliste:
     path: /{id}/chef/liste
