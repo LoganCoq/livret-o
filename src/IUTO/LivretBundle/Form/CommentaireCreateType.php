@@ -20,6 +20,7 @@ class CommentaireCreateType extends AbstractType
     {
         $builder
         ->add('contenu', TextType::class, array(
+            'label' => ' ',
         ))
         ->add('submit', SubmitType::class, array(
             'label' => 'Envoyer',
