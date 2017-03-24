@@ -194,13 +194,25 @@ class TeacherController extends Controller
             ));
     }
 
-    public function correctionTeacher4Action(Projet $projet)
+    public function correctionTeacher4Action(Request $request, Projet $projet)
     {
         // recupération de l'utilisateur connecté
         $manager = $this->getDoctrine()->getManager();
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $professeur = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
+
+        $form = $this->createForm(ProjetValideType::class, $projet);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            if($projet->getValiderProjet()==0){
+                $projet->setValiderProjet(True);
+            }
+            return $this->redirectToRoute('/professeur');
+        }
 
         $idProjet = $projet->getId();
 
