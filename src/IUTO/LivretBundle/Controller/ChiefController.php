@@ -8,11 +8,14 @@ use IUTO\LivretBundle\Form\ProjetModifType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use Symfony\Component\HttpFoundation\Request;
+use IUTO\LivretBundle\Form\PresentationType;
+use IUTO\LivretBundle\Entity\Livret;
 
 class ChiefController extends Controller
 {
     public function chiefhomeAction($id)
     {
+
         return $this->render('IUTOLivretBundle:Chief:chiefhome.html.twig', array(
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
@@ -22,13 +25,39 @@ class ChiefController extends Controller
             'routing_statutCAShome' => '/'.$id.'/chef',));
     }
 
-    public function chiefpresentationAction($id)
+    public function chiefpresentationAction(Request $request, $id)
     {
+        $session = $this->get('session');
+        $manager = $this->getDoctrine()->getManager();
+        $livret = $manager->getRepository(Livret::class)->findOneById($session->get("numEdito")); //TODO recuperation cas
+        $form = $this->createForm(PresentationType::class, $livret);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('submit')->isClicked()) {
+                $ed = $form['editoLivret']->getData();
+                $livret->setEditoLivret($ed);
+                $manager->persist($livret);
+                $manager->flush();
+            }
+            if ($form->get('previsualiser')->isClicked())
+            {
+                $session->set('edito',$ed = $form['editoLivret']->getData());
+                return $this->redirectToRoute('iuto_livret_chiefEditoPrevisualiser');
+            }
+            return $this->redirectToRoute('iuto_livret_chiefhomepage');
+        }
+
+
+
+
         return $this->render('IUTOLivretBundle:Chief:chiefpresentation.html.twig', array(
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('#', '/'.$id.'/chef/presentation', '#', '/'.$id.'/chef/liste', '#'),
-            'routing_statutCAShome' => '/'.$id.'/chef',));
+            'options' => array('Visualiser'),
+            'routing_statutCAShome' => '/'.$id.'/chef',
+            'routing_info' => array('#', '/'.$id.'/chef/presentation', '/'.$id.'/correctionChief1', '/'.$id.'/chef/liste', '#'),
+            'routing_options' => array('/'.$id.'/chef/editoprevisualiser'),
+            'form' => $form->createView()));
     }
 
     public function chieflisteAction($id)
