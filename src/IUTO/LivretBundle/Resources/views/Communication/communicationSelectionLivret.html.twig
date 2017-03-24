@@ -12,26 +12,10 @@
         <h1 class="h1_home"> Génération de livret </h1>
 
         <div class="form">
-            <form>
                 <label> Créer un édito pour ces livrets </label>
-                <br/>
-                <select class="selectpicker" data-live-search="true" multiple="multiple"
-                        name="livret" title="Aucun livret sélectionné">
-                    {% for livret in livrets %}
-                        <option value="{{ livret.id }}"> {{ livret.intituleLivret }} </option>
-                    {% endfor %}
-                </select>
+                {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                {{ form(form) }}
 
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-
-                {% for o in range(0, options|length - 1) %}
-                    <a href="{{ routing_options[o] }}" class="buttonhome">{{ options[o] }}</a>
-                {% endfor %}
-            </form>
         </div>
     </div>
 {% endblock %}
