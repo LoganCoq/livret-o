@@ -22,9 +22,9 @@ class ConnexionController extends Controller
     public function connexionAction()
     {
         // com = p51955
-        $numPersonne = "o2151178";
-//        $numPersonne = "p2171";
-//        $numPersonne = "p51955";
+        //$numPersonne = "o2151178";
+        $numPersonne = "p2171";
+        //$numPersonne = "p51955";
 
         $config = array(
             'host' => 'ldap-univ.iut45.univ-orleans.fr',

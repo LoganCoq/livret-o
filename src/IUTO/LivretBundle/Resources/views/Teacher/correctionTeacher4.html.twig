@@ -5,15 +5,13 @@
 
     <style type="text/css">
         .div_confirm_complete {
-            width: 50em;
+            width: 70em;
             height: 10em;
-
             position: absolute;
             top:0;
             bottom: 0;
             left: 35em;
             right: 35em;
-
             margin: auto;
         }
         .download_confirm {
@@ -27,23 +25,34 @@
 {% endblock %}
 
 {% block content %}
-
+    <br>
     <h1> Finalisation du projet </h1>
-
+    <br>
     <div class="div_confirm_complete">
-        <a href="/generate/{{ projet.id }}" class="btn btn-success apercu_confirm">
+        <a href="/generate/{{ projet }}" class="btn btn-success apercu_confirm">
             Aperçu du compte rendu
         </a>
-        <a href="" class="btn btn-default download_confirm">
-            <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-            Enregistrer sur l'ordinateur
+
+        <a type="button" href="" class="btn btn-default download_confirm">
+            Renvoyer en correction
         </a>
-        <a type="button" href="" class="btn btn-warning">
-            Terminer et envoyer en correction
+        {#<a type="submit" href="" class="btn btn-warning">#}
+            {#Valider le compte-rendu#}
+        {#</a>#}
+
+        <a type="submit" href="" class="btn btn-warning">
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form(form) }}
         </a>
+
         <a type="button" class="btn btn-retour" href="{{ pagePrec }}">
             <  Retour
         </a>
+
+        {#<div class="formulaire">#}
+            {#{% form_theme form 'bootstrap_3_layout.html.twig' %}#}
+            {#{{ form(form) }}#}
+        {#</div>#}
     </div>
 
 {% endblock %}
