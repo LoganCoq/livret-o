@@ -30,8 +30,8 @@
 
         <ul id="listeProjets">
             {% for p in projets %}
-                <li class="projetPublicLi"><a class="projetPublic" href="/generate/{{ p.id }}"
-                                              id="o{{ p.id }}">{{ p.intituleProjet }}</a></li>
+                <li id="l{{ p.id }}"><a href="/generate/{{ p.id }}"
+                                        id="o{{ p.id }}">{{ p.intituleProjet }}</a></li>
             {% endfor %}
         </ul>
     </div>
@@ -87,9 +87,12 @@
             for (pro of projets) {
                 if (dpt.includes(pro[1]) && ann.includes(pro[2])) {
                     document.getElementById("o" + pro[0]).hidden = false;
+                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                    document.getElementById("l" + pro[0]).className = "projetPublicLi";
                 }
                 else {
                     document.getElementById("o" + pro[0]).hidden = true;
+                    document.getElementById("l" + pro[0]).className = "";
                 }
             }
         }
