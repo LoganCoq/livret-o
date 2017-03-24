@@ -9,7 +9,7 @@
     </title>
     {% block stylesheets %}
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.min.css  ') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap-overload.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/src.css') }}">
     {% endblock %}
@@ -38,13 +38,13 @@
                 <div style="position:absolute ;bottom: 5%; width: 100%;text-align:center">
                     <img src="{{ asset('assets/images/IUTO_transp.png') }}" alt="Logo IUT" style="max-height: 125px"/>
                     {% if statutCAS != "Public" %}
-                    <a href="{{ path('iuto_livret_logout') }}">
-                        {#TODO style#}
-                        <button type="button" class="btn btn-danger" style="width: 100%">
-                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-                            Déconnexion
-                        </button>
-                    </a>
+                        <a href="{{ path('iuto_livret_logout') }}">
+                            {#TODO style#}
+                            <button type="button" class="btn btn-danger" style="width: 100%">
+                                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                                Déconnexion
+                            </button>
+                        </a>
                     {% endif %}
                 </div>
             </div>
