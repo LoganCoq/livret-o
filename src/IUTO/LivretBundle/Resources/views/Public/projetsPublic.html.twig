@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css"/>
@@ -6,89 +7,95 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
 {% endblock %}
+
 {% block content %}
     <div class="div_home">
-        <select id="selectionDpt" class="selectpicker form-control" data-live-search="data-live-search" data-width="auto" multiple="multiple">
+        <h1 class="h1_home"> Voir les projets </h1>
+
+        <select id="selectionDpt" class="selectpicker form-control" data-live-search="data-live-search"
+                data-width="auto" multiple="multiple" title="Aucun département sélectionné">
             {% for d in dpt %}
                 <option value="{{ d.id }}">{{ d.nomDpt }}</option>
             {% endfor %}
         </select>
 
-        <select id="selectionAnnee" class="selectpicker form-control" data-live-search="data-live-search" data-width="auto" multiple="multiple">
+        <select id="selectionAnnee" class="selectpicker form-control" data-live-search="data-live-search"
+                data-width="auto" multiple="multiple" title="Aucune année sélectionnée">
             {% for d in annee %}
                 <option value="{{ d }}">20{{ d }}</option>
             {% endfor %}
         </select>
-    <ul id="listeProjets">
-        {% for p in projets %}
-            <li><a href="/generate/{{ p.id }}" id="o{{ p.id }}">{{ p.intituleProjet }}</a></li>
-        {% endfor %}
-            </ul>
+
+        <br/>
+
+        <ul id="listeProjets">
+            {% for p in projets %}
+                <li id="l{{ p.id }}"><a href="/generate/{{ p.id }}"
+                                        id="o{{ p.id }}">{{ p.intituleProjet }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+
     <script>
-        projets = Array();
+        projets = [];
+
         {% for p in projets %}
-        a = new Array();
-        a.push({{ p.id }})
+        a = [];
+        a.push({{ p.id }});
         a.push("{{ p.etudiants[0].formations[0].departement.nomDpt }}");
-        a.push("{{ p.dateDebut|date('Y') }}")
+        a.push("{{ p.dateDebut|date('Y') }}");
         projets.push(a);
         {% endfor %}
+
         liste = document.getElementById("listeProjets");
+
         selDpt = document.getElementById("selectionDpt");
-        selDpt.onchange = function(evenement){
+        selDpt.onchange = function (evenement) {
             actualiserProjets();
-        }
+        };
+
         selAnnee = document.getElementById("selectionAnnee");
-        selAnnee.onchange = function(evenement){
+        selAnnee.onchange = function (evenement) {
             actualiserProjets();
-        }
+        };
+
         allHidden();
+        function allHidden() {
+            for (pro of projets) {
+                document.getElementById("o" + pro[0]).hidden = true;
+            }
+        }
+
         actualiserProjets();
-        function actualiserProjets(){
+        function actualiserProjets() {
             dptS = selDpt.selectedOptions;
             AnnS = selAnnee.selectedOptions;
-            dpt = new Array();
-            for (d of dptS)
-            {
+            dpt = [];
+            for (d of dptS) {
                 dpt.push(d.innerHTML);
             }
-            ann = new Array();
-            for (a of AnnS)
-            {
-                ann.push(20+a.value);
+            ann = [];
+            for (a of AnnS) {
+                ann.push(20 + a.value);
             }
-            for (pro of projets)
-            {
-                if (dpt.includes(pro[1]) && ann.includes(pro[2]))
-                {
-                    document.getElementById("o"+pro[0]).hidden = false;
+            for (pro of projets) {
+                if (dpt.includes(pro[1]) && ann.includes(pro[2])) {
+                    document.getElementById("o" + pro[0]).hidden = false;
+                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                    document.getElementById("l" + pro[0]).className = "projetPublicLi";
                 }
-                else
-                {
-                    document.getElementById("o"+pro[0]).hidden = true;
+                else {
+                    document.getElementById("o" + pro[0]).hidden = true;
+                    document.getElementById("o" + pro[0]).className = "";
+                    document.getElementById("l" + pro[0]).className = "";
                 }
-            }
-
-        }
-
-        function allHidden()
-        {
-            for (pro of projets)
-            {
-                document.getElementById("o"+pro[0]).hidden = true;
             }
         }
-
     </script>
-
-
-
 {% endblock %}

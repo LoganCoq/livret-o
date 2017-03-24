@@ -23,7 +23,7 @@ class CommentaireCreateType extends AbstractType
             'label' => 'Contenu',
         ))
         ->add('submit', SubmitType::class, array(
-            'label' => 'Enregistrer',
+            'label' => 'Envoyer',
         ))
 
         ;

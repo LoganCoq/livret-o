@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 class CommunicationController extends Controller
 {
 
-
     public function communicationhomeAction()
     {
         return $this->render('IUTOLivretBundle:Communication:communicationhome.html.twig', array('statutCAS' => 'service de communication',
@@ -65,7 +64,84 @@ class CommunicationController extends Controller
 
     public function communicationgenerationlivretAction()
     {
-        return $this->render('IUTOLivretBundle:Communication:communicationgenerationlivret.html.twig', array('statutCAS' => 'service de communication',
+        $form = $this->createForm(LivretCreateType::class);
+        $form->handleRequest($request2);
+        if ($form->isSubmitted() && $form->isValid()) {
+          $dateDebutSelection = $form["dateDebut"]->getData();
+          $dateFinSelection = $form["dateFin"]->getData();
+          $formationsSelectionnes = $form["listeFormation"]->getData();
+          $departementsSelectionnes = $form["listeDepartements"]->getData();
+          $manager = $this
+              ->getDoctrine()
+              ->getManager();
+          $repository = $manager
+              ->getRepository('IUTOLivretBundle:Projet');
+
+          $livret = new Livret();
+          $livret->setIntituleLivret("Projet département Informatique");
+          $livret->setDateCreationLivret(new \DateTime());
+          $livret->setEditoLivret("Le département informatique ils sont au dessus.");
+          //creation d'un nouveau livret pour la bd
+
+          $projets = $repository->findAll();
+          //recuperation de tous les projets de la BD
+
+          $html2pdf = $this->get('app.html2pdf');
+          $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
+          //preparation du PDF
+
+          foreach ($projets as $projet) {
+            $toutesLesFormations = $projet->getEtudiants()[0]->getFormations();
+            foreach ($toutesLesFormations as $formation) {
+
+              foreach ($formationsSelectionnes as $formationSelectionnee) {
+                if($formation->getTypeFormation() == $formationSelectionnee){
+                  //chaque projet qui a le bon type de formation
+
+                  $dateDeFormation = $formation->getDateDebut();
+                  if(($dateDeFormation>=$dateDebutSelection)&&($dateDeFormation<=$dateFinSelection)){
+                    //chaque projet qui a le bon type de formation à la bonne date
+
+                    foreach ($departementsSelectionnes as $departmentSelectionne) {
+                      if ($formation->getDepartement()->getNomDpt()==$departementSelectionne) {
+                        //chaque projet qui a le bon type de formation à la bonne date et le bon department
+
+                        $nomP = $projet->getIntituleProjet();
+                        $descripP = $projet->getDescripProjet();
+                        $bilanP = $projet->getBilanProjet();
+                        $clientP = $projet->getClientProjet();
+                        $etudiants = $projet->getEtudiants();
+                        $tuteurs = $projet->getTuteurs();
+                        //recuperation des infos du projet
+
+                        $projet->addLivrets($livret);
+                        $livret->addProjet($projet);
+                        //ajout de la relation livret/projet
+
+                        $template = $this->renderView('::pdf.html.twig',
+                            ['nom' => $nomP,
+                                'descrip' => $descripP,
+                                'bilan' => $bilanP,
+                                'client' => $clientP,
+                                'etudiants' => $etudiants,
+                                'tuteurs' => $tuteurs
+                            ]);
+                            //creation du template
+
+                        $html2pdf->writeHTML($template);
+                        //ajout de la page au livret
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          $manager->persist($livret);
+          $manager->flush();
+        }
+
+        return $this->render('IUTOLivretBundle:Communication:communicationgenerationlivret.html.twig', array('form' => $form->createView(), 'statutCAS' => 'service de communication',
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
             'routing_statutCAShome' => '/communication',
             'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#')));
