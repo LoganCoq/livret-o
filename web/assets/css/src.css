@@ -333,3 +333,22 @@ ul {
     text-decoration: none;
     color: black;
 }
+
+.presentationIUTO {
+    list-style: square;
+    padding-left: 1em;
+}
+
+.bodyPresentationIUTO {
+    margin-left: 2em;
+}
+
+.contentPresentationIUTO {
+    margin-left: 2em;
+}
+
+.allPresentationIUTO {
+    margin-right: 30em;
+    text-align: justify;
+}
+
