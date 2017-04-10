@@ -1,8 +1,8 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: 127.0.0.1
+    database_host: 192.168.82.168
     database_port: null
-    database_name: symfony
+    database_name: livreto
     database_user: symfony
     database_password: symfony
     mailer_transport: smtp

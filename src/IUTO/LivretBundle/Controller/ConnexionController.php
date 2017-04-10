@@ -6,15 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Ldap\Adapter\ExtLdap\Adapter;
 use Symfony\Component\Ldap\Ldap;
-use Symfony\Component\Ldap\Entry;
 use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Entity\Formation;
 use IUTO\LivretBundle\Entity\Departement;
-
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\Validator\Constraints\Date;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 
 class ConnexionController extends Controller
@@ -23,7 +19,7 @@ class ConnexionController extends Controller
     {
         // com = p51955
         $numPersonne = "o2151178";
-//        $numPersonne = "p2171";
+    //    $numPersonne = "p2171";
 //        $numPersonne = "p51955";
 
         $config = array(
@@ -36,6 +32,7 @@ class ConnexionController extends Controller
         $ldap = new Ldap($AdapterInterface);
         $ldap->bind();
         $infosPersonne = $ldap->query("ou=People,dc=univ-orleans,dc=fr", "uid=" . $numPersonne)->execute()->toArray()[0];
+
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository("IUTOLivretBundle:User")->findOneByIdUniv($numPersonne);
@@ -69,17 +66,31 @@ class ConnexionController extends Controller
             'ILPO29' => array('LPMCF', 'GEA'),
             'ILPO21' => array('LPEBSI', 'GTE'),
         );
+//        $primaryaffil = 'student';
 
         $manager = $this->getDoctrine()->getManager();
         if (!$user) {
             $user = new User();
-            $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
-            $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
-            $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
-            $user->setRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
-            $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
+             $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
+//            $user -> setPrenomUser("Logan");
+
+             $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
+//            $user -> setNomUser("Coquerant");
+
+             $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
+//            $user -> setMailUser("logan.coquerant@etu.univ-orleans.fr");
+
+             $user->setRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
+//            $user -> setRole("ROLE_student");
+
+             $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
+//            $user -> setIdUniv("o2151179");
+
+//            $primaryaffil = 'student';
             if ($user->getRole() == "ROLE_student") {
-                $codeFormation = $infosPersonne->getAttribute("unrcEtape")[0];
+                 $codeFormation = $infosPersonne->getAttribute("unrcEtape")[0];
+//                $codeFormation = 'IO1341';
+
                 $infForm = $corresLDAP[$codeFormation];
                 $formation = $manager->getRepository(Formation::class)->findOneBy(array("departement" => ($manager->getRepository(Departement::class)->findOneByNomDpt($infForm[0])), "typeFormation" => $infForm[0]));
                 if (!$formation) {
@@ -121,7 +132,8 @@ class ConnexionController extends Controller
         $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
         $id = $em->getRepository("IUTOLivretBundle:User")->findOneByIdUniv($numPersonne)->getId();
 
-        if (strcmp($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0], "student") == 0) {
+         if (strcmp($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0], "student") == 0) {
+//            if (strcmp($primaryaffil, "student") == 0) {
             return $this->redirectToRoute("iuto_livret_studenthomepage", array("id" => $id));
         } else if (strcmp($user->getRoles(), "ROLE_employee") == 0) {
             return $this->redirectToRoute("iuto_livret_communicationhomepage", array("id" => $id));
