@@ -62,6 +62,7 @@ class ProjetCompleteType extends AbstractType
                 'label' => 'Enregistrer modifications et envoyer en correction',
                 'attr' => [
                     'onclick' => "return confirm('Etes vous sûr ?')",
+                    'class' => 'btn-primary',
                 ],
 //                'attr' => [
 //                    'data-toggle' => "confirmation",

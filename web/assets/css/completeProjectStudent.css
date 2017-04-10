@@ -1,0 +1,85 @@
+
+.form-group
+{
+    width: 50em;
+}
+
+.control-label
+{
+    margin: 1em 1em 1em 0em;
+    padding: auto;
+    font-size: 1.5em;
+    margin-right: 20em;
+}
+
+.form-control
+{
+    margin-right: 5em;
+    font-size: 1.2em;
+    height: auto;
+    /*text-align: center;*/
+}
+
+#eventForm .form-control-feedback {
+    top: 0;
+    right: -15px;
+}
+.statCAS {
+    padding: 1.1em 1.05em 0.4em 1.05em;
+}
+.form-complete {
+    margin-left: 2em;
+}
+
+#iuto_livretbundle_projet_descripProjet
+{
+    width: 50em;
+    height: 20em;
+    font-size: 1.2em;
+    margin-left: 4em;
+}
+
+#iuto_livretbundle_projet_bilanProjet
+{
+    width: 50em;
+    height: 12em;
+    font-size: 1.2em;
+    margin-left: 4em;
+}
+
+#iuto_livretbundle_projet_submit
+{
+    margin: 1em;
+    font-size: 1.2em;
+}
+
+form[name=iuto_livretbundle_projet]
+{
+    margin-left: 2em;
+}
+
+#iuto_livretbundle_projet_intituleProjet
+{
+    width: 30em;
+    height: 3em;
+    margin-left: 4em;
+}
+
+#iuto_livretbundle_projet_dateDebut
+{
+    width: auto;
+    height: 3em;
+    margin-left: 4em;
+}
+
+#iuto_livretbundle_projet_dateFin
+{
+    width: auto;
+    height: 3em;
+    margin-left: 4em;
+}
+
+#iuto_livretbundle_projet_clientProjet
+{
+    margin-left: 4em;
+}
