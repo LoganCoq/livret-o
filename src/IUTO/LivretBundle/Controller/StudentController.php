@@ -11,7 +11,6 @@ use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class StudentController extends Controller
 {

@@ -50,6 +50,7 @@ class ProjetCreateType extends AbstractType
                     'class' => 'selectpicker',
                     'data-live-search' => true,
                     'data-width' => 'auto',
+                    'id' => 'livreto_project_studs',
                 ],
                 'query_builder' => function (UserRepository $er) use ($options) {
                     $options;
@@ -69,6 +70,7 @@ class ProjetCreateType extends AbstractType
                     'class' => 'selectpicker',
                     'data-live-search' => true,
                     'data-width' => 'auto',
+                    'id' => 'livreto_project_tuts',
                 ],
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')

@@ -27,9 +27,10 @@ class ProjetContenuType extends AbstractType
         ))
         ->add('submit', SubmitType::class, array(
             'label' => 'Enregistrer le contenu et envoyer en correction',
-//            'attr' => [
-//                'onclick' => "return confirm('Etes vous sûr ?')",
-//            ],
+            'attr' => [
+                'onclick' => "return confirm('Etes vous sûr ?')",
+                'class' => "btn-primary",
+            ],
         ));
     }
 
