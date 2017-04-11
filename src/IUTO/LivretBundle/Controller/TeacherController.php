@@ -2,16 +2,15 @@
 
 namespace IUTO\LivretBundle\Controller;
 
-use IUTO\LivretBundle\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use IUTO\LivretBundle\Entity\Projet;
-use IUTO\LivretBundle\Form\ProjetModifType;
-use IUTO\LivretBundle\Form\ProjetContenuType;
-use IUTO\LivretBundle\Form\ProjetValideType;
-use IUTO\LivretBundle\Form\CommentaireCreateType;
-use Symfony\Component\HttpFoundation\Request;
 use IUTO\LivretBundle\Entity\Commentaire;
-
+use IUTO\LivretBundle\Entity\Projet;
+use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Form\CommentaireCreateType;
+use IUTO\LivretBundle\Form\ProjetContenuType;
+use IUTO\LivretBundle\Form\ProjetModifType;
+use IUTO\LivretBundle\Form\ProjetValideType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class TeacherController extends Controller
@@ -84,13 +83,20 @@ class TeacherController extends Controller
 
 
         $form = $this->createForm(ProjetModifType::class, $projet);
+
+        // insertion des dates en string
+        $form['dateDebut']->setData($projet->getDateDebut()->format('m/d/Y'));
+        $form['dateFin']->setData($projet->getDateFin()->format('m/d/Y'));
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $proj = new Projet();
-            $proj -> setIntituleProjet($_POST['iuto_livretbundle_projet']['intituleProjet']);
-            $proj -> setDateDebut($_POST['iuto_livretbundle_projet']['dateDebut']);
-            $proj -> setDateFin($_POST['iuto_livretbundle_projet']['dateFin']);
+
+            $dateFormD = $form['dateDebut']->getData();
+            $dateFormF = $form['dateFin']->getData();
+
+            $projet->setDateDebut(new \DateTime($dateFormD));
+            $projet->setDateFin(new \DateTime($dateFormF));
 
             $em2 = $this->getDoctrine()->getManager();
             $em2->persist($proj);
@@ -106,6 +112,8 @@ class TeacherController extends Controller
             ->getRepository('IUTOLivretBundle:Commentaire');
         $com = $repository->findByProjet($projet);
 
+
+        //recuperation des commentaires
         $commentaires = array();
         foreach($com as $elem){
             $x=array();
