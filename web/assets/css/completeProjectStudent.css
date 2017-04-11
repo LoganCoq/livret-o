@@ -33,18 +33,20 @@
 
 #iuto_livretbundle_projet_descripProjet
 {
-    width: 50em;
+    /*width: 50em;*/
     height: 20em;
     font-size: 1.2em;
     margin-left: 4em;
+    margin-right: 7em;
 }
 
 #iuto_livretbundle_projet_bilanProjet
 {
-    width: 50em;
+    /*width: 50em;*/
     height: 12em;
     font-size: 1.2em;
     margin-left: 4em;
+    margin-right: 7em;
 }
 
 #iuto_livretbundle_projet_submit
