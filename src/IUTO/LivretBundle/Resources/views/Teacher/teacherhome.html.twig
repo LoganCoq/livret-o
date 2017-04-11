@@ -1,8 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="div_home">
-        <h1 class="h1_home"> {{ statutCAS|capitalize }} </h1>
+        <h1 class="h1_home">
+            {{ statutCAS|capitalize }} <br/>
+            <small>Connecté(e) en tant que : {{ professeur.prenomUser }} {{ professeur.nomUser }}</small>
+        </h1>
+
         {% for o in range(0, options|length - 1) %}
             <a href="{{ routing_options[o] }}" class="buttonhome">{{ options[o] }}</a>
         {% endfor %}
