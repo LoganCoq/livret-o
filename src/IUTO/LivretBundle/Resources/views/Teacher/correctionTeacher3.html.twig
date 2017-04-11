@@ -5,6 +5,10 @@
     Correction projets
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/correctionTeacher.css') }}">
+{% endblock %}
 
 {% block content %}
     </br>

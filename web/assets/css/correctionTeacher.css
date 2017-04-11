@@ -1,0 +1,29 @@
+
+
+#iuto_livretbundle_projet_descripProjet
+{
+    width: 50em;
+    height: 30em;
+    text-align: left;
+    margin-bottom: 4em;
+}
+
+#iuto_livretbundle_projet_bilanProjet
+{
+    width: 50em;
+    height: 20em;
+    text-align: left;
+    margin-bottom: 1em;
+}
+
+.formulaire
+{
+    margin-left: 5em;
+}
+
+.control-label
+{
+    padding: auto;
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}

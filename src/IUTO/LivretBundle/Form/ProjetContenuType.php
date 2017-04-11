@@ -23,7 +23,6 @@ class ProjetContenuType extends AbstractType
         ->add('bilanProjet', TextType::class, array(
             'label' => 'Bilan du projet',
             'required' => false,
-
         ))
         ->add('submit', SubmitType::class, array(
             'label' => 'Enregistrer le contenu et envoyer en correction',

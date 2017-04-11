@@ -195,16 +195,19 @@ class TeacherController extends Controller
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $proj = new Projet();
-
-            $proj -> setBilanProjet($_POST['iuto_livretbundle_projet']['bilanProjet']);
-            $proj -> setDescripProjet($_POST['iuto_livretbundle_projet']['descripProjet']);
 
             $em2 = $this->getDoctrine()->getManager();
-            $em2->persist($proj);
+            $em2->persist($projet);
             $em2->flush();
 
-            return $this->redirectToRoute('');
+            return $this->redirectToRoute(
+                'iuto_livret_correctionProf4', array(
+                    'statusCAS' => 'professeur',
+                    'info' => array('Demandes de correction', 'Projets validés'),
+                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                    'projet' => $projet->getId(),
+                )
+            );
         }
 
         $repository = $this
