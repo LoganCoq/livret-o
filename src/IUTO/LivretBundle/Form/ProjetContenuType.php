@@ -4,7 +4,7 @@ namespace IUTO\LivretBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,11 +16,11 @@ class ProjetContenuType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('descripProjet', TextType::class, array(
+        ->add('descripProjet', TextareaType::class, array(
             'label' => 'Description du projet',
             'required' => false,
         ))
-        ->add('bilanProjet', TextType::class, array(
+        ->add('bilanProjet', TextareaType::class, array(
             'label' => 'Bilan du projet',
             'required' => false,
         ))
