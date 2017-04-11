@@ -99,11 +99,18 @@ class TeacherController extends Controller
             $projet->setDateFin(new \DateTime($dateFormF));
 
             $em2 = $this->getDoctrine()->getManager();
-            $em2->persist($proj);
+            $em2->persist($projet);
             $em2->flush();
 
 
-            return $this->redirectToRoute();
+            return $this->redirectToRoute(
+                'iuto_livret_correctionProf3', array(
+                    'statusCAS' => 'professeur',
+                    'info' => array('Demandes de correction', 'Projets validés'),
+                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                    'projet' => $projet->getId(),
+                )
+            );
         }
 
         $repository = $this
