@@ -1,20 +1,28 @@
 {% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/chooseCorrectionTeacher.css") }}">
+{% endblock %}
+
 {% block title %}
     Correction projets
 {% endblock %}
+
 {% block content %}
 
-     <div class="list-group" style="padding: 2%">
-        <h1 class="">Correction de projets </h1>
-        <div style="padding: 2%">
-            <h2><small>Choisir un projet à corriger</small></h2>
+     <div class="list-group">
+        <h1>Correction de projets </h1>
+        <div id="project_choose_correction" id="pick_section">
+            <h2>Choisir un projet à corriger</h2>
 
             {% if projets|length > 0 %}
-                <ul class="list-group">
+                <ul class="list-group" id="choose_project">
                     {% for projet in projets %}
-                        <li class="list-group-item" style="padding: 1%; margin: 1%">
-                            <a href="/{{ projet.id }}/correctionProf2" class="list-group-item">
-                                    {{ projet.intituleProjet }}
+                        <li class="list-group-item">
+                            <p id="intitule">{{ projet.intituleProjet }}</p>
+                            <a href="/{{ projet.id }}/correctionProf2" class="list-group-item list-group-item-info">
+                                Corriger le projet
                             </a>
                         </li>
                     {% endfor %}
