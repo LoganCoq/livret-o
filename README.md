@@ -13,14 +13,20 @@ Pré-requis :
 
 Pour installer l'application :
 - Fork et clone du projet https://victor.maupu@gitlab.com/victor.maupu/projet_livretO_2A.git
- > php composer.phar update ( cela peut prendre quelque minute) 
- - Relancer le server 
+
+> php composer.phar update ( cela peut prendre quelque minute) 
+
+- Relancer le server 
 
 
 Si la base de données n'est pas instalée :
-- php bin/console doctrine:database:create
-- php bin/console doctrine:schema:create
-- php bin/console doctrine:schema:validate
+
+> php bin/console doctrine:database:create
+
+> php bin/console doctrine:schema:create
+
+> php bin/console doctrine:schema:validate
+- Relancer le serveur
 
 Lancement et arrêt du serveur :
 > php bin/console server:start    (pour lancer le projet en fond)

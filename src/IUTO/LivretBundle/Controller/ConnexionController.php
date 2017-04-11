@@ -2,13 +2,13 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use IUTO\LivretBundle\Entity\Departement;
+use IUTO\LivretBundle\Entity\Formation;
+use IUTO\LivretBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Ldap\Adapter\ExtLdap\Adapter;
 use Symfony\Component\Ldap\Ldap;
-use IUTO\LivretBundle\Entity\User;
-use IUTO\LivretBundle\Entity\Formation;
-use IUTO\LivretBundle\Entity\Departement;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
@@ -17,10 +17,28 @@ class ConnexionController extends Controller
 {
     public function connexionAction()
     {
-        // com = p51955
-        $numPersonne = "o2151178";
-    //    $numPersonne = "p2171";
+        //CONNECTION SANS CAS : decommenter le numero avec lequel on souhaite se connecter
+
+//        -----PROFESSEUR-----
+//        $numPersonne = "p2171";
+//        $numPersonne = "p7184";
+//        $numPersonne = "p22732";
+//        $numPersonne = "p46975";
+        $numPersonne = "p15987";
+
+//        -----ETUDIANT-----
+//        $numPersonne = "o2151178";
+//        $numPersonne = "o2154952";
+//        $numPersonne = "o2151485";
+//        $numPersonne = "o2153164";
+//        $numPersonne = "o2151841";
+//        $numPersonne = "o2150380";
+
+
+//        -----COMMUNICATION-----
 //        $numPersonne = "p51955";
+
+
 
         $config = array(
             'host' => 'ldap-univ.iut45.univ-orleans.fr',

@@ -3,12 +3,12 @@
 namespace IUTO\LivretBundle\Controller;
 
 use IUTO\LivretBundle\Entity\Commentaire;
-use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Entity\Projet;
-use IUTO\LivretBundle\Form\ProjetCompleteType;
-use IUTO\LivretBundle\Form\ProjetCreateType;
-use IUTO\LivretBundle\Form\ProjetContenuType;
+use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
+use IUTO\LivretBundle\Form\ProjetCompleteType;
+use IUTO\LivretBundle\Form\ProjetContenuType;
+use IUTO\LivretBundle\Form\ProjetCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -50,6 +50,7 @@ class StudentController extends Controller
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
+        //creation d'un nouveau projet
         $projet = new Projet();
 
         // Recuperation des informations de l'étudiant
@@ -70,10 +71,10 @@ class StudentController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             // récupération de la date et changement de son format
-
             $dateFormD = $form['dateDebut']->getData();
             $dateFormF = $form['dateFin']->getData();
 
+            //stockage de la date dans le projet
             $projet->setDateDebut(new \DateTime($dateFormD));
             $projet->setDateFin(new \DateTime($dateFormF));
 
@@ -94,6 +95,7 @@ class StudentController extends Controller
             $em->persist($projet);
             $em->flush();
 
+            //redirection vers la page suivante
             return $this->redirectToRoute('iuto_livret_contenuProject', array(
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
@@ -121,6 +123,7 @@ class StudentController extends Controller
 
     public function contenuProjectAction(Request $request, Projet $projet)
     {
+        //recuperation des informations sur l'utilisateur
         $em = $this->getDoctrine()->getManager();
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
@@ -167,9 +170,10 @@ class StudentController extends Controller
             );
     }
 
+//    controller pour l'affichage des projets d'un étudiant
     public function chooseProjectAction(Request $request)
     {
-
+        //récupération des informations sur l'utilisateur
         $em = $this->getDoctrine()->getManager();
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
@@ -183,9 +187,11 @@ class StudentController extends Controller
         // récupération des projets fait et non fait de l'étudiant
         foreach ( $projets as $proj ){
             if ( $proj->getValiderProjet() == 1){
+                // ajout du projet à la liste si il est valider
                 $projetsFinis[] = $proj;
             }
             else{
+                // ajout du projet à la liste si il est en cours de suivi
                 $projetsSuivis[] = $proj;
             }
         }
@@ -205,7 +211,7 @@ class StudentController extends Controller
 
     public function completeProjectAction(Request $request, Projet $projet)
     {
-
+        //récupération des informations de l'utilisateur connecter
         $em = $this->getDoctrine()->getManager();
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
@@ -223,11 +229,15 @@ class StudentController extends Controller
         // vérification de la validité du formulaire et si il à été envoyer
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // recupération des dates dans le formulaire
             $dateFormD = $form['dateDebut']->getData();
             $dateFormF = $form['dateFin']->getData();
 
+            //affectations des date dans le formulaire
             $projet->setDateDebut(new \DateTime($dateFormD));
             $projet->setDateFin(new \DateTime($dateFormF));
+
+
             // enregistrement des modifications dans la base de données
             $em->persist($projet);
             $em->flush();
@@ -249,8 +259,10 @@ class StudentController extends Controller
             );
         }
 
+        //récupération du repositoriry Commentaire
         $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
 
+        //recupération des commentaires
         $commentaires = array();
         foreach($com as $elem){
             $x=array();
@@ -277,9 +289,10 @@ class StudentController extends Controller
             $comReponse->setUser($user);
             $comReponse->setContenu($_POST['iuto_livretbundle_commentaire']['contenu']);
 
-            $em = $this->getDoctrine()->getManager();
+            // sauvegarde des commentaires dans la base de données
             $em->persist($comReponse);
             $em->flush();
+
 
             return $this->render('IUTOLivretBundle:Student:completeProject.html.twig',
                 array('form' => $form->createView(),
@@ -292,6 +305,7 @@ class StudentController extends Controller
                 ));
         }
 
+        // affichage du formulaire pour complété le projet
         return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
             'form' => $form->createView(),
             'formCom' => $form2->createView(),
@@ -309,13 +323,13 @@ class StudentController extends Controller
     // vue d'apres ajout d'information à un projet pour voir le pdf ou le télécharger
     public function confirmCompleteProjectAction(Projet $projet)
     {
-
+        // récupération des informations de l'utilisateur connecter
         $manager = $this->getDoctrine()->getManager();
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
-
+        // affichage de la page de confirmation des modification du projet
         return $this->render('IUTOLivretBundle:Student:confirmCompleteProject.html.twig', array(
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
@@ -331,6 +345,7 @@ class StudentController extends Controller
     // controlleur pour voir le pdf d'un projet validé.
     public function viewFinishedProjectAction(Request $request, Projet $projet){
 
+        // récupération des inforamtions dur l'utilsateur connecté
         $manager = $this->getDoctrine()->getManager();
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
