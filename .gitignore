@@ -21,7 +21,6 @@ var/logs/dev.log
 *.lock
 composer.json
 composer.lock
-/app/config/parameters.yml
 /.git/.MERGE_MSG.swp
 .DS_Store
 src/.DS_Store
