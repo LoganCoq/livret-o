@@ -1,6 +1,7 @@
 /build/
 /phpunit.xml
 /var/*
+var/bootstrap.php.cache
 !/var/cache
 /var/cache/*
 !var/cache/.gitkeep
@@ -19,7 +20,6 @@ var/logs/*
 var/logs/dev.log
 /vendor/*
 *.lock
-composer.json
 composer.lock
 /.git/.MERGE_MSG.swp
 .DS_Store
