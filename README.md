@@ -6,8 +6,9 @@ A Symfony project created on January 9, 2017, 4:40 pm.
 Pré-requis :
 - Apache2
 - PHP7
-- MySQL-PHP
+- PHP - MySQL
 - PHP - ldap
+- PHP - dev
 
 
 Pour installer l'application :
