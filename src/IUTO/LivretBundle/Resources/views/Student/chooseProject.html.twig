@@ -1,17 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link type="text/css" rel="stylesheet" href="{{ asset("assets/css/chooseProjectStudent.css") }}"/>
+{% endblock %}
+
 {% block content %}
-    <div class="list-group" style="padding: 2em">
-        <h1 class="">Projets :</h1>
-        <div style="padding: 1em">
-            <h2><small>Projets en cours</small></h2>
+    <div id="all_projects">
+        <h1>Projets :</h1>
+        {#section pour les projet en cours de réalisation#}
+        <div id="choose_project_enCours">
+            <h2>Projets en cours</h2>
             {% if projetsSuivis|length > 0 %}
                 <ul class="list-group">
                 {% for projet in projetsSuivis %}
-                    <li class="list-group-item" style="padding: 1em; margin: 0.5em">
-                        Intitulé du projet : {{ projet.intituleProjet }}
-                        <a href="/{{ projet.id }}/complete" class="list-group-item" style="margin: 1em">
-                            Voir les corrections du projet
+                    <li class="list-group-item">
+                        <p id="intitule">{{ projet.intituleProjet }}</p>
+                        <a href="/{{ projet.id }}/complete" class="list-group-item list-group-item-info pick_project">
+                            <p class="correction">Voir les corrections du projet</p>
                         </a>
                     </li>
                 {% endfor %}
@@ -20,12 +26,13 @@
                 <p>Vous n'avez pas de projets en cours.</p>
             {% endif %}
         </div>
-        <div style="padding: 1em">
-            <h2><small>Projets finis</small></h2>
+        {#section pour les projets terminés#}
+        <div id="choose_project_fini">
+            <h2>Projets finis</h2>
             {% if projetsFinis|length > 0 %}
                 {% for projet in projetsFinis %}
-                    <a href="/{{ projet.id }}/finishedProject" class="list-group-item list-group-item-success">
-                        Intitulé du projet : {{ projet.intituleProjet }}
+                    <a href="/{{ projet.id }}/finishedProject" class="list-group-item list-group-item-success pick_project">
+                        <p id="intitule">{{ projet.intituleProjet }}</p>
                     </a>
                 {% endfor %}
             {% else %}

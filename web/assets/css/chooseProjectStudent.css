@@ -1,0 +1,51 @@
+
+h1
+{
+    padding: 0.5em
+}
+
+h2
+{
+    font-size: 2em;
+}
+
+#intitule
+{
+    font-size: 1.5em;
+}
+
+#choose_project_enCours
+{
+    margin: 2em;
+    margin-left: 4em;
+    margin-right: 5em;
+}
+
+#choose_project_enCours > ul
+{
+    margin-left: 1em;
+    margin-top: 1em;
+}
+
+#choose_project_fini
+{
+    margin: 2em;
+    margin-left: 4em;
+    margin-right: 5em;
+}
+
+#choose_project_fini > ul
+{
+    margin-left: 1em;
+    margin-top: 1em;
+}
+
+.correction
+{
+    font-size: 1.2em;
+}
+
+.pick_project
+{
+    margin-left: 1em;
+}
