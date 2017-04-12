@@ -10,14 +10,44 @@ h2
     margin-left: 2em;
 }
 
-#intitule
+
+#choose_project_name
 {
+    margin-left: 1em;
+    margin-top: 0.5em;
     font-size: 1.5em;
+    width: 20em;
+}
+
+#livret_modif_btn
+{
+    margin-top: -4.7em;
+    margin-left: 32em;
+}
+#livreto_see_btn
+{
+    margin-top: -4.7em;
+    margin-left: 5em;
+}
+
+.list-group-item
+{
+    padding: 0.2em;
+    margin: 0.2em;
+    height: auto;
+    width: 61em;
+    margin-left: 4em;
+}
+
+#livret_btn_goto_home
+{
+    margin: 1em;
+    margin-top: 2em;
+    margin-left: 2em;
+    font-size: 1.2em;
 }
 
 #choose_project
 {
     margin: 2em;
-    margin-left: 6em;
-    margin-right: 5em;
 }
