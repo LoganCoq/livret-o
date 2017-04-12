@@ -35,6 +35,9 @@ Si la base de données n'est pas instalée :
 > php bin/console doctrine:schema:create
 
 > php bin/console doctrine:schema:validate
+
+> php bin/console doctrine:fixtures:load
+
 - Relancer le serveur
 
 Lancement et arrêt du serveur :
