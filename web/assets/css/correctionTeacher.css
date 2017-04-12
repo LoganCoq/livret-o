@@ -21,7 +21,7 @@
 
 #iuto_livretbundle_projet_descripProjet
 {
-    width: 45em;
+    width: 40em;
     height: 20em;
     font-size: 1.2em;
     margin-left: 4em;
@@ -29,7 +29,7 @@
 
 #iuto_livretbundle_projet_bilanProjet
 {
-    width: 45em;
+    width: 40em;
     height: 12em;
     font-size: 1.2em;
     margin-left: 4em;
@@ -78,7 +78,7 @@
 
 #livret_cancel_correction
 {
-    margin-left: 45em;
+    margin-left: 42em;
     margin-top: -7.5em;
     font-size: 1.2em;
 }

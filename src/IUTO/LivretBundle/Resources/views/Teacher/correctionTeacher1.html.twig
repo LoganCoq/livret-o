@@ -11,9 +11,14 @@
 
 {% block content %}
 
-     <div class="list-group">
+    <a type="button" href="{{ path('iuto_livret_teacherhomepage') }}" class="btn btn-success" id="livret_btn_goto_home">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        Accueil
+    </a>
+
+    <div class="list-group">
         <h1>Correction de projets </h1>
-        <div id="project_choose_correction" id="pick_section">
+            <div id="project_choose_correction" id="pick_section">
             <h2>Choisir un projet à corriger</h2>
 
             {% if projets|length > 0 %}
@@ -37,13 +42,6 @@
                 <p>Vous n'avez pas de projets en cours.</p>
             {% endif %}
         </div>
-
     </div>
-
-    <a type="button" class="btn btn-retour" href="{{ pagePrec }}">
-        <  Retour
-    </a>
-
-
 
 {% endblock %}
