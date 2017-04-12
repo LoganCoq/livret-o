@@ -27,7 +27,7 @@ class ProjetCreateType extends AbstractType
                 'attr' => [
                     'data-provide' => 'datepicker',
                     'class' => 'datepicker',
-            ],
+                ],
             ))
             ->add('dateFin', TextType::class, array(
                 'label' => 'Date de fin',
@@ -82,6 +82,7 @@ class ProjetCreateType extends AbstractType
                 'label' => 'Suivant',
                 'attr' => [
                     'onclick' => "return confirm('Etes vous sûr ?')",
+                    'class' => 'btn btn-primary'
                 ]
             ));
     }

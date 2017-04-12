@@ -73,3 +73,10 @@ form[name=iuto_livretbundle_projet]
     height: 3em;
     width: 20em;
 }
+
+#livret_cancel_create_student
+{
+    margin-left: 35em;
+    margin-top: -8em;
+    font-size: 1.2em;
+}
