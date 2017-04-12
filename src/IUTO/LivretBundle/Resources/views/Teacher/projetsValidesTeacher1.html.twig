@@ -2,7 +2,59 @@
 {% block title %}
     Correction projets
 {% endblock %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+
+    <style type="text/css">
+        #choose_project_name
+        {
+            margin-left: 1em;
+            margin-top: 0.5em;
+            font-size: 1.5em;
+        }
+
+        #livret_modif_btn
+        {
+            margin-top: -4.7em;
+            margin-left: 10em;
+        }
+        #livreto_see_btn
+        {
+            margin-top: -4.7em;
+            margin-left: 5em;
+        }
+
+        .list-group-item
+        {
+            padding: 0.2em;
+            margin: 0.2em;
+            height: 5em;
+            width: 40em;
+            margin-left: 4em;
+        }
+
+        #livret_btn_goto_home
+        {
+            margin: 1em;
+            margin-top: 2em;
+            margin-left: 2em;
+            font-size: 1.2em;
+        }
+
+    </style>
+
+
+
+{% endblock %}
+
 {% block content %}
+
+    <a type="button" href="{{ path('iuto_livret_teacherhomepage') }}" class="btn btn-success" id="livret_btn_goto_home">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        Accueil
+    </a>
 
     <div class="list-group" style="padding: 2%">
         <h1 class="">Projets validés </h1>
@@ -12,9 +64,15 @@
             {% if projets|length > 0 %}
                 <ul class="list-group">
                     {% for projet in projets %}
-                        <li class="list-group-item" style="padding: 1%; margin: 1%">
-                            <a href="/{{ projet.id }}/correctionProf2" class="list-group-item">
-                                {{ projet.intituleProjet }}
+                        <li class="list-group-item">
+                            <p id="choose_project_name">{{ projet.intituleProjet }}</p>
+                            <a href="/{{ projet.id }}/correctionProf2" class="btn btn-warning" id="livret_modif_btn">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                Modifier le projet
+                            </a>
+                            <a href="/generate/{{ projet.id }}" class="btn btn-success" id="livreto_see_btn">
+                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                Aperçu du projet
                             </a>
                         </li>
                     {% endfor %}
