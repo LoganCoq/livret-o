@@ -2,6 +2,9 @@
 
 namespace IUTO\LivretBundle\Form;
 
+use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Repository\UserRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -21,16 +24,16 @@ class ProjetCompleteType extends AbstractType
             ->add('intituleProjet', TextType::class, array(
                 'label' => 'Intitulé du projet',
             ))
+            ->add('clientProjet', TextType::class, array(
+                'label' => 'Client',
+                'required' => false,
+            ))
             ->add('descripProjet', TextareaType::class, array(
                 'label' => 'Description',
                 'required' => false,
             ))
             ->add('bilanProjet', TextareaType::class, array(
                 'label' => 'Bilan du projet',
-                'required' => false,
-            ))
-            ->add('clientProjet', TextType::class, array(
-                'label' => 'Client',
                 'required' => false,
             ))
             ->add('motsClesProjet', CollectionType::class, array( //TODO mots clés
@@ -57,6 +60,45 @@ class ProjetCompleteType extends AbstractType
                     'data-provide' => 'datepicker',
                     'class' => 'datepicker',
                 ],
+            ))
+            ->add('etudiants', EntityType::class, array(
+                'class' => User::class,
+                'label' => 'Etudiants',
+                'choice_label' => function (User $etudiant) {
+                    return $etudiant->getNomUser() . ' ' . $etudiant->getPrenomUser();
+                },
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'selectpicker',
+                    'data-live-search' => true,
+                    'data-width' => 'auto',
+                    'id' => 'livreto_project_studs',
+                ],
+                'query_builder' => function (UserRepository $er) use ($options) {
+                    $options;
+                    return $er->createQueryBuilder('u')
+                        ->select('u')
+                        ->where("u.role = 'Etudiant' or u.role = 'ROLE_student'");
+                }
+            ))
+            ->add('tuteurs', EntityType::class, array(
+                'class' => User::class,
+                'label' => 'Tuteurs',
+                'choice_label' => function (User $personnel) {
+                    return $personnel->getNomUser() . ' ' . $personnel->getPrenomUser();
+                },
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'selectpicker',
+                    'data-live-search' => true,
+                    'data-width' => 'auto',
+                    'id' => 'livreto_project_tuts',
+                ],
+                'query_builder' => function (UserRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->select('u')
+                        ->where("u.role <> 'Etudiant' and u.role <> 'ROLE_student' and u.role <> 'ROLE_employee'");
+                }
             ))
             ->add('submit', SubmitType::class, array(
                 'label' => 'Enregistrer modifications et envoyer en correction',

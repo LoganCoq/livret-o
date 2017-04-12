@@ -23,6 +23,11 @@
         .download_confirm {
             margin-left: 3em;
         }
+        #livret_btn_goto_home
+        {
+            margin: 1em;
+            font-size: 1.2em;
+        }
 
     </style>
 {% endblock %}
@@ -35,6 +40,10 @@
             {% endfor %}
         </div>
     {% endif %}
+    <a type="button" href="{{ path('iuto_livret_studenthomepage') }}" class="btn btn-success" id="livret_btn_goto_home">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        Accueil
+    </a>
     <div class="div_confirm_complete">
         <a href="/generate/{{ projet.id }}" class="btn btn-success apercu_confirm">
             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>

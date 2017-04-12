@@ -5,6 +5,7 @@ namespace IUTO\LivretBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,21 +17,25 @@ class ProjetContenuType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('descripProjet', TextareaType::class, array(
-            'label' => 'Description du projet',
-            'required' => false,
-        ))
-        ->add('bilanProjet', TextareaType::class, array(
-            'label' => 'Bilan du projet',
-            'required' => false,
-        ))
-        ->add('submit', SubmitType::class, array(
-            'label' => 'Enregistrer le contenu et envoyer en correction',
-            'attr' => [
-                'onclick' => "return confirm('Etes vous sûr ?')",
-                'class' => "btn-primary",
-            ],
-        ));
+            ->add('clientProjet', TextType::class, array(
+                'label' => 'Client',
+                'required' => false,
+            ))
+            ->add('descripProjet', TextareaType::class, array(
+                'label' => 'Description du projet',
+                'required' => false,
+            ))
+            ->add('bilanProjet', TextareaType::class, array(
+                'label' => 'Bilan du projet',
+                'required' => false,
+            ))
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Enregistrer le contenu et envoyer en correction',
+                'attr' => [
+                    'onclick' => "return confirm('Etes vous sûr ?')",
+                    'class' => "btn-primary",
+                ],
+            ));
     }
 
     /**

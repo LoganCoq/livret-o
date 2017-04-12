@@ -21,7 +21,7 @@
 
 #iuto_livretbundle_projet_descripProjet
 {
-    width: 60em;
+    width: 40em;
     height: 20em;
     font-size: 1.2em;
     margin-left: 4em;
@@ -29,7 +29,7 @@
 
 #iuto_livretbundle_projet_bilanProjet
 {
-    width: 60em;
+    width: 40em;
     height: 12em;
     font-size: 1.2em;
     margin-left: 4em;
@@ -74,9 +74,15 @@ form[name=iuto_livretbundle_projet]
     width: 20em;
 }
 
+#iuto_livretbundle_projet_clientProjet
+{
+    margin-left: 4em;
+    width: 20em;
+}
+
 #livret_cancel_create_student
 {
-    margin-left: 35em;
+    margin-left: 45em;
     margin-top: -7.5em;
     font-size: 1.2em;
 }
