@@ -4,19 +4,27 @@
     {{ parent() }}
 
     <style type="text/css">
-        .div_confirm_complete {
-            width: 70em;
-            height: 10em;
-            position: absolute;
-            top:0;
-            bottom: 0;
-            left: 35em;
-            right: 35em;
-            margin: auto;
+        .div_confirm_complete
+        {
+            margin-top: -15em;
+
         }
-        .download_confirm {
+        .btn-info
+        {
+            margin-left: 20em;
+            margin-top: 30em;
+        }
+        .btn-success
+        {
+            margin-top: 30em;
             margin-left: 3em;
         }
+        .formulaire
+        {
+            margin-top: 10em;
+            margin-left: 37em;
+        }
+
     </style>
 {% endblock %}
 
@@ -29,22 +37,24 @@
     <h1> Finalisation du projet </h1>
     <br>
     <div class="div_confirm_complete">
-        <a href="/generate/{{ projet }}" class="btn btn-success apercu_confirm">
+        <a type="button" class="btn btn-primary" href="{{ path('iuto_livret_teacherhomepage') }}">
+            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            Accueil
+        </a>
+
+        <a href="/generate/{{ projet }}" class="btn btn-info apercu_confirm">
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
             Aperçu du compte rendu
         </a>
 
-        <a type="button" href="" class="btn btn-default download_confirm">
+        <a type="button" href="" class="btn btn-success download_confirm">
+            <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
             Renvoyer en correction
         </a>
         {#<a type="submit" href="" class="btn btn-warning">#}
             {#Valider le compte-rendu#}
         {#</a>#}
 
-
-
-        <a type="button" class="btn btn-retour" href="{{ pagePrec }}">
-            <  Retour
-        </a>
 
         <div class="formulaire">
             {% form_theme form 'bootstrap_3_layout.html.twig' %}
@@ -53,6 +63,19 @@
     </div>
 
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $subBtn = document.getElementById('iuto_livretbundle_projet_submit');
+        $glyph = document.createElement('span');
+        $glyph.className = 'glyphicon glyphicon-ok';
+        $subBtn.appendChild($glyph);
+    </script>
+
+{% endblock %}
+
 
 
 

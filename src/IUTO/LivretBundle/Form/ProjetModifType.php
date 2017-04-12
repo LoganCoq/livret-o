@@ -100,6 +100,4 @@ class ProjetModifType extends AbstractType
     {
         return 'iuto_livretbundle_projet';
     }
-
-
 }

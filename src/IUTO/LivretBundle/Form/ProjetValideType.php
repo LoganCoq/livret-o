@@ -16,8 +16,11 @@ class ProjetValideType extends AbstractType
     {
         $builder
             ->add('submit', SubmitType::class, array(
-                'label' => 'Valider le projet',
-            ))    ;
+                'label' => 'Valider le projet ',
+                'attr' => [
+                    'class' => 'btn btn-warning',
+                ]
+            ));
     }
 
     /**

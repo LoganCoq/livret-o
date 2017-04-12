@@ -326,6 +326,7 @@ class TeacherController extends Controller
                     'info' => array('Demandes de correction', 'Projets validés'),
                     'routing_info' => array('/correctionProf1', '/projetsValides1'),
                     'routing_options' => array('/correctionProf1', '/projetsValides1'),
+                    'professeur' => $professeur,
                     'pagePrec' => '/'.$idProjet.'/correctionProf3',
                     'projet' => $idProjet,
                 ));
