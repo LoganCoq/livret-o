@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Livret'O - Mes projets
+{% endblock %}
+
+
 {% block stylesheets %}
     {{ parent() }}
     <link type="text/css" rel="stylesheet" href="{{ asset("assets/css/chooseProjectStudent.css") }}"/>
@@ -64,7 +69,7 @@
                 {% for projet in projetsSuivis %}
                     <li class="list-group-item">
                         <p id="choose_project_name">{{ projet.intituleProjet }}</p>
-                        <a href="{{ path('iuto_livret_completeProject', {'projet': 'x'}) }}" class="btn btn-warning" id="livret_modif_btn">
+                        <a href="{{ path('iuto_livret_completeProject', {'projet': projet.id}) }}" class="btn btn-warning" id="livret_modif_btn">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             Modifier le projet
                         </a>

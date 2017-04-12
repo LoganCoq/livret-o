@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Livret'O - Etudiant
+{% endblock %}
+
+
 {% block content %}
     {% if app.session.flashBag.has('success') %}
         <div class="alert alert-success">
