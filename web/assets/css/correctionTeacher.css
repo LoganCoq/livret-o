@@ -1,20 +1,68 @@
+.form-group
+{
+    width: 70em;
+}
 
+.control-label
+{
+    margin: 1em 1em 1em 0em;
+    padding: auto;
+    font-size: 1.5em;
+    margin-right: 30em;
+}
+
+.form-control
+{
+    margin-right: 15em;
+    font-size: 1.2em;
+    height: auto;
+    /*text-align: center;*/
+}
 
 #iuto_livretbundle_projet_descripProjet
 {
-    width: 50em;
-    height: 30em;
-    text-align: left;
-    margin-bottom: 4em;
+    width: 60em;
+    height: 20em;
+    font-size: 1.2em;
+    margin-left: 4em;
 }
 
 #iuto_livretbundle_projet_bilanProjet
 {
-    width: 50em;
-    height: 20em;
-    text-align: left;
-    margin-bottom: 1em;
+    width: 60em;
+    height: 12em;
+    font-size: 1.2em;
+    margin-left: 4em;
 }
+
+#iuto_livretbundle_projet_submit
+{
+    margin: 1em;
+    font-size: 1.2em;
+}
+
+
+#iuto_livretbundle_projet_intituleProjet
+{
+    width: 30em;
+    height: 3em;
+    margin-left: 4em;
+}
+
+#iuto_livretbundle_projet_dateDebut
+{
+    width: auto;
+    height: 3em;
+    margin-left: 4em;
+}
+
+#iuto_livretbundle_projet_dateFin
+{
+    width: auto;
+    height: 3em;
+    margin-left: 4em;
+}
+
 
 .formulaire
 {
@@ -26,4 +74,11 @@
     padding: auto;
     font-size: 1.5em;
     margin-bottom: 1em;
+}
+
+#livret_cancel_correction
+{
+    margin-left: 35em;
+    margin-top: -7.5em;
+    font-size: 1.2em;
 }

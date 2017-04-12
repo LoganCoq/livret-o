@@ -78,6 +78,7 @@ class ProjetModifType extends AbstractType
                 'label' => 'Suivant',
                 'attr' => [
                     'onclick' => "return confirm('Etes vous sûr ?')",
+                    'class' => 'btn btn-primary',
                 ],
             ));
     }
