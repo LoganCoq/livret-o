@@ -6,6 +6,12 @@
 {% endblock %}
 
 {% block content %}
+
+    <a type="button" href="{{ path('iuto_livret_studenthomepage') }}" class="btn btn-success" id="livret_btn_goto_home">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        Accueil
+    </a>
+
     <div id="all_projects">
         <h1>Projets :</h1>
         {#section pour les projet en cours de réalisation#}

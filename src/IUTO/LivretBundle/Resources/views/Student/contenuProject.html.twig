@@ -11,4 +11,21 @@
     {% form_theme form 'bootstrap_3_layout.html.twig' %}
     {{ form(form) }}
 
+    <a type="button" href="{{ path('iuto_livret_studenthomepage') }}" class="btn btn-danger" id="livret_cancel_create_student">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        Annuler
+    </a>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $subBtn = document.getElementById('iuto_livretbundle_projet_submit');
+        $glyph = document.createElement('span');
+        $glyph.className = 'glyphicon glyphicon-chevron-right';
+        $subBtn.appendChild($glyph);
+    </script>
 {% endblock %}

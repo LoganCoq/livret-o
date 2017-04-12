@@ -18,6 +18,11 @@
     <div class="form-complete">
         {% form_theme form 'bootstrap_3_layout.html.twig' %}
         {{ form(form) }}
+
+        <a type="button" href="{{ path('iuto_livret_chooseProject') }}" class="btn btn-danger" id="livret_cancel_create_student">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            Annuler
+        </a>
     </div>
     <div class="popup-box">
         <div class="popup-head">
@@ -26,9 +31,7 @@
             </div>
         </div>
 
-
         <div class="popup-messages">
-
             <div class="direct-chat-messages">
 
                 {% if commentaires|length > 0 %}
@@ -68,13 +71,10 @@
                             </div>
                         {% endif %}
                         </div>
-
-
                     {% endfor %}
                 {% endif %}
 
             </div>
-
 
             <div class="reponseCorrection">
                 {% form_theme form 'bootstrap_3_layout.html.twig' %}
@@ -98,6 +98,13 @@
         $('.datepicker').datepicker({
             autoclose: true
         });
+    </script>
+
+    <script type="text/javascript">
+        $subBtn = document.getElementById('iuto_livretbundle_projet_submit');
+        $glyph = document.createElement('span');
+        $glyph.className = 'glyphicon glyphicon-chevron-right';
+        $subBtn.appendChild($glyph);
     </script>
 
 {% endblock %}
