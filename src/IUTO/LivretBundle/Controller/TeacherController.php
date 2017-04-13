@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TeacherController extends Controller
 {
+//    Controlleur pour l'affichage du home de teacher
     public function teacherhomeAction()
     {
         // recupération de l'utilisateur connecté
@@ -23,9 +24,7 @@ class TeacherController extends Controller
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
-        $repositoryUser = $em->getRepository('IUTOLivretBundle:User');
-        $names = $repositoryUser->findOneById($id)->getUsername();
-
+//        rendu de la page home du professeur avec les arguments nécessaires
         return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig', array(
             'statutCAS' => 'professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
@@ -35,9 +34,10 @@ class TeacherController extends Controller
             'professeur' => $professeur,
             'routing_info' => array('/correctionProf1', '/projetsValides1'),
             'routing_options' => array('/correctionProf1', '/projetsValides1'),
-            'names' => $names, '#'));
+            '#'));
     }
 
+//    controlleur pour l'affichage des projets du professeur
     public function correctionTeacher1Action()
     {
         // recupération de l'utilisateur connecté
@@ -46,6 +46,7 @@ class TeacherController extends Controller
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
+//        récupération des projets suivis par l'utilisateur
         $repositoryUser = $em->getRepository('IUTOLivretBundle:User');
         $projets = $repositoryUser->findOneById($id)->getProjetSuivis();
 
@@ -53,10 +54,12 @@ class TeacherController extends Controller
         $projetsValides = array();
         foreach($projets as $elem)
         {
+//            ajout des projet qui n'ont pas étés validés par un utilisateur
             if ($elem->getValiderProjet() == 0)
             array_push($projetsValides, $elem);
         };
 
+//        rendu de la page d'affichage des projets suivis
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array(
             'id' => $id,
             'statutCAS' => 'professeur',
@@ -69,6 +72,7 @@ class TeacherController extends Controller
 
     }
 
+//    controlleur pour la correction d'un projet
     public function correctionTeacher2Action(Request $request, Projet $projet)
     {
         // recupération de l'utilisateur connecté
@@ -77,26 +81,30 @@ class TeacherController extends Controller
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
-
+//        creation du formulaire de modification
         $formModif = $this->createForm(ProjetModifType::class, $projet);
 
         // insertion des dates en string
         $formModif['dateDebut']->setData($projet->getDateDebut()->format('m/d/Y'));
         $formModif['dateFin']->setData($projet->getDateFin()->format('m/d/Y'));
 
+//        mise du formulaire en attente de submit
         $formModif->handleRequest($request);
 
+//        vérification de la validité du formulaire et de si il à été envoyer
         if ($formModif->isSubmitted() && $formModif->isValid())
         {
+//            récupération des dates du formulaire
             $dateFormD = $formModif['dateDebut']->getData();
             $dateFormF = $formModif['dateFin']->getData();
-
+//            affectation des valeurs des dates dans le projet
             $projet->setDateDebut(new \DateTime($dateFormD));
             $projet->setDateFin(new \DateTime($dateFormF));
-
+//            enregistrement du projet dans la base
             $em->persist($projet);
             $em->flush();
 
+//            redirection vers le formulaire de modification suivant une fois le formulaire envoyer
             return $this->redirectToRoute(
                 'iuto_livret_correctionProf3', array(
                     'statusCAS' => 'professeur',
@@ -107,9 +115,9 @@ class TeacherController extends Controller
             );
         }
 
+//        récupération des commentaires appartenant au porjet actuel
         $repositoryCommentaire = $em->getRepository('IUTOLivretBundle:Commentaire');
         $com = $repositoryCommentaire->findByProjet($projet);
-
 
         //recuperation des commentaires
         $commentaires = array();
@@ -126,14 +134,18 @@ class TeacherController extends Controller
 
         $idProjet = $projet->getId();
 
+//        creation du formulaire d'ajout d'un commentaire
         $formCom = $this->createForm(CommentaireCreateType::class, $com);
+//        mise en attente du formulaire d'une action sur celui ci ( submit )
         $formCom->handleRequest($request);
 
+//        vérification de lavalidité du formulaire et de son envoi
         if ($formCom->isSubmitted() && $formCom->isValid())
         {
             $repositoryUser = $em->getRepository('IUTOLivretBundle:User');
-
+//            création d'une nouvelle entité de commentaire
             $comReponse = new Commentaire;
+//            ajout des infirmations nécessaire au commentaire
             $comReponse->setDate();
             $comReponse->setProjet($projet);
 
@@ -142,6 +154,7 @@ class TeacherController extends Controller
             $comReponse->setUser($user);
             $comReponse->setContenu($formCom['contenu']->getData());
 
+//            enregistrement des données dans la base
             $em->persist($comReponse);
             $em->flush();
 
@@ -159,6 +172,7 @@ class TeacherController extends Controller
                 array_push($commentaires, $x);
             };
 
+//            reaffichage du rendu de la section de commentaires
             return $this->render( 'IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
                 array(
                     'form' => $formModif->createView(),
@@ -174,6 +188,7 @@ class TeacherController extends Controller
                 ));
         }
 
+//        rendu de la page de correction du projet
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig', array(
                 'form' => $formModif->createView(),
                 'formCom' => $formCom->createView(),
@@ -188,24 +203,27 @@ class TeacherController extends Controller
             ));
     }
 
+//    controlleur pour la seconde partie de la correction d'un projet
     public function correctionTeacher3Action(Request $request, Projet $projet)
     {
-
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
+//        creation du formulaire de modification du contenu du projet
         $formContent = $this->createForm(ProjetContenuType::class, $projet);
         $formContent->handleRequest($request);
 
-
+//        vérification de la validité et de l'envoi du formulaire
         if ($formContent->isSubmitted() && $formContent->isValid())
         {
+//            enregistrement du formulaire dans la base
             $em->persist($projet);
             $em->flush();
 
+//            redirection vers la page de fin de correction du projet
             return $this->redirectToRoute('iuto_livret_correctionProf4', array(
                     'statusCAS' => 'professeur',
                     'info' => array('Demandes de correction', 'Projets validés'),
@@ -217,6 +235,7 @@ class TeacherController extends Controller
 
         $repositoryUser = $em->getRepository('IUTOLivretBundle:User');
         $repositoryCommentaire = $em->getRepository('IUTOLivretBundle:Commentaire');
+//        recupération des commentaires associés au projet actuel
         $com = $repositoryCommentaire->findByProjet($projet);
 
         $commentaires = array();
@@ -233,11 +252,15 @@ class TeacherController extends Controller
 
         $idProjet = $projet->getId();
 
+//        creation du formulaire d'ajout d'un commentaire
         $formCom = $this->createForm(CommentaireCreateType::class, $com);
+//        mise en attente du formulaire d'une action sur celui-ci
         $formCom->handleRequest($request);
 
+//        verification de l'envoie et de la validité du formulaire
         if ($formCom->isSubmitted() && $formCom->isValid())
         {
+//            creation d'un nouveau commentaire et ajout des informations à celui ci
             $comReponse = new Commentaire;
             $comReponse->setDate();
             $comReponse->setProjet($projet);
@@ -245,6 +268,7 @@ class TeacherController extends Controller
             $comReponse->setUser($user);
             $comReponse->setContenu($formCom['contenu']->getData());
 
+//            enregistrement du commentaire dans la base
             $em->persist($comReponse);
             $em->flush();
 
@@ -262,7 +286,8 @@ class TeacherController extends Controller
                 array_push($commentaires, $x);
             };
 
-            return $this->render( 'IUTOLivretBundle:Teacher:correctionTeacher2.html.twig', array(
+//            rendu du formulaire de modification du contenu du projet + formulaire d'ajout de commentaire
+            return $this->render( 'IUTOLivretBundle:Teacher:correctionTeacher3.html.twig', array(
                     'form' => $formContent->createView(),
                     'formCom' => $formCom->createView(),
                     'statutCAS' => 'professeur',
@@ -276,6 +301,7 @@ class TeacherController extends Controller
                 ));
         }
 
+//        rendu de la page de modification du projet et du formulaire d'ajout d'un commentaire
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig', array(
                 'form' => $formContent->createView(),
                 'formCom' => $formCom->createView(),
@@ -290,6 +316,7 @@ class TeacherController extends Controller
             ));
     }
 
+//    controlleur pour la page finale de  modification d'un projet
     public function correctionTeacher4Action(Request $request, Projet $projet)
     {
         // recupération de l'utilisateur connecté
@@ -298,6 +325,7 @@ class TeacherController extends Controller
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
+//        creation du formulaire de validation d'un projet
         $form = $this->createForm(ProjetValideType::class, $projet);
         $form->handleRequest($request);
 
@@ -305,14 +333,17 @@ class TeacherController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
+//            validation du projet si le formaulaire est envoyé
             if($projet->getValiderProjet()==0)
             {
                 $projet->setValiderProjet(1);
             }
 
+//            enregistrement des données dans la base
             $em->persist($projet);
             $em->flush();
 
+//            rendu du home de teacher
             return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig',
                 array(
                     'form' => $form->createView(),
@@ -329,6 +360,7 @@ class TeacherController extends Controller
                 ));
         }
 
+//        rendu de la page finale de modification
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
             array(
                 'form' => $form->createView(),
@@ -350,18 +382,19 @@ class TeacherController extends Controller
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
+//        recupération des projets suivis par l'utilisateur
         $repositoryUser = $em->getRepository('IUTOLivretBundle:User');
         $projets = $repositoryUser->findOneById($id)->getProjetSuivis();
-
 
 
         $projetsValides = array();
         foreach($projets as $elem)
         {
+//            recupération des projets validés
             if ($elem->getValiderProjet() == 1)
                 array_push($projetsValides, $elem);
         };
-
+    //  rendu de la page de selections des projets validés
         return $this->render('IUTOLivretBundle:Teacher:projetsValidesTeacher1.html.twig', array(
             'id' => $id,
             'statutCAS' => 'professeur',
