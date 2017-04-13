@@ -1,5 +1,7 @@
+{# on entend base.html.twig pour avoir le menu sur la gauche #}
 {% extends 'base.html.twig' %}
 
+{# block titre pour changer le titre de l'onglet #}
 {% block title %}
     Livret'O - Modification projet
 {% endblock %}
@@ -20,14 +22,19 @@
 
 {% block content %}
     <div class="form-complete">
+        {# initialisation du theme pourle formulaire #}
         {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {# génération automatique du formulaire #}
         {{ form(form) }}
 
+        {# bouton retour accueil #}
         <a type="button" href="{{ path('iuto_livret_chooseProject') }}" class="btn btn-danger" id="livret_cancel_create_student">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             Annuler
         </a>
     </div>
+
+    {# section pour le chat de correction #}
     <div class="popup-box">
         <div class="popup-head">
             <div class="popup-head-left">
@@ -37,55 +44,66 @@
 
         <div class="popup-messages">
             <div class="direct-chat-messages">
-
+                {# vérification que des commentaires existe pour ce projet #}
                 {% if commentaires|length > 0 %}
+                    {# parcours des commentaires du projet #}
                     {% for o in range(0, commentaires|length - 1) %}
+                        {# vérification que le commentaire est le premier ou non #}
                         {% if o != 0 %}
+                            {# affichagede la date si le commentaire n'as pas la même date que le précédent #}
                             {% if commentaires[o][2]|date('d-m-Y') != commentaires[o-1][2]|date('d-m-Y') %}
                                 <div class="chat-box-single-line">
                                     <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
                                 </div>
                             {% endif %}
                         {% endif %}
-
+                        {# affichage de la date si ce commentaire est le premier #}
                         {% if o == 0 %}
                             <div class="chat-box-single-line">
                                 <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
                             </div>
                         {% endif %}
 
+                        {# vérification du role de l'utilisateur pour le commentaire actuel #}
+                        {# le commentaire se trouve à gauche si ce n'est pas un étudiant #}
                         {% if commentaires[o][3] == "ROLE_faculty" or commentaires[o][3] == "ROLE_employee" %}
                             <div class="direct-chat-msg-left">
                                 {% if o != 0 %}
+                                    {# affichage du nom de l'utilisateur si le commentaire précédent n'avais pas le même propriétaire #}
                                     {% if commentaires[o][0] != commentaires[o-1][0]  %}
                                         <div class="direct-chat-info clearfix">
                                             <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
                                         </div>
                                     {% endif %}
+                                {# affichage du nom si c'est le premier commentaire #}
                                 {% else %}
                                     <div class="direct-chat-info clearfix">
                                         <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
                                     </div>
                                 {% endif %}
+                                {# affichage du contenu du commentaire #}
                                 <div class="direct-chat-text-left">
                                     {{ commentaires[o][1] }}
                                 </div>
                             </div>
                         {% endif %}
-
+                        {# le commentaire se met à droite si c'est un étudiant #}
                         {% if commentaires[o][3] == "ROLE_student" %}
                             <div class="direct-chat-msg-right">
                                 {% if o != 0 %}
+                                    {# affichage du nom de l'utilisateur si le commentaire précédent n'avais pas le même propriétaire #}
                                     {% if commentaires[o][0] != commentaires[o-1][0]  %}
                                         <div class="direct-chat-info clearfix">
                                             <span class="direct-chat-name-right"> {{ commentaires[o][0] }} </span>
                                         </div>
                                     {% endif %}
+                                {# affichage du nom si c'est le premier commentaire #}
                                 {% else %}
                                     <div class="direct-chat-info clearfix">
                                         <span class="direct-chat-name-right"> {{ commentaires[o][0] }} </span>
                                     </div>
                                 {% endif %}
+                                {# affichage du contenu du commentaire #}
                                 <div class="direct-chat-text-right">
                                     {{ commentaires[o][1] }}
                                 </div>
@@ -93,14 +111,14 @@
                         {% endif %}
                     {% endfor %}
                 {% endif %}
-
             </div>
 
             <div class="reponseCorrection">
+                {# chargement du theme pour le formulaire #}
                 {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                {# génération automatique du formulaire d'ajout d'un commentaire #}
                 {{ form(formCom) }}
             </div>
-
         </div>
     </div>
 

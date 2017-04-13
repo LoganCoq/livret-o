@@ -1,5 +1,8 @@
+{# on entend base.html.twig pour avoir le menu sur la gauche #}
 {% extends 'base.html.twig' %}
 
+
+{# block titre pour changer le titre de l'onglet #}
 {% block title %}
     Livret'O - Mes projets
 {% endblock %}
@@ -53,11 +56,14 @@
 
 {% block content %}
 
+    {# bouton de retour à l'accueil #}
     <a type="button" href="{{ path('iuto_livret_studenthomepage') }}" class="btn btn-success" id="livret_btn_goto_home">
+        {# icone #}
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         Accueil
     </a>
 
+    {# section d'affichage des projet en cours et des projet validés #}
     <div id="all_projects">
         <h1>Projets :</h1>
         {#section pour les projet en cours de réalisation#}
@@ -65,6 +71,7 @@
             <h2>Projets en cours</h2>
             {% if projetsSuivis|length > 0 %}
                 <ul class="list-group">
+                    {# parcours des projets en cours #}
                 {% for projet in projetsSuivis %}
                     <li class="list-group-item">
                         <p id="choose_project_name">{{ projet.intituleProjet }}</p>
@@ -86,8 +93,10 @@
         {#section pour les projets terminés#}
         <div id="choose_project_fini">
             <h2>Projets finis</h2>
+            {#vérification de l'existance de projets validés #}
             {% if projetsFinis|length > 0 %}
                 <ul class="list-group">
+                    {# parcours des projets finis et validés #}
                     {% for projet in projetsFinis %}
                         <li class="list-group-item">
                             <p id="choose_project_name">{{ projet.intituleProjet }}</p>

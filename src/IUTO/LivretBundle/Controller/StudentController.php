@@ -17,8 +17,9 @@ class StudentController extends Controller
     // controlleur pour le home de l'étudiant connecté
     public function studenthomeAction()
     {
-        // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
+
+        // recupération de l'utilisateur connecté
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
@@ -43,9 +44,9 @@ class StudentController extends Controller
 
     public function createProjectAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
 
         // Recuperation de l'étudiant connecté
-        $em = $this->getDoctrine()->getManager();
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
@@ -67,7 +68,7 @@ class StudentController extends Controller
         $form = $this->createForm(ProjetCreateType::class, $projet, ['annee' => $formation->getYearDebut()]);
         $form->handleRequest($request);
 
-        //verifie si le formulaire est valide ou pas
+        //verifie si le formulaire est valide ou non et si il est envoyé
         if ($form->isSubmitted() && $form->isValid()) {
 
             // récupération de la date et changement de son format
@@ -144,6 +145,7 @@ class StudentController extends Controller
             // affichage d'un message de confirmation que le projet à bien été créer
             $request->getSession()->getFlashBag()->add('success', 'Projet bien ajouté.');
 
+            // redirection vers le home de l'étudiant
             return $this->redirectToRoute('iuto_livret_studenthomepage', array(
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
@@ -156,7 +158,7 @@ class StudentController extends Controller
             );
         }
 
-        // affichage de la page du formulaire
+        // affichage de la page du formulaire d'ajout de contenu au projet
         return $this->render('IUTOLivretBundle:Student:contenuProject.html.twig',
             array('form' => $form->createView(),
                 'statutCAS' => 'étudiant',
@@ -196,6 +198,7 @@ class StudentController extends Controller
             }
         }
 
+        // affichage de la page de selection du projet à modifier ou prévisualiser
         return $this->render('IUTOLivretBundle:Student:chooseProject.html.twig',
             array('statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
@@ -209,6 +212,7 @@ class StudentController extends Controller
         );
     }
 
+//    controlleur pour l'affichage du formulaire de correction du projet
     public function completeProjectAction(Request $request, Projet $projet)
     {
         //récupération des informations de l'utilisateur connecter
@@ -224,6 +228,7 @@ class StudentController extends Controller
         $form['dateDebut']->setData($projet->getDateDebut()->format('m/d/Y'));
         $form['dateFin']->setData($projet->getDateFin()->format('m/d/Y'));
 
+        // attente d'action sur le formulaire
         $form->handleRequest($request);
 
         // vérification de la validité du formulaire et si il à été envoyer
@@ -233,7 +238,7 @@ class StudentController extends Controller
             $dateFormD = $form['dateDebut']->getData();
             $dateFormF = $form['dateFin']->getData();
 
-            //affectations des date dans le formulaire
+            //affectations des date dans le formulaire au bon format
             $projet->setDateDebut(new \DateTime($dateFormD));
             $projet->setDateFin(new \DateTime($dateFormF));
 
@@ -245,7 +250,7 @@ class StudentController extends Controller
             // affichage d'un message success si le projet à bien été modifié
             $request->getSession()->getFlashBag()->add('success', 'Projet bien modifié.');
 
-            // redirection une fois le formulaire envoyer
+            // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_confirmCompleteProject', array(
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
@@ -259,11 +264,11 @@ class StudentController extends Controller
             );
         }
 
-        //récupération du repositoriry Commentaire
+        //récupération des commentaires appartenant au projet actuel
         $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
 
-        //recupération des commentaires
         $commentaires = array();
+
         foreach($com as $elem){
             $x=array();
             $user = $elem->getUser();
@@ -275,13 +280,17 @@ class StudentController extends Controller
 
         };
 
+        //creation du formulaire pour la section de chat/commentaire
         $formCom = $this->createForm(CommentaireCreateType::class, $com);
         $formCom->handleRequest($request);
 
+        // vérification de la validité du formulaire si celui-ci à été envoyer
         if ($formCom->isSubmitted() && $formCom->isValid()) {
+            // création et affectation des informations dans le nouveau commentaire
             $comReponse = new Commentaire;
             $comReponse->setDate();
             $comReponse->setProjet($projet);
+            // ajout de l'user au commentaire
             $repository2 = $em->getRepository('IUTOLivretBundle:User');
             $user = $repository2->findOneById($id);
             $comReponse->setUser($user);
@@ -291,9 +300,9 @@ class StudentController extends Controller
             $em->persist($comReponse);
             $em->flush();
 
-            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
-
+            //actualisation des commentaires une fois le nouveau ajouté
             //recupération des commentaires
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
             $commentaires = array();
             foreach($com as $elem){
                 $x=array();
@@ -306,6 +315,7 @@ class StudentController extends Controller
 
             };
 
+            //rechargement du formulaire pour les commentaires
             return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
                     'commentaires' => $commentaires,
                     'form' => $form->createView(),
@@ -317,7 +327,7 @@ class StudentController extends Controller
                 ));
         }
 
-        // affichage du formulaire pour complété le projet
+        // affichage du formulaire pour compléter le projet
         return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
             'commentaires' => $commentaires,
             'form' => $form->createView(),
@@ -363,7 +373,7 @@ class StudentController extends Controller
         $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
-
+//      rendu de la vue pour un projet fini
         return $this->render('IUTOLivretBundle:Student:finishedProject.html.twig', array(
                 'statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),

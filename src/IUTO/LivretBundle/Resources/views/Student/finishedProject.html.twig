@@ -1,9 +1,15 @@
+{# on entend base.html.twig pour avoir le menu sur la gauche #}
 {% extends 'base.html.twig' %}
+
+{# block titre pour changer le titre de l'onglet #}
+{% block title %}
+    Livret'O - Finition projet
+{% endblock %}
 
 {% block content %}
     <div class="div_confirm_complete">
         <a href="/generate/{{ projet.id }}" class="btn btn-success">Aperçu du compte rendu</a>
-        {#TODO link + style#}
+        {#TODO telechargement pdf#}
         <a href="" class="btn btn-default">Enregistrer sur l'ordinateur</a>
     </div>
 {% endblock %}
