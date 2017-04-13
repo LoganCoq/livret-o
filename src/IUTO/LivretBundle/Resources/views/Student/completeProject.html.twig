@@ -54,7 +54,7 @@
                             </div>
                         {% endif %}
 
-                        {% if commentaires[o][3] == "Enseignant" %}
+                        {% if commentaires[o][3] == "ROLE_faculty" or commentaires[o][3] == "ROLE_employee" %}
                             <div class="direct-chat-msg-left">
                                 <div class="direct-chat-info clearfix">
                                     <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
@@ -65,7 +65,7 @@
                             </div>
                         {% endif %}
 
-                        {% if commentaires[o][3] == "Etudiant" %}
+                        {% if commentaires[o][3] == "ROLE_student" %}
                             <div class="direct-chat-msg-right">
                             <div class="direct-chat-info-right clearfix">
                                 <span class="direct-chat-name-right">{{ commentaires[o][0] }}</span>
@@ -109,6 +109,14 @@
         $glyph = document.createElement('span');
         $glyph.className = 'glyphicon glyphicon-chevron-right';
         $subBtn.appendChild($glyph);
+    </script>
+
+    <script type="text/javascript">
+        fct = function () {
+//            $champ = document.getElementById("iuto_livretbundle_commentaire_contenu");
+            $formComment = $document.forms["iuto_livretbundle_commentaire"];
+            $formComment.reset();
+        }
     </script>
 
 {% endblock %}

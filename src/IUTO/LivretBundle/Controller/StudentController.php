@@ -275,43 +275,55 @@ class StudentController extends Controller
 
         };
 
-        $form2 = $this->createForm(CommentaireCreateType::class, $com);
-        $form2->handleRequest($request);
-        if ($form2->isSubmitted() && $form2->isValid()) {
+        $formCom = $this->createForm(CommentaireCreateType::class, $com);
+        $formCom->handleRequest($request);
+
+        if ($formCom->isSubmitted() && $formCom->isValid()) {
             $comReponse = new Commentaire;
             $comReponse->setDate();
             $comReponse->setProjet($projet);
-            $repository2 = $this
-                ->getDoctrine()
-                ->getManager()
-                ->getRepository('IUTOLivretBundle:User');
+            $repository2 = $em->getRepository('IUTOLivretBundle:User');
             $user = $repository2->findOneById($id);
             $comReponse->setUser($user);
-            $comReponse->setContenu($_POST['iuto_livretbundle_commentaire']['contenu']);
+            $comReponse->setContenu($formCom['contenu']->getData());
 
             // sauvegarde des commentaires dans la base de données
             $em->persist($comReponse);
             $em->flush();
 
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
 
-            return $this->render('IUTOLivretBundle:Student:completeProject.html.twig',
-                array('form' => $form->createView(),
-                    'formCom' => $form2->createView(),
+            //recupération des commentaires
+            $commentaires = array();
+            foreach($com as $elem){
+                $x=array();
+                $user = $elem->getUser();
+                array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+                array_push($x, $elem->getContenu());
+                array_push($x, $elem->getDate());
+                array_push($x, $user->getRole());
+                array_push($commentaires, $x);
+
+            };
+
+            return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
+                    'commentaires' => $commentaires,
+                    'form' => $form->createView(),
+                    'formCom' => $formCom->createView(),
                     'statutCAS' => 'etudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
                     'routing_statutCAShome' => '/etudiant',
-                    'commentaires' => $commentaires,
                     'routing_info' => array('/create/project', '/choose/project'),
                 ));
         }
 
         // affichage du formulaire pour complété le projet
         return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
+            'commentaires' => $commentaires,
             'form' => $form->createView(),
-            'formCom' => $form2->createView(),
+            'formCom' => $formCom->createView(),
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
-            'commentaires' => $commentaires,
             'routing_info' => array('/create/project',
                 '/choose/project',
                 '#',),

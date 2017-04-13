@@ -352,3 +352,14 @@ ul {
     text-align: justify;
 }
 
+#iuto_livretbundle_commentaire_contenu
+{
+    width: 20em;
+    color: #000000;
+}
+#iuto_livretbundle_commentaire_submit
+{
+    margin-left: 19.3em;
+    color: #000000;
+}
+

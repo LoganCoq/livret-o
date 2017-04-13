@@ -1,12 +1,9 @@
 /build/
 /phpunit.xml
 /var/*
-var/bootstrap.php.cache
 !/var/cache
 /var/cache/*
 !var/cache/.gitkeep
-/var/cache/dev/*
-var/logs/*
 !var/logs/.gitkeep
 !/var/sessions
 /var/sessions/*
@@ -17,13 +14,12 @@ var/logs/*
 /.idea/*
 /src/AppBundle/Controller/TestController.php
 /app/config/parameters.yml.save
-var/logs/dev.log
 /vendor/*
 *.lock
-composer.lock
 /.git/.MERGE_MSG.swp
 .DS_Store
 src/.DS_Store
 src/IUTO/.DS_Store
 src/IUTO/LivretBundle/.DS_Store
 src/IUTO/LivretBundle/Controller/.DS_Store
+/var/bootstrap.php.cache
