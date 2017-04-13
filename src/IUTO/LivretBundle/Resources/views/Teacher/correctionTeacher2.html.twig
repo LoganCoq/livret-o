@@ -76,8 +76,7 @@
                             </div>
                         {% endif %}
 
-                        {% if commentaires[o][3] == "ROLE_faculty" %}
-                            {#TODO penser à mettre pour service com et chef dpt#}
+                        {% if commentaires[o][3] == "ROLE_faculty" or commentaires[o][3] == "ROLE_employee" %}
                             <div class="direct-chat-msg-right">
                             <div class="direct-chat-info-right clearfix">
                                 <span class="direct-chat-name-right">{{ commentaires[o][0] }}</span>
