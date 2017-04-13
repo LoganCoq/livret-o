@@ -89,12 +89,12 @@
                                 {% if o != 0 %}
                                     {% if commentaires[o][0] != commentaires[o-1][0]  %}
                                         <div class="direct-chat-info clearfix">
-                                            <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
+                                            <span class="direct-chat-name-right"> {{ commentaires[o][0] }} </span>
                                         </div>
                                     {% endif %}
                                 {% else %}
                                     <div class="direct-chat-info clearfix">
-                                        <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
+                                        <span class="direct-chat-name-right"> {{ commentaires[o][0] }} </span>
                                     </div>
                                 {% endif %}
                                 <div class="direct-chat-text-right">
