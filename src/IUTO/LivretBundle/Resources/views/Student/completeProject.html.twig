@@ -41,7 +41,7 @@
                 {% if commentaires|length > 0 %}
                     {% for o in range(0, commentaires|length - 1) %}
                         {% if o != 0 %}
-                            {% if commentaires[o][2] != commentaires[o-1][2] %}
+                            {% if commentaires[o][2]|date('d-m-Y') != commentaires[o-1][2]|date('d-m-Y') %}
                                 <div class="chat-box-single-line">
                                     <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
                                 </div>
@@ -109,14 +109,6 @@
         $glyph = document.createElement('span');
         $glyph.className = 'glyphicon glyphicon-chevron-right';
         $subBtn.appendChild($glyph);
-    </script>
-
-    <script type="text/javascript">
-        fct = function () {
-//            $champ = document.getElementById("iuto_livretbundle_commentaire_contenu");
-            $formComment = $document.forms["iuto_livretbundle_commentaire"];
-            $formComment.reset();
-        }
     </script>
 
 {% endblock %}

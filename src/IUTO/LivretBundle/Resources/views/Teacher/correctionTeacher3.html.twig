@@ -12,9 +12,10 @@
 
 {% block content %}
     </br>
-    <h1> Contenu du compte-rendu </h1>
+        <h1> Contenu du compte-rendu </h1>
     </br>
     <div class="formulaire">
+
         {% form_theme form 'bootstrap_3_layout.html.twig' %}
         {{ form(form) }}
 
@@ -22,7 +23,6 @@
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
             Retour
         </a>
-
     </div>
 
 
@@ -34,12 +34,11 @@
         </div>
 
         <div class="popup-messages">
-
             <div class="direct-chat-messages">
                 {% if commentaires|length > 0 %}
                     {% for o in range(0, commentaires|length - 1) %}
                         {% if o != 0 %}
-                            {% if commentaires[o][2] != commentaires[o-1][2] %}
+                            {% if commentaires[o][2]|date('d-m-Y') != commentaires[o-1][2]|date('d-m-Y') %}
                                 <div class="chat-box-single-line">
                                     <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
                                 </div>
@@ -54,9 +53,17 @@
 
                         {% if commentaires[o][3] == "ROLE_student" %}
                             <div class="direct-chat-msg-left">
-                                <div class="direct-chat-info clearfix">
-                                    <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
-                                </div>
+                                {% if o != 0 %}
+                                    {% if commentaires[o][0] != commentaires[o-1][0]  %}
+                                        <div class="direct-chat-info clearfix">
+                                            <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="direct-chat-info clearfix">
+                                        <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
+                                    </div>
+                                {% endif %}
                                 <div class="direct-chat-text-left">
                                     {{ commentaires[o][1] }}
                                 </div>
@@ -65,28 +72,31 @@
 
                         {% if commentaires[o][3] == "ROLE_faculty" or commentaires[o][3] == "ROLE_employee"%}
                             <div class="direct-chat-msg-right">
-                            <div class="direct-chat-info-right clearfix">
-                                <span class="direct-chat-name-right">{{ commentaires[o][0] }}</span>
-                            </div>
-                            <div class="direct-chat-text-right">
-                                {{ commentaires[o][1] }}
+                                {% if o != 0 %}
+                                    {% if commentaires[o][0] != commentaires[o-1][0]  %}
+                                        <div class="direct-chat-info clearfix">
+                                            <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="direct-chat-info clearfix">
+                                        <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
+                                    </div>
+                                {% endif %}
+                                <div class="direct-chat-text-right">
+                                    {{ commentaires[o][1] }}
+                                </div>
                             </div>
                         {% endif %}
-                        </div>
-
-
                     {% endfor %}
                 {% endif %}
             </div>
-
-
             <div class="reponseCorrection">
                 {% form_theme form 'bootstrap_3_layout.html.twig' %}
                 {{ form(formCom) }}
             </div>
 
         </div>
-
     </div>
 
 
