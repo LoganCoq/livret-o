@@ -180,6 +180,11 @@ iuto_livret_login:
   path: /login
   defaults: { _controller: IUTOLivretBundle:Login:login }
 
+
+iuto_livret_download:
+  path: /download/{id}
+  defaults: { _controller: IUTOLivretBundle:PDFGenerator:download}
+
 #==================ROUTES MODULES PUBLIC============#
 #=====INDEX MODULE PUBLIC=====#
 iuto_livret_public:
