@@ -2,8 +2,6 @@
 
 namespace IUTO\LivretBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Projet
  *
@@ -12,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Projet
 {
+    public $nomDep;
+    public $listeEtudiants;
     /**
      * @var int
      *
@@ -20,88 +20,81 @@ class Projet
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
      * @ORM\Column(name="intituleProjet", type="text")
      */
     private $intituleProjet;
-
     /**
      * @var string
      *
      * @ORM\Column(name="descripProjet", type="text", nullable=true)
      */
     private $descripProjet;
-
     /**
      * @var string
      *
      * @ORM\Column(name="bilanProjet", type="text", nullable=true)
      */
     private $bilanProjet;
-
     /**
      * @var bool
      *
      * @ORM\Column(name="marquantProjet", type="boolean")
      */
     private $marquantProjet;
-
     /**
      * @var array
      *
      * @ORM\Column(name="motsClesProjet", type="array", nullable=true)
      */
     private $motsClesProjet;
-
     /**
      * @var string
      *
      * @ORM\Column(name="clientProjet", type="string", length=255, nullable=true)
      */
     private $clientProjet;
-
     /**
      * @var bool
      *
      * @ORM\Column(name="validerProjet", type="boolean")
      */
     private $validerProjet;
-
     /**
      * @var date
      *
      * @ORM\Column(name="dateDebut", type="date")
      */
     private $dateDebut;
-
     /**
      * @var date
      *
      * @ORM\Column(name="dateFin", type="date")
      */
     private $dateFin;
-
     /**
     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\User", mappedBy="projetFaits")
     */
     private $etudiants;
-
     /**
      * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\User", mappedBy="projetSuivis")
      */
     private $tuteurs;
-
     /**
      * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Livret", inversedBy="projets")
      */
     private $livrets;
 
-    public $nomDep;
-
-    public $listeEtudiants;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->etudiants = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tuteur = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * @return string
@@ -131,6 +124,16 @@ class Projet
     }
 
     /**
+     * Get intituleProjet
+     *
+     * @return string
+     */
+    public function getIntituleProjet()
+    {
+        return $this->intituleProjet;
+    }
+
+    /**
      * Set intituleProjet
      *
      * @param string $intituleProjet
@@ -145,13 +148,13 @@ class Projet
     }
 
     /**
-     * Get intituleProjet
+     * Get descripProjet
      *
      * @return string
      */
-    public function getIntituleProjet()
+    public function getDescripProjet()
     {
-        return $this->intituleProjet;
+        return $this->descripProjet;
     }
 
     /**
@@ -169,13 +172,13 @@ class Projet
     }
 
     /**
-     * Get descripProjet
+     * Get bilanProjet
      *
      * @return string
      */
-    public function getDescripProjet()
+    public function getBilanProjet()
     {
-        return $this->descripProjet;
+        return $this->bilanProjet;
     }
 
     /**
@@ -193,13 +196,13 @@ class Projet
     }
 
     /**
-     * Get bilanProjet
+     * Get marquantProjet
      *
-     * @return string
+     * @return bool
      */
-    public function getBilanProjet()
+    public function getMarquantProjet()
     {
-        return $this->bilanProjet;
+        return $this->marquantProjet;
     }
 
     /**
@@ -217,13 +220,13 @@ class Projet
     }
 
     /**
-     * Get marquantProjet
+     * Get motsClesProjet
      *
-     * @return bool
+     * @return array
      */
-    public function getMarquantProjet()
+    public function getMotsClesProjet()
     {
-        return $this->marquantProjet;
+        return $this->motsClesProjet;
     }
 
     /**
@@ -241,13 +244,13 @@ class Projet
     }
 
     /**
-     * Get motsClesProjet
+     * Get clientProjet
      *
-     * @return array
+     * @return string
      */
-    public function getMotsClesProjet()
+    public function getClientProjet()
     {
-        return $this->motsClesProjet;
+        return $this->clientProjet;
     }
 
     /**
@@ -265,13 +268,13 @@ class Projet
     }
 
     /**
-     * Get clientProjet
+     * Get validerProjet
      *
-     * @return string
+     * @return bool
      */
-    public function getClientProjet()
+    public function getValiderProjet()
     {
-        return $this->clientProjet;
+        return $this->validerProjet;
     }
 
     /**
@@ -289,21 +292,13 @@ class Projet
     }
 
     /**
-     * Get validerProjet
+     * Get dateDebut
      *
-     * @return bool
+     * @return \DateTime
      */
-    public function getValiderProjet()
+    public function getDateDebut()
     {
-        return $this->validerProjet;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->etudiants = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tuteur = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->dateDebut;
     }
 
     /**
@@ -321,13 +316,13 @@ class Projet
     }
 
     /**
-     * Get dateDebut
+     * Get dateFin
      *
      * @return \DateTime
      */
-    public function getDateDebut()
+    public function getDateFin()
     {
-        return $this->dateDebut;
+        return $this->dateFin;
     }
 
     /**
@@ -342,16 +337,6 @@ class Projet
         $this->dateFin = $dateFin;
 
         return $this;
-    }
-
-    /**
-     * Get dateFin
-     *
-     * @return \DateTime
-     */
-    public function getDateFin()
-    {
-        return $this->dateFin;
     }
 
     /**
