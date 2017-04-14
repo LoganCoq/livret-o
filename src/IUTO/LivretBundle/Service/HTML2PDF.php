@@ -21,4 +21,9 @@ class HTML2PDF
         $this->pdf->writeHTML($template);
         return $this->pdf->Output($name.'.pdf');
     }
+
+    public function downloadPdf($template, $name){
+        $this->pdf->writeHTML($template);
+        return $this->pdf->Output($name.'.pdf', 'D');
+    }
 }

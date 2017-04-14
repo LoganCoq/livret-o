@@ -18,5 +18,3 @@ services:
             - 3           # version
             - true       # SSL
             - true        # TLS
-    app.html2pdfdownload:
-        class: IUTO\LivretBundle\Service\HTML2PDFdownload
