@@ -4,6 +4,7 @@ namespace IUTO\LivretBundle\Controller;
 
 use Doctrine\ORM\Query\Expr\Select;
 use IUTO\LivretBundle\Entity\Livret;
+use IUTO\LivretBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use IUTO\LivretBundle\Form\EditoType;
@@ -22,13 +23,22 @@ class CommunicationController extends Controller
 
     public function communicationhomeAction()
     {
+        $em = $this->getDoctrine()->getManager();
+
+        // recupération de l'utilisateur connecté
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
         return $this->render('IUTOLivretBundle:Communication:communicationhome.html.twig', array(
             'statutCAS' => 'service de communication',
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
             'options' => array('Générer des livrets au format PDF', 'Corriger des projets', 'Créer l\'édito du directeur'),
             'routing_info' => array('/communication/generation', '/communication/selection', '#'),
             'routing_statutCAShome' => '/communication',
-            'routing_options' => array('/communication/generation', '/communication/selection', '/communication/selectionlivret')));
+            'routing_options' => array('/communication/generation', '/communication/selection', '/communication/selectionlivret'),
+            'user' => $user,
+            )
+        );
     }
 
     public function communicationeditoAction(Request $request)
@@ -52,9 +62,6 @@ class CommunicationController extends Controller
             }
             return $this->redirectToRoute('iuto_livret_communicationhomepage');
         }
-
-
-
 
         return $this->render('IUTOLivretBundle:Communication:communicationedito.html.twig', array('statutCAS' => 'service de communication',
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
@@ -152,10 +159,10 @@ class CommunicationController extends Controller
         }
         $manager->persist($livret);
         $manager->flush();
-        // return $this->render('IUTOLivretBundle:Communication:communicationgenerationlivret.html.twig', array('form' => $form->createView(), 'statutCAS' => 'service de communication',
-        //     'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
-        //     'routing_statutCAShome' => '/communication',
-        //     'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#')));
+         return $this->render('IUTOLivretBundle:Communication:communicationgenerationlivret.html.twig', array('form' => $form->createView(), 'statutCAS' => 'service de communication',
+             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+             'routing_statutCAShome' => '/communication',
+             'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#')));
     }
 
     public function communicationvalidationCRAction()
