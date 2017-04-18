@@ -80,3 +80,10 @@ swiftmailer:
 #    handleLogoutRequest: false                           # Activiation du Single Sign Out (défaut: false)
 #    casLogoutTarget: livreto.iut45.univ-orleans.fr       # Page de redirection après la déconnexion de l'application
 #    force: true
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+        project_image:
+            uri_prefix:         /images/projects
+            upload_destination: '%kernel.root_dir%/../web/images/projects'
