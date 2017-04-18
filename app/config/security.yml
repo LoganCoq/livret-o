@@ -19,10 +19,10 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-#        l3_firewall:
-#            pattern: ^/
-#            security: true
-#            cas: false
+        l3_firewall:
+            pattern: ^/
+            security: true
+            cas: true
 
         main:
             pattern: ^/
