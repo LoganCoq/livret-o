@@ -45,6 +45,14 @@
                                 Déconnexion
                             </button>
                         </a>
+                    {% else %}
+                        <a href="{{ path('iuto_livret_homepage') }}">
+                            {#TODO style#}
+                            <button type="button" class="btn btn-danger" style="width: 100%">
+                                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                                Retour à l'authentification
+                            </button>
+                        </a>
                     {% endif %}
                 </div>
             </div>
