@@ -95,6 +95,11 @@ class Projet
     private $livrets;
 
     /**
+     * @ORM\OneToMany(targetEntity="IUTO\LivretBundle\Entity\Image", mappedBy="projet")
+     */
+    private $images;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -446,5 +451,39 @@ class Projet
     public function getLivrets()
     {
         return $this->livrets;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \IUTO\LivretBundle\Entity\Image $image
+     *
+     * @return Projet
+     */
+    public function addImage(\IUTO\LivretBundle\Entity\Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \IUTO\LivretBundle\Entity\Image $image
+     */
+    public function removeImage(\IUTO\LivretBundle\Entity\Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

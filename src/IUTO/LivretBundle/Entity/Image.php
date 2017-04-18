@@ -11,13 +11,12 @@ use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
-
  * @ORM\Table(name="image")
-
  * @ORM\Entity(repositoryClass="IUTO\LivretBundle\Entity\ImageRepository")
-
+ * @Vich\Uploadable
  */
 
 class Image
@@ -38,25 +37,24 @@ class Image
 
 
     /**
-
-     * @ORM\Column(name="url", type="string", length=255)
-
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName", size="imageSize")
+     *
+     * @var File
      */
-
-    private $url;
-
+    private $imageFile;
 
     /**
-
-     * @ORM\Column(name="alt", type="string", length=255)
-
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
-
-    private $alt;
+    private $imageName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Projet")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Projet", inversedBy="images")
+     * @ORM\JoinColumn(name="projet_id", referencedColumnName="id", nullable=false)
      */
     private $projet;
 
