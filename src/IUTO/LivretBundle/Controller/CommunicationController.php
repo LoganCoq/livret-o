@@ -200,31 +200,37 @@ class CommunicationController extends Controller
 
 
 
-        return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array('statutCAS' => 'service de communication',
+        return $this->render('IUTOLivretBundle:Communication:communicationChoixValide.html.twig', array('statutCAS' => 'service de communication',
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
             'options' => array('Valider', 'Retour'),
             'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#'),
             'routing_statutCAShome' => '/communication',
-            'routing_options' => array('/generate/1', '/communication')));
-
+            'routing_options' => array('/generate/1', '/communication'),
+            'dpt' => $dpt,
+            'projets' => $projets,
+            'annee' => $annee,
+            ));
     }
 
     public function communicationChoixNValideAction()
     {
         $manager = $this->getDoctrine()->getManager();
         $dpt = $manager->getRepository(Departement::class)->findAll();
-        $projets = $manager->getRepository(Projet::class)->findByValiderProjet(1);
+        $projets = $manager->getRepository(Projet::class)->findByValiderProjet(0);
         $annee = array(1 => date("y"), 2 => date("y") - 1, 3 => date("y") - 2, 4 => date("y") - 3, 5 => date("y") - 4);
 
 
 
-        return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array('statutCAS' => 'service de communication',
+        return $this->render('IUTOLivretBundle:Communication:communicationChoixNValide.html.twig', array('statutCAS' => 'service de communication',
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
             'options' => array('Valider', 'Retour'),
             'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#'),
             'routing_statutCAShome' => '/communication',
-            'routing_options' => array('/generate/1', '/communication')));
-
+            'routing_options' => array('/generate/1', '/communication'),
+            'dpt' => $dpt,
+            'projets' => $projets,
+            'annee' => $annee,
+        ));
     }
 
     public function communicationSelectionlivretAction(Request $request)
