@@ -21,8 +21,14 @@
         }
         .formulaire
         {
-            margin-top: 10em;
+            margin-top: 8em;
             margin-left: 37em;
+        }
+
+        #livreto_download_finished
+        {
+            margin-top: 40em;
+            margin-left: -23em;
         }
 
     </style>
@@ -51,9 +57,12 @@
             <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
             Renvoyer en correction
         </a>
-        {#<a type="submit" href="" class="btn btn-warning">#}
-            {#Valider le compte-rendu#}
-        {#</a>#}
+
+        <a href="{{ path('iuto_livret_download', {'id': projet}) }}" class="btn btn-default download_confirm" id="livreto_download_finished">
+            {#icone telechargement#}
+            <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+            Enregistrer sur l'ordinateur
+        </a>
 
 
         <div class="formulaire">
