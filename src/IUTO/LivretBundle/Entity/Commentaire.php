@@ -3,6 +3,11 @@
 namespace IUTO\LivretBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
 
 /**
  * Commentaire
@@ -61,6 +66,16 @@ class Commentaire
     }
 
     /**
+     * Get contenu
+     *
+     * @return string
+     */
+    public function getContenu()
+    {
+        return $this->contenu;
+    }
+
+    /**
      * Set contenu
      *
      * @param string $contenu
@@ -75,13 +90,13 @@ class Commentaire
     }
 
     /**
-     * Get contenu
+     * Get date
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getContenu()
+    public function getDate()
     {
-        return $this->contenu;
+        return $this->date;
     }
 
     /**
@@ -99,13 +114,13 @@ class Commentaire
     }
 
     /**
-     * Get date
+     * Get projet
      *
-     * @return \DateTime
+     * @return \IUTO\LivretBundle\Entity\Projet
      */
-    public function getDate()
+    public function getProjet()
     {
-        return $this->date;
+        return $this->projet;
     }
 
     /**
@@ -123,13 +138,13 @@ class Commentaire
     }
 
     /**
-     * Get projet
+     * Get user
      *
-     * @return \IUTO\LivretBundle\Entity\Projet
+     * @return \IUTO\LivretBundle\Entity\User
      */
-    public function getProjet()
+    public function getUser()
     {
-        return $this->projet;
+        return $this->user;
     }
 
     /**
@@ -144,15 +159,5 @@ class Commentaire
         $this->user = $user;
 
         return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \IUTO\LivretBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 }

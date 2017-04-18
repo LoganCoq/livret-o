@@ -24,10 +24,10 @@ class ConnexionController extends Controller
 //        $numPersonne = "p7184";
 //        $numPersonne = "p22732";
 //        $numPersonne = "p46975";
-        $numPersonne = "p15987";
+//        $numPersonne = "p15987";
 
 //        -----ETUDIANT-----
-//        $numPersonne = "o2151178";
+        $numPersonne = "o2151178";
 //        $numPersonne = "o2154952";
 //        $numPersonne = "o2151485";
 //        $numPersonne = "o2153164";
@@ -86,43 +86,45 @@ class ConnexionController extends Controller
         );
 //        $primaryaffil = 'student';
 
-        $manager = $this->getDoctrine()->getManager();
         if (!$user) {
             $user = new User();
-             $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
+
 //            $user -> setPrenomUser("Logan");
-
-             $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
 //            $user -> setNomUser("Coquerant");
-
-             $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
 //            $user -> setMailUser("logan.coquerant@etu.univ-orleans.fr");
-
-             $user->setRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
 //            $user -> setRole("ROLE_student");
-
-             $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
 //            $user -> setIdUniv("o2151179");
-
 //            $primaryaffil = 'student';
-            if ($user->getRole() == "ROLE_student") {
+
+             $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
+             $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
+             $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
+             $user->setRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
+             $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
+
+            if ($user->getRole() == "ROLE_student")
+            {
                  $codeFormation = $infosPersonne->getAttribute("unrcEtape")[0];
 //                $codeFormation = 'IO1341';
 
                 $infForm = $corresLDAP[$codeFormation];
-                $formation = $manager->getRepository(Formation::class)->findOneBy(array("departement" => ($manager->getRepository(Departement::class)->findOneByNomDpt($infForm[0])), "typeFormation" => $infForm[0]));
-                if (!$formation) {
+                $formation = $em->getRepository(Formation::class)->findOneBy(array("departement" => ($em->getRepository(Departement::class)->findOneByNomDpt($infForm[0])), "typeFormation" => $infForm[0]));
+                if (!$formation)
+                {
                     $newF = new Formation();
                     $newF->setTypeFormation($infForm[0]);
                     $newF->setDepartement($em->getRepository("IUTOLivretBundle:Departement")->findOneByNomDpt($corresLDAP[$codeFormation][1]));
                     $dDeb = new \DateTime();
                     $dFin = new \DateTime();
-                    if (date("m") < 9) {
+                    if (date("m") < 9)
+                    {
                         $dDeb->setDate(date("y"), 1, 15);
                         $dFin->setDate(date("y"), 8, 15);
                         $newF->setSemestre(2);
 
-                    } else {
+                    }
+                    else
+                    {
                         $dDeb->setDate(date("y") - 1, 8, 16);
                         $dFin->setDate(date("y"), 1, 14);
                         $newF->setSemestre(1);
@@ -130,14 +132,14 @@ class ConnexionController extends Controller
                     $newF->setDateDebut($dDeb);
                     $newF->setDateFin($dFin);
                     $formation = $newF;
-                    $manager->persist($formation);
+                    $em->persist($formation);
                 }
                 $user->addFormation($formation);
                 $formation->addUser($user);
             }
 
-            $manager->persist($user);
-            $manager->flush();
+            $em->persist($user);
+            $em->flush();
 
         } else {
             // TODO vérifier avec LDAP si les infos sont à jours
@@ -150,12 +152,17 @@ class ConnexionController extends Controller
         $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
         $id = $em->getRepository("IUTOLivretBundle:User")->findOneByIdUniv($numPersonne)->getId();
 
-         if (strcmp($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0], "student") == 0) {
-//            if (strcmp($primaryaffil, "student") == 0) {
+        if (strcmp($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0], "student") == 0)
+        {
+//            if (strcmp($primaryaffil, "student") == 0)
             return $this->redirectToRoute("iuto_livret_studenthomepage", array("id" => $id));
-        } else if (strcmp($user->getRoles(), "ROLE_employee") == 0) {
+        }
+        else if (strcmp($user->getRoles(), "ROLE_employee") == 0)
+        {
             return $this->redirectToRoute("iuto_livret_communicationhomepage", array("id" => $id));
-        } else {
+        }
+        else
+        {
             return $this->redirectToRoute("iuto_livret_teacherhomepage", array("id" => $id));
         }
     }

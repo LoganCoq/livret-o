@@ -3,6 +3,11 @@
 namespace IUTO\LivretBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
 
 /**
  * Departement
@@ -40,6 +45,16 @@ class Departement
     }
 
     /**
+     * Get nomDpt
+     *
+     * @return string
+     */
+    public function getNomDpt()
+    {
+        return $this->nomDpt;
+    }
+
+    /**
      * Set nomDpt
      *
      * @param string $nomDpt
@@ -51,15 +66,5 @@ class Departement
         $this->nomDpt = $nomDpt;
 
         return $this;
-    }
-
-    /**
-     * Get nomDpt
-     *
-     * @return string
-     */
-    public function getNomDpt()
-    {
-        return $this->nomDpt;
     }
 }

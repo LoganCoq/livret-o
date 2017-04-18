@@ -3,6 +3,11 @@
 namespace IUTO\LivretBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
 
 /**
  * Formation
@@ -59,6 +64,11 @@ class Formation
     */
     private $users;
 
+    public function __construct()
+    {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * Get id
      *
@@ -67,6 +77,16 @@ class Formation
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get typeFormation
+     *
+     * @return string
+     */
+    public function getTypeFormation()
+    {
+        return $this->typeFormation;
     }
 
     /**
@@ -84,13 +104,13 @@ class Formation
     }
 
     /**
-     * Get typeFormation
+     * Get semestre
      *
-     * @return string
+     * @return int
      */
-    public function getTypeFormation()
+    public function getSemestre()
     {
-        return $this->typeFormation;
+        return $this->semestre;
     }
 
     /**
@@ -108,13 +128,13 @@ class Formation
     }
 
     /**
-     * Get semestre
+     * Get dateDebut
      *
-     * @return int
+     * @return \DateTime
      */
-    public function getSemestre()
+    public function getDateDebut()
     {
-        return $this->semestre;
+        return $this->dateDebut;
     }
 
     /**
@@ -132,13 +152,13 @@ class Formation
     }
 
     /**
-     * Get dateDebut
+     * Get dateFin
      *
      * @return \DateTime
      */
-    public function getDateDebut()
+    public function getDateFin()
     {
-        return $this->dateDebut;
+        return $this->dateFin;
     }
 
     /**
@@ -156,13 +176,13 @@ class Formation
     }
 
     /**
-     * Get dateFin
+     * Get departement
      *
-     * @return \DateTime
+     * @return \IUTO\LivretBundle\Entity\Departement
      */
-    public function getDateFin()
+    public function getDepartement()
     {
-        return $this->dateFin;
+        return $this->departement;
     }
 
     /**
@@ -180,16 +200,6 @@ class Formation
     }
 
     /**
-     * Get departement
-     *
-     * @return \IUTO\LivretBundle\Entity\Departement
-     */
-    public function getDepartement()
-    {
-        return $this->departement;
-    }
-
-    /**
      * @return int
      */
     public function getYearDebut()
@@ -204,9 +214,6 @@ class Formation
     {
         return (int)$this->dateFin->format('Y');
     }
-
-
-
 
     /**
      * Add user
@@ -240,10 +247,5 @@ class Formation
     public function getUsers()
     {
         return $this->users;
-    }
-
-    public function __construct()
-    {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 }

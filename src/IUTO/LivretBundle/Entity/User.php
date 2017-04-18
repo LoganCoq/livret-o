@@ -3,6 +3,11 @@
 namespace IUTO\LivretBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -69,6 +74,15 @@ class User implements UserInterface
     */
     private $projetSuivis;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->formations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->projetFaits = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->projetSuivis = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getRoles()
     {
@@ -94,15 +108,6 @@ class User implements UserInterface
     {
         return;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->formations = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->projetFaits = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->projetSuivis = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -112,6 +117,16 @@ class User implements UserInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get nomUser
+     *
+     * @return string
+     */
+    public function getNomUser()
+    {
+        return $this->nomUser;
     }
 
     /**
@@ -129,13 +144,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get nomUser
+     * Get prenomUser
      *
      * @return string
      */
-    public function getNomUser()
+    public function getPrenomUser()
     {
-        return $this->nomUser;
+        return $this->prenomUser;
     }
 
     /**
@@ -153,13 +168,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get prenomUser
+     * Get mailUser
      *
      * @return string
      */
-    public function getPrenomUser()
+    public function getMailUser()
     {
-        return $this->prenomUser;
+        return $this->mailUser;
     }
 
     /**
@@ -177,13 +192,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get mailUser
+     * Get role
      *
      * @return string
      */
-    public function getMailUser()
+    public function getRole()
     {
-        return $this->mailUser;
+        return $this->role;
     }
 
     /**
@@ -201,13 +216,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get role
+     * Get idUniv
      *
      * @return string
      */
-    public function getRole()
+    public function getIdUniv()
     {
-        return $this->role;
+        return $this->idUniv;
     }
 
     /**
@@ -222,16 +237,6 @@ class User implements UserInterface
         $this->idUniv = $idUniv;
 
         return $this;
-    }
-
-    /**
-     * Get idUniv
-     *
-     * @return string
-     */
-    public function getIdUniv()
-    {
-        return $this->idUniv;
     }
 
     /**

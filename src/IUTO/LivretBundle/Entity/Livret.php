@@ -4,6 +4,11 @@ namespace IUTO\LivretBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
 
 /**
  * Livret
@@ -74,6 +79,16 @@ class Livret
     }
 
     /**
+     * Get intituleLivret
+     *
+     * @return string
+     */
+    public function getIntituleLivret()
+    {
+        return $this->intituleLivret;
+    }
+
+    /**
      * Set intituleLivret
      *
      * @param string $intituleLivret
@@ -88,13 +103,13 @@ class Livret
     }
 
     /**
-     * Get intituleLivret
+     * Get donneesMaquetteLivret
      *
      * @return string
      */
-    public function getIntituleLivret()
+    public function getDonneesMaquetteLivret()
     {
-        return $this->intituleLivret;
+        return $this->donneesMaquetteLivret;
     }
 
     /**
@@ -112,13 +127,13 @@ class Livret
     }
 
     /**
-     * Get donneesMaquetteLivret
+     * Get dateCreationLivret
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getDonneesMaquetteLivret()
+    public function getDateCreationLivret()
     {
-        return $this->donneesMaquetteLivret;
+        return $this->dateCreationLivret;
     }
 
     /**
@@ -136,13 +151,13 @@ class Livret
     }
 
     /**
-     * Get dateCreationLivret
+     * Get editoLivret
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getDateCreationLivret()
+    public function getEditoLivret()
     {
-        return $this->dateCreationLivret;
+        return $this->editoLivret;
     }
 
     /**
@@ -157,16 +172,6 @@ class Livret
         $this->editoLivret = $editoLivret;
 
         return $this;
-    }
-
-    /**
-     * Get editoLivret
-     *
-     * @return string
-     */
-    public function getEditoLivret()
-    {
-        return $this->editoLivret;
     }
 
     /**
