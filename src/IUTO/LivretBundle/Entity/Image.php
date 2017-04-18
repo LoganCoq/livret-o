@@ -5,7 +5,6 @@
 
 namespace IUTO\LivretBundle\Entity;
 
-
 /**
 
  * @ORM\Table(name="image")
