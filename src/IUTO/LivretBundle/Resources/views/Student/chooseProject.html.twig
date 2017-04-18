@@ -11,47 +11,6 @@
     {{ parent() }}
     <link type="text/css" rel="stylesheet" href="{{ asset("assets/css/chooseProjectStudent.css") }}"/>
 
-    <style type="text/css">
-        #choose_project_name
-        {
-            margin-left: 1em;
-            margin-top: 0.5em;
-            font-size: 1.5em;
-            width: 20em;
-        }
-
-        #livret_modif_btn
-        {
-            margin-top: -4.7em;
-            margin-left: 32em;
-        }
-        #livreto_see_btn
-        {
-            margin-top: -4.7em;
-            margin-left: 5em;
-        }
-        #livreto_see_finished_btn
-        {
-            margin-top: -4.7em;
-            margin-left: 40em;
-        }
-        .list-group-item
-        {
-            padding: 0.2em;
-            margin: 0.2em;
-            height: auto;
-            width: 61em;
-            margin-left: 4em;
-        }
-
-        #livret_btn_goto_home
-        {
-            font-size: 1.2em;
-            margin-top: 2em;
-        }
-
-    </style>
-
 {% endblock %}
 
 {% block content %}
@@ -103,6 +62,11 @@
                             <a href="/generate/{{ projet.id }}" class="btn btn-success" id="livreto_see_finished_btn">
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                 Aperçu du projet
+                            </a>
+                            <a href="{{ path('iuto_livret_download', {'id': projet.id}) }}" class="btn btn-default download_confirm" id="livreto_download_finished">
+                                {#icone telechargement#}
+                                <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                                Enregistrer sur l'ordinateur
                             </a>
                         </li>
                     {% endfor %}

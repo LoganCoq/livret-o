@@ -71,12 +71,12 @@ swiftmailer:
     spool:     { type: memory }
 
 
-
-l3_cas:
-    host: auth.univ-orleans.fr/cas                          # Serveur CAS
-    path: ~                                             # Chemin de l'application CAS si elle ne se trouve pas à la racine
-    port: 443                                           # Port du serveur CAS
-    ca: false                                           # Définition d'un certificat SSL pour le serveur CAS
-    handleLogoutRequest: false                           # Activiation du Single Sign Out (défaut: false)
-    casLogoutTarget: auth.univ-orleans.fr/cas     # Page de redirection après la déconnexion de l'application
-    force: true
+#
+#l3_cas:
+#    host: auth.univ-orleans.fr/cas                       # Serveur CAS
+#    path: ~                                              # Chemin de l'application CAS si elle ne se trouve pas à la racine
+#    port: 443                                            # Port du serveur CAS
+#    ca: false                                            # Définition d'un certificat SSL pour le serveur CAS
+#    handleLogoutRequest: false                           # Activiation du Single Sign Out (défaut: false)
+#    casLogoutTarget: livreto.iut45.univ-orleans.fr       # Page de redirection après la déconnexion de l'application
+#    force: true

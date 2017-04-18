@@ -55,3 +55,47 @@ h2
     margin: 1em;
     font-size: 1.2em;
 }
+
+#choose_project_name
+{
+    margin-left: 1em;
+    margin-top: 0.5em;
+    font-size: 1.5em;
+    width: 20em;
+}
+
+#livret_modif_btn
+{
+    margin-top: -4.7em;
+    margin-left: 32em;
+}
+#livreto_see_btn
+{
+    margin-top: -4.7em;
+    margin-left: 5em;
+}
+#livreto_see_finished_btn
+{
+    margin-top: -4.7em;
+    margin-left: 32em;
+}
+.list-group-item
+{
+    padding: 0.2em;
+    margin: 0.2em;
+    height: auto;
+    width: 65em;
+    margin-left: 4em;
+}
+
+#livret_btn_goto_home
+{
+    font-size: 1.2em;
+    margin-top: 2em;
+}
+
+#livreto_download_finished
+{
+    margin-top: -4.7em;
+    margin-left: 4em;
+}
