@@ -3,7 +3,9 @@
 namespace IUTO\LivretBundle\Controller;
 
 use Doctrine\ORM\Query\Expr\Select;
+use IUTO\LivretBundle\Entity\Departement;
 use IUTO\LivretBundle\Entity\Livret;
+use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
@@ -177,17 +179,45 @@ class CommunicationController extends Controller
 
     public function communicationChoixAction()
     {
+
         return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array('statutCAS' => 'service de communication',
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
             'options' => array('Valider', 'Retour'),
             'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#'),
             'routing_statutCAShome' => '/communication',
-            'routing_options' => array('/communication/validation', '/communication')));
+            'routing_options' => array('/communication/validation', '/communication'),
+        ));
 
     }
 
     public function communicationChoixValideAction()
     {
+
+        $manager = $this->getDoctrine()->getManager();
+        $dpt = $manager->getRepository(Departement::class)->findAll();
+        $projets = $manager->getRepository(Projet::class)->findByValiderProjet(1);
+        $annee = array(1 => date("y"), 2 => date("y") - 1, 3 => date("y") - 2, 4 => date("y") - 3, 5 => date("y") - 4);
+
+
+
+        return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array('statutCAS' => 'service de communication',
+            'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+            'options' => array('Valider', 'Retour'),
+            'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#'),
+            'routing_statutCAShome' => '/communication',
+            'routing_options' => array('/generate/1', '/communication')));
+
+    }
+
+    public function communicationChoixNValideAction()
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $dpt = $manager->getRepository(Departement::class)->findAll();
+        $projets = $manager->getRepository(Projet::class)->findByValiderProjet(1);
+        $annee = array(1 => date("y"), 2 => date("y") - 1, 3 => date("y") - 2, 4 => date("y") - 3, 5 => date("y") - 4);
+
+
+
         return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array('statutCAS' => 'service de communication',
             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
             'options' => array('Valider', 'Retour'),

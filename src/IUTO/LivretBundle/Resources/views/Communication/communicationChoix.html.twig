@@ -2,11 +2,20 @@
 
 {% block content %}
 
+
     <div class="div_home">
+        <a type="button" href="{{ path('iuto_livret_communicationhomepage') }}" class="btn btn-success" id="livret_btn_goto_home">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            Accueil
+        </a>
         <h1 class="h1_home"> {{ statutCAS|capitalize }} - Choix de projet a corriger </h1>
-        <h2>	Ajouter liste deroulante </h2>
-        {% for o in range(0, options|length - 1) %}
-            <a href="{{ routing_options[o] }}" class="buttonhome">{{ options[o] }}</a>
-        {% endfor %}
+        <a type="button" href="{{ path('iuto_livret_communicationChoixNValide') }}" class="btn btn-primary" id="livret_btn_goto_home">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            Projets en cours
+        </a>
+        <a type="button" href="{{ path('iuto_livret_communicationChoixValide') }}" class="btn btn-success" id="livret_btn_goto_home">
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+            Projets validés
+        </a>
     </div>
 {% endblock %}
