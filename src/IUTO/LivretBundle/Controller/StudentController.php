@@ -3,8 +3,10 @@
 namespace IUTO\LivretBundle\Controller;
 
 use IUTO\LivretBundle\Entity\Commentaire;
+use IUTO\LivretBundle\Entity\Image;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Form\AddImageType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use IUTO\LivretBundle\Form\ProjetCompleteType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
@@ -338,6 +340,39 @@ class StudentController extends Controller
                 '/choose/project',
                 '#',),
             'routing_statutCAShome' => '/etudiant',
+                'projet' => $projet,
+            )
+        );
+    }
+
+    public function addImageAction(Request $request, Projet $projet)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+        $image = new Image();
+
+        $form = $this->createForm(AddImageType::class, $image);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $image->setProjet($projet);
+            $em->persist($image);
+            $em->flush();
+
+        }
+
+        return $this->render('IUTOLivretBundle:Student:addImageProject.html.twig', array(
+                'form' => $form->createView(),
+                'statutCAS' => 'étudiant',
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_info' => array('/create/project',
+                    '/choose/project',
+                    '#',),
+                'routing_statutCAShome' => '/etudiant',
+                'projet' => $projet,
             )
         );
     }

@@ -38,6 +38,12 @@ iuto_livret_completeProject:
     path: /{projet}/complete
     defaults: { _controller: IUTOLivretBundle:Student:completeProject }
 
+
+#=====AJOUT D'UNE IMAGE====#
+iuto_livret_add_img:
+    path: /{projet}/addImg
+    defaults: { _controller: IUTOLivretBundle:Student:addImage }
+
 #====VALIDER MODIFICATION===#
 iuto_livret_confirmCompleteProject:
     path:  /{projet}/validate
