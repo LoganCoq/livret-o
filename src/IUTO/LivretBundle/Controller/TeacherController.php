@@ -9,6 +9,7 @@ use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Form\AddImageType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
+use IUTO\LivretBundle\Form\ProjetMarquantType;
 use IUTO\LivretBundle\Form\ProjetModifType;
 use IUTO\LivretBundle\Form\ProjetValideType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -336,6 +337,10 @@ class TeacherController extends Controller
         $form = $this->createForm(ProjetValideType::class, $projet);
         $form->handleRequest($request);
 
+        $formMarquant = $this->createForm(ProjetMarquantType::class, $projet);
+        $formMarquant->handleRequest($request);
+
+
         $idProjet = $projet->getId();
 
         if ($form->isSubmitted() && $form->isValid())
@@ -354,6 +359,35 @@ class TeacherController extends Controller
             return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig',
                 array(
                     'form' => $form->createView(),
+                    'formMarquant' => $formMarquant->createView(),
+                    'id' => $id,
+                    'statutCAS' => 'professeur',
+                    'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
+                    'routing_statutCAShome' => '/professeur',
+                    'info' => array('Demandes de correction', 'Projets validés'),
+                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                    'routing_options' => array('/correctionProf1', '/projetsValides1'),
+                    'professeur' => $professeur,
+                    'pagePrec' => '/'.$idProjet.'/correctionProf3',
+                    'projet' => $idProjet,
+                ));
+        }
+
+
+        if ($formMarquant->isSubmitted() && $formMarquant->isValid())
+        {
+            if($projet->getMarquantProjet() == 0)
+            {
+                $projet->setMarquantProjet(1);
+            }
+
+            $em->persist();
+            $em->flush();
+
+            return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig',
+                array(
+                    'form' => $form->createView(),
+                    'formMarquant' => $formMarquant->createView(),
                     'id' => $id,
                     'statutCAS' => 'professeur',
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
@@ -371,6 +405,7 @@ class TeacherController extends Controller
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
             array(
                 'form' => $form->createView(),
+                'formMarquant' => $formMarquant->createView(),
                 'id' => $id,
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
