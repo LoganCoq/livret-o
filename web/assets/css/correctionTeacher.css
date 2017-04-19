@@ -33,6 +33,7 @@
     height: 12em;
     font-size: 1.2em;
     margin-left: 4em;
+    margin-bottom: 15em;
 }
 
 #iuto_livretbundle_projet_submit
@@ -79,8 +80,8 @@
 #livret_cancel_correction
 {
     margin-left: 42em;
-    margin-top: -7.5em;
     font-size: 1.2em;
+    margin-top: 7em;
 }
 
 #iuto_livretbundle_projet_clientProjet
@@ -90,3 +91,22 @@
     margin-left: 4em;
 }
 
+#livret_add_img
+{
+    margin-top: -24em;
+    width: 30em;
+    margin-bottom: 2em;
+}
+
+#livret_add_img > a
+{
+    margin-top: 10em;
+    margin-left: 2em;
+}
+
+#images_projet
+{
+    margin-top: -15em;
+    margin-left: 3em;
+    height: 6em;
+}

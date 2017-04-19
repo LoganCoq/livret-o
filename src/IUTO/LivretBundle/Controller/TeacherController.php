@@ -3,8 +3,10 @@
 namespace IUTO\LivretBundle\Controller;
 
 use IUTO\LivretBundle\Entity\Commentaire;
+use IUTO\LivretBundle\Entity\Image;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Form\AddImageType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\ProjetModifType;
@@ -212,6 +214,7 @@ class TeacherController extends Controller
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
+        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
 //        creation du formulaire de modification du contenu du projet
         $formContent = $this->createForm(ProjetContenuType::class, $projet);
         $formContent->handleRequest($request);
@@ -298,6 +301,8 @@ class TeacherController extends Controller
                     'routing_options' => array('#', '#'),
                     'pagePrec' => '/correctionProf1',
                     'pageSuiv' => '/'.$idProjet.'/correctionProf3',
+                    'projet' => $projet,
+                    'image' => $images,
                 ));
         }
 
@@ -312,7 +317,9 @@ class TeacherController extends Controller
                 'routing_info' => array('/correctionProf1', '/projetsValides1'),
                 'routing_options' => array('#', '#'),
                 'pagePrec' => '/'.$idProjet.'/correctionProf2',
-                'pageSuiv' => '/'.$idProjet.'/correctionProf4'
+                'pageSuiv' => '/'.$idProjet.'/correctionProf4',
+                'projet' => $projet,
+                'images' => $images,
             ));
     }
 
@@ -372,6 +379,38 @@ class TeacherController extends Controller
                 'pagePrec' => '/'.$idProjet.'/correctionProf3',
                 'projet' => $idProjet,
                 ));
+    }
+
+    public function addImageAction(Request $request, Projet $projet)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+        $image = new Image();
+
+        $form = $this->createForm(AddImageType::class, $image);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $image->setProjet($projet);
+            $em->persist($image);
+            $em->flush();
+
+        }
+
+        return $this->render('IUTOLivretBundle:Teacher:addImageProject.html.twig', array(
+                'form' => $form->createView(),
+                'statutCAS' => 'étudiant',
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_info' => array('/create/project',
+                    '/choose/project',
+                    '#',),
+                'routing_statutCAShome' => '/etudiant',
+                'projet' => $projet,
+            )
+        );
     }
 
     public function projetsValidesTeacher1Action(Request $request)
