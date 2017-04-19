@@ -87,3 +87,4 @@ vich_uploader:
         project_image:
             uri_prefix:         /images/projects
             upload_destination: '%kernel.root_dir%/../web/images/projects'
+            namer:              vich.uploader.namer_origname
