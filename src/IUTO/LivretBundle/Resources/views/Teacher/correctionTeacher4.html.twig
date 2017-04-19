@@ -11,12 +11,12 @@
         }
         .btn-info
         {
-            margin-left: 20em;
-            margin-top: 30em;
+            margin-left: 26em;
+            margin-top: 20em;
         }
         .btn-success
         {
-            margin-top: 30em;
+            margin-top: 20em;
             margin-left: 3em;
         }
         .formulaire
@@ -27,9 +27,15 @@
 
         #livreto_download_finished
         {
-            margin-top: 40em;
+            margin-top: 30em;
             margin-left: -23em;
         }
+
+        #btn-goto-accueil
+        {
+            margin: 1em;
+        }
+
 
     </style>
 {% endblock %}
@@ -39,14 +45,15 @@
 {% endblock %}
 
 {% block content %}
+    <a type="button" class="btn btn-primary" href="{{ path('iuto_livret_teacherhomepage') }}" id="btn-goto-accueil">
+        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+        Accueil
+    </a>
     <br>
     <h1> Finalisation du projet </h1>
     <br>
     <div class="div_confirm_complete">
-        <a type="button" class="btn btn-primary" href="{{ path('iuto_livret_teacherhomepage') }}">
-            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-            Accueil
-        </a>
+
 
         <a href="/generate/{{ projet }}" class="btn btn-info apercu_confirm">
             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
