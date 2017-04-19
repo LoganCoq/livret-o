@@ -3,6 +3,7 @@
 namespace IUTO\LivretBundle\Form;
 
 use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Repository\ProjetRepository;
 use IUTO\LivretBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -78,6 +79,18 @@ class ProjetCreateType extends AbstractType
                         ->where("u.role <> 'Etudiant' and u.role <> 'ROLE_student' and u.role <> 'ROLE_employee'");
                 }
             ))
+//            ->add('motsClesProjet', TextType::class, array(
+//                'label' => 'Mots clés projet',
+//                'choice_label' => function ( string $mot){
+//                    return $mot)
+//                },
+//                'multiple' => true,
+//                'attr' => [
+//                    'class' => 'selectpicker',
+//                    'data-live-search' => true,
+//                    'data-width' => 'auto'
+//                ],
+//            ))
             ->add('submit', SubmitType::class, array(
                 'label' => 'Suivant',
                 'attr' => [

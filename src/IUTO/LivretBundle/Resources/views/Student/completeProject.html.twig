@@ -39,11 +39,14 @@
         </div>
 
         <div id="images_projet">
-        {% for img in images %}
-            <a href="/images/projects/{{ img.imageName }}">
-                <img href="/images/projects/{{ img.imageName }}" alt="" src="/images/projects/{{ img.imageName }}"/>
-            </a>
-        {% endfor %}
+            {% for img in images %}
+                <a href="/images/projects/{{ img.imageName }}">
+                    <img href="/images/projects/{{ img.imageName }}" alt="" src="/images/projects/{{ img.imageName }}"/>
+                </a>
+                <a type="button" id="rm_img_{{ img.id }}" class="rmv_img">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </a>
+            {% endfor %}
         </div>
         {# bouton retour accueil #}
         <a type="button" href="{{ path('iuto_livret_chooseProject') }}" class="btn btn-danger" id="livret_cancel_create_student">
@@ -162,5 +165,15 @@
         $glyph.className = 'glyphicon glyphicon-chevron-right';
         $subBtn.appendChild($glyph);
     </script>
+
+    {#<script type="text/javascript">#}
+        {#$imagesProj = document.getElementsByClassName('rmv_img');#}
+        {#for ( $img of $imagesProj)#}
+        {#{#}
+            {#$img.onclick = function () {#}
+                {##}
+            {#}#}
+        {#}#}
+    {#</script>#}
 
 {% endblock %}

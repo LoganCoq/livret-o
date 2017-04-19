@@ -322,6 +322,8 @@ class StudentController extends Controller
 
             //rechargement du formulaire pour les commentaires
             return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
+                    'projet' => $projet,
+                    'images' => $images,
                     'commentaires' => $commentaires,
                     'form' => $form->createView(),
                     'formCom' => $formCom->createView(),
