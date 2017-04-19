@@ -38,7 +38,13 @@
             </a>
         </div>
 
-
+        <div id="images_projet">
+        {% for img in images %}
+            <a href="/images/projects/{{ img.imageName }}">
+                <img href="/images/projects/{{ img.imageName }}" alt="" src="/images/projects/{{ img.imageName }}"/>
+            </a>
+        {% endfor %}
+        </div>
         {# bouton retour accueil #}
         <a type="button" href="{{ path('iuto_livret_chooseProject') }}" class="btn btn-danger" id="livret_cancel_create_student">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>

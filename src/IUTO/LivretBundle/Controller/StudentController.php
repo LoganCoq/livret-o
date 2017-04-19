@@ -223,6 +223,8 @@ class StudentController extends Controller
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
+        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+
         //creation du formulaire pour completer un projet
         $form = $this->createForm(ProjetCompleteType::class, $projet);
 
@@ -262,6 +264,7 @@ class StudentController extends Controller
                     'routing_statutCAShome' => '/etudiant',
                     'id' => $id,
                     'projet' => $projet->getId(),
+                    'images' => $images,
                 )
             );
         }
@@ -341,6 +344,7 @@ class StudentController extends Controller
                 '#',),
             'routing_statutCAShome' => '/etudiant',
                 'projet' => $projet,
+                'images' => $images,
             )
         );
     }

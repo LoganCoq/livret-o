@@ -54,7 +54,7 @@
 {
     margin: 1em;
     font-size: 1.2em;
-    margin-top: 9em;
+    margin-top: 16em;
 }
 
 form[name=iuto_livretbundle_projet]
@@ -92,15 +92,28 @@ form[name=iuto_livretbundle_projet]
 {
     margin-left: 35em;
     font-size: 1.2em;
-    margin-top: 2em;
+    margin-top: 4.4em;
 }
 
 
 #livret_add_img
 {
     margin-left: 2em;
-    margin-top: -17em;
+    margin-top: -24em;
     width: 30em;
     margin-bottom: 2em;
+}
+
+#livret_add_img > a
+{
+    margin-top: 10em;
+    margin-left: 2em;
+}
+
+#images_projet
+{
+    margin-top: -15em;
+    margin-left: 3em;
+    heigth: 6em;
 }
 
