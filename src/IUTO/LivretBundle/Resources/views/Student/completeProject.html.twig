@@ -27,6 +27,18 @@
         {# génération automatique du formulaire #}
         {{ form(form) }}
 
+        <div id="livret_add_img">
+            <label class="control-label" for="project_btn_add_img">
+                Images
+            </label>
+            <a type="button" href="{{ path('iuto_livret_studenthomepage') }}" class="btn btn-default" id="project_btn_add_img">
+                {# icone #}
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                Ajouter une image au projet
+            </a>
+        </div>
+
+
         {# bouton retour accueil #}
         <a type="button" href="{{ path('iuto_livret_chooseProject') }}" class="btn btn-danger" id="livret_cancel_create_student">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
