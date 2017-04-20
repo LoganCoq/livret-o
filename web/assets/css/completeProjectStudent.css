@@ -29,7 +29,7 @@
 }
 .form-complete {
     margin-left: 2em;
-    margin-bottom: 15em;
+    margin-bottom: 5em;
 }
 
 #iuto_livretbundle_projet_descripProjet
@@ -54,7 +54,6 @@
 {
     margin: 1em;
     font-size: 1.2em;
-    margin-top: 30em;
 }
 
 form[name=iuto_livretbundle_projet]
@@ -92,56 +91,5 @@ form[name=iuto_livretbundle_projet]
 {
     margin-left: 35em;
     font-size: 1.2em;
-    margin-bottom: -44em;
+    margin-top: -7em;
 }
-
-
-#livret_add_img
-{
-    margin-left: 2em;
-    width: 30em;
-    margin-bottom: 2em;
-}
-
-#livret_add_img > a
-{
-    margin-top: auto;
-    margin-left: 2em;
-}
-
-#images_projet
-{
-    height: 10em;
-    margin-top: -41em;
-}
-
-#images
-{
-    margin-left: 2em;
-}
-
-#images > a > img
-{
-    height: 7em;
-    width: 7em;
-}
-
-#key_words_project
-{
-    margin-top: -10em;
-    margin-left: 2em;
-    width: 40em;
-}
-
-.add-word
-{
-    margin-top: 0em !important;
-    font-size: 1.2em;
-}
-
-/*#livret_add_word*/
-/*{*/
-    /*margin-left: -2em;*/
-/*}*/
-
-

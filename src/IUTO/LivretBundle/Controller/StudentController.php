@@ -224,9 +224,6 @@ class StudentController extends Controller
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
-        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
-        $motsCles = $projet->getMotsClesProjet();
-
         //creation du formulaire pour completer un projet
         $form = $this->createForm(ProjetCompleteType::class, $projet);
 
@@ -257,7 +254,7 @@ class StudentController extends Controller
             $request->getSession()->getFlashBag()->add('success', 'Projet bien modifié.');
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
-            return $this->redirectToRoute('iuto_livret_confirmCompleteProject', array(
+            return $this->redirectToRoute('iuto_livret_add_word_image', array(
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
                     'routing_info' => array('/create/project',
@@ -266,13 +263,9 @@ class StudentController extends Controller
                     'routing_statutCAShome' => '/etudiant',
                     'id' => $id,
                     'projet' => $projet->getId(),
-                    'images' => $images,
                 )
             );
         }
-
-        $formMot = $this->createForm(ProjetAddKeyWordType::class);
-        $formMot->handleRequest($request);
 
         //récupération des commentaires appartenant au projet actuel
         $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
@@ -329,30 +322,102 @@ class StudentController extends Controller
             return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
                     'form' => $form->createView(),
                     'formCom' => $formCom->createView(),
-                    'formMot' => $formMot->createView(),
                     'statutCAS' => 'etudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
                     'routing_statutCAShome' => '/etudiant',
                     'routing_info' => array('/create/project', '/choose/project'),
                         'projet' => $projet,
-                        'images' => $images,
-                        'motsCles' => $motsCles,
                         'commentaires' => $commentaires,
                 ));
         }
 
-        if ($formMot->isSubmitted() && $formMot->isValid())
-        {
-            $newWord = $formMot['mot']->getData();
-            $projet->addMotCleProjet($newWord);
-            $motsCles = $projet->getMotsClesProjet();
 
-            $em->persist($projet);
+        // affichage du formulaire pour compléter le projet
+        return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
+            'form' => $form->createView(),
+            'formCom' => $formCom->createView(),
+            'statutCAS' => 'étudiant',
+            'info' => array('Créer un compte rendu', 'Voir mes projets'),
+            'routing_info' => array('/create/project',
+                '/choose/project',
+                '#',),
+            'routing_statutCAShome' => '/etudiant',
+                'projet' => $projet,
+                'commentaires' => $commentaires,
+            )
+        );
+    }
+
+    public function addWordImageAction(Request $request, Projet $projet)
+    {
+        //récupération des informations de l'utilisateur connecter
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $etudiant->getId();
+
+//        récupération des images du projet
+        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+//        récupération des mots clés du projet
+        $motsCles = $projet->getMotsClesProjet();
+
+//        création du formulaire d'ajout d'une image
+        $formMot = $this->createForm(ProjetAddKeyWordType::class);
+        $formMot->handleRequest($request);
+
+        //récupération des commentaires appartenant au projet actuel
+        $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+
+        $commentaires = array();
+
+        foreach($com as $elem){
+            $x=array();
+            $user = $elem->getUser();
+            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $elem->getContenu());
+            array_push($x, $elem->getDate());
+            array_push($x, $user->getRole());
+            array_push($commentaires, $x);
+
+        };
+
+        //creation du formulaire pour la section de chat/commentaire
+        $formCom = $this->createForm(CommentaireCreateType::class, $com);
+        $formCom->handleRequest($request);
+
+        // vérification de la validité du formulaire si celui-ci à été envoyer
+        if ($formCom->isSubmitted() && $formCom->isValid()) {
+            // création et affectation des informations dans le nouveau commentaire
+            $comReponse = new Commentaire;
+            $comReponse->setDate();
+            $comReponse->setProjet($projet);
+            // ajout de l'user au commentaire
+            $repository2 = $em->getRepository('IUTOLivretBundle:User');
+            $user = $repository2->findOneById($id);
+            $comReponse->setUser($user);
+            $comReponse->setContenu($formCom['contenu']->getData());
+
+            // sauvegarde des commentaires dans la base de données
+            $em->persist($comReponse);
             $em->flush();
 
-            //rechargement du formulaire pour les mots clés
-            return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
-                'form' => $form->createView(),
+            //actualisation des commentaires une fois le nouveau ajouté
+            //recupération des commentaires
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+            $commentaires = array();
+            foreach ($com as $elem) {
+                $x = array();
+                $user = $elem->getUser();
+                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
+                array_push($x, $elem->getContenu());
+                array_push($x, $elem->getDate());
+                array_push($x, $user->getRole());
+                array_push($commentaires, $x);
+
+            };
+
+            //rechargement du formulaire pour les commentaires
+            return $this->render('IUTOLivretBundle:Student:addWordImageProject.html.twig', array(
                 'formCom' => $formCom->createView(),
                 'formMot' => $formMot->createView(),
                 'statutCAS' => 'etudiant',
@@ -364,26 +429,44 @@ class StudentController extends Controller
                 'motsCles' => $motsCles,
                 'commentaires' => $commentaires,
             ));
-
         }
 
-        // affichage du formulaire pour compléter le projet
-        return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
-            'form' => $form->createView(),
-            'formCom' => $formCom->createView(),
-            'formMot' => $formMot->createView(),
-            'statutCAS' => 'étudiant',
-            'info' => array('Créer un compte rendu', 'Voir mes projets'),
-            'routing_info' => array('/create/project',
-                '/choose/project',
-                '#',),
-            'routing_statutCAShome' => '/etudiant',
+        if ($formMot->isSubmitted() && $formMot->isValid()) {
+            $newWord = $formMot['mot']->getData();
+            $projet->addMotCleProjet($newWord);
+            $motsCles = $projet->getMotsClesProjet();
+
+
+            $em->persist($projet);
+            $em->flush();
+
+            //rechargement du formulaire pour les mots clés
+            return $this->render('IUTOLivretBundle:Student:addWordImageProject.html.twig', array(
+                'formCom' => $formCom->createView(),
+                'formMot' => $formMot->createView(),
+                'statutCAS' => 'etudiant',
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_statutCAShome' => '/etudiant',
+                'routing_info' => array('/create/project', '/choose/project'),
                 'projet' => $projet,
                 'images' => $images,
                 'motsCles' => $motsCles,
                 'commentaires' => $commentaires,
-            )
-        );
+            ));
+        }
+        return $this->render('IUTOLivretBundle:Student:addWordImageProject.html.twig', array(
+            'formCom' => $formCom->createView(),
+            'formMot' => $formMot->createView(),
+            'statutCAS' => 'etudiant',
+            'info' => array('Créer un compte rendu', 'Voir mes projets'),
+            'routing_statutCAShome' => '/etudiant',
+            'routing_info' => array('/create/project', '/choose/project'),
+            'projet' => $projet,
+            'images' => $images,
+            'motsCles' => $motsCles,
+            'commentaires' => $commentaires,
+        ));
+
     }
 
     public function addImageAction(Request $request, Projet $projet)
@@ -391,6 +474,13 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $etudiant->getId();
+
+//        récupération des images du projet
+        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+//        récupération des mots clés du projet
+        $motsCles = $projet->getMotsClesProjet();
+
 
         $image = new Image();
 
@@ -402,6 +492,21 @@ class StudentController extends Controller
             $image->setProjet($projet);
             $em->persist($image);
             $em->flush();
+
+            // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
+            return $this->redirectToRoute('iuto_livret_add_word_image', array(
+                    'statutCAS' => 'étudiant',
+                    'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                    'routing_info' => array('/create/project',
+                        '/choose/project',
+                        '#',),
+                    'routing_statutCAShome' => '/etudiant',
+                    'id' => $id,
+                    'projet' => $projet->getId(),
+                    'images' => $images,
+                    'motsCles' => $motsCles,
+                )
+            );
 
         }
 
@@ -447,7 +552,6 @@ class StudentController extends Controller
         $manager = $this->getDoctrine()->getManager();
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
-        $id = $etudiant->getId();
 
 //      rendu de la vue pour un projet fini
         return $this->render('IUTOLivretBundle:Student:finishedProject.html.twig', array(

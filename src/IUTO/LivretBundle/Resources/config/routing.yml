@@ -38,6 +38,10 @@ iuto_livret_completeProject:
     path: /{projet}/complete
     defaults: { _controller: IUTOLivretBundle:Student:completeProject }
 
+#====AJOUT MOT ET IMAGE====#
+iuto_livret_add_word_image:
+    path: /{projet}/complete/words_images
+    defaults: { _controller: IUTOLivretBundle:Student:addWordImage }
 
 #=====AJOUT D'UNE IMAGE====#
 iuto_livret_add_img:
@@ -81,10 +85,10 @@ iuto_livret_correctionProf4:
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher4 }
 
 
-#=====AJOUT D'UNE IMAGE====#
-iuto_livret_add_img:
-    path: /{projet}/correction/addImg
-    defaults: { _controller: IUTOLivretBundle:Student:addImage }
+##=====AJOUT D'UNE IMAGE====#
+#iuto_livret_add_img:
+#    path: /{projet}/correction/addImg
+#    defaults: { _controller: IUTOLivretBundle:Student:addImage }
 
 
 #==========PROJETS VALIDES1=====#

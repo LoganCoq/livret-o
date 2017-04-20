@@ -22,10 +22,50 @@
 
 {% block content %}
     <div class="form-complete">
-        {# initialisation du theme pourle formulaire #}
-        {% form_theme form 'bootstrap_3_layout.html.twig' %}
-        {# génération automatique du formulaire #}
-        {{ form(form) }}
+
+        <div id="images_projet">
+            <div id="livret_add_img">
+                <label class="control-label" for="project_btn_add_img">
+                    Images
+                </label>
+                <a type="button" href="{{ path('iuto_livret_add_img', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
+                    {# icone #}
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Ajouter une image au projet
+                </a>
+            </div>
+            <div id="images">
+                {% for img in images %}
+                    <a href="/images/projects/{{ img.imageName }}">
+                        <img href="/images/projects/{{ img.imageName }}" alt="" src="/images/projects/{{ img.imageName }}"/>
+                    </a>
+                    <a type="button" id="rm_img_{{ img.id }}" class="rmv_img">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="key_words_project">
+            <div id="livret_add_word">
+                {% form_theme formMot 'bootstrap_3_layout.html.twig' %}
+                {{ form(formMot) }}
+            </div>
+            <div id="key_words">
+                {% if motsCles|length == 0 %}
+                    <h3><small>Il n'y a pas de mots clés pour ce projet</small></h3>
+                {% else %}
+                    {% for mot in motsCles %}
+                        <p>{{ mot }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <a type="button" href="{{ path('iuto_livret_confirmCompleteProject', {'projet': projet.id }) }}" class="btn btn-success">
+            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+            Terminer
+        </a>
 
         {# bouton retour accueil #}
         <a type="button" href="{{ path('iuto_livret_chooseProject') }}" class="btn btn-danger" id="livret_cancel_create_student">
@@ -33,6 +73,7 @@
             Annuler
         </a>
     </div>
+
 
     {# section pour le chat de correction #}
     <div class="popup-box">
@@ -75,7 +116,7 @@
                                             <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
                                         </div>
                                     {% endif %}
-                                {# affichage du nom si c'est le premier commentaire #}
+                                    {# affichage du nom si c'est le premier commentaire #}
                                 {% else %}
                                     <div class="direct-chat-info clearfix">
                                         <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
@@ -97,7 +138,7 @@
                                             <span class="direct-chat-name-right"> {{ commentaires[o][0] }} </span>
                                         </div>
                                     {% endif %}
-                                {# affichage du nom si c'est le premier commentaire #}
+                                    {# affichage du nom si c'est le premier commentaire #}
                                 {% else %}
                                     <div class="direct-chat-info clearfix">
                                         <span class="direct-chat-name-right"> {{ commentaires[o][0] }} </span>
@@ -115,7 +156,7 @@
 
             <div class="reponseCorrection">
                 {# chargement du theme pour le formulaire #}
-                {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                {% form_theme formCom 'bootstrap_3_layout.html.twig' %}
                 {# génération automatique du formulaire d'ajout d'un commentaire #}
                 {{ form(formCom) }}
             </div>
@@ -145,5 +186,14 @@
         $subBtn.appendChild($glyph);
     </script>
 
+    {#<script type="text/javascript">#}
+    {#$imagesProj = document.getElementsByClassName('rmv_img');#}
+    {#for ( $img of $imagesProj)#}
+    {#{#}
+    {#$img.onclick = function () {#}
+    {##}
+    {#}#}
+    {#}#}
+    {#</script>#}
 
 {% endblock %}

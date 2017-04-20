@@ -36,17 +36,6 @@ class ProjetCompleteType extends AbstractType
                 'label' => 'Bilan du projet',
                 'required' => false,
             ))
-//            ->add('motsClesProjet', CollectionType::class, array( //TODO mots clés
-//                'allow_add' => true,
-//                'allow_delete' => true,
-//                'entry_type' => TextType::class,
-//                'entry_options' => array(
-//
-//                ),
-//                'prototype' => true,
-//                'prototype_data' => 'New Tag Placeholder',
-//                'required' => false,
-//            ))
             ->add('dateDebut', TextType::class, array(
                 'label' => 'Date de début',
                 'attr' => [
@@ -101,7 +90,7 @@ class ProjetCompleteType extends AbstractType
                 }
             ))
             ->add('submit', SubmitType::class, array(
-                'label' => 'Enregistrer modifications et envoyer en correction',
+                'label' => 'Enregistrer modifications et continuer',
                 'attr' => [
                     'onclick' => "return confirm('Etes vous sûr ?')",
                     'class' => 'btn-primary',
