@@ -85,10 +85,10 @@ iuto_livret_correctionProf4:
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher4 }
 
 
-##=====AJOUT D'UNE IMAGE====#
-#iuto_livret_add_img:
-#    path: /{projet}/correction/addImg
-#    defaults: { _controller: IUTOLivretBundle:Student:addImage }
+#=====AJOUT D'UNE IMAGE====#
+iuto_livret_add_img_teacher:
+    path: /{projet}/correction/addImg
+    defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacherWordImage }
 
 
 #==========PROJETS VALIDES1=====#

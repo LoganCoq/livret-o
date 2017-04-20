@@ -19,28 +19,6 @@
         {% form_theme form 'bootstrap_3_layout.html.twig' %}
         {{ form(form) }}
 
-        <div id="livret_add_img">
-            <label class="control-label" for="project_btn_add_img">
-                Images
-            </label>
-            <a type="button" href="{{ path('iuto_livret_add_img', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
-                {# icone #}
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                Ajouter une image au projet
-            </a>
-        </div>
-
-        <div id="images_projet">
-            {% for img in images %}
-                <a href="/images/projects/{{ img.imageName }}">
-                    <img href="/images/projects/{{ img.imageName }}" alt="" src="/images/projects/{{ img.imageName }}"/>
-                </a>
-                <a type="button" id="rm_img_{{ img.id }}" class="rmv_img">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                </a>
-            {% endfor %}
-        </div>
-
         <a type="button" class="btn btn-danger" href="{{ pagePrec }}" id="livret_cancel_correction">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
             Retour
@@ -114,7 +92,7 @@
                 {% endif %}
             </div>
             <div class="reponseCorrection">
-                {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                {% form_theme formCom 'bootstrap_3_layout.html.twig' %}
                 {{ form(formCom) }}
             </div>
         </div>

@@ -1,0 +1,184 @@
+{# on entend base.html.twig pour avoir le menu sur la gauche #}
+{% extends 'base.html.twig' %}
+
+{# block titre pour changer le titre de l'onglet #}
+{% block title %}
+    Livret'O - Modification projet
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css"/>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css"/>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/completeProjectStudent.css") }}"/>
+{% endblock %}
+
+
+{% block content %}
+    <div class="form-complete">
+
+        <div id="images_projet">
+            <div id="livret_add_img">
+                <label class="control-label" for="project_btn_add_img">
+                    Images
+                </label>
+                <a type="button" href="{{ path('iuto_livret_add_img', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
+                    {# icone #}
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Ajouter une image au projet
+                </a>
+            </div>
+            <div id="images">
+                {% for img in images %}
+                    <a href="/images/projects/{{ img.imageName }}">
+                        <img href="/images/projects/{{ img.imageName }}" alt="" src="/images/projects/{{ img.imageName }}"/>
+                    </a>
+                    <a type="button" id="rm_img_{{ img.id }}" class="rmv_img">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="key_words_project">
+            <div id="livret_add_word">
+                {% form_theme formMot 'bootstrap_3_layout.html.twig' %}
+                {{ form(formMot) }}
+            </div>
+            <div id="key_words">
+                {% if motsCles|length == 0 %}
+                    <h3><small>Il n'y a pas de mots clés pour ce projet</small></h3>
+                {% else %}
+                    {% for mot in motsCles %}
+                        <p>{{ mot }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <a type="button" href="{{ path('iuto_livret_correctionProf4', {'projet': projet.id }) }}" class="btn btn-success">
+            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+            Terminer
+        </a>
+
+        {# bouton retour accueil #}
+        <a type="button" href="{{ path('iuto_livret_correctionProf1') }}" class="btn btn-danger" id="livret_cancel_create_student">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            Annuler
+        </a>
+    </div>
+
+
+    {# section pour le chat de correction #}
+    <div class="popup-box">
+        <div class="popup-head">
+            <div class="popup-head-left">
+                Correction
+            </div>
+        </div>
+
+        <div class="popup-messages">
+            <div class="direct-chat-messages">
+                {% if commentaires|length > 0 %}
+                    {% for o in range(0, commentaires|length - 1) %}
+                        {% if o != 0 %}
+                            {% if commentaires[o][2]|date('d-m-Y') != commentaires[o-1][2]|date('d-m-Y') %}
+                                <div class="chat-box-single-line">
+                                    <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if o == 0 %}
+                            <div class="chat-box-single-line">
+                                <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
+                            </div>
+                        {% endif %}
+
+                        {% if commentaires[o][3] == "ROLE_student" %}
+                            <div class="direct-chat-msg-left">
+                                {% if o != 0 %}
+                                    {% if commentaires[o][0] != commentaires[o-1][0]  %}
+                                        <div class="direct-chat-info clearfix">
+                                            <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="direct-chat-info clearfix">
+                                        <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
+                                    </div>
+                                {% endif %}
+                                <div class="direct-chat-text-left">
+                                    {{ commentaires[o][1] }}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% if commentaires[o][3] == "ROLE_faculty" or commentaires[o][3] == "ROLE_employee"%}
+                            <div class="direct-chat-msg-right">
+                                {% if o != 0 %}
+                                    {% if commentaires[o][0] != commentaires[o-1][0]  %}
+                                        <div class="direct-chat-info clearfix">
+                                            <span class="direct-chat-name-right"> {{ commentaires[o][0] }} </span>
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="direct-chat-info clearfix">
+                                        <span class="direct-chat-name-right"> {{ commentaires[o][0] }} </span>
+                                    </div>
+                                {% endif %}
+                                <div class="direct-chat-text-right">
+                                    {{ commentaires[o][1] }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="reponseCorrection">
+                {% form_theme formCom 'bootstrap_3_layout.html.twig' %}
+                {{ form(formCom) }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+    <script src="bootstrap-datepicker.fr.js" charset="UTF-8">
+        $('.datepicker').datepicker({
+            autoclose: true
+        });
+    </script>
+
+    <script type="text/javascript">
+        $subBtn = document.getElementById('iuto_livretbundle_projet_submit');
+        $glyph = document.createElement('span');
+        $glyph.className = 'glyphicon glyphicon-chevron-right';
+        $subBtn.appendChild($glyph);
+    </script>
+
+    {#<script type="text/javascript">#}
+    {#$imagesProj = document.getElementsByClassName('rmv_img');#}
+    {#for ( $img of $imagesProj)#}
+    {#{#}
+    {#$img.onclick = function () {#}
+    {##}
+    {#}#}
+    {#}#}
+    {#</script>#}
+
+{% endblock %}

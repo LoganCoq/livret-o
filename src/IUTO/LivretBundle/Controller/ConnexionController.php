@@ -20,14 +20,14 @@ class ConnexionController extends Controller
         //CONNECTION SANS CAS : decommenter le numero avec lequel on souhaite se connecter
 
 //        -----PROFESSEUR-----
-//        $numPersonne = "p2171";
+        $numPersonne = "p2171";
 //        $numPersonne = "p7184";
 //        $numPersonne = "p22732";
 //        $numPersonne = "p46975";
 //        $numPersonne = "p15987";
 
 //        -----ETUDIANT-----
-        $numPersonne = "o2151178";
+//        $numPersonne = "o2151178";
 //        $numPersonne = "o2154952";
 //        $numPersonne = "o2151485";
 //        $numPersonne = "o2153164";

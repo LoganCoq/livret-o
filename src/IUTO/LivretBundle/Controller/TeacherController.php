@@ -8,6 +8,7 @@ use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Form\AddImageType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
+use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\ProjetMarquantType;
 use IUTO\LivretBundle\Form\ProjetModifType;
@@ -228,7 +229,7 @@ class TeacherController extends Controller
             $em->flush();
 
 //            redirection vers la page de fin de correction du projet
-            return $this->redirectToRoute('iuto_livret_correctionProf4', array(
+            return $this->redirectToRoute('iuto_livret_add_img_teacher', array(
                     'statusCAS' => 'professeur',
                     'info' => array('Demandes de correction', 'Projets validés'),
                     'routing_info' => array('/correctionProf1', '/projetsValides1'),
@@ -322,6 +323,130 @@ class TeacherController extends Controller
                 'projet' => $projet,
                 'images' => $images,
             ));
+    }
+
+    public function correctionTeacherWordImageAction(Request $request, Projet $projet)
+    {
+        // recupération de l'utilisateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $professeur->getId();
+
+
+//        récupération des images du projet
+        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+//        récupération des mots clés du projet
+        $motsCles = $projet->getMotsClesProjet();
+
+//        création du formulaire d'ajout d'une image
+        $formMot = $this->createForm(ProjetAddKeyWordType::class);
+        $formMot->handleRequest($request);
+
+        //récupération des commentaires appartenant au projet actuel
+        $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+
+        $commentaires = array();
+
+        foreach($com as $elem){
+            $x=array();
+            $user = $elem->getUser();
+            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $elem->getContenu());
+            array_push($x, $elem->getDate());
+            array_push($x, $user->getRole());
+            array_push($commentaires, $x);
+
+        };
+
+        //creation du formulaire pour la section de chat/commentaire
+        $formCom = $this->createForm(CommentaireCreateType::class, $com);
+        $formCom->handleRequest($request);
+
+        // vérification de la validité du formulaire si celui-ci à été envoyer
+        if ($formCom->isSubmitted() && $formCom->isValid()) {
+            // création et affectation des informations dans le nouveau commentaire
+            $comReponse = new Commentaire;
+            $comReponse->setDate();
+            $comReponse->setProjet($projet);
+            // ajout de l'user au commentaire
+            $repository2 = $em->getRepository('IUTOLivretBundle:User');
+            $user = $repository2->findOneById($id);
+            $comReponse->setUser($user);
+            $comReponse->setContenu($formCom['contenu']->getData());
+
+            // sauvegarde des commentaires dans la base de données
+            $em->persist($comReponse);
+            $em->flush();
+
+            //actualisation des commentaires une fois le nouveau ajouté
+            //recupération des commentaires
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+            $commentaires = array();
+            foreach ($com as $elem) {
+                $x = array();
+                $user = $elem->getUser();
+                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
+                array_push($x, $elem->getContenu());
+                array_push($x, $elem->getDate());
+                array_push($x, $user->getRole());
+                array_push($commentaires, $x);
+
+            };
+
+            //rechargement du formulaire pour les commentaires
+            return $this->render('IUTOLivretBundle:Teacher:correctionTeacherWordImage.html.twig', array(
+                'formMot' => $formMot->createView(),
+                'formCom' => $formCom->createView(),
+                'statutCAS' => 'professeur',
+                'routing_statutCAShome' => '/professeur',
+                'info' => array('Demandes de correction', 'Projets validés'),
+                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'routing_options' => array('#', '#'),
+                'projet' => $projet,
+                'motsCles' => $motsCles,
+                'images' => $images,
+                'commentaires' => $commentaires,
+            ));
+        }
+
+        if ($formMot->isSubmitted() && $formMot->isValid()) {
+            $newWord = $formMot['mot']->getData();
+            $projet->addMotCleProjet($newWord);
+            $motsCles = $projet->getMotsClesProjet();
+
+
+            $em->persist($projet);
+            $em->flush();
+
+            //rechargement du formulaire pour les mots clés
+            return $this->render('IUTOLivretBundle:Teacher:correctionTeacherWordImage.html.twig', array(
+                'formMot' => $formMot->createView(),
+                'formCom' => $formCom->createView(),
+                'statutCAS' => 'professeur',
+                'routing_statutCAShome' => '/professeur',
+                'info' => array('Demandes de correction', 'Projets validés'),
+                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'routing_options' => array('#', '#'),
+                'projet' => $projet,
+                'motsCles' => $motsCles,
+                'images' => $images,
+                'commentaires' => $commentaires,
+            ));
+        }
+        return $this->render('IUTOLivretBundle:Teacher:correctionTeacherWordImage.html.twig', array(
+            'formMot' => $formMot->createView(),
+            'formCom' => $formCom->createView(),
+            'statutCAS' => 'professeur',
+            'routing_statutCAShome' => '/professeur',
+            'info' => array('Demandes de correction', 'Projets validés'),
+            'routing_info' => array('/correctionProf1', '/projetsValides1'),
+            'routing_options' => array('#', '#'),
+            'projet' => $projet,
+            'motsCles' => $motsCles,
+            'images' => $images,
+            'commentaires' => $commentaires,
+        ));
     }
 
 //    controlleur pour la page finale de  modification d'un projet
