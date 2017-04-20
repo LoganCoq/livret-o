@@ -256,6 +256,20 @@ class Projet
     }
 
     /**
+     * Add motsClesProjet
+     *
+     * @param string $mot
+     *
+     * @return Projet
+     */
+    public function addMotCleProjet($mot)
+    {
+        $this->motsClesProjet[] = $mot;
+
+        return $this;
+    }
+
+    /**
      * Get clientProjet
      *
      * @return string

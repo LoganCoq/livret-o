@@ -8,6 +8,7 @@ use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Form\AddImageType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
+use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
 use IUTO\LivretBundle\Form\ProjetCompleteType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
@@ -224,6 +225,7 @@ class StudentController extends Controller
         $id = $etudiant->getId();
 
         $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+        $motsCles = $projet->getMotsClesProjet();
 
         //creation du formulaire pour completer un projet
         $form = $this->createForm(ProjetCompleteType::class, $projet);
@@ -268,6 +270,9 @@ class StudentController extends Controller
                 )
             );
         }
+
+        $formMot = $this->createForm(ProjetAddKeyWordType::class);
+        $formMot->handleRequest($request);
 
         //récupération des commentaires appartenant au projet actuel
         $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
@@ -322,23 +327,48 @@ class StudentController extends Controller
 
             //rechargement du formulaire pour les commentaires
             return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
-                    'projet' => $projet,
-                    'images' => $images,
-                    'commentaires' => $commentaires,
                     'form' => $form->createView(),
                     'formCom' => $formCom->createView(),
+                    'formMot' => $formMot->createView(),
                     'statutCAS' => 'etudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
                     'routing_statutCAShome' => '/etudiant',
                     'routing_info' => array('/create/project', '/choose/project'),
+                        'projet' => $projet,
+                        'images' => $images,
+                        'motsCles' => $motsCles,
+                        'commentaires' => $commentaires,
                 ));
+        }
+
+        if ($formMot->isSubmitted() && $formMot->isValid())
+        {
+            $newWord = $formMot['mot']->getData();
+            $projet->addMotCleProjet($newWord);
+            $motsCles = $projet->getMotsClesProjet();
+
+            //rechargement du formulaire pour les mots clés
+            return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
+                'form' => $form->createView(),
+                'formCom' => $formCom->createView(),
+                'formMot' => $formMot->createView(),
+                'statutCAS' => 'etudiant',
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_statutCAShome' => '/etudiant',
+                'routing_info' => array('/create/project', '/choose/project'),
+                'projet' => $projet,
+                'images' => $images,
+                'motsCles' => $motsCles,
+                'commentaires' => $commentaires,
+            ));
+
         }
 
         // affichage du formulaire pour compléter le projet
         return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
-            'commentaires' => $commentaires,
             'form' => $form->createView(),
             'formCom' => $formCom->createView(),
+            'formMot' => $formMot->createView(),
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
             'routing_info' => array('/create/project',
@@ -347,6 +377,8 @@ class StudentController extends Controller
             'routing_statutCAShome' => '/etudiant',
                 'projet' => $projet,
                 'images' => $images,
+                'motsCles' => $motsCles,
+                'commentaires' => $commentaires,
             )
         );
     }

@@ -27,32 +27,48 @@
         {# génération automatique du formulaire #}
         {{ form(form) }}
 
-        <div id="livret_add_img">
-            <label class="control-label" for="project_btn_add_img">
-                Images
-            </label>
-            <a type="button" href="{{ path('iuto_livret_add_img', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
-                {# icone #}
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                Ajouter une image au projet
-            </a>
-        </div>
-
         <div id="images_projet">
-            {% for img in images %}
-                <a href="/images/projects/{{ img.imageName }}">
-                    <img href="/images/projects/{{ img.imageName }}" alt="" src="/images/projects/{{ img.imageName }}"/>
+            <div id="livret_add_img">
+                <label class="control-label" for="project_btn_add_img">
+                    Images
+                </label>
+                <a type="button" href="{{ path('iuto_livret_add_img', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
+                    {# icone #}
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Ajouter une image au projet
                 </a>
-                <a type="button" id="rm_img_{{ img.id }}" class="rmv_img">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                </a>
-            {% endfor %}
+            </div>
+            <div id="images">
+                {% for img in images %}
+                    <a href="/images/projects/{{ img.imageName }}">
+                        <img href="/images/projects/{{ img.imageName }}" alt="" src="/images/projects/{{ img.imageName }}"/>
+                    </a>
+                    <a type="button" id="rm_img_{{ img.id }}" class="rmv_img">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </a>
+                {% endfor %}
+            </div>
         </div>
         {# bouton retour accueil #}
         <a type="button" href="{{ path('iuto_livret_chooseProject') }}" class="btn btn-danger" id="livret_cancel_create_student">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             Annuler
         </a>
+    </div>
+
+    <div id="key_words_project">
+        <div id="livret_add_word">
+            {{ form(formMot) }}
+        </div>
+        <div id="key_words">
+            {% if motsCles|length == 0 %}
+                <h3><small>Il n'y a pas de mots clés pour ce projet</small></h3>
+            {% else %}
+                {% for mot in motsCles %}
+                    <p>{{ mot }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
 
     {# section pour le chat de correction #}
