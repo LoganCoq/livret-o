@@ -347,6 +347,9 @@ class StudentController extends Controller
             $projet->addMotCleProjet($newWord);
             $motsCles = $projet->getMotsClesProjet();
 
+            $em->persist($projet);
+            $em->flush();
+
             //rechargement du formulaire pour les mots clés
             return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
                 'form' => $form->createView(),
