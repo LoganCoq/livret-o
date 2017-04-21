@@ -17,9 +17,18 @@ class AddImageType extends AbstractType
     {
         $builder
             ->add('imageFile', VichImageType::class, [
+                'label' => 'Ajout d\'une image',
                 'required' => false,
+                'attr' => [
+                    'class' => 'btn btn-default'
+                ]
             ])
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, [
+                'label' => 'Ajouter l\'image',
+                'attr' => [
+                    'class' => 'btn btn-success',
+                ]
+            ]);
     }
 
     /**
