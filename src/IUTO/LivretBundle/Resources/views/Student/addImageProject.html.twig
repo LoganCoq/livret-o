@@ -20,5 +20,11 @@
         {# génération automatique du formulaire #}
         {{ form(form) }}
 
+        {# bouton d'annulation / retour accueil #}
+        <a type="button" href="{{ path('iuto_livret_add_word_image', {'projet' : projet.id }) }}" class="btn btn-danger" id="livret_cancel_add_img">
+            {#icone#}
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            Annuler
+        </a>
     </div>
 {% endblock %}
