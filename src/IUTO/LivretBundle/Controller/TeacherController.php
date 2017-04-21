@@ -229,7 +229,7 @@ class TeacherController extends Controller
             $em->flush();
 
 //            redirection vers la page de fin de correction du projet
-            return $this->redirectToRoute('iuto_livret_add_img_teacher', array(
+            return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
                     'statusCAS' => 'professeur',
                     'info' => array('Demandes de correction', 'Projets validés'),
                     'routing_info' => array('/correctionProf1', '/projetsValides1'),
@@ -404,7 +404,7 @@ class TeacherController extends Controller
                 'routing_info' => array('/correctionProf1', '/projetsValides1'),
                 'routing_options' => array('#', '#'),
                 'projet' => $projet,
-                'motsCles' => $motsCles,
+                'motsCle' => $motsCles,
                 'images' => $images,
                 'commentaires' => $commentaires,
             ));
@@ -429,7 +429,7 @@ class TeacherController extends Controller
                 'routing_info' => array('/correctionProf1', '/projetsValides1'),
                 'routing_options' => array('#', '#'),
                 'projet' => $projet,
-                'motsCles' => $motsCles,
+                'motsCle' => $motsCles,
                 'images' => $images,
                 'commentaires' => $commentaires,
             ));
@@ -443,11 +443,13 @@ class TeacherController extends Controller
             'routing_info' => array('/correctionProf1', '/projetsValides1'),
             'routing_options' => array('#', '#'),
             'projet' => $projet,
-            'motsCles' => $motsCles,
+            'motsCle' => $motsCles,
             'images' => $images,
             'commentaires' => $commentaires,
         ));
     }
+
+
 
 //    controlleur pour la page finale de  modification d'un projet
     public function correctionTeacher4Action(Request $request, Projet $projet)
@@ -538,14 +540,21 @@ class TeacherController extends Controller
                 'routing_info' => array('/correctionProf1', '/projetsValides1'),
                 'pagePrec' => '/'.$idProjet.'/correctionProf3',
                 'projet' => $idProjet,
-                ));
+                )
+        );
     }
 
-    public function addImageAction(Request $request, Projet $projet)
+    public function addImageCorrectionAction(Request $request, Projet $projet)
     {
         $em = $this->getDoctrine()->getManager();
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $etudiant->getId();
+
+//        récupération des images du projet
+        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+//        récupération des mots clés du projet
+        $motsCles = $projet->getMotsClesProjet();
 
         $image = new Image();
 
@@ -558,20 +567,32 @@ class TeacherController extends Controller
             $em->persist($image);
             $em->flush();
 
+            // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
+            return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
+                    'id' => $id,
+                    'statutCAS' => 'professeur',
+                    'routing_statutCAShome' => '/professeur',
+                    'info' => array('Demandes de correction', 'Projets validés'),
+                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                    'projet' => $projet->getId(),
+                    'images' => $images,
+                    'motsCle' => $motsCles,
+                )
+            );
         }
 
         return $this->render('IUTOLivretBundle:Teacher:addImageProject.html.twig', array(
                 'form' => $form->createView(),
-                'statutCAS' => 'étudiant',
-                'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                'routing_info' => array('/create/project',
-                    '/choose/project',
-                    '#',),
-                'routing_statutCAShome' => '/etudiant',
+                'id' => $id,
+                'statutCAS' => 'professeur',
+                'routing_statutCAShome' => '/professeur',
+                'info' => array('Demandes de correction', 'Projets validés'),
+                'routing_info' => array('/correctionProf1', '/projetsValides1'),
                 'projet' => $projet,
             )
         );
     }
+
 
     public function projetsValidesTeacher1Action(Request $request)
     {

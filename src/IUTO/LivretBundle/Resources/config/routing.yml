@@ -85,11 +85,15 @@ iuto_livret_correctionProf4:
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher4 }
 
 
-#=====AJOUT D'UNE IMAGE====#
-iuto_livret_add_img_teacher:
-    path: /{projet}/correction/addImg
+#=====AJOUT IMAGE ET MOT====#
+iuto_livret_add_img_word_teacher:
+    path: /{projet}/correction/addImgWord
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacherWordImage }
 
+#====AJOUT D'UNE IMAGE======#
+iuto_livret_add_img_teacher:
+    path: /{projet}/correction/addImg
+    defaults: { _controller: IUTOLivretBundle:Teacher:addImageCorrection }
 
 #==========PROJETS VALIDES1=====#
 iuto_livret_projetsValides1:

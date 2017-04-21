@@ -28,7 +28,7 @@
                 <label class="control-label" for="project_btn_add_img">
                     Images
                 </label>
-                <a type="button" href="{{ path('iuto_livret_add_img', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
+                <a type="button" href="{{ path('iuto_livret_add_img_teacher', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
                     {# icone #}
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     Ajouter une image au projet
@@ -52,13 +52,14 @@
                 {{ form(formMot) }}
             </div>
             <div id="key_words">
-                {% if motsCles|length == 0 %}
-                    <h3><small>Il n'y a pas de mots clés pour ce projet</small></h3>
-                {% else %}
-                    {% for mot in motsCles %}
-                        <p>{{ mot }}</p>
+                {#{% if motsCle|length == 0 %}#}
+                    {#<h3><small>Il n'y a pas de mots clés pour ce projet</small></h3>#}
+                {#{% else %}#}
+                    {% for mot in motsCle %}
+                        {#<p>{{ mot }}</p>#}
+                        {{ mot }}
                     {% endfor %}
-                {% endif %}
+                {#{% endif %}#}
             </div>
         </div>
 
