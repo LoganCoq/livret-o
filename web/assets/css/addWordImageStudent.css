@@ -62,7 +62,7 @@
 .label-info
 {
     font-size: 1em;
-    margin-left: 1em;
+    margin: 2em !important;
 }
 
 #iuto_livretbundle_mot_mot
@@ -73,6 +73,5 @@
 
 #key_words
 {
-    margin-top: -1em;
     margin-left: 2em;
 }
