@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css"/>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css"/>
 
-    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/completeProjectStudent.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/addWordImageTeacher.css") }}"/>
 {% endblock %}
 
 
@@ -52,24 +52,25 @@
                 {{ form(formMot) }}
             </div>
             <div id="key_words">
-                {#{% if motsCle|length == 0 %}#}
-                    {#<h3><small>Il n'y a pas de mots clés pour ce projet</small></h3>#}
-                {#{% else %}#}
+                {% if motsCle|length == 0 %}
+                    <h3><small>Il n'y a pas de mots clés pour ce projet</small></h3>
+                {% else %}
+                    <label>Mots clés du du projet :</label>
                     {% for mot in motsCle %}
-                        {#<p>{{ mot }}</p>#}
-                        {{ mot }}
+                        <span class="label label-info">{{ mot }}</span>
                     {% endfor %}
-                {#{% endif %}#}
+                {% endif %}
             </div>
+
         </div>
 
-        <a type="button" href="{{ path('iuto_livret_correctionProf4', {'projet': projet.id }) }}" class="btn btn-success">
+        <a type="button" href="{{ path('iuto_livret_correctionProf4', {'projet': projet.id }) }}" class="btn btn-success" id="correction_accept_wordImg">
             <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
             Terminer
         </a>
 
         {# bouton retour accueil #}
-        <a type="button" href="{{ path('iuto_livret_correctionProf1') }}" class="btn btn-danger" id="livret_cancel_create_student">
+        <a type="button" href="{{ path('iuto_livret_correctionProf1') }}" class="btn btn-danger" id="livret_cancel_correction_wordImg">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             Annuler
         </a>

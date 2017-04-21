@@ -1,0 +1,78 @@
+
+.control-label
+{
+    margin: 1em 10em 1em 0em;
+    padding: auto;
+    font-size: 1.5em;
+}
+
+
+#livret_add_img
+{
+    margin-left: 2em;
+    width: 30em;
+    margin-bottom: 2em;
+}
+
+#livret_add_img > a
+{
+    margin-top: auto;
+    margin-left: 2em;
+}
+
+#images
+{
+    margin-left: 2em;
+    width: 55em;
+}
+
+#key_words_project
+{
+    margin-top: 2em;
+    margin-left: 2em;
+    width: 40em;
+}
+
+.add-word
+{
+    margin-top: 0em !important;
+    font-size: 1.2em;
+}
+
+#iuto_livretbundle_mot_submit
+{
+    margin-left: 19em;
+    margin-top: -5.4em !important;
+}
+
+#correction_accept_wordImg
+{
+    margin-left: 4em;
+    margin-top: 3em;
+    margin-bottom: 5em;
+}
+
+#livret_cancel_correction_wordImg
+{
+    margin-left: 30em;
+    margin-top: 3em;
+    margin-bottom: 5em;
+}
+
+.label-info
+{
+    font-size: 1em;
+    margin-left: 1em;
+}
+
+#iuto_livretbundle_mot_mot
+{
+    width: 20em;
+    margin-left: 2em;
+}
+
+#key_words
+{
+    margin-top: -1em;
+    margin-left: 2em;
+}

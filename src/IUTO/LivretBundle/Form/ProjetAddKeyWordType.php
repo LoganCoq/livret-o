@@ -24,7 +24,7 @@ class ProjetAddKeyWordType extends AbstractType
                 ]
             ))
             ->add('submit', SubmitType::class, array(
-                'label' => 'Ajouter un mot clé au projet',
+                'label' => 'Ajouter le mot clé au projet',
                 'attr' => [
                     'class' => 'btn btn-default add-word',
                 ],
