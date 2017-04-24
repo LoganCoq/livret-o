@@ -508,7 +508,7 @@ class TeacherController extends Controller
                 $projet->setMarquantProjet(1);
             }
 
-            $em->persist();
+            $em->persist($projet);
             $em->flush();
 
             return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig',

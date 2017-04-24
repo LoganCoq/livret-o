@@ -3,6 +3,7 @@
 namespace IUTO\LivretBundle\Form;
 
 use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\IUTOLivretBundle;
 use IUTO\LivretBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -51,7 +52,7 @@ class ProjetCompleteType extends AbstractType
                 ],
             ))
             ->add('etudiants', EntityType::class, array(
-                'class' => User::class,
+                'class' => 'IUTOLivretBundle:User',
                 'label' => 'Etudiants',
                 'choice_label' => function (User $etudiant) {
                     return $etudiant->getNomUser() . ' ' . $etudiant->getPrenomUser();

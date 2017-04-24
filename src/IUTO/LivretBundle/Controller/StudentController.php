@@ -82,16 +82,22 @@ class StudentController extends Controller
             $projet->setDateDebut(new \DateTime($dateFormD));
             $projet->setDateFin(new \DateTime($dateFormF));
 
-            // ajout des etudiant au projet et du projet aux étudiant
-            foreach ( $projet->getEtudiants() as $etu ){
-                $etu->addProjetFait($projet);
+            $etusForm = $form['etudiants']->getData();
+            $tutsForm = $form['tuteurs']->getData();
+
+            $userRep = $em->getRepository(User::class);
+
+            foreach ( $etusForm as $etu )
+            {
                 $projet->addEtudiant($etu);
+                $etu->addProjetFait($projet);
                 $em->persist($etu);
             }
-            // ajout des tuteurs au projet et du projet aux tuteurs
-            foreach ( $projet->getTuteurs() as $tut){
-                $tut->addProjetSuivi($projet);
+
+            foreach ( $tutsForm as $tut )
+            {
                 $projet->addTuteur($tut);
+                $tut->addProjetSuivi($projet);
                 $em->persist($tut);
             }
 
@@ -235,19 +241,50 @@ class StudentController extends Controller
         $form->handleRequest($request);
 
         // vérification de la validité du formulaire et si il à été envoyer
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid())
+        {
+
+            $newProjet = new Projet();
+
+            $newProjet->setIntituleProjet($projet->getIntituleProjet());
+            $newProjet->setDescripProjet($projet->getDescripProjet());
+            $newProjet->setBilanProjet($projet->getBilanProjet());
+            $newProjet->setMarquantProjet($projet->getMarquantProjet());
+            $newProjet->setMotsClesProjet($projet->getMotsClesProjet());
+            $newProjet->setClientProjet($projet->getClientProjet());
+            $newProjet->setValiderProjet($projet->getValiderProjet());
+            $newProjet->setNomDpt($projet->getNomDpt());
+            $newProjet->setImages($projet->getImages());
 
             // recupération des dates dans le formulaire
             $dateFormD = $form['dateDebut']->getData();
             $dateFormF = $form['dateFin']->getData();
 
             //affectations des date dans le formulaire au bon format
-            $projet->setDateDebut(new \DateTime($dateFormD));
-            $projet->setDateFin(new \DateTime($dateFormF));
+            $newProjet->setDateDebut(new \DateTime($dateFormD));
+            $newProjet->setDateFin(new \DateTime($dateFormF));
+
+            $etus = $form['etudiants']->getData();
+            $tuts = $form['tuteurs']->getData();
 
 
-            // enregistrement des modifications dans la base de données
-            $em->persist($projet);
+            foreach ( $etus as $etu )
+            {
+                $etu->addProjetFait($newProjet);
+                $newProjet->addEtudiant($etu);
+                $em->persist($etu);
+            }
+
+            foreach ( $tuts as $tut )
+            {
+                $tut->addProjetSuivi($newProjet);
+                $newProjet->addTuteur($tut);
+                $em->persist($tut);
+            }
+
+            // enregistrement des données dans la base
+            $em->persist($newProjet);
+            $em->remove($projet);
             $em->flush();
 
             // affichage d'un message success si le projet à bien été modifié
@@ -262,7 +299,7 @@ class StudentController extends Controller
                         '#',),
                     'routing_statutCAShome' => '/etudiant',
                     'id' => $id,
-                    'projet' => $projet->getId(),
+                    'projet' => $newProjet->getId(),
                 )
             );
         }
