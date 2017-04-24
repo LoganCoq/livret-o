@@ -98,14 +98,50 @@ class TeacherController extends Controller
 //        vérification de la validité du formulaire et de si il à été envoyer
         if ($formModif->isSubmitted() && $formModif->isValid())
         {
+
+            $newProjet = new Projet();
+
+            $newProjet->setIntituleProjet($projet->getIntituleProjet());
+            $newProjet->setDescripProjet($projet->getDescripProjet());
+            $newProjet->setBilanProjet($projet->getBilanProjet());
+            $newProjet->setMarquantProjet($projet->getMarquantProjet());
+            $newProjet->setMotsClesProjet($projet->getMotsClesProjet());
+            $newProjet->setClientProjet($projet->getClientProjet());
+            $newProjet->setValiderProjet($projet->getValiderProjet());
+            $newProjet->setNomDpt($projet->getNomDpt());
+            $newProjet->setImages($projet->getImages());
+
 //            récupération des dates du formulaire
             $dateFormD = $formModif['dateDebut']->getData();
             $dateFormF = $formModif['dateFin']->getData();
+
 //            affectation des valeurs des dates dans le projet
-            $projet->setDateDebut(new \DateTime($dateFormD));
-            $projet->setDateFin(new \DateTime($dateFormF));
-//            enregistrement du projet dans la base
-            $em->persist($projet);
+            $newProjet->setDateDebut(new \DateTime($dateFormD));
+            $newProjet->setDateFin(new \DateTime($dateFormF));
+
+            $etus = $formModif['etudiants']->getData();
+            $tuts = $formModif['tuteurs']->getData();
+
+
+            foreach ( $etus as $etu )
+            {
+                $etu->addProjetFait($newProjet);
+                $newProjet->addEtudiant($etu);
+                $em->persist($etu);
+            }
+
+            foreach ( $tuts as $tut )
+            {
+                $tut->addProjetSuivi($newProjet);
+                $newProjet->addTuteur($tut);
+                $em->persist($tut);
+            }
+
+            // enregistrement des données dans la base
+            $em->persist($newProjet);
+
+//            suppression de l'ancien projet de la base
+            $em->remove($projet);
             $em->flush();
 
 //            redirection vers le formulaire de modification suivant une fois le formulaire envoyer
@@ -114,7 +150,7 @@ class TeacherController extends Controller
                     'statusCAS' => 'professeur',
                     'info' => array('Demandes de correction', 'Projets validés'),
                     'routing_info' => array('/correctionProf1', '/projetsValides1'),
-                    'projet' => $projet->getId(),
+                    'projet' => $newProjet->getId(),
                 )
             );
         }
