@@ -2,6 +2,7 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use Exception;
 use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Image;
 use IUTO\LivretBundle\Entity\Projet;
@@ -526,9 +527,16 @@ class StudentController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $image->setProjet($projet);
-            $em->persist($image);
-            $em->flush();
+            if ( count($projet->getImages()) < 2 )
+            {
+                $image->setProjet($projet);
+                $em->persist($image);
+                $em->flush();
+            }
+            else
+            {
+                throw new Exception('Seulement 2 images peuvent être liées au projet.');
+            }
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_add_word_image', array(
