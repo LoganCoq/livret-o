@@ -79,4 +79,4 @@ l3_cas:
     ca: false                                           # Définition d'un certificat SSL pour le serveur CAS
     handleLogoutRequest: false                           # Activiation du Single Sign Out (défaut: false)
     casLogoutTarget: auth.univ-orleans.fr/cas     # Page de redirection après la déconnexion de l'application
-    force: true
+    force: false
