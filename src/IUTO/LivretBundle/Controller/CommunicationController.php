@@ -96,6 +96,7 @@ class CommunicationController extends Controller
             $formationsSelectionnes = $form["listeFormation"]->getData();
             $departementsSelectionnes = $form["listeDepartements"]->getData();
 
+//            TODO selection des projets selon tout les paramètres
             $qb = $repository->createQueryBuilder('p');
             $qb->where('p.dateDebut > :dateDebut')
                     ->setParameter('dateDebut', $dateDebutSelection)

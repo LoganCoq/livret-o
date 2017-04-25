@@ -13,6 +13,7 @@ use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
 use IUTO\LivretBundle\Form\ProjetCompleteType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
+use IUTO\LivretBundle\Form\DeleteImageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -269,6 +270,11 @@ class StudentController extends Controller
             $newProjet->setNomDpt($projet->getNomDpt());
             $newProjet->setImages($projet->getImages());
 
+            foreach ( $newProjet->getImages() as $oneImg )
+            {
+                $oneImg->setProjet($newProjet);
+            }
+
             // recupération des dates dans le formulaire
             $dateFormD = $form['dateDebut']->getData();
             $dateFormF = $form['dateFin']->getData();
@@ -410,8 +416,7 @@ class StudentController extends Controller
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
-//        récupération des images du projet
-        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+
 //        récupération des mots clés du projet
         $motsCles = $projet->getMotsClesProjet();
 
@@ -438,6 +443,9 @@ class StudentController extends Controller
         //creation du formulaire pour la section de chat/commentaire
         $formCom = $this->createForm(CommentaireCreateType::class, $com);
         $formCom->handleRequest($request);
+
+//        récupération des images du projet
+        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
 
         // vérification de la validité du formulaire si celui-ci à été envoyer
         if ($formCom->isSubmitted() && $formCom->isValid()) {
@@ -508,6 +516,8 @@ class StudentController extends Controller
                 'commentaires' => $commentaires,
             ));
         }
+
+
         return $this->render('IUTOLivretBundle:Student:addWordImageProject.html.twig', array(
             'formCom' => $formCom->createView(),
             'formMot' => $formMot->createView(),
