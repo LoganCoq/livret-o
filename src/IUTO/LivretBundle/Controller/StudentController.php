@@ -18,7 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StudentController extends Controller
 {
-    // controlleur pour le home de l'étudiant connecté
+//    controlleur pour le home de l'étudiant connecté
+//    arguments :
+//
     public function studenthomeAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -46,6 +48,9 @@ class StudentController extends Controller
         ));
     }
 
+//    controlleur pour la gestion de la création d'un projet par un étudiant
+//    arguments :
+//        request : objet pour gérer les requettes des formulaires
     public function createProjectAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -132,6 +137,10 @@ class StudentController extends Controller
         );
     }
 
+//    controlleur pour la gestion de l'ajout de contenu lors de la création d'un projet
+//    arguments :
+//        request : objet pour gérer les requettes des formulaires
+//        projet  : projet sur le quel on va effectuer des ajouts d'information ( celui créer dans createProject )
     public function contenuProjectAction(Request $request, Projet $projet)
     {
         //recuperation des informations sur l'utilisateur
@@ -182,8 +191,10 @@ class StudentController extends Controller
             );
     }
 
-//    controller pour l'affichage des projets d'un étudiant
-    public function chooseProjectAction(Request $request)
+//    controller pour l'affichage des projets d'un étudiant ( validés ou non )
+//    arguments :
+//
+    public function chooseProjectAction()
     {
         //récupération des informations sur l'utilisateur
         $em = $this->getDoctrine()->getManager();
@@ -223,6 +234,9 @@ class StudentController extends Controller
     }
 
 //    controlleur pour l'affichage du formulaire de correction du projet
+//    arguments :
+//        request : objet pour gérer les requettes des formulaires
+//        projet  : projet sur le quel on va effectuer des modification
     public function completeProjectAction(Request $request, Projet $projet)
     {
         //récupération des informations de l'utilisateur connecter
@@ -386,6 +400,10 @@ class StudentController extends Controller
         );
     }
 
+//    controlleur pour l'ajout de mots clés et d'image à un projet lors de la correction
+//    arguments :
+//        request : objet pour gérer les requettes des formulaires
+//        projet  : projet sur le quel on va effectuer des modification
     public function addWordImageAction(Request $request, Projet $projet)
     {
         //récupération des informations de l'utilisateur connecter
@@ -507,6 +525,10 @@ class StudentController extends Controller
 
     }
 
+//    controlleur pour l'ajout d'une nouvelle image au projet
+//    arguments :
+//        request : objet pour gérer les requettes des formulaires
+//        projet  : projet sur le quel on va ajouter une image
     public function addImageAction(Request $request, Projet $projet)
     {
         $em = $this->getDoctrine()->getManager();
@@ -568,7 +590,9 @@ class StudentController extends Controller
         );
     }
 
-    // vue d'apres ajout d'information à un projet pour voir le pdf ou le télécharger
+//    controlleur pour la vue d'apres ajout d'information à un projet pour voir le pdf ou le télécharger
+//    arguments :
+//        projet  : projet modifié précedemment
     public function confirmCompleteProjectAction(Projet $projet)
     {
         // récupération des informations de l'utilisateur connecter
@@ -590,8 +614,10 @@ class StudentController extends Controller
         );
     }
 
-    // controlleur pour voir le pdf d'un projet validé.
-    public function viewFinishedProjectAction(Request $request, Projet $projet){
+//    controlleur pour voir le pdf d'un projet validé ou pour le télécharger.
+//    arguments :
+//        projet  : projet validé
+    public function viewFinishedProjectAction(Projet $projet){
 
         // récupération des inforamtions dur l'utilsateur connecté
         $manager = $this->getDoctrine()->getManager();
