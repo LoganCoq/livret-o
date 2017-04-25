@@ -91,8 +91,6 @@ class StudentController extends Controller
             $etusForm = $form['etudiants']->getData();
             $tutsForm = $form['tuteurs']->getData();
 
-            $userRep = $em->getRepository(User::class);
-
             foreach ( $etusForm as $etu )
             {
                 $projet->addEtudiant($etu);
@@ -487,11 +485,11 @@ class StudentController extends Controller
             ));
         }
 
-        if ($formMot->isSubmitted() && $formMot->isValid()) {
+        if ($formMot->isSubmitted() && $formMot->isValid())
+        {
             $newWord = $formMot['mot']->getData();
             $projet->addMotCleProjet($newWord);
             $motsCles = $projet->getMotsClesProjet();
-
 
             $em->persist($projet);
             $em->flush();
@@ -538,9 +536,9 @@ class StudentController extends Controller
 
 //        récupération des images du projet
         $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+
 //        récupération des mots clés du projet
         $motsCles = $projet->getMotsClesProjet();
-
 
         $image = new Image();
 
