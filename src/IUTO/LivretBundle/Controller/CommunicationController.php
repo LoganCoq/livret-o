@@ -33,11 +33,11 @@ class CommunicationController extends Controller
 
         return $this->render('IUTOLivretBundle:Communication:communicationhome.html.twig', array(
             'statutCAS' => 'service de communication',
-            'info' => array('Générer livrets', 'Corriger des projets', 'Créer un édito'),
-            'options' => array('Générer des livrets au format PDF', 'Corriger des projets', 'Créer l\'édito du directeur'),
-            'routing_info' => array('/communication/generation', '/communication/selection', '#'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+            'routing_info' => array('/communication/generation', '/communication/chooseLivret', '/communication/selection', '#'),
             'routing_statutCAShome' => '/communication',
-            'routing_options' => array('/communication/generation', '/communication/selection', '/communication/selectionlivret'),
+            'options' => array('Générer des livrets au format PDF', 'Voir les livrets', 'Corriger des projets', 'Créer l\'édito du directeur'),
+            'routing_options' => array('/communication/generation', '/communication/chooseLivret', '/communication/selection', '/communication/selectionlivret'),
             'user' => $user,
             )
         );
@@ -66,10 +66,10 @@ class CommunicationController extends Controller
         }
 
         return $this->render('IUTOLivretBundle:Communication:communicationedito.html.twig', array('statutCAS' => 'service de communication',
-            'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+            'routing_info' => array('/communication/generation', '/communication/chooseLivret', '/communication/selection', '#'),
             'options' => array('Visualiser'),
             'routing_statutCAShome' => '/communication',
-            'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#'),
             'routing_options' => array('/communication/editoprevisualiser'),
             'form' => $form->createView()));
     }
@@ -122,9 +122,9 @@ class CommunicationController extends Controller
 
             return $this->redirectToRoute('iuto_livret_communicationChoixLivret', array(
                     'statutCAS' => 'service de communication',
-                    'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+                    'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+                    'routing_info' => array('/communication/generation', '/communication/chooseLivret', '/communication/selection', '#'),
                     'routing_statutCAShome' => '/communication',
-                    'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#'),
                 )
             );
         }
@@ -194,9 +194,10 @@ class CommunicationController extends Controller
          return $this->render('IUTOLivretBundle:Communication:communicationgenerationlivret.html.twig', array(
              'form' => $form->createView(),
              'statutCAS' => 'service de communication',
-             'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+             'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+             'routing_info' => array('/communication/generation', '/communication/chooseLivret', '/communication/selection', '#'),
              'routing_statutCAShome' => '/communication',
-             'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#')));
+         ));
     }
 
     public function communicationChooseLivretAction()
@@ -212,12 +213,10 @@ class CommunicationController extends Controller
 
         // affichage de la page de selection du projet à modifier ou prévisualiser
         return $this->render('IUTOLivretBundle:Communication:communicationChooseLivret.html.twig',
-            array('statutCAS' => 'étudiant',
-                'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                'routing_info' => array('/create/project',
-                    '/choose/project',
-                    '#',),
-                'routing_statutCAShome' => '/etudiant',
+            array('statutCAS' => 'communication',
+                'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+                'routing_info' => array('/communication/generation', '/communication/chooseLivret', '/communication/selection', '#'),
+                'routing_statutCAShome' => '/communication',
                 'livrets' => $livrets,
             )
         );
@@ -226,9 +225,9 @@ class CommunicationController extends Controller
     public function communicationvalidationCRAction()
     {
         return $this->render('IUTOLivretBundle:Communication:communicationvalidationCR.html.twig', array('statutCAS' => 'service de communication',
-            'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+            'routing_info' => array('/communication/generation', '/communication/chooseLivret', '/communication/selection', '#'),
             'options' => array('Apercu du compte rendu', 'Renvoyer la correction aux élèves', 'Valider', 'Retour'),
-            'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#'),
             'routing_statutCAShome' => '/communication',
             'routing_options' => array('/generate/1', '#', '/communication/validation', 'communication/selection'))); //"generate/1" a changer en id
     }
@@ -237,9 +236,9 @@ class CommunicationController extends Controller
     {
 
         return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array('statutCAS' => 'service de communication',
-            'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+            'routing_info' => array('/communication/generation', '/communication/chooseLivret', '/communication/selection', '#'),
             'options' => array('Valider', 'Retour'),
-            'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#'),
             'routing_statutCAShome' => '/communication',
             'routing_options' => array('/communication/validation', '/communication'),
         ));
@@ -257,9 +256,9 @@ class CommunicationController extends Controller
 
 
         return $this->render('IUTOLivretBundle:Communication:communicationChoixValide.html.twig', array('statutCAS' => 'service de communication',
-            'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+            'routing_info' => array('/communication/generation', '/communication/chooseLivret', '/communication/selection', '#'),
             'options' => array('Valider', 'Retour'),
-            'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#'),
             'routing_statutCAShome' => '/communication',
             'routing_options' => array('/generate/1', '/communication'),
             'dpt' => $dpt,
@@ -278,9 +277,9 @@ class CommunicationController extends Controller
 
 
         return $this->render('IUTOLivretBundle:Communication:communicationChoixNValide.html.twig', array('statutCAS' => 'service de communication',
-            'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+            'routing_info' => array('/communication/generation', '/communication/chooseLivret', '/communication/selection', '#'),
             'options' => array('Valider', 'Retour'),
-            'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#'),
             'routing_statutCAShome' => '/communication',
             'routing_options' => array('/generate/1', '/communication'),
             'dpt' => $dpt,
@@ -321,8 +320,8 @@ class CommunicationController extends Controller
             }
 
         return $this->render('IUTOLivretBundle:Communication:communicationSelectionLivret.html.twig', array('statutCAS' => 'service de communication',
-                'info' => array('Générer livrets', 'Créer un édito', 'Corriger des projets'),
-                'routing_info' => array('/communication/generation', '/communication/selectionlivret', '#'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+            'routing_info' => array('/communication/generation', '/communication/chooseLivret', '/communication/selection', '#'),
                 'routing_statutCAShome' => '/communication',
             'form' => $form->createView(),
                 'routing_options' => array('/communication/edito', '/communication')));
