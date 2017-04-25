@@ -23,6 +23,9 @@ use Symfony\Component\HttpFoundation\Request;
 class TeacherController extends Controller
 {
 //    Controlleur pour l'affichage du home de teacher
+//    arguments :
+//        request : objet pour gérer les requettes des formulaires
+//        projet  : projet sur le quel on va effectuer des modification
     public function teacherhomeAction()
     {
         // recupération de l'utilisateur connecté
@@ -45,6 +48,9 @@ class TeacherController extends Controller
     }
 
 //    controlleur pour l'affichage des projets du professeur
+//    arguments :
+//        request : objet pour gérer les requettes des formulaires
+//        projet  : projet sur le quel on va effectuer des modification
     public function correctionTeacher1Action()
     {
         // recupération de l'utilisateur connecté
@@ -80,6 +86,9 @@ class TeacherController extends Controller
     }
 
 //    controlleur pour la correction d'un projet
+//    arguments :
+//        request : objet pour gérer les requettes des formulaires
+//        projet  : projet sur le quel on va effectuer des modification
     public function correctionTeacher2Action(Request $request, Projet $projet)
     {
         // recupération de l'utilisateur connecté
@@ -247,6 +256,9 @@ class TeacherController extends Controller
     }
 
 //    controlleur pour la seconde partie de la correction d'un projet
+//    arguments :
+//        request : objet pour gérer les requettes des formulaires
+//        projet  : projet sur le quel on va effectuer des modification
     public function correctionTeacher3Action(Request $request, Projet $projet)
     {
         // recupération de l'utilisateur connecté
@@ -364,6 +376,10 @@ class TeacherController extends Controller
             ));
     }
 
+//    controlleur pour la gestion de l'ajout d'images et de mots clés
+//    arguments :
+//        request : objet pour gérer les requettes des formulaires
+//        projet  : projet sur le quel on va effectuer des modification
     public function correctionTeacherWordImageAction(Request $request, Projet $projet)
     {
         // recupération de l'utilisateur connecté
@@ -488,9 +504,10 @@ class TeacherController extends Controller
         ));
     }
 
-
-
 //    controlleur pour la page finale de  modification d'un projet
+//    arguments :
+//        request : objet pour gérer les requettes des formulaires
+//        projet  : projet que l'on va pouvoir afficher, télécharger, valider ou "marquer"
     public function correctionTeacher4Action(Request $request, Projet $projet)
     {
         // recupération de l'utilisateur connecté
@@ -642,6 +659,10 @@ class TeacherController extends Controller
         );
     }
 
+//    controlleur pour la gestion des ajouts d'images
+//    arguments :
+//        request : objet pour gérer les requettes des formulaires
+//        projet  : projet sur le quel on va ajouter (ou non) une image
     public function addImageCorrectionAction(Request $request, Projet $projet)
     {
         $em = $this->getDoctrine()->getManager();
@@ -698,8 +719,10 @@ class TeacherController extends Controller
         );
     }
 
-
-    public function projetsValidesTeacher1Action(Request $request)
+//    controlleur pour l'affichage des projets qui ont été validé par un professeur
+//    arguments :
+//
+    public function projetsValidesTeacher1Action()
     {
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
