@@ -113,19 +113,24 @@ class PDFGeneratorController extends Controller
         return $html2pdf->downloadPdf($template, "projetPDF");
     }
 
-    public function generatorManyAction($projets)
+    public function generatorManyAction($idLivret)
     {
-        $repository = $this
+        $repLivret = $this
             ->getDoctrine()
             ->getManager()
-            ->getRepository('IUTOLivretBundle:Projet');
+            ->getRepository('IUTOLivretBundle:Livret');
+
+        $repProjet = $this->getDoctrine()->getManager()->getRepository('IUTOLivretBundle:Projet');
+
+        $livret = $repLivret->findOneById($idLivret);
 
         $html2pdf = $this->get('app.html2pdf');
         $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
 
-        foreach ( $projets as $id)
+        $projets = $livret->getProjets();
+
+        foreach ( $projets as $projet)
         {
-            $projet = $repository->findOneById($id);
 
             $nomP = $projet->getIntituleProjet();
             $descripP = $projet->getDescripProjet();
@@ -164,10 +169,10 @@ class PDFGeneratorController extends Controller
                     'image2' => $image2,
                 ]);
 
-	        $html2pdf->writeHTML($template);
+	        $html2pdf->write($template);
         }
 
-        $html2pdf->Output("livret.pdf");
+        $html2pdf->getOutputPdf("livret");
     }
 }
 
