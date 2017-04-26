@@ -55,7 +55,7 @@
     <div class="div_confirm_complete">
 
 
-        <a href="/generate/{{ projet.id }}" class="btn btn-info apercu_confirm">
+        <a href="/generate/{{ projetO.id }}" class="btn btn-info apercu_confirm">
             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
             Aperçu du compte rendu
         </a>
@@ -65,7 +65,7 @@
             Renvoyer en correction
         </a>
 
-        <a href="{{ path('iuto_livret_download', {'id': projet.id}) }}" class="btn btn-default download_confirm" id="livreto_download_finished">
+        <a href="{{ path('iuto_livret_download', {'id': projetO.id}) }}" class="btn btn-default download_confirm" id="livreto_download_finished">
             {#icone telechargement#}
             <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
             Enregistrer sur l'ordinateur
@@ -74,8 +74,8 @@
 
         <div class="formulaire">
             <div id="marquant">
-                {% form_theme formSetMarquant 'bootstrap_3_layout.html.twig' %}
-                {% if not projet.marquantProjet %}
+                {% if not projetO.marquantProjet %}
+                    {% form_theme formSetMarquant 'bootstrap_3_layout.html.twig' %}
                     {{ form(formSetMarquant) }}
                 {% else %}
                     {% form_theme formUnSetMarquant 'bootstrap_3_layout.html.twig' %}
@@ -84,8 +84,8 @@
             </div>
 
             <div id="valide">
-                {% form_theme formSetValide 'bootstrap_3_layout.html.twig' %}
-                {% if not projet.validerProjet %}
+                {% if not projetO.validerProjet %}
+                    {% form_theme formSetValide 'bootstrap_3_layout.html.twig' %}
                     {{ form(formSetValide) }}
                 {% else %}
                     {% form_theme formUnSetValide 'bootstrap_3_layout.html.twig' %}
@@ -100,12 +100,12 @@
 {% block javascripts %}
     {{ parent() }}
 
-    <script type="text/javascript">
-        $subBtn = document.getElementById('iuto_livretbundle_projet_submit');
-        $glyph = document.createElement('span');
-        $glyph.className = 'glyphicon glyphicon-ok';
-        $subBtn.appendChild($glyph);
-    </script>
+    {#<script type="text/javascript">#}
+        {#$subBtn = document.getElementById('iuto_livretbundle_projet_submit');#}
+        {#$glyph = document.createElement('span');#}
+        {#$glyph.className = 'glyphicon glyphicon-ok';#}
+        {#$subBtn.appendChild($glyph);#}
+    {#</script>#}
 
 {% endblock %}
 

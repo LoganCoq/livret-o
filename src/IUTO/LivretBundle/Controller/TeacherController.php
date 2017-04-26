@@ -542,13 +542,13 @@ class TeacherController extends Controller
             $em->flush();
 
 //            rendu du home de teacher
-            return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
+            return $this->redirectToRoute('iuto_livret_correctionProf4',
                 array(
                     'formSetValide' => $formSetValide->createView(),
                     'formSetMarquant' => $formSetMarquant->createView(),
                     'formUnSetValide' => $formUnSetValide->createView(),
                     'formUnSetMarquant' => $formUnSetMarquant->createView(),
-                    'id' => $id,
+                    'projet' => $projet->getId(),
                     'statutCAS' => 'professeur',
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
                     'routing_statutCAShome' => '/professeur',
@@ -557,27 +557,27 @@ class TeacherController extends Controller
                     'routing_options' => array('/correctionProf1', '/projetsValides1'),
                     'professeur' => $professeur,
                     'pagePrec' => '/'.$idProjet.'/correctionProf3',
-                    'projet' => $projet,
+                    'projetO' => $projet,
                 ));
         }
 
         if ($formUnSetValide->isSubmitted() && $formUnSetValide->isValid())
         {
 //            validation du projet si le formaulaire est envoyé
-            $projet->setValiderProjet(false);
+            $projet->setValiderProjet(0);
 
 //            enregistrement des données dans la base
             $em->persist($projet);
             $em->flush();
 
 //            rendu du home de teacher
-            return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
+            return $this->redirectToRoute('iuto_livret_correctionProf4',
                 array(
                     'formSetValide' => $formSetValide->createView(),
                     'formSetMarquant' => $formSetMarquant->createView(),
                     'formUnSetValide' => $formUnSetValide->createView(),
                     'formUnSetMarquant' => $formUnSetMarquant->createView(),
-                    'id' => $id,
+                    'projet' => $projet->getId(),
                     'statutCAS' => 'professeur',
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
                     'routing_statutCAShome' => '/professeur',
@@ -586,7 +586,7 @@ class TeacherController extends Controller
                     'routing_options' => array('/correctionProf1', '/projetsValides1'),
                     'professeur' => $professeur,
                     'pagePrec' => '/'.$idProjet.'/correctionProf3',
-                    'projet' => $projet,
+                    'projetO' => $projet,
                 ));
         }
 
@@ -597,13 +597,13 @@ class TeacherController extends Controller
             $em->persist($projet);
             $em->flush();
 
-            return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
+            return $this->redirectToRoute('iuto_livret_correctionProf4',
                 array(
                     'formSetValide' => $formSetValide->createView(),
                     'formSetMarquant' => $formSetMarquant->createView(),
                     'formUnSetValide' => $formUnSetValide->createView(),
                     'formUnSetMarquant' => $formUnSetMarquant->createView(),
-                    'id' => $id,
+                    'projet' => $projet->getId(),
                     'statutCAS' => 'professeur',
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
                     'routing_statutCAShome' => '/professeur',
@@ -612,7 +612,7 @@ class TeacherController extends Controller
                     'routing_options' => array('/correctionProf1', '/projetsValides1'),
                     'professeur' => $professeur,
                     'pagePrec' => '/'.$idProjet.'/correctionProf3',
-                    'projet' => $projet,
+                    'projetO' => $projet,
                 ));
         }
         if ($formUnSetMarquant->isSubmitted() && $formUnSetMarquant->isValid())
@@ -622,13 +622,13 @@ class TeacherController extends Controller
             $em->persist($projet);
             $em->flush();
 
-            return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
+            return $this->redirectToRoute('iuto_livret_correctionProf4',
                 array(
                     'formSetValide' => $formSetValide->createView(),
                     'formSetMarquant' => $formSetMarquant->createView(),
                     'formUnSetValide' => $formUnSetValide->createView(),
                     'formUnSetMarquant' => $formUnSetMarquant->createView(),
-                    'id' => $id,
+                    'projet' => $projet->getId(),
                     'statutCAS' => 'professeur',
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
                     'routing_statutCAShome' => '/professeur',
@@ -637,7 +637,7 @@ class TeacherController extends Controller
                     'routing_options' => array('/correctionProf1', '/projetsValides1'),
                     'professeur' => $professeur,
                     'pagePrec' => '/'.$idProjet.'/correctionProf3',
-                    'projet' => $projet,
+                    'projetO' => $projet,
                 ));
         }
 
@@ -648,13 +648,13 @@ class TeacherController extends Controller
                 'formSetMarquant' => $formSetMarquant->createView(),
                 'formUnSetValide' => $formUnSetValide->createView(),
                 'formUnSetMarquant' => $formUnSetMarquant->createView(),
-                'id' => $id,
+                'projet' => $id,
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/correctionProf1', '/projetsValides1'),
                 'pagePrec' => '/'.$idProjet.'/correctionProf3',
-                'projet' => $projet,
+                'projetO' => $projet,
                 )
         );
     }
