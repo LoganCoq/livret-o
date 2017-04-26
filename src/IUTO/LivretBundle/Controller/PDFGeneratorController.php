@@ -18,6 +18,7 @@ class PDFGeneratorController extends Controller
 
         $nomP = $projet->getIntituleProjet();
         $descripP = $projet->getDescripProjet();
+//        $descripP = preg_replace("/\r\n|\r|\n/","\n",$descripP);
         $bilanP = $projet->getBilanProjet();
         $clientP = $projet->getClientProjet();
         $etudiants = $projet->getEtudiants();
@@ -71,6 +72,7 @@ class PDFGeneratorController extends Controller
 
         $nomP = $projet->getIntituleProjet();
         $descripP = $projet->getDescripProjet();
+//        $descripP = preg_replace("/\r\n|\r|\n/","<br/>\n",$descripP);
         $bilanP = $projet->getBilanProjet();
         $clientP = $projet->getClientProjet();
         $etudiants = $projet->getEtudiants();
@@ -173,6 +175,33 @@ class PDFGeneratorController extends Controller
         }
 
         $html2pdf->getOutputPdf("livret");
+    }
+
+    function smart_wordwrap($string, $width = 70, $break = "<br>") {
+// split on problem words over the line length
+        $pattern = sprintf('/([^ ]{%d,})/', $width);
+        $output = '';
+        $words = preg_split($pattern, $string, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
+
+        foreach ($words as $word) {
+            // normal behaviour, rebuild the string
+            if (false !== strpos($word, ' ')) {
+                $output .= $word;
+            } else {
+                // work out how many characters would be on the current line
+                $wrapped = explode($break, wordwrap($output, $width, $break));
+                $count = $width - (strlen(end($wrapped)) % $width);
+
+                // fill the current line and add a break
+                $output .= substr($word, 0, $count) . $break;
+
+                // wrap any remaining characters from the problem word
+                $output .= wordwrap(substr($word, $count), $width, $break, true);
+            }
+        }
+
+        // wrap the final output
+        return wordwrap($output, $width, $break);
     }
 }
 

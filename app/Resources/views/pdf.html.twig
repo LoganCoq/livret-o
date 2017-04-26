@@ -1,163 +1,168 @@
 <page>
-<head>
-    <meta charset="utf-8">
-    <style>
-        .entete_projet {
-            text-align: center;
-            margin-bottom: 15px;
-        }
+    <head>
+        <meta charset="utf-8">
+        <style>
+            .entete_projet {
+                text-align: center;
+                margin-bottom: 15px;
+            }
 
-        .titre {
-            font-size: 45px;
-            white-space: nowrap;
-            margin-bottom: 10px;
-        }
+            .titre {
+                font-size: 45px;
+                white-space: nowrap;
+                margin-bottom: 10px;
+            }
 
-        .client {
-            margin-top: 0;
-        }
+            .client {
+                margin-top: 0;
+            }
 
-        .titre_info {
-            margin-bottom: 0;
-        }
+            .titre_info {
+                margin-bottom: 0;
+            }
 
-        .presentation_projet {
-            margin-bottom: 15px;
-        }
+            .presentation_projet {
+                margin-bottom: 15px;
+            }
 
-        table {
-            width: 100%;
-        }
+            table {
+                width: 100%;
+            }
 
-        .fifty-percent {
-            width: 50%;
-        }
-    </style>
-    <title>
-        {{ nom }}
-    </title>
-</head>
-<body>
-<table>
-    <tr>
-        <td class="fifty-percent">
-            {% if departement == 'Informatique' %}
-                <img src=".{{ asset('assets/images/Info.jpg') }}" alt="Logo IUT" style="max-height: 125px"/>
-            {% else %}
-                <img src=".{{ asset('assets/images/' ~ departement ~ '.jpg') }}" alt="Logo IUT"
-                     style="max-height: 125px"/>
-            {% endif %}
-        </td>
-        <td class="fifty-percent" style="text-align: right; vertical-align: top;">
-            {% if etudiants is not empty %}
-                <p>
-                    {% if etudiants|length > 1 %}
-                        Étudiants
+            .fifty-percent {
+                width: 50%;
+            }
+            p{
+                white-space:pre-wrap;
+            }
+
+
+        </style>
+        <title>
+            {{ nom }}
+        </title>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td class="fifty-percent">
+                    {% if departement == 'Informatique' %}
+                        <img src=".{{ asset('assets/images/Info.jpg') }}" alt="Logo IUT" style="max-height: 125px"/>
                     {% else %}
-                        Étudiant
+                        <img src=".{{ asset('assets/images/' ~ departement ~ '.jpg') }}" alt="Logo IUT"
+                             style="max-height: 125px"/>
                     {% endif %}
-                    <br/>
-                    {% for etudiant in etudiants %}
-                        {{ etudiant.prenomUser }} {{ etudiant.nomUser }}<br/>
-                    {% endfor %}
-                </p>
-            {% endif %}
-        </td>
-    </tr>
-</table>
-
-<table>
-    <tr>
-        <td>
-            <div class="entete_projet">
-                <h1 class="titre"> {{ nom }} </h1>
-                <p class="client"> À destination de {{ client }} </p>
-            </div>
-        </td>
-    </tr>
-</table>
-<table>
-    <tr style="width: 100%;">
-        <td style="width: 70%; text-align: justify">
-            <div class="presentation_projet">
-                <h4 class="titre_info"> Description du projet </h4>
-                <p> {{ descrip }} </p>
-            </div>
-        </td>
-        <td style="width:30%; height: 10%">
-            <div class="image" style="text-align: center">
-                {% if image1 != null %}
-                    <img src=".{{ asset('images/projects/' ~ image1.imageName) }}" alt="Image 1" style="max-height: 200px; max-width: 200px"/>
-                {% else %}
-                    <p style="text-align: center">Image 1</p>
-                {% endif %}
-            </div>
-        </td>
-    </tr>
-</table>
-<table>
-    <tr>
-        <td style="width:30%" >
-            <div class="image" style="text-align: center">
-                {% if image2 != null %}
-                    <img src=".{{ asset('images/projects/' ~ image2.imageName) }}" alt="Image 2" style="max-height: 200px; max-width: 200px"/>
-                {% else %}
-                    <p style="text-align: center">Image 2</p>
-                {% endif %}
-            </div>
-        </td>
-        <td style="width: 70%; text-align: justify;">
-            <div class="bilan_projet">
-                <h4 class="titre_info"> Bilan du projet </h4>
-                <p> {{ bilan }} </p>
-            </div>
-        </td>
-    </tr>
-</table>
-
-
-<page_footer>
-    <table>
-        <tr>
-            <td class="fifty-percent" style="vertical-align: bottom;">
-                {% if tuteurs is not empty %}
-                    <p>
-                        {% if tuteurs|length > 1 %}
-                            Encadrants :
-                        {% else %}
-                            Encadrant :
-                        {% endif %}
-                        {% for tuteur in tuteurs %}
-                            {% if tuteur == tuteurs|last %}
-                                {{ tuteur.prenomUser }} {{ tuteur.nomUser }}
+                </td>
+                <td class="fifty-percent" style="text-align: right; vertical-align: top;">
+                    {% if etudiants is not empty %}
+                        <p>
+                            {% if etudiants|length > 1 %}
+                                Étudiants
                             {% else %}
-                                {{ tuteur.prenomUser }} {{ tuteur.nomUser }},
+                                Étudiant
                             {% endif %}
-                        {% endfor %}
-                    </p>
-                {% endif %}
-            </td>
-            <td class="fifty-percent" style="text-align: right; vertical-align: bottom;">
-                <p>
-                    Département
-                    {% if departement == "Informatique" or departement == "Chimie" %}
-                        {{ departement|lower }},
-                    {% else %}
-                        {{ departement }},
+                            <br/>
+                            {% for etudiant in etudiants %}
+                                {{ etudiant.prenomUser }} {{ etudiant.nomUser }}<br/>
+                            {% endfor %}
+                        </p>
                     {% endif %}
-                    {% if formation == "1A" %}
-                        Première année
-                    {% elseif formation == "2A" %}
-                        Deuxième année
-                    {% elseif formation == "LP" %}
-                        Licence professionnelle
-                    {% else %}
-                        Année spéciale
-                    {% endif %}
-                </p>
-            </td>
-        </tr>
-    </table>
-</page_footer>
-</body>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td>
+                    <div class="entete_projet">
+                        <h1 class="titre"> {{ nom }} </h1>
+                        <p class="client"> À destination de {{ client }} </p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr style="width: 100%;">
+                <td style="width: 70%; text-align: justify">
+                    <div class="presentation_projet">
+                        <h4 class="titre_info"> Description du projet </h4>
+                        <p> {{ descrip }} </p>
+                    </div>
+                </td>
+                <td style="width:30%; height: 10%">
+                    <div class="image" style="text-align: center">
+                        {% if image1 != null %}
+                            <img src=".{{ asset('images/projects/' ~ image1.imageName) }}" alt="Image 1" style="max-height: 200px; max-width: 200px"/>
+                        {% else %}
+                            <p style="text-align: center">Image 1</p>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td style="width:30%" >
+                    <div class="image" style="text-align: center">
+                        {% if image2 != null %}
+                            <img src=".{{ asset('images/projects/' ~ image2.imageName) }}" alt="Image 2" style="max-height: 200px; max-width: 200px"/>
+                        {% else %}
+                            <p style="text-align: center">Image 2</p>
+                        {% endif %}
+                    </div>
+                </td>
+                <td style="width: 70%; text-align: justify;">
+                    <div class="bilan_projet">
+                        <h4 class="titre_info"> Bilan du projet </h4>
+                        <p> {{ bilan }} </p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+        <page_footer>
+            <table>
+                <tr>
+                    <td class="fifty-percent" style="vertical-align: bottom;">
+                        {% if tuteurs is not empty %}
+                            <p>
+                                {% if tuteurs|length > 1 %}
+                                    Encadrants :
+                                {% else %}
+                                    Encadrant :
+                                {% endif %}
+                                {% for tuteur in tuteurs %}
+                                    {% if tuteur == tuteurs|last %}
+                                        {{ tuteur.prenomUser }} {{ tuteur.nomUser }}
+                                    {% else %}
+                                        {{ tuteur.prenomUser }} {{ tuteur.nomUser }},
+                                    {% endif %}
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+                    </td>
+                    <td class="fifty-percent" style="text-align: right; vertical-align: bottom;">
+                        <p>
+                            Département
+                            {% if departement == "Informatique" or departement == "Chimie" %}
+                                {{ departement|lower }},
+                            {% else %}
+                                {{ departement }},
+                            {% endif %}
+                            {% if formation == "1A" %}
+                                Première année
+                            {% elseif formation == "2A" %}
+                                Deuxième année
+                            {% elseif formation == "LP" %}
+                                Licence professionnelle
+                            {% else %}
+                                Année spéciale
+                            {% endif %}
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </page_footer>
+    </body>
 </page>
