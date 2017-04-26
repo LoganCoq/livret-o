@@ -129,6 +129,12 @@ class PDFGeneratorController extends Controller
         $html2pdf = $this->get('app.html2pdf');
         $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
 
+        $template = $this->renderView('::edito.html.twig',
+            ['texte' => $livret->getEditoLivret(),
+            ]);
+
+        $html2pdf->write($template);
+
         $projets = $livret->getProjets();
 
         foreach ( $projets as $projet)
