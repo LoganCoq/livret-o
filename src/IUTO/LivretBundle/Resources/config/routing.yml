@@ -216,7 +216,11 @@ iuto_livret_login:
 
 iuto_livret_download:
     path: /download/{id}
-    defaults: { _controller: IUTOLivretBundle:PDFGenerator:download}
+    defaults: { _controller: IUTOLivretBundle:PDFGenerator:download }
+
+iuto_livret_download_livret:
+    path: /download/livret/{id}
+    defaults: { _controller: IUTOLivretBundle:PDFGenerator:downloadLivret }
 
 iuto_livret_livretgenerator:
     path: /generate/livret/{idLivret}
