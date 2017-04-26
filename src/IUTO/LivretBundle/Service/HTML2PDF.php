@@ -36,4 +36,9 @@ class HTML2PDF
     {
         return $this->pdf->Output($name.'.pdf');
     }
+
+    public function getDownloadPdf($name)
+    {
+        return $this->pdf->Output($name.'.pdf', 'D');
+    }
 }
