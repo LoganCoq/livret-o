@@ -186,7 +186,7 @@ class PDFGeneratorController extends Controller
 
         $repProjet = $this->getDoctrine()->getManager()->getRepository('IUTOLivretBundle:Projet');
 
-        $livret = $repLivret->findOneById($idLivret);
+        $livret = $repLivret->findOneById($id);
 
         $html2pdf = $this->get('app.html2pdf');
         $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
