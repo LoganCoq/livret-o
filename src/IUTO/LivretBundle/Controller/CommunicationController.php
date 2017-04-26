@@ -93,7 +93,8 @@ class CommunicationController extends Controller
             $manager->persist($newLivret);
             $manager->flush();
 
-            return $this->redirectToRoute( 'iuto_livret_communicationhomepage', array(
+            return $this->redirectToRoute( 'iuto_livret_communication_livret_project_choice', array(
+                    'livretId' => $newLivret->getId(),
                     'statutCAS' => 'service de communication',
                     'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
                     'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
@@ -114,21 +115,14 @@ class CommunicationController extends Controller
         );
     }
 
-    public function communicationgenerationlivretAction(Request $request2)
+    public function communicationgenerationlivretAction(Request $request, Livret $livretId)
     {
-        $form = $this->createForm(LivretCreateType::class);
-        $form->handleRequest($request2);
-        $manager = $this
-            ->getDoctrine()
-            ->getManager();
-        $repository = $manager
-            ->getRepository('IUTOLivretBundle:Projet');
 
-        $livret = new Livret();
-        $livret->setIntituleLivret("livret trop trop cool");
-        $livret->setDateCreationLivret(new \DateTime());
-        $livret->setEditoLivret("coucou");
-        //creation d'un nouveau livret pour la bd
+        $manager = $this->getDoctrine()->getManager();
+        $repositoryProjet = $manager->getRepository('IUTOLivretBundle:Projet');
+
+        $form = $this->createForm(LivretCreateType::class);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $dateDebutSelection = $form["dateDebut"]->getData();
@@ -136,8 +130,8 @@ class CommunicationController extends Controller
             $formationsSelectionnes = $form["listeFormation"]->getData();
             $departementsSelectionnes = $form["listeDepartements"]->getData();
 
-//            TODO selection des projets selon tout les paramètres
-            $qb = $repository->createQueryBuilder('p');
+//            TODO projets marquants
+            $qb = $repositoryProjet->createQueryBuilder('p');
             $qb->where('p.dateDebut > :dateDebut')
                     ->setParameter('dateDebut', $dateDebutSelection)
                 ->andWhere('p.dateFin < :dateFin')
@@ -146,19 +140,40 @@ class CommunicationController extends Controller
 
             $projets = $qb->getQuery()->getResult();
 
-            $idProjs = array();
-            foreach ($projets as $p)
+            $livretProjets =array();
+            foreach ( $projets as $curProj )
             {
-                $livret->addProjet($p);
-                $p->addLivret($livret);
+                $curFormation = $curProj->getEtudiants()[0]->getFormations()[0];
+                $curDept = $curFormation->getDepartement()->getNomDpt();
+                $curTypeFormation = $curFormation->getTypeFormation();
+
+                foreach ( $formationsSelectionnes as $curFormSelected )
+                {
+                    if ( $curFormSelected == $curTypeFormation)
+                    {
+                        foreach ( $departementsSelectionnes as $curDeptSelected )
+                        {
+                            if ( $curDeptSelected == $curDept)
+                            {
+                                array_push($livretProjets, $curProj);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            $idProjs = array();
+            foreach ($livretProjets as $p)
+            {
+                $livretId->addProjet($p);
+                $p->addLivret($livretId);
                 array_push($idProjs, $p->getId());
                 $manager->persist($p);
             }
 
-            $manager->persist($livret);
+            $manager->persist($livretId);
             $manager->flush();
-
-            $livrets = $manager->getRepository('IUTOLivretBundle:Livret')->findAll();
 
             return $this->redirectToRoute('iuto_livret_communicationChoixLivret', array(
                     'statutCAS' => 'service de communication',
@@ -169,75 +184,13 @@ class CommunicationController extends Controller
             );
         }
 
-//          $html2pdf = $this->get('app.html2pdf');
-//          $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
-//          //preparation du PDF
-//          echo "1";
-//
-//          foreach ($projets as $projet) {
-//            $toutesLesFormations = $projet->getEtudiants()[0]->getFormations();
-//            foreach ($toutesLesFormations as $formation) {
-//
-//              foreach ($formationsSelectionnes as $formationSelectionnee) {
-//                if($formation->getTypeFormation() == $formationSelectionnee){
-//                  //chaque projet qui a le bon type de formation
-//
-//                  echo "2";
-//
-//                  $dateDeFormation = $formation->getDateDebut();
-//                  if(($dateDeFormation>=$dateDebutSelection)&&($dateDeFormation<=$dateFinSelection)){
-//                    //chaque projet qui a le bon type de formation à la bonne date
-//                    echo "3";
-//
-//                    foreach ($departementsSelectionnes as $departementSelectionne) {
-//                      if ($formation->getDepartement()->getNomDpt()==$departementSelectionne) {
-//                        //chaque projet qui a le bon type de formation à la bonne date et le bon department
-//
-//                        echo "ok";
-//                        $nomP = $projet->getIntituleProjet();
-//                        $descripP = $projet->getDescripProjet();
-//                        $bilanP = $projet->getBilanProjet();
-//                        $clientP = $projet->getClientProjet();
-//                        $etudiants = $projet->getEtudiants();
-//                        $tuteurs = $projet->getTuteurs();
-//                        $departement = $formation->getDepartement()->getNomDpt();
-//                        //recuperation des infos du projet
-//
-//                        $projet->addLivret($livret);
-//                        $livret->addProjet($projet);
-//                        //ajout de la relation livret/projet
-//
-//                        $template = $this->renderView('::pdf.html.twig',
-//                            ['nom' => $nomP,
-//                                'descrip' => $descripP,
-//                                'bilan' => $bilanP,
-//                                'client' => $clientP,
-//                                'etudiants' => $etudiants,
-//                                'tuteurs' => $tuteurs,
-//                                'departement' => $departement,
-//                                'formation' => $formation->getTypeFormation()
-//                            ]);
-//                            //creation du template
-//
-//                        $html2pdf->create($template);
-//                        //ajout de la page au livret
-//                      }
-//                    }
-//                  }
-//                }
-//              }
-//            }
-//          }
-//        }
-//        $manager->persist($livret);
-//        $manager->flush();
-         return $this->render('IUTOLivretBundle:Communication:communicationgenerationlivret.html.twig', array(
-             'form' => $form->createView(),
-             'statutCAS' => 'service de communication',
-             'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
-             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
-             'routing_statutCAShome' => '/communication',
-         ));
+        return $this->render('IUTOLivretBundle:Communication:communicationgenerationlivret.html.twig', array(
+            'form' => $form->createView(),
+            'statutCAS' => 'service de communication',
+            'info' => array('Générer livrets', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+            'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+            'routing_statutCAShome' => '/communication',
+        ));
     }
 
     public function communicationChooseLivretAction()

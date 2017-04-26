@@ -164,8 +164,8 @@ iuto_livret_communicationEditoPrevisualiser:
     defaults: { _controller: IUTOLivretBundle:EditoGenerator:generator }
 
 #=====GENERATION LIVRET====#
-iuto_livret_communicationgenerationlivret:
-    path: /communication/generation
+iuto_livret_communication_livret_project_choice:
+    path: /communication/create/{livretId}/projects
     defaults: { _controller: IUTOLivretBundle:Communication:communicationgenerationlivret }
 
 #=====GENERER LIVRET====#
