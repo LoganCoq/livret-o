@@ -148,6 +148,11 @@ iuto_livret_communicationhomepage:
     path: /communication
     defaults: { _controller: IUTOLivretBundle:Communication:communicationhome }
 
+#=====CREATION LIVRET======#
+iuto_livret_create_livret:
+    path: /communication/create/livret
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationCreateLivret }
+
 #==========EDITO===========#
 iuto_livret_communicationEdito:
     path: /communication/edito
