@@ -160,7 +160,6 @@ class CommunicationController extends Controller
                         }
                     }
                 }
-
             }
 
             $idProjs = array();

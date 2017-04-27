@@ -1,0 +1,56 @@
+
+h1
+{
+    padding: 0.5em
+}
+
+#livret_btn_goto_home
+{
+    margin: 1em;
+    font-size: 1.2em;
+}
+
+#choose_livret_name
+{
+    margin-left: 1em;
+    margin-top: 0.5em;
+    font-size: 1.5em;
+    width: 20em;
+}
+
+#livreto_modif_livret
+{
+    margin-top: -4.7em;
+    margin-left: 32em;
+}
+#livreto_see_btn
+{
+    margin-top: -4.7em;
+    margin-left: 2em;
+}
+
+
+.list-group
+{
+    margin-left: 4em;
+}
+
+.list-group-item
+{
+    padding: 0.2em;
+    margin: 0.3em;
+    height: auto;
+    width: 85%;
+}
+
+#livret_btn_goto_home
+{
+    font-size: 1.2em;
+    margin-top: 2em;
+}
+
+#livreto_download_finished
+{
+    margin-top: -4.7em;
+    margin-left: 2em;
+}

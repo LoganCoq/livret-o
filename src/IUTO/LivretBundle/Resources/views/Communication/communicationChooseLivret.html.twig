@@ -9,7 +9,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {#<link type="text/css" rel="stylesheet" href="{{ asset("assets/css/chooseProjectStudent.css") }}"/>#}
+    <link type="text/css" rel="stylesheet" href="{{ asset("assets/css/chooseLivretCommunication.css") }}"/>
 
 {% endblock %}
 
@@ -32,7 +32,11 @@
                     {# parcours des projets en cours #}
                     {% for livret in livrets %}
                         <li class="list-group-item">
-                            <p >{{ livret.intituleLivret }}</p>
+                            <p id="choose_livret_name">{{ livret.intituleLivret }}</p>
+                            <a href="{{ path('iuto_livret_modif_livret', {'livret' : livret.id}) }}" class="btn btn-warning" id="livreto_modif_livret">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                Modifier le livret
+                            </a>
                             <a href="/generate/livret/{{ livret.id }}" class="btn btn-success" id="livreto_see_btn">
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                 Aperçu du livret
@@ -41,10 +45,6 @@
                                 {#icone telechargement#}
                                 <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
                                 Enregistrer sur l'ordinateur
-                            </a>
-                            <a href="{{ path('iuto_livret_modif_livret', {'livret' : livret.id}) }}" class="btn btn-warning" id="livreto_modif_livret">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                                Modifier le livret
                             </a>
                         </li>
                     {% endfor %}
