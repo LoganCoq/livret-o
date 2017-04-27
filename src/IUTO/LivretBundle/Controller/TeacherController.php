@@ -107,6 +107,23 @@ class TeacherController extends Controller
 //        mise du formulaire en attente de submit
         $formModif->handleRequest($request);
 
+        //        récupération des commentaires appartenant au porjet actuel
+        $repositoryCommentaire = $em->getRepository('IUTOLivretBundle:Commentaire');
+        $com = $repositoryCommentaire->findByProjet($projet);
+
+        //recuperation des commentaires
+        $commentaires = array();
+        foreach($com as $elem)
+        {
+            $x=array();
+            $user = $elem->getUser();
+            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $elem->getContenu());
+            array_push($x, $elem->getDate());
+            array_push($x, $user->getRole());
+            array_push($commentaires, $x);
+        };
+
 //        vérification de la validité du formulaire et de si il à été envoyer
         if ($formModif->isSubmitted() && $formModif->isValid())
         {
@@ -149,6 +166,11 @@ class TeacherController extends Controller
                 $em->persist($tut);
             }
 
+            foreach ( $com as $c )
+            {
+                $c->setProjet($newProjet);
+            }
+
             // enregistrement des données dans la base
             $em->persist($newProjet);
 
@@ -167,22 +189,7 @@ class TeacherController extends Controller
             );
         }
 
-//        récupération des commentaires appartenant au porjet actuel
-        $repositoryCommentaire = $em->getRepository('IUTOLivretBundle:Commentaire');
-        $com = $repositoryCommentaire->findByProjet($projet);
 
-        //recuperation des commentaires
-        $commentaires = array();
-        foreach($com as $elem)
-        {
-            $x=array();
-            $user = $elem->getUser();
-            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
-            array_push($x, $elem->getContenu());
-            array_push($x, $elem->getDate());
-            array_push($x, $user->getRole());
-            array_push($commentaires, $x);
-        };
 
         $idProjet = $projet->getId();
 
