@@ -3,14 +3,14 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/createLivret.css') }}"
 {% endblock %}
 
 {% block content %}
-    <div class="div_home">
-        <h1 class="h1_home"> Génération de livret </h1>
 
-        {{ form(formCreate) }}
+    <h2 id="page_title"> Génération de livret </h2>
 
-        {{ parent() }}
-    </div>
+    {{ form(formCreate) }}
+
+    {{ parent() }}
 {% endblock %}

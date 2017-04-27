@@ -1,0 +1,38 @@
+
+#page_title
+{
+    margin-top: 0;
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: 2em;
+    font-size: 3em;
+}
+
+#iuto_livretbundle_livret
+{
+    text-align: center;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#iuto_livretbundle_livret_intituleLivret
+{
+    width: 70%;
+}
+
+#iuto_livretbundle_livret_editoLivret
+{
+    width: 80%;
+    height: 20em;
+}
+
+.control-label
+{
+    font-size: 1.4em;
+}
+
+#iuto_livretbundle_livret_submit
+{
+    margin-top: 2em;
+    font-size: 1.2em;
+}
