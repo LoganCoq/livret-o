@@ -125,8 +125,8 @@ class CommunicationController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $dateDebutSelection = $form["dateDebut"]->getData();
-            $dateFinSelection = $form["dateFin"]->getData();
+            $dateDebutSelection = new \DateTime($form["dateDebut"]->getData());
+            $dateFinSelection = new \DateTime($form["dateFin"]->getData());
             $formationsSelectionnes = $form["listeFormation"]->getData();
             $departementsSelectionnes = $form["listeDepartements"]->getData();
 
