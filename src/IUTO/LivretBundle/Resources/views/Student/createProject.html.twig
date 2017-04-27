@@ -49,12 +49,26 @@
 
     <script type="text/javascript">
         $(function (){
-            $('.datepicker').datetimepicker(
+            $.fn.datepicker.dates['fr'] = {
+                days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+                daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+                daysMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+                months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"],
+                monthsShort: ["Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aout", "Sep", "Oct", "Nov", "Dec"],
+                today: "Aujourd'hui",
+                clear: "Clear",
+                format: "dd/mm/yyyy",
+                titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+                weekStart: 0
+            };
+
+            $('.datepicker').datepicker(
                 {
-                    format: 'DD/MM/YYYY'
+                    autoclose: true,
+                    language: 'fr',
+                    startView: 'year'
                 }
             );
-            $('.datepicker').data("DateTimePicker").locale('fr');
         });
     </script>
 

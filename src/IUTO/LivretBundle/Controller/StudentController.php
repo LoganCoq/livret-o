@@ -2,6 +2,7 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use DateTimeZone;
 use Exception;
 use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Image;
@@ -86,8 +87,8 @@ class StudentController extends Controller
             $dateFormF = $form['dateFin']->getData();
 
             //stockage de la date dans le projet
-            $projet->setDateDebut(new \DateTime($dateFormD));
-            $projet->setDateFin(new \DateTime($dateFormF));
+            $projet->setDateDebut(\DateTime::createFromFormat('d/m/Y', $dateFormD));
+            $projet->setDateFin(\DateTime::createFromFormat('d/m/Y', $dateFormF));
 
             $etusForm = $form['etudiants']->getData();
             $tutsForm = $form['tuteurs']->getData();
@@ -248,8 +249,8 @@ class StudentController extends Controller
         $form = $this->createForm(ProjetCompleteType::class, $projet);
 
         // insertion des dates en string
-        $form['dateDebut']->setData($projet->getDateDebut()->format('m/d/Y'));
-        $form['dateFin']->setData($projet->getDateFin()->format('m/d/Y'));
+        $form['dateDebut']->setData($projet->getDateDebut()->format('d/m/Y'));
+        $form['dateFin']->setData($projet->getDateFin()->format('d/m/Y'));
 
         // attente d'action sur le formulaire
         $form->handleRequest($request);
@@ -295,8 +296,9 @@ class StudentController extends Controller
             $dateFormF = $form['dateFin']->getData();
 
             //affectations des date dans le formulaire au bon format
-            $newProjet->setDateDebut(new \DateTime($dateFormD));
-            $newProjet->setDateFin(new \DateTime($dateFormF));
+            //stockage de la date dans le projet
+            $newProjet->setDateDebut(\DateTime::createFromFormat('d/m/Y', $dateFormD));
+            $newProjet->setDateFin(\DateTime::createFromFormat('d/m/Y', $dateFormF));
 
             $etus = $form['etudiants']->getData();
             $tuts = $form['tuteurs']->getData();
