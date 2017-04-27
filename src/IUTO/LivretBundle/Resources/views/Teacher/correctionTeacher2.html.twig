@@ -123,6 +123,31 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
     <script type="text/javascript">
+        $(function (){
+            $.fn.datepicker.dates['fr'] = {
+                days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+                daysShort: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+                daysMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+                months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"],
+                monthsShort: ["Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Juil", "Aout", "Sep", "Oct", "Nov", "Dec"],
+                today: "Aujourd'hui",
+                clear: "Clear",
+                format: "dd/mm/yyyy",
+                titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+                weekStart: 0
+            };
+
+            $('.datepicker').datepicker(
+                {
+                    autoclose: true,
+                    language: 'fr',
+                    startView: 'year'
+                }
+            );
+        });
+    </script>
+
+    <script type="text/javascript">
         $subBtn = document.getElementById('iuto_livretbundle_projet_submit');
         $glyph = document.createElement('span');
         $glyph.className = 'glyphicon glyphicon-chevron-right';

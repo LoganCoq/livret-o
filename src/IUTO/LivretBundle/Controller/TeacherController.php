@@ -101,8 +101,8 @@ class TeacherController extends Controller
         $formModif = $this->createForm(ProjetModifType::class, $projet);
 
         // insertion des dates en string
-        $formModif['dateDebut']->setData($projet->getDateDebut()->format('m/d/Y'));
-        $formModif['dateFin']->setData($projet->getDateFin()->format('m/d/Y'));
+        $formModif['dateDebut']->setData($projet->getDateDebut()->format('d/m/Y'));
+        $formModif['dateFin']->setData($projet->getDateFin()->format('d/m/Y'));
 
 //        mise du formulaire en attente de submit
         $formModif->handleRequest($request);
@@ -128,8 +128,8 @@ class TeacherController extends Controller
             $dateFormF = $formModif['dateFin']->getData();
 
 //            affectation des valeurs des dates dans le projet
-            $newProjet->setDateDebut(new \DateTime($dateFormD));
-            $newProjet->setDateFin(new \DateTime($dateFormF));
+            $newProjet->setDateDebut(\DateTime::createFromFormat('d/m/Y', $dateFormD));
+            $newProjet->setDateFin(\DateTime::createFromFormat('d/m/Y', $dateFormF));
 
             $etus = $formModif['etudiants']->getData();
             $tuts = $formModif['tuteurs']->getData();
