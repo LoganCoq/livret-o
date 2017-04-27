@@ -22,11 +22,12 @@
             padding: 1.1em 1.05em 0.4em 1.05em;
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/createLivret.css') }}">
+
 {% endblock %}
 
 {% block content %}
-    <div class="div_home">
-        <h1 class="h1_home"> Génération de livret </h1>
+        <h1 id="page_title"> Génération de livret </h1>
 
         {% form_theme form 'bootstrap_3_layout.html.twig' %}
 

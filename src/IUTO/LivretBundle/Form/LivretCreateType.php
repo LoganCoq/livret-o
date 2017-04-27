@@ -60,11 +60,19 @@ class LivretCreateType extends AbstractType
                     'AS' => 'AS'
                   )
             ))
-            ->add('dateDebut', DateType::class, array(
-                'label' => 'Sélectionner les projets se trouvant après cette date'
+            ->add('dateDebut', TextType::class, array(
+                'label' => 'Sélectionner les projets se trouvant après cette date',
+                'attr' => [
+                    'class' => 'datepicker',
+                    'data-provide' => 'datepicker'
+                ]
             ))
-            ->add('dateFin', DateType::class, array(
-                'label' => 'Sélectionner les projets se trouvant avant cette date'
+            ->add('dateFin', TextType::class, array(
+                'label' => 'Sélectionner les projets se trouvant avant cette date',
+                'attr' => [
+                    'class' => 'datepicker',
+                    'data-provide' => 'datepicker'
+                 ]
             ))
             ->add('projetMarquants', CheckboxType::class, array(
                 'label' => 'Projets marquants seulements',

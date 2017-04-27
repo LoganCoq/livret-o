@@ -29,10 +29,26 @@
 .control-label
 {
     font-size: 1.4em;
+    padding: 1em;
 }
 
 #iuto_livretbundle_livret_submit
 {
     margin-top: 2em;
     font-size: 1.2em;
+}
+
+.form-group
+{
+    width: auto;
+}
+
+#iuto_livretbundle_livret_dateDebut
+{
+    width: 15%;
+}
+
+#iuto_livretbundle_livret_dateFin
+{
+    width: 15%;
 }
