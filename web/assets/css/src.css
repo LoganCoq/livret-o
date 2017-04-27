@@ -162,8 +162,8 @@ ul {
     clear: both;
     color: #7b7b7b;
     display: inline-table;
-    font-size: 21px;
-    padding: 7px 10px;
+    font-size: 159%;
+    padding: 2% 3%;
     width: 100%;
     font-family: Oswald, serif;
 }
@@ -358,20 +358,20 @@ ul {
 
 #iuto_livretbundle_commentaire_contenu
 {
-    width: 40%;
-    height: 4em;
+    width: 90%;
     color: #000000;
     margin-left: 1em;
-    margin-top: -1em;
+    margin-top: -5%;
 }
 #iuto_livretbundle_commentaire_submit
 {
-    margin-left: 19em;
+    margin-left: 70%;
+    margin-right: 2% !important;
     color: #000000;
 }
 #iuto_livretbundle_commentaire > div > label
 {
     color: #000000;
     margin-right: 1em;
-    margin-top: 0em;
+    margin-top: 0%;
 }
