@@ -63,15 +63,15 @@ class LivretCreateType extends AbstractType
             ->add('dateDebut', TextType::class, array(
                 'label' => 'Sélectionner les projets se trouvant après cette date',
                 'attr' => [
+                    'data-provide' => 'datepicker',
                     'class' => 'datepicker',
-                    'data-provide' => 'datepicker'
                 ]
             ))
             ->add('dateFin', TextType::class, array(
                 'label' => 'Sélectionner les projets se trouvant avant cette date',
                 'attr' => [
+                    'data-provide' => 'datepicker',
                     'class' => 'datepicker',
-                    'data-provide' => 'datepicker'
                  ]
             ))
             ->add('projetMarquants', CheckboxType::class, array(
