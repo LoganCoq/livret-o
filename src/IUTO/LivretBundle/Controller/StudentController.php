@@ -254,6 +254,21 @@ class StudentController extends Controller
         // attente d'action sur le formulaire
         $form->handleRequest($request);
 
+        //récupération des commentaires appartenant au projet actuel
+        $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+
+        $commentaires = array();
+
+        foreach($com as $elem){
+            $x=array();
+            $user = $elem->getUser();
+            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $elem->getContenu());
+            array_push($x, $elem->getDate());
+            array_push($x, $user->getRole());
+            array_push($commentaires, $x);
+        };
+
         // vérification de la validité du formulaire et si il à été envoyer
         if ($form->isSubmitted() && $form->isValid())
         {
@@ -301,6 +316,11 @@ class StudentController extends Controller
                 $em->persist($tut);
             }
 
+            foreach ( $com as $c )
+            {
+                $c->setProjet($newProjet);
+            }
+
             // enregistrement des données dans la base
             $em->persist($newProjet);
             $em->remove($projet);
@@ -323,21 +343,7 @@ class StudentController extends Controller
             );
         }
 
-        //récupération des commentaires appartenant au projet actuel
-        $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
 
-        $commentaires = array();
-
-        foreach($com as $elem){
-            $x=array();
-            $user = $elem->getUser();
-            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
-            array_push($x, $elem->getContenu());
-            array_push($x, $elem->getDate());
-            array_push($x, $user->getRole());
-            array_push($commentaires, $x);
-
-        };
 
         //creation du formulaire pour la section de chat/commentaire
         $formCom = $this->createForm(CommentaireCreateType::class, $com);
