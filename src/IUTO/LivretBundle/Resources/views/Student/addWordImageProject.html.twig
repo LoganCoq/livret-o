@@ -174,17 +174,11 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
-    <script src="bootstrap-datepicker.fr.js" charset="UTF-8">
-        $('.datepicker').datepicker({
-            autoclose: true
-        });
-    </script>
-
     <script type="text/javascript">
-        $subBtn = document.getElementById('iuto_livretbundle_projet_submit');
-        $glyph = document.createElement('span');
-        $glyph.className = 'glyphicon glyphicon-chevron-right';
-        $subBtn.appendChild($glyph);
+
+        $champCom = document.getElementById('iuto_livretbundle_commentaire_contenu');
+        $champCom.value = '';
+
     </script>
 
     {#<script type="text/javascript">#}
