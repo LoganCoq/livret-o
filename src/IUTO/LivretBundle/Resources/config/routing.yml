@@ -153,6 +153,11 @@ iuto_livret_create_livret:
     path: /communication/create/livret
     defaults: { _controller: IUTOLivretBundle:Communication:communicationCreateLivret }
 
+#=====MODIFICATION LIVRET==#
+iuto_livret_modif_livret:
+    path: /communication/modif/livret/{livret}
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationModifLivret }
+
 #==========EDITO===========#
 iuto_livret_communicationEdito:
     path: /communication/edito

@@ -215,6 +215,38 @@ class CommunicationController extends Controller
         );
     }
 
+    public function communicationModifLivretAction(Request $request, Livret $livret)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
+
+        $formModif = $this->createForm(NewLivretType::class, $livret);
+        $formModif->handleRequest($request);
+
+        if ( $formModif->isSubmitted() && $formModif->isValid() )
+        {
+            $em->persist($livret);
+            $em->flush();
+
+            return $this->redirectToRoute('iuto_livret_communicationChoixLivret', array(
+                    'statutCAS' => 'communication',
+                    'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+                    'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                    'routing_statutCAShome' => '/communication',
+                )
+            );
+        }
+
+        return $this->render('IUTOLivretBundle:Communication:communicationCreateLivret.html.twig', array(
+            'formCreate' => $formModif->createView(),
+            'statutCAS' => 'communication',
+            'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets', 'Créer un édito'),
+            'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+            'routing_statutCAShome' => '/communication',
+        ));
+    }
+
     public function communicationvalidationCRAction()
     {
         return $this->render('IUTOLivretBundle:Communication:communicationvalidationCR.html.twig', array('statutCAS' => 'service de communication',

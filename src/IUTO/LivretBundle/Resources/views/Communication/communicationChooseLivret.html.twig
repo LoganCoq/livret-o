@@ -42,6 +42,10 @@
                                 <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
                                 Enregistrer sur l'ordinateur
                             </a>
+                            <a href="{{ path('iuto_livret_modif_livret', {'livret' : livret.id}) }}" class="btn btn-warning" id="livreto_modif_livret">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                Modifier le livret
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
