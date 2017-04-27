@@ -100,3 +100,16 @@
 
 
 {% endblock %}
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+        $champCom = document.getElementById('iuto_livretbundle_commentaire_contenu');
+        $champCom.value = '';
+
+    </script>
+
+
+{% endblock %}
