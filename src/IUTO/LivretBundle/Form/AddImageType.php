@@ -27,6 +27,13 @@ class AddImageType extends AbstractType
                 'label' => 'Ajouter l\'image',
                 'attr' => [
                     'class' => 'btn btn-success',
+                    'data-toggle' => 'confirmation',
+                    'data-singleton' => true,
+                    'data-popout' => true,
+                    'data-title' => 'Êtes-vous sûr ?',
+                    'data-content' => 'L\'image sera ajoutée au projet',
+                    'data-btn-ok-label' => 'Continuer',
+                    'data-btn-cancel-label' => 'Annuler'
                 ]
             ]);
     }

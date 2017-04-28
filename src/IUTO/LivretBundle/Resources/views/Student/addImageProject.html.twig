@@ -28,3 +28,21 @@
         </a>
     </div>
 {% endblock %}
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap-confirmation.js') }}"></script>
+
+
+    <script type="text/javascript">
+        $(function (){
+            $('[data-toggle=confirmation]').confirmation({
+                rootSelector: '[data-toggle=confirmation]',
+            });
+        });
+    </script>
+
+
+{% endblock %}
