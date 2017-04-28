@@ -93,8 +93,14 @@ class ProjetCreateType extends AbstractType
             ->add('submit', SubmitType::class, array(
                 'label' => 'Suivant',
                 'attr' => [
+                    'class' => 'btn btn-primary',
                     'data-toggle' => 'confirmation',
-                    'class' => 'btn btn-primary'
+                    'data-singleton' => true,
+                    'data-popout' => true,
+                    'data-title' => 'Êtes-vous sûr ?',
+                    'data-content' => 'Le projet sera enregistré',
+                    'data-btn-ok-label' => 'Continuer',
+                    'data-btn-cancel-label' => 'Annuler'
                 ]
             ));
     }
