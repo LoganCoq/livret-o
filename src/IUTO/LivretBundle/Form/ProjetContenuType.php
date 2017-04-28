@@ -23,6 +23,10 @@ class ProjetContenuType extends AbstractType
                 'label' => 'Client',
                 'required' => false,
             ))
+            ->add('descriptionClientProjet', TextType::class, array(
+                'label' => 'Description du client',
+                'required' => false,
+            ))
             ->add('descripProjet', TextareaType::class, array(
                 'label' => 'Description du projet',
                 'required' => false,

@@ -139,6 +139,7 @@ class TeacherController extends Controller
             $newProjet->setValiderProjet($projet->getValiderProjet());
             $newProjet->setNomDpt($projet->getNomDpt());
             $newProjet->setImages($projet->getImages());
+            $newProjet->setDescriptionClientProjet(($projet->getDescriptionClientProjet()));
 
 //            récupération des dates du formulaire
             $dateFormD = $formModif['dateDebut']->getData();

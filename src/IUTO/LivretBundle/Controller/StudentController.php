@@ -290,6 +290,7 @@ class StudentController extends Controller
             $newProjet->setValiderProjet($projet->getValiderProjet());
             $newProjet->setNomDpt($projet->getNomDpt());
             $newProjet->setImages($projet->getImages());
+            $newProjet->setDescriptionClientProjet($projet->getDescriptionClientProjet());
 
 //            actualisation du projet associé aux images du projet
             foreach ( $newProjet->getImages() as $oneImg )
