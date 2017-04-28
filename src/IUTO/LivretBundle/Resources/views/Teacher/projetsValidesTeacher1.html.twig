@@ -76,7 +76,9 @@
                     {% for projet in projets %}
                         <li class="list-group-item">
                             <p id="choose_project_name">{{ projet.intituleProjet }}</p>
-                            <a href="/{{ projet.id }}/correctionProf2" class="btn btn-warning" id="livret_modif_btn">
+                            <a href="/{{ projet.id }}/correctionProf2" class="btn btn-warning" id="livret_modif_btn"
+                                data-toggle="confirmation" data-singleton="true" data-popout="true" data-title="Êtes-vous sûr"
+                                data-content="Ce projet est un projet validé" data-btn-ok-label="Continuer" data-btn-cancel-label="Annuler">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 Modifier le projet
                             </a>
@@ -99,5 +101,23 @@
         </div>
 
     </div>
+
+{% endblock %}
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap-confirmation.js') }}"></script>
+
+
+    <script type="text/javascript">
+        $(function (){
+            $('[data-toggle=confirmation]').confirmation({
+                rootSelector: '[data-toggle=confirmation]',
+            });
+        });
+    </script>
+
 
 {% endblock %}
