@@ -46,6 +46,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap-confirmation.js') }}"></script>
 
     <script type="text/javascript">
         $(function (){
@@ -69,6 +70,20 @@
                     startView: 'year'
                 }
             );
+
+            $('.from_date').on('changeDate', function (e) {
+
+                $('to_date').datepicker(
+                    {
+                        startDate : $('.from_date').val().toString(),
+                    }
+                )
+            });
+
+            $('[data-toggle=confirmation]').confirmation({
+                rootSelector: '[data-toggle=confirmation]',
+                // other options
+            });
         });
     </script>
 

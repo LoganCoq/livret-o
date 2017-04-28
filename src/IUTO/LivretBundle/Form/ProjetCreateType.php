@@ -26,14 +26,14 @@ class ProjetCreateType extends AbstractType
                 'label' => 'Date de début',
                 'attr' => [
                     'data-provide' => 'datepicker',
-                    'class' => 'datepicker',
+                    'class' => 'datepicker from_date',
                 ],
             ))
             ->add('dateFin', TextType::class, array(
                 'label' => 'Date de fin',
                 'attr' => [
                     'data-provide' => 'datepicker',
-                    'class' => 'datepicker',
+                    'class' => 'datepicker to_date',
                 ],
             ))
             ->add('nomDep', TextType::class, array(
@@ -93,7 +93,7 @@ class ProjetCreateType extends AbstractType
             ->add('submit', SubmitType::class, array(
                 'label' => 'Suivant',
                 'attr' => [
-                    'onclick' => "return confirm('Etes vous sûr ?')",
+                    'data-toggle' => 'confirmation',
                     'class' => 'btn btn-primary'
                 ]
             ));
