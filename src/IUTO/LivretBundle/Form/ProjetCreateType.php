@@ -78,18 +78,6 @@ class ProjetCreateType extends AbstractType
                         ->where("u.role <> 'Etudiant' and u.role <> 'ROLE_student' and u.role <> 'ROLE_employee'");
                 }
             ))
-//            ->add('motsClesProjet', TextType::class, array(
-//                'label' => 'Mots clés projet',
-//                'choice_label' => function ( string $mot){
-//                    return $mot)
-//                },
-//                'multiple' => true,
-//                'attr' => [
-//                    'class' => 'selectpicker',
-//                    'data-live-search' => true,
-//                    'data-width' => 'auto'
-//                ],
-//            ))
             ->add('submit', SubmitType::class, array(
                 'label' => 'Suivant',
                 'attr' => [

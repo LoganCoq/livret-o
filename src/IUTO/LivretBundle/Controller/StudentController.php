@@ -2,7 +2,6 @@
 
 namespace IUTO\LivretBundle\Controller;
 
-use DateTimeZone;
 use Exception;
 use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Image;
@@ -14,7 +13,6 @@ use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
 use IUTO\LivretBundle\Form\ProjetCompleteType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
-use IUTO\LivretBundle\Form\DeleteImageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -36,17 +34,12 @@ class StudentController extends Controller
         return $this->render('IUTOLivretBundle:Student:studenthome.html.twig', array(
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
-            'options' => array('Créer un compte rendu',
-                'Voir mes projets'),
-            'routing_info' => array('/create/project',
-                '/choose/project',
-                '#'),
-            'routing_options' => array('/create/project',
-                '/choose/project',
-                '#'),
+            'options' => array('Créer un compte rendu', 'Voir mes projets'),
+            'routing_info' => array('/create/project', '/choose/project', '#'),
+            'routing_options' => array('/create/project', '/choose/project', '#'),
             'routing_statutCAShome' => '/etudiant',
-                'id' => $id,
-                'user' => $etudiant,
+            'id' => $id,
+            'user' => $etudiant,
         ));
     }
 
@@ -55,6 +48,7 @@ class StudentController extends Controller
 //        request : objet pour gérer les requettes des formulaires
     public function createProjectAction(Request $request)
     {
+//        récupération de l'entity manager
         $em = $this->getDoctrine()->getManager();
 
         // Recuperation de l'étudiant connecté
@@ -65,7 +59,7 @@ class StudentController extends Controller
         //creation d'un nouveau projet
         $projet = new Projet();
 
-        // Recuperation des informations de l'étudiant
+        // Recuperation des informations sur la formation de l'étudiant connecté
         $formation = $etudiant->getFormations()[0];
         $departement = $formation->getDepartement()->getNomDpt();
 
@@ -90,25 +84,35 @@ class StudentController extends Controller
             $projet->setDateDebut(\DateTime::createFromFormat('d/m/Y', $dateFormD));
             $projet->setDateFin(\DateTime::createFromFormat('d/m/Y', $dateFormF));
 
+//            récupération des étudiants selectionnées dans le formulaire
             $etusForm = $form['etudiants']->getData();
             $tutsForm = $form['tuteurs']->getData();
 
+//              opérations sur les étudiants du projet
             foreach ( $etusForm as $etu )
             {
+//                ajout de l'étudiant au projet
                 $projet->addEtudiant($etu);
+//                ajout du projet à l'étudiant
                 $etu->addProjetFait($projet);
+//                on indique à doctrine que cette données va être sauvegardée
                 $em->persist($etu);
             }
 
+//            opération sur les tuteurs du projet
             foreach ( $tutsForm as $tut )
             {
+//                ajout du tuteur au projet
                 $projet->addTuteur($tut);
+//                ajout du projet aux projets suivis par le tuteur
                 $tut->addProjetSuivi($projet);
+//                on indique à doctrine que cette données va être sauvegardée
                 $em->persist($tut);
             }
 
-            // enregistrement des données dans la base
+//            on indique à doctrine que la donnée va être sauvegardée
             $em->persist($projet);
+            // enregistrement des données dans la base
             $em->flush();
 
             //redirection vers la page suivante
@@ -143,8 +147,10 @@ class StudentController extends Controller
 //        projet  : projet sur le quel on va effectuer des ajouts d'information ( celui créer dans createProject )
     public function contenuProjectAction(Request $request, Projet $projet)
     {
-        //recuperation des informations sur l'utilisateur
+//        récupération de l'entity manager
         $em = $this->getDoctrine()->getManager();
+
+        //recuperation des informations sur l'utilisateur
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
@@ -168,10 +174,7 @@ class StudentController extends Controller
             return $this->redirectToRoute('iuto_livret_studenthomepage', array(
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                    'options' => array('Créer un compte rendu', ' Voir mes projets'),
-                    'routing_info' => array('/etudiant',
-                        '/choose/project',
-                        '#',),
+                    'routing_info' => array('/etudiant', '/choose/project', '#',),
                     'routing_statutCAShome' => '/etudiant',
                     'id' => $id,)
             );
@@ -274,8 +277,10 @@ class StudentController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
 
+//            création d'un nouveau projet afin d'enregistrer les
             $newProjet = new Projet();
 
+//            récupération et affectation des données du projet dans le nouveau projet
             $newProjet->setIntituleProjet($projet->getIntituleProjet());
             $newProjet->setDescripProjet($projet->getDescripProjet());
             $newProjet->setBilanProjet($projet->getBilanProjet());
@@ -286,6 +291,7 @@ class StudentController extends Controller
             $newProjet->setNomDpt($projet->getNomDpt());
             $newProjet->setImages($projet->getImages());
 
+//            actualisation du projet associé aux images du projet
             foreach ( $newProjet->getImages() as $oneImg )
             {
                 $oneImg->setProjet($newProjet);
@@ -300,10 +306,11 @@ class StudentController extends Controller
             $newProjet->setDateDebut(\DateTime::createFromFormat('d/m/Y', $dateFormD));
             $newProjet->setDateFin(\DateTime::createFromFormat('d/m/Y', $dateFormF));
 
+//            récupération des étudiants et tuteurs selectionnées dans le formulaire
             $etus = $form['etudiants']->getData();
             $tuts = $form['tuteurs']->getData();
 
-
+//            opérations sur les étudiant selectionnées
             foreach ( $etus as $etu )
             {
                 $etu->addProjetFait($newProjet);
@@ -311,6 +318,7 @@ class StudentController extends Controller
                 $em->persist($etu);
             }
 
+//            opérations sur les tuteurs sélectionnés
             foreach ( $tuts as $tut )
             {
                 $tut->addProjetSuivi($newProjet);
@@ -318,6 +326,7 @@ class StudentController extends Controller
                 $em->persist($tut);
             }
 
+//            actualisation du projet associé aux commentaires
             foreach ( $com as $c )
             {
                 $c->setProjet($newProjet);
@@ -325,6 +334,7 @@ class StudentController extends Controller
 
             // enregistrement des données dans la base
             $em->persist($newProjet);
+//            suppression de l'ancien projet
             $em->remove($projet);
             $em->flush();
 
@@ -335,9 +345,7 @@ class StudentController extends Controller
             return $this->redirectToRoute('iuto_livret_add_word_image', array(
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                    'routing_info' => array('/create/project',
-                        '/choose/project',
-                        '#',),
+                    'routing_info' => array('/create/project', '/choose/project', '#',),
                     'routing_statutCAShome' => '/etudiant',
                     'id' => $id,
                     'projet' => $newProjet->getId(),
@@ -390,8 +398,8 @@ class StudentController extends Controller
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
                     'routing_statutCAShome' => '/etudiant',
                     'routing_info' => array('/create/project', '/choose/project'),
-                        'projet' => $projet,
-                        'commentaires' => $commentaires,
+                    'projet' => $projet,
+                    'commentaires' => $commentaires,
                 ));
         }
 
@@ -402,9 +410,7 @@ class StudentController extends Controller
             'formCom' => $formCom->createView(),
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
-            'routing_info' => array('/create/project',
-                '/choose/project',
-                '#',),
+            'routing_info' => array('/create/project', '/choose/project', '#',),
             'routing_statutCAShome' => '/etudiant',
                 'projet' => $projet,
                 'commentaires' => $commentaires,
@@ -418,8 +424,9 @@ class StudentController extends Controller
 //        projet  : projet sur le quel on va effectuer des modification
     public function addWordImageAction(Request $request, Projet $projet)
     {
-        //récupération des informations de l'utilisateur connecter
+//        récupération de l'entity manager
         $em = $this->getDoctrine()->getManager();
+        //récupération des informations de l'utilisateur connecter
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
@@ -434,9 +441,7 @@ class StudentController extends Controller
 
         //récupération des commentaires appartenant au projet actuel
         $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
-
         $commentaires = array();
-
         foreach($com as $elem){
             $x=array();
             $user = $elem->getUser();
@@ -445,7 +450,6 @@ class StudentController extends Controller
             array_push($x, $elem->getDate());
             array_push($x, $user->getRole());
             array_push($commentaires, $x);
-
         };
 
         //creation du formulaire pour la section de chat/commentaire
@@ -472,7 +476,7 @@ class StudentController extends Controller
             $em->flush();
 
             //actualisation des commentaires une fois le nouveau ajouté
-            //recupération des commentaires
+            //recupération des commentaires associé au projet
             $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
             $commentaires = array();
             foreach ($com as $elem) {
@@ -501,12 +505,17 @@ class StudentController extends Controller
             ));
         }
 
+//        vérification de si le formulaire pour l'ajout de mots clés et envoyer et valide
         if ($formMot->isSubmitted() && $formMot->isValid())
         {
+
+//            ajouts du mot clé au projet
             $newWord = $formMot['mot']->getData();
             $projet->addMotCleProjet($newWord);
+//            actualisation des mots clés du projet pour le rechargement de la page
             $motsCles = $projet->getMotsClesProjet();
 
+//            enregistrement des donnees
             $em->persist($projet);
             $em->flush();
 
@@ -525,7 +534,7 @@ class StudentController extends Controller
             ));
         }
 
-
+//        rendu de la page d'ajout de mots clés et de d'images
         return $this->render('IUTOLivretBundle:Student:addWordImageProject.html.twig', array(
             'formCom' => $formCom->createView(),
             'formMot' => $formMot->createView(),
@@ -547,7 +556,9 @@ class StudentController extends Controller
 //        projet  : projet sur le quel on va ajouter une image
     public function addImageAction(Request $request, Projet $projet)
     {
+//        récupération de l'entity manager
         $em = $this->getDoctrine()->getManager();
+//        récupération des données sur l'étudiant connecté
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
@@ -558,19 +569,24 @@ class StudentController extends Controller
 //        récupération des mots clés du projet
         $motsCles = $projet->getMotsClesProjet();
 
+//        création d'une entité image qui va être remplie dans le formulaire
         $image = new Image();
 
+//        creation du formulaire d'ajout d'image
         $form = $this->createForm(AddImageType::class, $image);
         $form->handleRequest($request);
 
+//        vérification de l'envoie du formulaire et de sa validité
         if ($form->isSubmitted() && $form->isValid())
         {
+//            vérification que la limite du nombre d'images est respectée
             if ( count($projet->getImages()) < 2 )
             {
                 $image->setProjet($projet);
                 $em->persist($image);
                 $em->flush();
             }
+//            exception si il y a déja deux images associées au projet
             else
             {
                 throw new Exception('Seulement 2 images peuvent être liées au projet.');
@@ -580,9 +596,7 @@ class StudentController extends Controller
             return $this->redirectToRoute('iuto_livret_add_word_image', array(
                     'statutCAS' => 'étudiant',
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                    'routing_info' => array('/create/project',
-                        '/choose/project',
-                        '#',),
+                    'routing_info' => array('/create/project', '/choose/project', '#',),
                     'routing_statutCAShome' => '/etudiant',
                     'id' => $id,
                     'projet' => $projet->getId(),
@@ -597,9 +611,7 @@ class StudentController extends Controller
                 'form' => $form->createView(),
                 'statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                'routing_info' => array('/create/project',
-                    '/choose/project',
-                    '#',),
+                'routing_info' => array('/create/project', '/choose/project', '#',),
                 'routing_statutCAShome' => '/etudiant',
                 'projet' => $projet,
             )
