@@ -30,13 +30,13 @@
 
         <ul id="listeProjets">
             {% for projet in projets %}
-                <li id="l{{ projet.id }}"  class="list-group-item">
+                <li id="o{{ projet.id }}"  class="list-group-item">
                     <p id="choose_project_name">{{ projet.intituleProjet }}</p>
                     <a href="{{ path('iuto_livret_completeProject', {'projet': projet.id}) }}" class="btn btn-warning" id="livret_modif_btn">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         Modifier le projet
                     </a>
-                    <a href="/generate/{{ projet.id }}" class="btn btn-success" id="o{{ projet.id }}">
+                    <a href="/generate/{{ projet.id }}" class="btn btn-success" id="l{{ projet.id }}">
                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                         Aperçu du projet
                     </a>

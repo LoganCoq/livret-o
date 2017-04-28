@@ -190,6 +190,15 @@ class CommunicationController extends Controller
         ));
     }
 
+    public function communicationSelectProjectsAction(Request $request, Livret $livret)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+
+    }
+
     public function communicationChooseLivretAction()
     {
         //récupération des informations sur l'utilisateur
@@ -246,7 +255,8 @@ class CommunicationController extends Controller
 
     public function communicationvalidationCRAction()
     {
-        return $this->render('IUTOLivretBundle:Communication:communicationvalidationCR.html.twig', array('statutCAS' => 'service de communication',
+        return $this->render('IUTOLivretBundle:Communication:communicationvalidationCR.html.twig', array(
+            'statutCAS' => 'communication',
             'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
             'options' => array('Apercu du compte rendu', 'Renvoyer la correction aux élèves', 'Valider', 'Retour'),
@@ -257,7 +267,8 @@ class CommunicationController extends Controller
     public function communicationChoixAction()
     {
 
-        return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array('statutCAS' => 'service de communication',
+        return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array(
+            'statutCAS' => 'communication',
             'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
             'options' => array('Valider', 'Retour'),
@@ -277,7 +288,8 @@ class CommunicationController extends Controller
 
 
 
-        return $this->render('IUTOLivretBundle:Communication:communicationChoixValide.html.twig', array('statutCAS' => 'service de communication',
+        return $this->render('IUTOLivretBundle:Communication:communicationChoixValide.html.twig', array(
+            'statutCAS' => 'communication',
             'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
             'options' => array('Valider', 'Retour'),
@@ -298,7 +310,8 @@ class CommunicationController extends Controller
 
 
 
-        return $this->render('IUTOLivretBundle:Communication:communicationChoixNValide.html.twig', array('statutCAS' => 'service de communication',
+        return $this->render('IUTOLivretBundle:Communication:communicationChoixNValide.html.twig', array(
+            'statutCAS' => 'communication',
             'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
             'options' => array('Valider', 'Retour'),
@@ -341,7 +354,8 @@ class CommunicationController extends Controller
                 return $this->redirectToRoute("iuto_livret_communicationEdito", array());
             }
 
-        return $this->render('IUTOLivretBundle:Communication:communicationSelectionLivret.html.twig', array('statutCAS' => 'service de communication',
+        return $this->render('IUTOLivretBundle:Communication:communicationSelectionLivret.html.twig', array(
+            'statutCAS' => 'communication',
             'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
                 'routing_statutCAShome' => '/communication',
