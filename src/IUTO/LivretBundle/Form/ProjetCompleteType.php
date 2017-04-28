@@ -29,7 +29,7 @@ class ProjetCompleteType extends AbstractType
                 'label' => 'Client',
                 'required' => false,
             ))
-            ->add('descriptionClientProjet', TextType::class, array(
+            ->add('descriptionClientProjet', TextareaType::class, array(
                 'label' => 'Description du client',
                 'required' => false,
             ))
