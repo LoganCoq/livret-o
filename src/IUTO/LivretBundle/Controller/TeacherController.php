@@ -763,6 +763,7 @@ class TeacherController extends Controller
 
     }
 
+//    controlleur pour l'affichage du formulaire de suppression d'un projet
     public function deleteProjetAction(Request $request, Projet $projet)
     {
         // récupération des inforamtions dur l'utilsateur connecté
@@ -770,53 +771,41 @@ class TeacherController extends Controller
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
+//        creation d'un formulaire vide pour supprimmer le projet
         $form = $this->get('form.factory')->create();
         $form->handleRequest($request);
 
         if ( $form->isSubmitted() && $form->isValid() )
         {
+//            suppression des images associées au projet
             $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
             foreach ( $images as $img)
             {
                 $em->remove($img);
             }
+//            suppression des commentaires associés au projet
             $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
             foreach ( $com as $c)
             {
                 $em->remove($c);
             }
 
+//            suppression du projet et enregistrement des modification dans la base de données
             $em->remove($projet);
             $em->flush();
             $request->getSession()->getFlashBag()->add('info', "Le projet a bien été supprimé.");
 
-            $projets = $etudiant->getProjetFaits();
-            $projetsSuivis = array();
-            $projetsFinis = array();
-
-            // récupération des projets fait et non fait de l'étudiant
-            foreach ( $projets as $proj ){
-                if ( $proj->getValiderProjet() == 1){
-                    // ajout du projet à la liste si il est valider
-                    $projetsFinis[] = $proj;
-                }
-                else{
-                    // ajout du projet à la liste si il est en cours de suivi
-                    $projetsSuivis[] = $proj;
-                }
-            }
-
+//            redirection vers la page de choix des projets non finis
             return $this->redirectToRoute('iuto_livret_correctionProf1', array(
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/correctionProf1', '/projetsValides1'),
-                'projetsSuivis' => $projetsSuivis,
-                'projetsFinis' => $projetsFinis,
                 'projet' => $projet,
             ));
         }
 
+//        creation du rendu de la prage de suppression d'un projet
         return $this->render('IUTOLivretBundle:Teacher:confirmProjectDelete.html.twig', array(
             'projet' => $projet,
             'form'   => $form->createView(),
@@ -826,4 +815,5 @@ class TeacherController extends Controller
             'routing_info' => array('/correctionProf1', '/projetsValides1'),
         ));
     }
+
 }
