@@ -763,4 +763,67 @@ class TeacherController extends Controller
 
     }
 
+    public function deleteProjetAction(Request $request, Projet $projet)
+    {
+        // récupération des inforamtions dur l'utilsateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ( $form->isSubmitted() && $form->isValid() )
+        {
+            $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+            foreach ( $images as $img)
+            {
+                $em->remove($img);
+            }
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+            foreach ( $com as $c)
+            {
+                $em->remove($c);
+            }
+
+            $em->remove($projet);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('info', "Le projet a bien été supprimé.");
+
+            $projets = $etudiant->getProjetFaits();
+            $projetsSuivis = array();
+            $projetsFinis = array();
+
+            // récupération des projets fait et non fait de l'étudiant
+            foreach ( $projets as $proj ){
+                if ( $proj->getValiderProjet() == 1){
+                    // ajout du projet à la liste si il est valider
+                    $projetsFinis[] = $proj;
+                }
+                else{
+                    // ajout du projet à la liste si il est en cours de suivi
+                    $projetsSuivis[] = $proj;
+                }
+            }
+
+            return $this->redirectToRoute('iuto_livret_correctionProf1', array(
+                'statutCAS' => 'professeur',
+                'routing_statutCAShome' => '/professeur',
+                'info' => array('Demandes de correction', 'Projets validés'),
+                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'projetsSuivis' => $projetsSuivis,
+                'projetsFinis' => $projetsFinis,
+                'projet' => $projet,
+            ));
+        }
+
+        return $this->render('IUTOLivretBundle:Teacher:confirmProjectDelete.html.twig', array(
+            'projet' => $projet,
+            'form'   => $form->createView(),
+            'statutCAS' => 'professeur',
+            'routing_statutCAShome' => '/professeur',
+            'info' => array('Demandes de correction', 'Projets validés'),
+            'routing_info' => array('/correctionProf1', '/projetsValides1'),
+        ));
+    }
 }
