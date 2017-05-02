@@ -681,6 +681,11 @@ class StudentController extends Controller
             {
                 $em->remove($img);
             }
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+            foreach ( $com as $c)
+            {
+                $em->remove($c);
+            }
 
             $em->remove($projet);
             $em->flush();
