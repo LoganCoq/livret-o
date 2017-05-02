@@ -17,10 +17,11 @@ class PDFGeneratorController extends Controller
         $projet = $repository->findOneById($id);
 
         $nomP = $projet->getIntituleProjet();
-        $descripP = $projet->getDescripProjet();
-//        $descripP = preg_replace("/\r\n|\r|\n/","\n",$descripP);
+//        $descripP = $projet->getDescripProjet();
+        $descripP = preg_replace("/\r\n/","\ ",$projet->getDescripProjet());
         $bilanP = $projet->getBilanProjet();
         $clientP = $projet->getClientProjet();
+        $descripCli = $projet->getDescriptionClientProjet();
         $etudiants = $projet->getEtudiants();
         $tuteurs = $projet->getTuteurs();
         $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
@@ -46,6 +47,7 @@ class PDFGeneratorController extends Controller
                 'descrip' => $descripP,
                 'bilan' => $bilanP,
                 'client' => $clientP,
+                'descripCli' => $descripCli,
                 'etudiants' => $etudiants,
                 'tuteurs' => $tuteurs,
                 'formation' => $formation,
@@ -75,6 +77,7 @@ class PDFGeneratorController extends Controller
 //        $descripP = preg_replace("/\r\n|\r|\n/","<br/>\n",$descripP);
         $bilanP = $projet->getBilanProjet();
         $clientP = $projet->getClientProjet();
+        $descripCli = $projet->getDescriptionClientProjet();
         $etudiants = $projet->getEtudiants();
         $tuteurs = $projet->getTuteurs();
         $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
@@ -100,6 +103,7 @@ class PDFGeneratorController extends Controller
                 'descrip' => $descripP,
                 'bilan' => $bilanP,
                 'client' => $clientP,
+                'descripCli' => $descripCli,
                 'etudiants' => $etudiants,
                 'tuteurs' => $tuteurs,
                 'formation' => $formation,
@@ -144,6 +148,7 @@ class PDFGeneratorController extends Controller
             $descripP = $projet->getDescripProjet();
             $bilanP = $projet->getBilanProjet();
             $clientP = $projet->getClientProjet();
+            $descripCli = $projet->getDescriptionClientProjet();
             $etudiants = $projet->getEtudiants();
             $tuteurs = $projet->getTuteurs();
             $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
@@ -169,6 +174,7 @@ class PDFGeneratorController extends Controller
                     'descrip' => $descripP,
                     'bilan' => $bilanP,
                     'client' => $clientP,
+                    'descripCli' => $descripCli,
                     'etudiants' => $etudiants,
                     'tuteurs' => $tuteurs,
                     'formation' => $formation,
@@ -197,6 +203,12 @@ class PDFGeneratorController extends Controller
         $html2pdf = $this->get('app.html2pdf');
         $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
 
+        $template = $this->renderView('::edito.html.twig',
+            ['texte' => $livret->getEditoLivret(),
+            ]);
+
+        $html2pdf->write($template);
+
         $projets = $livret->getProjets();
 
         foreach ( $projets as $projet)
@@ -206,6 +218,7 @@ class PDFGeneratorController extends Controller
             $descripP = $projet->getDescripProjet();
             $bilanP = $projet->getBilanProjet();
             $clientP = $projet->getClientProjet();
+            $descripCli = $projet->getDescriptionClientProjet();
             $etudiants = $projet->getEtudiants();
             $tuteurs = $projet->getTuteurs();
             $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
@@ -231,6 +244,7 @@ class PDFGeneratorController extends Controller
                     'descrip' => $descripP,
                     'bilan' => $bilanP,
                     'client' => $clientP,
+                    'descripCli' => $descripCli,
                     'etudiants' => $etudiants,
                     'tuteurs' => $tuteurs,
                     'formation' => $formation,

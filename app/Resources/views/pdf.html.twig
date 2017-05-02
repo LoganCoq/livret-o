@@ -36,6 +36,11 @@
                 white-space:pre-wrap;
             }
 
+            .descripClient
+            {
+                text-align: center;
+            }
+
 
         </style>
         <title>
@@ -80,13 +85,20 @@
                     </div>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <div>
+                        <p class="descripClient">{{ descripCli }}</p>
+                    </div>
+                </td>
+            </tr>
         </table>
         <table>
             <tr style="width: 100%;">
-                <td style="width: 70%; text-align: justify">
+                <td style="width: 70%; ">
                     <div class="presentation_projet">
                         <h4 class="titre_info"> Description du projet </h4>
-                        <p> {{ descrip }} </p>
+                         {{ descrip }}
                     </div>
                 </td>
                 <td style="width:30%; height: 10%">
@@ -111,7 +123,7 @@
                         {% endif %}
                     </div>
                 </td>
-                <td style="width: 70%; text-align: justify;">
+                <td style="width: 70%; ">
                     <div class="bilan_projet">
                         <h4 class="titre_info"> Bilan du projet </h4>
                         <p> {{ bilan }} </p>
