@@ -816,4 +816,80 @@ class TeacherController extends Controller
         ));
     }
 
+    public function deleteImageAction(Request $request, Image $image)
+    {
+        // récupération des inforamtions dur l'utilsateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $teacher = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+        $projet = $image->getProjet();
+
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ( $form->isSubmitted() && $form->isValid() )
+        {
+
+            $em->remove($image);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('info', "L'image a bien été supprimée.");
+
+            $projets = $teacher->getProjetFaits();
+            $projetsSuivis = array();
+            $projetsFinis = array();
+
+            // récupération des projets fait et non fait de l'étudiant
+            foreach ( $projets as $proj ){
+                if ( $proj->getValiderProjet() == 1){
+                    // ajout du projet à la liste si il est valider
+                    $projetsFinis[] = $proj;
+                }
+                else{
+                    // ajout du projet à la liste si il est en cours de suivi
+                    $projetsSuivis[] = $proj;
+                }
+            }
+            //actualisation des commentaires une fois le nouveau ajouté
+            //recupération des commentaires associé au projet
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+            $commentaires = array();
+            foreach ($com as $elem) {
+                $x = array();
+                $user = $elem->getUser();
+                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
+                array_push($x, $elem->getContenu());
+                array_push($x, $elem->getDate());
+                array_push($x, $user->getRole());
+                array_push($commentaires, $x);
+
+            };
+
+            $images = $em->getRepository(Image::class)->findByProjet($image->getProjet());
+            $motsCles = $projet->getMotsClesProjet();
+
+            return $this->redirectToRoute('iuto_livret_add_word_image', array(
+                'projet' => $projet->getId(),
+                'statutCAS' => 'professeur',
+                'routing_statutCAShome' => '/professeur',
+                'info' => array('Demandes de correction', 'Projets validés'),
+                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'images' => $images,
+                'motsCles' => $motsCles,
+                'commentaires' => $commentaires,
+            ));
+        }
+
+
+        return $this->render('IUTOLivretBundle:Student:confirmImageDelete.html.twig', array(
+            'image' => $image,
+            'form'   => $form->createView(),
+            'statutCAS' => 'professeur',
+            'routing_statutCAShome' => '/professeur',
+            'info' => array('Demandes de correction', 'Projets validés'),
+            'routing_info' => array('/correctionProf1', '/projetsValides1'),
+            'projet' => $projet,
+        ));
+    }
+
 }
