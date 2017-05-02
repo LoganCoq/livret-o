@@ -63,6 +63,10 @@ iuto_livret_deleteProject:
     path: /delete/{projet}
     defaults: { _controller: IUTOLivretBundle:Student:deleteProjet }
 
+iuto_livret_deleteImage:
+    path: /delete/image/{image}
+    defaults: { _controller: IUTOLivretBundle:Student:deleteImage }
+
 #==================ROUTES MODULE PROFESSEUR================#
 #==========HOME============#
 iuto_livret_teacherhomepage:
