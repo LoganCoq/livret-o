@@ -21,6 +21,12 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/createProjectStudent.css') }}"/>
 
+    <style type="text/css" rel="stylesheet">
+        label.required:after {
+            content: "* ";
+        }
+    </style>
+
 {% endblock %}
 
 
@@ -29,6 +35,7 @@
         {# chargement du theme pour le formulaire #}
         {% form_theme form 'bootstrap_3_layout.html.twig' %}
         {{ form(form) }}
+
 
         {# bouton d'annulation / retour accueil #}
         <a type="button" href="{{ path('iuto_livret_studenthomepage') }}" class="btn btn-danger" id="livret_cancel_create_student">
@@ -67,18 +74,9 @@
                 {
                     autoclose: true,
                     language: 'fr',
-                    startView: 'year'
+                    startView: 'decade'
                 }
             );
-
-            $('.from_date').on('changeDate', function (e) {
-
-                $('to_date').datepicker(
-                    {
-                        startDate : $('.from_date').val().toString(),
-                    }
-                )
-            });
 
             $('[data-toggle=confirmation]').confirmation({
                 rootSelector: '[data-toggle=confirmation]',

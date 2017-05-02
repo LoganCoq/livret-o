@@ -13,6 +13,13 @@
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/createProjectStudent.css') }}"/>
 
+    <style type="text/css" rel="stylesheet">
+        label.required:after {
+            content: "* ";
+        }
+    </style>
+
+
 {% endblock %}
 
 {% block content %}
