@@ -868,7 +868,7 @@ class TeacherController extends Controller
             $images = $em->getRepository(Image::class)->findByProjet($image->getProjet());
             $motsCles = $projet->getMotsClesProjet();
 
-            return $this->redirectToRoute('iuto_livret_add_word_image', array(
+            return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
                 'projet' => $projet->getId(),
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
@@ -881,7 +881,7 @@ class TeacherController extends Controller
         }
 
 
-        return $this->render('IUTOLivretBundle:Student:confirmImageDelete.html.twig', array(
+        return $this->render('IUTOLivretBundle:Teacher:confirmImageDelete.html.twig', array(
             'image' => $image,
             'form'   => $form->createView(),
             'statutCAS' => 'professeur',

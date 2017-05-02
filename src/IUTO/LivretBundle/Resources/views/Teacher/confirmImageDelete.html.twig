@@ -19,8 +19,8 @@
     <img href="/images/projects/{{ image.imageName }}" alt="" src="/images/projects/{{ image.imageName }}"/>
 
     {# On met l'id de l'annonce dans la route de l'action du formulaire #}
-    <form action="{{ path('iuto_livret_deleteImage', {'image': image.id}) }}" method="post">
-        <a href="{{ path('iuto_livret_add_word_image', {'projet' : projet.id }) }}" class="btn btn-default">
+    <form action="{{ path('iuto_livret_teacher_deleteImage', {'image': image.id}) }}" method="post">
+        <a href="{{ path('iuto_livret_add_img_word_teacher', {'projet' : projet.id }) }}" class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i>
             Retour à la correction du projet
         </a>

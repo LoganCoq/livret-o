@@ -110,11 +110,11 @@ iuto_livret_projetsValides1:
     defaults: { _controller: IUTOLivretBundle:Teacher:projetsValidesTeacher1 }
 
 iuto_livret_teacher_deleteProjet:
-    path: /delete/projet/{projet}
+    path: /teacher/delete/projet/{projet}
     defaults: { _controller: IUTOLivretBundle:Teacher:deleteProjet }
 
 iuto_livret_teacher_deleteImage:
-    path: /delete/image/{image}
+    path: /teacher/delete/image/{image}
     defaults: { _controller: IUTOLivretBundle:Teacher:deleteImage}
 
 #==================ROUTES MODULE CHEF DEPARTEMENT==========#
