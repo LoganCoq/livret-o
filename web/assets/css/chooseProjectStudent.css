@@ -61,30 +61,30 @@ h2
     margin-left: 1em;
     margin-top: 0.5em;
     font-size: 1.5em;
-    width: 20em;
+    width: 50%;
 }
 
 #livret_modif_btn
 {
-    margin-top: -4.7em;
-    margin-left: 32em;
+    margin-top: -7%;
+    margin-left: 50%;
 }
 #livreto_see_btn
 {
-    margin-top: -4.7em;
-    margin-left: 5em;
+    margin-top: -7%;
+    margin-left: 9%;
 }
 #livreto_see_finished_btn
 {
-    margin-top: -4.7em;
-    margin-left: 32em;
+    margin-top: -7%;
+    margin-left: 50%;
 }
 .list-group-item
 {
     padding: 0.2em;
     margin: 0.2em;
     height: auto;
-    width: 65em;
+    width: 77%;
     margin-left: 4em;
 }
 
@@ -96,6 +96,11 @@ h2
 
 #livreto_download_finished
 {
-    margin-top: -4.7em;
+    margin-top: -7%;
     margin-left: 4em;
+}
+
+#delete_btn
+{
+    margin-left: 4%;
 }
