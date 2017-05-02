@@ -657,11 +657,70 @@ class StudentController extends Controller
         return $this->render('IUTOLivretBundle:Student:finishedProject.html.twig', array(
                 'statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                'routing_info' => array('/create/project',
-                    '/choose/project',
-                    '#',),
+                'routing_info' => array('/create/project', '/choose/project', '#',),
                 'routing_statutCAShome' => '/etudiant',
                 'projet' => $projet
         ));
+    }
+
+
+    public function deleteProjetAction(Request $request, Projet $projet)
+    {
+        // récupération des inforamtions dur l'utilsateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ( $form->isSubmitted() && $form->isValid() )
+        {
+            $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+            foreach ( $images as $img)
+            {
+                $em->remove($img);
+            }
+
+            $em->remove($projet);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('info', "L'annonce a bien été supprimée.");
+
+            $projets = $etudiant->getProjetFaits();
+            $projetsSuivis = array();
+            $projetsFinis = array();
+
+            // récupération des projets fait et non fait de l'étudiant
+            foreach ( $projets as $proj ){
+                if ( $proj->getValiderProjet() == 1){
+                    // ajout du projet à la liste si il est valider
+                    $projetsFinis[] = $proj;
+                }
+                else{
+                    // ajout du projet à la liste si il est en cours de suivi
+                    $projetsSuivis[] = $proj;
+                }
+            }
+
+            return $this->redirectToRoute('iuto_livret_chooseProject', array(
+                'statutCAS' => 'étudiant',
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_info' => array('/create/project', '/choose/project', '#',),
+                'routing_statutCAShome' => '/etudiant',
+                'projetsSuivis' => $projetsSuivis,
+                'projetsFinis' => $projetsFinis,
+                'projet' => $projet,
+            ));
+        }
+
+        return $this->render('IUTOLivretBundle:Student:confirmProjectDelete.html.twig', array(
+            'projet' => $projet,
+            'form'   => $form->createView(),
+            'statutCAS' => 'étudiant',
+            'info' => array('Créer un compte rendu', 'Voir mes projets'),
+            'routing_info' => array('/create/project', '/choose/project', '#',),
+            'routing_statutCAShome' => '/etudiant',
+        ));
+
     }
 }

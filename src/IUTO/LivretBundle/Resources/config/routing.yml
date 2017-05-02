@@ -58,6 +58,11 @@ iuto_livret_finishedProject:
     path: /{projet}/finishedProject
     defaults: { _controller: IUTOLivretBundle:Student:viewFinishedProject }
 
+#====SUPPRIMER UN PROJET====#
+iuto_livret_deleteProject:
+    path: /delete/{projet}
+    defaults: { _controller: IUTOLivretBundle:Student:deleteProjet }
+
 #==================ROUTES MODULE PROFESSEUR================#
 #==========HOME============#
 iuto_livret_teacherhomepage:
