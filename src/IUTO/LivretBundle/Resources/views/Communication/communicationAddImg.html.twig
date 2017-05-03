@@ -1,0 +1,48 @@
+{# on entend base.html.twig pour avoir le menu sur la gauche #}
+{% extends 'base.html.twig' %}
+
+{# block titre pour changer le titre de l'onglet #}
+{% block title %}
+    Livret'O - Ajout d'une image
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/addImage.css") }}"/>
+{% endblock %}
+
+
+{% block content %}
+    <div class="form-complete">
+        {# initialisation du theme pourle formulaire #}
+        {% form_theme form 'VichUploaderBundle:Form:fields.html.twig' %}
+        {# génération automatique du formulaire #}
+        {{ form(form) }}
+
+        {# bouton d'annulation / retour accueil #}
+        <a type="button" href="{{ path('iuto_livret_communication_wordImg_projet', {'projet' : projet.id }) }}" class="btn btn-danger" id="livret_cancel_add_img">
+            {#icone#}
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            Annuler
+        </a>
+    </div>
+{% endblock %}
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap-confirmation.js') }}"></script>
+
+
+    <script type="text/javascript">
+        $(function (){
+            $('[data-toggle=confirmation]').confirmation({
+                rootSelector: '[data-toggle=confirmation]',
+            });
+        });
+    </script>
+
+
+{% endblock %}

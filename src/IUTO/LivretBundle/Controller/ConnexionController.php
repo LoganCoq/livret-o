@@ -27,7 +27,7 @@ class ConnexionController extends Controller
 //        $numPersonne = "p15987";
 
 //        -----ETUDIANT-----
-        $numPersonne = "o2151178";
+//        $numPersonne = "o2151178";
 //        $numPersonne = "o2154952";
 //        $numPersonne = "o2151485";
 //        $numPersonne = "o2153164";
@@ -36,9 +36,7 @@ class ConnexionController extends Controller
 
 
 //        -----COMMUNICATION-----
-//        $numPersonne = "p51955";
-
-
+        $numPersonne = "p51955";
 
         $config = array(
             'host' => 'ldap-univ.iut45.univ-orleans.fr',
