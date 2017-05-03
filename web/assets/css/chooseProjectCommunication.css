@@ -9,11 +9,6 @@
     margin: 2em;
 }
 
-h1
-{
-    text-align: center;
-    margin-top: 5%;
-}
 
 #livret_btn_choose_nvalide
 {
@@ -25,4 +20,42 @@ h1
 {
     margin-top: 5%;
     margin-left: 1%;
+}
+
+
+.projetPublic
+{
+    width: 100%;
+    padding: 1em;
+}
+
+.projetPublic:hover
+{
+    background-color: lightgrey;
+
+}
+
+#choose_project_name
+{
+    font-size: 1.2em;
+}
+
+#listeProjets
+{
+    margin: 3em;
+    text-align: center;
+}
+
+.titre
+{
+    margin-top: 0;
+    text-align: center;
+    padding: 2em;
+    font-size: 3em;
+}
+
+.selection
+{
+    text-align: center;
+    padding: 1em;
 }

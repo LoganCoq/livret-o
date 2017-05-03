@@ -5,13 +5,15 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css"/>
 
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css"/>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/chooseProjectCommunication.css') }}">
 {% endblock %}
 
 {% block content %}
-    <div class="div_home">
-        <h1 class="h1_home"> Projets en cours </h1>
+    <h1 class="titre"> Projets en cours </h1>
 
+    <div class="selection">
         <select id="selectionDpt" class="selectpicker form-control" data-live-search="data-live-search"
                 data-width="auto" multiple="multiple" title="Aucun département sélectionné">
             {% for d in dpt %}
@@ -25,25 +27,26 @@
                 <option value="{{ d }}">20{{ d }}</option>
             {% endfor %}
         </select>
-
+    </div>
         <br/>
 
         <ul id="listeProjets">
             {% for projet in projets %}
                 <li id="o{{ projet.id }}"  class="list-group-item">
                     <p id="choose_project_name">{{ projet.intituleProjet }}</p>
-                    <a href="{{ path('iuto_livret_communication_correct_projet', {'projet': projet.id}) }}" class="btn btn-warning" id="livret_modif_btn">
-                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                        Modifier le projet
-                    </a>
-                    <a href="/generate/{{ projet.id }}" class="btn btn-success" id="l{{ projet.id }}">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                        Aperçu du projet
-                    </a>
+                    <div class="btns">
+                        <a href="{{ path('iuto_livret_communication_correct_projet', {'projet': projet.id}) }}" class="btn btn-warning" id="livret_modif_btn">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            Modifier le projet
+                        </a>
+                        <a href="/generate/{{ projet.id }}" class="btn btn-success" id="l{{ projet.id }}">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                            Aperçu du projet
+                        </a>
+                    </div>
                 </li>
             {% endfor %}
         </ul>
-    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -96,28 +99,28 @@
             for (pro of projets) {
                 if (dptS.length > 0 && AnnS.length > 0) {
                     if (dpt.includes(pro[1]) && ann.includes(pro[2])) {
-                        document.getElementById("o" + pro[0]).hidden = false;
+                        document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
-                        document.getElementById("l" + pro[0]).className = "projetPublicLi";
+                        document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
                     }
 
                     else {
-                        document.getElementById("o" + pro[0]).hidden = true;
+                        document.getElementById("o" + pro[0]).style.display = "none";
                         document.getElementById("o" + pro[0]).className = "";
-                        document.getElementById("l" + pro[0]).className = "";
+                        document.getElementById("l" + pro[0]).className = "btn";
                     }
                 }
                 else {
                     if (dpt.includes(pro[1]) || ann.includes(pro[2])) {
-                        document.getElementById("o" + pro[0]).hidden = false;
+                        document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
-                        document.getElementById("l" + pro[0]).className = "projetPublicLi";
+                        document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
                     }
 
                     else {
-                        document.getElementById("o" + pro[0]).hidden = true;
+                        document.getElementById("o" + pro[0]).style.display = "none";
                         document.getElementById("o" + pro[0]).className = "";
-                        document.getElementById("l" + pro[0]).className = "";
+                        document.getElementById("l" + pro[0]).className = "btn";
                     }
                 }
             }
