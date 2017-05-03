@@ -1,0 +1,28 @@
+
+.btn
+{
+    font-size: 1.2em;
+}
+
+#livret_btn_goto_home
+{
+    margin: 2em;
+}
+
+h1
+{
+    text-align: center;
+    margin-top: 5%;
+}
+
+#livret_btn_choose_nvalide
+{
+    margin-top: 5%;
+    margin-left: 35%;
+}
+
+#livret_btn_choose_valide
+{
+    margin-top: 5%;
+    margin-left: 1%;
+}
