@@ -170,6 +170,11 @@ iuto_livret_create_livret:
     path: /communication/create/livret
     defaults: { _controller: IUTOLivretBundle:Communication:communicationCreateLivret }
 
+#====CHOIX DES PROJETS=====#
+iuto_livret_choose_livret_projects:
+    path: /communication/create/livret/{livret}/chooseProjects
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationSelectProjects }
+
 #=====MODIFICATION LIVRET==#
 iuto_livret_modif_livret:
     path: /communication/modif/livret/{livret}

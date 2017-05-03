@@ -11,6 +11,7 @@ use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Form\AddImageType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
+use IUTO\LivretBundle\Form\LivretChooseProjectsType;
 use IUTO\LivretBundle\Form\NewLivretType;
 use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
 use IUTO\LivretBundle\Form\ProjetCompleteType;
@@ -179,13 +180,13 @@ class CommunicationController extends Controller
             $manager->persist($livretId);
             $manager->flush();
 
-            return $this->redirectToRoute('iuto_livret_communicationChoixLivret', array(
-                    'statutCAS' => 'communication',
-                    'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
-                    'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
-                    'routing_statutCAShome' => '/communication',
-                )
-            );
+            return $this->redirectToRoute('iuto_livret_choose_livret_projects', array(
+                'livret' => $livretId->getId(),
+                'statutCAS' => 'communication',
+                'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+                'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                'routing_statutCAShome' => '/communication',
+            ));
         }
 
         return $this->render('IUTOLivretBundle:Communication:communicationgenerationlivret.html.twig', array(
@@ -203,7 +204,49 @@ class CommunicationController extends Controller
         $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
+        $oldProjects = $livret->getProjets();
 
+        $form = $this->createForm(LivretChooseProjectsType::class);
+        $form->get('projects')->setData($oldProjects);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $newLivret = new Livret();
+
+            $newLivret->setIntituleLivret($livret->getIntituleLivret());
+            $newLivret->setEditoLivret($livret->getEditoLivret());
+            $newLivret->setDateCreationLivret($livret->getDateCreationLivret());
+
+            $newProjects = $form['projects']->getData();
+
+            foreach ($newProjects as $curPro)
+            {
+                $newLivret->addProjet($curPro);
+                $curPro->addLivret($newLivret);
+                $em->persist($curPro);
+            }
+
+            $em->persist($newLivret);
+            $em->remove($livret);
+            $em->flush();
+
+            return $this->redirectToRoute('iuto_livret_communicationChoixLivret', array(
+                'statutCAS' => 'communication',
+                'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+                'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                'routing_statutCAShome' => '/communication',
+            ));
+        }
+
+        return $this->render('IUTOLivretBundle:Communication:communicationChooseLivretProjects.html.twig', array(
+            'livret' => $livret,
+            'form' => $form->createView(),
+            'statutCAS' => 'communication',
+            'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+            'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+            'routing_statutCAShome' => '/communication',
+        ));
     }
 
     public function communicationChooseLivretAction()
