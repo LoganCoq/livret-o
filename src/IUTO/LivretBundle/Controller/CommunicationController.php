@@ -2,11 +2,16 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Departement;
+use IUTO\LivretBundle\Entity\Image;
 use IUTO\LivretBundle\Entity\Livret;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Form\CommentaireCreateType;
 use IUTO\LivretBundle\Form\NewLivretType;
+use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
+use IUTO\LivretBundle\Form\ProjetCompleteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Form\EditoType;
 use IUTO\LivretBundle\Form\LivretCreateType;
@@ -364,5 +369,303 @@ class CommunicationController extends Controller
 
         }
 
+    public function communicationCorrectionProjetAction(Request $request, Projet $projet)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
+
+        $formCorrect = $this->createForm(ProjetCompleteType::class, $projet);
+
+        // insertion des dates en string
+        $formCorrect['dateDebut']->setData($projet->getDateDebut()->format('d/m/Y'));
+        $formCorrect['dateFin']->setData($projet->getDateFin()->format('d/m/Y'));
+
+        // attente d'action sur le formulaire
+        $formCorrect->handleRequest($request);
+
+        //récupération des commentaires appartenant au projet actuel
+        $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+
+        $commentaires = array();
+
+        foreach($com as $elem){
+            $x=array();
+            $user = $elem->getUser();
+            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $elem->getContenu());
+            array_push($x, $elem->getDate());
+            array_push($x, $user->getRole());
+            array_push($commentaires, $x);
+        };
+
+        // vérification de la validité du formulaire et si il à été envoyer
+        if ($formCorrect->isSubmitted() && $formCorrect->isValid())
+        {
+
+//            création d'un nouveau projet afin d'enregistrer les
+            $newProjet = new Projet();
+
+//            récupération et affectation des données du projet dans le nouveau projet
+            $newProjet->setIntituleProjet($projet->getIntituleProjet());
+            $newProjet->setDescripProjet($projet->getDescripProjet());
+            $newProjet->setBilanProjet($projet->getBilanProjet());
+            $newProjet->setMarquantProjet($projet->getMarquantProjet());
+            $newProjet->setMotsClesProjet($projet->getMotsClesProjet());
+            $newProjet->setClientProjet($projet->getClientProjet());
+            $newProjet->setValiderProjet($projet->getValiderProjet());
+            $newProjet->setNomDpt($projet->getNomDpt());
+            $newProjet->setImages($projet->getImages());
+            $newProjet->setDescriptionClientProjet($projet->getDescriptionClientProjet());
+
+//            actualisation du projet associé aux images du projet
+            foreach ( $newProjet->getImages() as $oneImg )
+            {
+                $oneImg->setProjet($newProjet);
+            }
+
+            // recupération des dates dans le formulaire
+            $dateFormD = $formCorrect['dateDebut']->getData();
+            $dateFormF = $formCorrect['dateFin']->getData();
+
+            //affectations des date dans le formulaire au bon format
+            //stockage de la date dans le projet
+            $newProjet->setDateDebut(\DateTime::createFromFormat('d/m/Y', $dateFormD));
+            $newProjet->setDateFin(\DateTime::createFromFormat('d/m/Y', $dateFormF));
+
+//            récupération des étudiants et tuteurs selectionnées dans le formulaire
+            $etus = $formCorrect['etudiants']->getData();
+            $tuts = $formCorrect['tuteurs']->getData();
+
+//            opérations sur les étudiant selectionnées
+            foreach ( $etus as $etu )
+            {
+                $etu->addProjetFait($newProjet);
+                $newProjet->addEtudiant($etu);
+                $em->persist($etu);
+            }
+
+//            opérations sur les tuteurs sélectionnés
+            foreach ( $tuts as $tut )
+            {
+                $tut->addProjetSuivi($newProjet);
+                $newProjet->addTuteur($tut);
+                $em->persist($tut);
+            }
+
+//            actualisation du projet associé aux commentaires
+            foreach ( $com as $c )
+            {
+                $c->setProjet($newProjet);
+            }
+
+            // enregistrement des données dans la base
+            $em->persist($newProjet);
+//            suppression de l'ancien projet
+            $em->remove($projet);
+            $em->flush();
+
+            // affichage d'un message success si le projet à bien été modifié
+            $request->getSession()->getFlashBag()->add('success', 'Projet bien modifié.');
+
+            // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
+            return $this->redirectToRoute('iuto_livret_communication_wordImg_projet', array(
+                    'statutCAS' => 'communication',
+                    'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+                    'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                    'routing_statutCAShome' => '/communication',
+                    'projet' => $newProjet->getId(),
+                )
+            );
+        }
+
+
+
+        //creation du formulaire pour la section de chat/commentaire
+        $formCom = $this->createForm(CommentaireCreateType::class, $com);
+        $formCom->handleRequest($request);
+
+        // vérification de la validité du formulaire si celui-ci à été envoyer
+        if ($formCom->isSubmitted() && $formCom->isValid()) {
+            // création et affectation des informations dans le nouveau commentaire
+            $comReponse = new Commentaire;
+            $comReponse->setDate();
+            $comReponse->setProjet($projet);
+            // ajout de l'user au commentaire
+            $repository2 = $em->getRepository('IUTOLivretBundle:User');
+            $user = $repository2->findOneById($id);
+            $comReponse->setUser($user);
+            $comReponse->setContenu($formCom['contenu']->getData());
+
+            // sauvegarde des commentaires dans la base de données
+            $em->persist($comReponse);
+            $em->flush();
+
+            //actualisation des commentaires une fois le nouveau ajouté
+            //recupération des commentaires
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+            $commentaires = array();
+            foreach($com as $elem){
+                $x=array();
+                $user = $elem->getUser();
+                array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+                array_push($x, $elem->getContenu());
+                array_push($x, $elem->getDate());
+                array_push($x, $user->getRole());
+                array_push($commentaires, $x);
+
+            };
+
+            //rechargement du formulaire pour les commentaires
+            return $this->render('IUTOLivretBundle:Communication:communicationCorrectionProjet.html.twig', array(
+                'formCorrect' => $formCorrect->createView(),
+                'formCom' => $formCom->createView(),
+                'statutCAS' => 'communication',
+                'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+                'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                'routing_statutCAShome' => '/communication',
+                'projet' => $projet,
+                'commentaires' => $commentaires,
+            ));
+        }
+
+
+        // affichage du formulaire pour compléter le projet
+        return $this->render('IUTOLivretBundle:Communication:communicationCorrectionProjet.html.twig', array(
+                'formCorrect' => $formCorrect->createView(),
+                'formCom' => $formCom->createView(),
+                'statutCAS' => 'communication',
+                'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+                'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                'routing_statutCAShome' => '/communication',
+                'projet' => $projet,
+                'commentaires' => $commentaires,
+            )
+        );
+    }
+
+    public function communicationWordImgProjetAction(Request $request, Projet $projet)
+    {
+        //        récupération de l'entity manager
+        $em = $this->getDoctrine()->getManager();
+        //récupération des informations de l'utilisateur connecter
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+//        récupération des mots clés du projet
+        $motsCles = $projet->getMotsClesProjet();
+
+//        création du formulaire d'ajout d'une image
+        $formMot = $this->createForm(ProjetAddKeyWordType::class);
+        $formMot->handleRequest($request);
+
+        //récupération des commentaires appartenant au projet actuel
+        $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+        $commentaires = array();
+        foreach($com as $elem){
+            $x=array();
+            $user = $elem->getUser();
+            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $elem->getContenu());
+            array_push($x, $elem->getDate());
+            array_push($x, $user->getRole());
+            array_push($commentaires, $x);
+        };
+
+        //creation du formulaire pour la section de chat/commentaire
+        $formCom = $this->createForm(CommentaireCreateType::class, $com);
+        $formCom->handleRequest($request);
+
+//        récupération des images du projet
+        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+
+        // vérification de la validité du formulaire si celui-ci à été envoyer
+        if ($formCom->isSubmitted() && $formCom->isValid()) {
+            // création et affectation des informations dans le nouveau commentaire
+            $comReponse = new Commentaire;
+            $comReponse->setDate();
+            $comReponse->setProjet($projet);
+            // ajout de l'user au commentaire
+            $repository2 = $em->getRepository('IUTOLivretBundle:User');
+            $comReponse->setUser($user);
+            $comReponse->setContenu($formCom['contenu']->getData());
+
+            // sauvegarde des commentaires dans la base de données
+            $em->persist($comReponse);
+            $em->flush();
+
+            //actualisation des commentaires une fois le nouveau ajouté
+            //recupération des commentaires associé au projet
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+            $commentaires = array();
+            foreach ($com as $elem) {
+                $x = array();
+                $user = $elem->getUser();
+                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
+                array_push($x, $elem->getContenu());
+                array_push($x, $elem->getDate());
+                array_push($x, $user->getRole());
+                array_push($commentaires, $x);
+
+            };
+
+            //rechargement du formulaire pour les commentaires
+            return $this->render('IUTOLivretBundle:Communication:communicationWordImgProjet.html.twig', array(
+                'formCom' => $formCom->createView(),
+                'formMot' => $formMot->createView(),
+                'statutCAS' => 'communication',
+                'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+                'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                'routing_statutCAShome' => '/communication',
+                'projet' => $projet,
+                'images' => $images,
+                'motsCles' => $motsCles,
+                'commentaires' => $commentaires,
+            ));
+        }
+
+//        vérification de si le formulaire pour l'ajout de mots clés et envoyer et valide
+        if ($formMot->isSubmitted() && $formMot->isValid())
+        {
+
+//            ajouts du mot clé au projet
+            $newWord = $formMot['mot']->getData();
+            $projet->addMotCleProjet($newWord);
+//            actualisation des mots clés du projet pour le rechargement de la page
+            $motsCles = $projet->getMotsClesProjet();
+
+//            enregistrement des donnees
+            $em->persist($projet);
+            $em->flush();
+
+            //rechargement du formulaire pour les mots clés
+            return $this->render('IUTOLivretBundle:Communication:communicationWordImgProjet.html.twig', array(
+                'formCom' => $formCom->createView(),
+                'formMot' => $formMot->createView(),
+                'statutCAS' => 'communication',
+                'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+                'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                'routing_statutCAShome' => '/communication',
+                'projet' => $projet,
+                'images' => $images,
+                'motsCles' => $motsCles,
+                'commentaires' => $commentaires,
+            ));
+        }
+
+//        rendu de la page d'ajout de mots clés et de d'images
+        return $this->render('IUTOLivretBundle:Communication:communicationWordImgProjet.html.twig', array(
+            'formCom' => $formCom->createView(),
+            'formMot' => $formMot->createView(),
+            'statutCAS' => 'communication',
+            'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+            'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+            'routing_statutCAShome' => '/communication',
+            'projet' => $projet,
+            'images' => $images,
+            'motsCles' => $motsCles,
+            'commentaires' => $commentaires,
+        ));
+    }
 
 }

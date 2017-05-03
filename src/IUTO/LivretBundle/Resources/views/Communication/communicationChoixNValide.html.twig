@@ -32,7 +32,7 @@
             {% for projet in projets %}
                 <li id="o{{ projet.id }}"  class="list-group-item">
                     <p id="choose_project_name">{{ projet.intituleProjet }}</p>
-                    <a href="{{ path('iuto_livret_completeProject', {'projet': projet.id}) }}" class="btn btn-warning" id="livret_modif_btn">
+                    <a href="{{ path('iuto_livret_communication_correct_projet', {'projet': projet.id}) }}" class="btn btn-warning" id="livret_modif_btn">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         Modifier le projet
                     </a>
