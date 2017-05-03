@@ -2,12 +2,14 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use Exception;
 use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Departement;
 use IUTO\LivretBundle\Entity\Image;
 use IUTO\LivretBundle\Entity\Livret;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Form\AddImageType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use IUTO\LivretBundle\Form\NewLivretType;
 use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
@@ -668,4 +670,63 @@ class CommunicationController extends Controller
         ));
     }
 
+    public function communicationAddImageAction(Request $request, Projet $projet)
+    {
+        //        récupération de l'entity manager
+        $em = $this->getDoctrine()->getManager();
+//        récupération des données sur l'étudiant connecté
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+//        récupération des images du projet
+        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+
+//        récupération des mots clés du projet
+        $motsCles = $projet->getMotsClesProjet();
+
+//        création d'une entité image qui va être remplie dans le formulaire
+        $image = new Image();
+
+//        creation du formulaire d'ajout d'image
+        $form = $this->createForm(AddImageType::class, $image);
+        $form->handleRequest($request);
+
+//        vérification de l'envoie du formulaire et de sa validité
+        if ($form->isSubmitted() && $form->isValid())
+        {
+//            vérification que la limite du nombre d'images est respectée
+            if ( count($projet->getImages()) < 2 )
+            {
+                $image->setProjet($projet);
+                $em->persist($image);
+                $em->flush();
+            }
+//            exception si il y a déja deux images associées au projet
+            else
+            {
+                throw new Exception('Seulement 2 images peuvent être liées au projet.');
+            }
+
+            // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
+            return $this->redirectToRoute('iuto_livret_communication_wordImg_projet', array(
+                    'statutCAS' => 'communication',
+                    'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+                    'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                    'routing_statutCAShome' => '/communication',
+                    'projet' => $projet->getId(),
+                    'images' => $images,
+                    'motsCles' => $motsCles,
+                )
+            );
+        }
+        return $this->render('IUTOLivretBundle:Communication:communicationAddImg.html.twig', array(
+                'form' => $form->createView(),
+                'statutCAS' => 'communication',
+                'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+                'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                'routing_statutCAShome' => '/communication',
+                'projet' => $projet,
+            )
+        );
+    }
 }
