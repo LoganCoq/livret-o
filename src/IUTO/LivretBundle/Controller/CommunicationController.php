@@ -285,13 +285,13 @@ class CommunicationController extends Controller
             $em->persist($livret);
             $em->flush();
 
-            return $this->redirectToRoute('iuto_livret_communicationChoixLivret', array(
-                    'statutCAS' => 'communication',
-                    'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
-                    'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
-                    'routing_statutCAShome' => '/communication',
-                )
-            );
+            return $this->redirectToRoute('iuto_livret_choose_livret_projects', array(
+                'livret' => $livret->getId(),
+                'statutCAS' => 'communication',
+                'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+                'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                'routing_statutCAShome' => '/communication',
+            ));
         }
 
         return $this->render('IUTOLivretBundle:Communication:communicationCreateLivret.html.twig', array(
