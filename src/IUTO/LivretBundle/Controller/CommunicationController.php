@@ -25,7 +25,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 class CommunicationController extends Controller
 {
 
-
     public function communicationhomeAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -771,5 +770,47 @@ class CommunicationController extends Controller
                 'projet' => $projet,
             )
         );
+    }
+
+    public function communicationDeleteLivretAction(Request $request, Livret $livret)
+    {
+        // récupération des inforamtions dur l'utilsateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ( $form->isSubmitted() && $form->isValid() )
+        {
+
+            foreach ( $livret->getProjets() as $curProj)
+            {
+                $curProj->removeLivret($livret);
+                $em->persist($curProj);
+            }
+
+            $em->remove($livret);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('info', "Le livret a bien été supprimé.");
+
+
+            return $this->redirectToRoute('iuto_livret_communicationChoixLivret', array(
+                'statutCAS' => 'communication',
+                'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+                'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                'routing_statutCAShome' => '/communication',
+            ));
+        }
+
+        return $this->render('IUTOLivretBundle:Communication:confirmLivretDelete.html.twig', array(
+            'livret' => $livret,
+            'form'   => $form->createView(),
+            'statutCAS' => 'communication',
+            'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+            'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+            'routing_statutCAShome' => '/communication',
+        ));
     }
 }

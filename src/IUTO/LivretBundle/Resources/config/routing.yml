@@ -239,6 +239,10 @@ iuto_livret_communicationChoixLivret:
     path: /communication/chooseLivret
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChooseLivret}
 
+iuto_livret_deleteLivret:
+    path: /communication/delete/livret/{livret}
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationDeleteLivret }
+
 #==================ROUTES MODULES ANNEXES============#
 #=====GENERATION PDF GENERATOR=====#
 

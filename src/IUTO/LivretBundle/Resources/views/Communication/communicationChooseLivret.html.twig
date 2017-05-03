@@ -46,6 +46,9 @@
                                 <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
                                 Enregistrer sur l'ordinateur
                             </a>
+                            <a href="{{ path('iuto_livret_deleteLivret', {'livret': livret.id}) }}" id="delete_btn">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
