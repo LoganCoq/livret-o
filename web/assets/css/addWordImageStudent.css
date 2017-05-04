@@ -9,8 +9,9 @@
 
 #livret_add_img
 {
+    padding-top: 5%;
     margin-left: 2em;
-    width: 30em;
+    width: 40%;
     margin-bottom: 2em;
 }
 
@@ -23,14 +24,14 @@
 #images
 {
     margin-left: 2em;
-    width: 55em;
+    width: 60%;
 }
 
 #key_words_project
 {
     margin-top: 2em;
     margin-left: 2em;
-    width: 40em;
+    width: 80%;
 }
 
 .add-word
@@ -41,7 +42,7 @@
 
 #iuto_livretbundle_mot_submit
 {
-    margin-left: 19em;
+    margin-left: 30%;
     margin-top: -5.4em !important;
 }
 
@@ -54,7 +55,7 @@
 
 #livret_cancel_create_student
 {
-    margin-left: 30em;
+    margin-left: 40%;
     margin-top: 3em;
     margin-bottom: 5em;
 }
@@ -67,7 +68,7 @@
 
 #iuto_livretbundle_mot_mot
 {
-    width: 20em;
+    width: 26%;
     margin-left: 2em;
 }
 

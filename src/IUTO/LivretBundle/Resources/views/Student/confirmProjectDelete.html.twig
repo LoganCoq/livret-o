@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}
+
+    Suppression - {{ parent() }}
+
+{% endblock %}
+
+
+{% block content %}
+
+
+    <h2>Supprimer</h2>
+    <p>
+        Etes-vous certain de vouloir supprimer le projet "{{ projet.intituleProjet }}" ?
+    </p>
+
+    {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+    <form action="{{ path('iuto_livret_deleteProject', {'projet': projet.id}) }}" method="post">
+        <a href="{{ path('iuto_livret_chooseProject') }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour au choix des projets
+        </a>
+        {% if projet.validerProjet != true %}
+            <input type="submit" value="Supprimer" class="btn btn-danger" />
+            {# Ceci va générer le champ CSRF #}
+            {{ form_rest(form) }}
+        {% endif %}
+    </form>
+
+{% endblock %}

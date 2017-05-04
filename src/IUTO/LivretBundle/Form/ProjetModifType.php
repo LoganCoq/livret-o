@@ -77,8 +77,14 @@ class ProjetModifType extends AbstractType
             ->add('submit', SubmitType::class, array(
                 'label' => 'Suivant',
                 'attr' => [
-                    'onclick' => "return confirm('Etes vous sûr ?')",
                     'class' => 'btn btn-primary',
+                    'data-toggle' => 'confirmation',
+                    'data-singleton' => true,
+                    'data-popout' => true,
+                    'data-title' => 'Êtes-vous sûr ?',
+//                    'data-content' => 'L\'image sera ajoutée au projet',
+                    'data-btn-ok-label' => 'Continuer',
+                    'data-btn-cancel-label' => 'Annuler'
                 ],
             ));
     }

@@ -1,7 +1,7 @@
 
-.form-group
+#iuto_livretbundle_projet >  .form-group
 {
-    width: 50em;
+    width: 55%;
 }
 
 .control-label
@@ -34,7 +34,6 @@
 
 #iuto_livretbundle_projet_descripProjet
 {
-    /*width: 50em;*/
     height: 20em;
     font-size: 1.2em;
     margin-left: 4em;
@@ -43,7 +42,6 @@
 
 #iuto_livretbundle_projet_bilanProjet
 {
-    /*width: 50em;*/
     height: 12em;
     font-size: 1.2em;
     margin-left: 4em;
@@ -63,7 +61,7 @@ form[name=iuto_livretbundle_projet]
 
 #iuto_livretbundle_projet_intituleProjet
 {
-    width: 30em;
+    width: 60%;
     height: 3em;
     margin-left: 4em;
 }
@@ -84,7 +82,14 @@ form[name=iuto_livretbundle_projet]
 
 #iuto_livretbundle_projet_clientProjet
 {
+    width: 50%;
     margin-left: 4em;
+}
+
+#iuto_livretbundle_projet_descriptionClientProjet
+{
+    margin-left: 4em;
+    height: 10em;
 }
 
 #livret_cancel_create_student

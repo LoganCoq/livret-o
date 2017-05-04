@@ -58,6 +58,15 @@ iuto_livret_finishedProject:
     path: /{projet}/finishedProject
     defaults: { _controller: IUTOLivretBundle:Student:viewFinishedProject }
 
+#====SUPPRIMER UN PROJET====#
+iuto_livret_deleteProject:
+    path: /delete/{projet}
+    defaults: { _controller: IUTOLivretBundle:Student:deleteProjet }
+
+iuto_livret_deleteImage:
+    path: /delete/image/{image}
+    defaults: { _controller: IUTOLivretBundle:Student:deleteImage }
+
 #==================ROUTES MODULE PROFESSEUR================#
 #==========HOME============#
 iuto_livret_teacherhomepage:
@@ -99,6 +108,14 @@ iuto_livret_add_img_teacher:
 iuto_livret_projetsValides1:
     path: /projetsValides1
     defaults: { _controller: IUTOLivretBundle:Teacher:projetsValidesTeacher1 }
+
+iuto_livret_teacher_deleteProjet:
+    path: /teacher/delete/projet/{projet}
+    defaults: { _controller: IUTOLivretBundle:Teacher:deleteProjet }
+
+iuto_livret_teacher_deleteImage:
+    path: /teacher/delete/image/{image}
+    defaults: { _controller: IUTOLivretBundle:Teacher:deleteImage}
 
 #==================ROUTES MODULE CHEF DEPARTEMENT==========#
 #==========HOME============#
@@ -148,6 +165,21 @@ iuto_livret_communicationhomepage:
     path: /communication
     defaults: { _controller: IUTOLivretBundle:Communication:communicationhome }
 
+#=====CREATION LIVRET======#
+iuto_livret_create_livret:
+    path: /communication/create/livret
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationCreateLivret }
+
+#====CHOIX DES PROJETS=====#
+iuto_livret_choose_livret_projects:
+    path: /communication/create/livret/{livret}/chooseProjects
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationSelectProjects }
+
+#=====MODIFICATION LIVRET==#
+iuto_livret_modif_livret:
+    path: /communication/modif/livret/{livret}
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationModifLivret }
+
 #==========EDITO===========#
 iuto_livret_communicationEdito:
     path: /communication/edito
@@ -159,8 +191,8 @@ iuto_livret_communicationEditoPrevisualiser:
     defaults: { _controller: IUTOLivretBundle:EditoGenerator:generator }
 
 #=====GENERATION LIVRET====#
-iuto_livret_communicationgenerationlivret:
-    path: /communication/generation
+iuto_livret_communication_livret_project_choice:
+    path: /communication/create/{livretId}/projects
     defaults: { _controller: IUTOLivretBundle:Communication:communicationgenerationlivret }
 
 #=====GENERER LIVRET====#
@@ -187,6 +219,18 @@ iuto_livret_communicationChoixNValide:
     path: /communication/selection/nvalide
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChoixNValide}
 
+iuto_livret_communication_correct_projet:
+    path: /communication/projet/{projet}/correction
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationCorrectionProjet }
+
+iuto_livret_communication_wordImg_projet:
+    path: /communication/projet/{projet}/wordImg
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationWordImgProjet}
+
+iuto_livret_communication_addImg_projet:
+    path: /communication/projet/{projet}/addImg
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationAddImage}
+
 iuto_livret_communicationSelectionLivret:
     path: /communication/selectionlivret
     defaults: { _controller: IUTOLivretBundle:Communication:communicationSelectionLivret}
@@ -194,6 +238,10 @@ iuto_livret_communicationSelectionLivret:
 iuto_livret_communicationChoixLivret:
     path: /communication/chooseLivret
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChooseLivret}
+
+iuto_livret_deleteLivret:
+    path: /communication/delete/livret/{livret}
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationDeleteLivret }
 
 #==================ROUTES MODULES ANNEXES============#
 #=====GENERATION PDF GENERATOR=====#
@@ -211,7 +259,11 @@ iuto_livret_login:
 
 iuto_livret_download:
     path: /download/{id}
-    defaults: { _controller: IUTOLivretBundle:PDFGenerator:download}
+    defaults: { _controller: IUTOLivretBundle:PDFGenerator:download }
+
+iuto_livret_download_livret:
+    path: /download/livret/{id}
+    defaults: { _controller: IUTOLivretBundle:PDFGenerator:downloadLivret }
 
 iuto_livret_livretgenerator:
     path: /generate/livret/{idLivret}

@@ -1,6 +1,6 @@
 .form-group
 {
-    width: 70em;
+    width: 70%;
 }
 
 .control-label
@@ -8,7 +8,7 @@
     margin: 1em 1em 1em 0em;
     padding: auto;
     font-size: 1.5em;
-    margin-right: 30em;
+    margin-right: 30%;
 }
 
 .form-control
@@ -19,21 +19,7 @@
     /*text-align: center;*/
 }
 
-#iuto_livretbundle_projet_descripProjet
-{
-    width: 40em;
-    height: 20em;
-    font-size: 1.2em;
-    margin-left: 4em;
-}
 
-#iuto_livretbundle_projet_bilanProjet
-{
-    width: 40em;
-    height: 12em;
-    font-size: 1.2em;
-    margin-left: 4em;
-}
 
 #iuto_livretbundle_projet_submit
 {
@@ -48,7 +34,7 @@ form[name=iuto_livretbundle_projet]
 
 #iuto_livretbundle_projet_intituleProjet
 {
-    width: 30em;
+    width: 65%;
     height: 3em;
     margin-left: 4em;
 }
@@ -71,18 +57,41 @@ form[name=iuto_livretbundle_projet]
 {
     margin-left: 4em;
     height: 3em;
-    width: 20em;
+    width: 30%;
+}
+
+.btn-group
+{
+    width: 70% !important;
+}
+
+
+#livret_cancel_create_student
+{
+    margin-left: 70%;
+    margin-top: -7.5em;
+    font-size: 1.2em;
 }
 
 #iuto_livretbundle_projet_clientProjet
 {
     margin-left: 4em;
-    width: 20em;
+    width: 40%;
 }
 
-#livret_cancel_create_student
+
+#iuto_livretbundle_projet_descripProjet
 {
-    margin-left: 45em;
-    margin-top: -7.5em;
+    width: 80%;
+    height: 20em;
     font-size: 1.2em;
+    margin-left: 4em;
+}
+
+#iuto_livretbundle_projet_bilanProjet
+{
+    width: 80%;
+    height: 12em;
+    font-size: 1.2em;
+    margin-left: 4em;
 }

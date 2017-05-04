@@ -101,11 +101,28 @@ class TeacherController extends Controller
         $formModif = $this->createForm(ProjetModifType::class, $projet);
 
         // insertion des dates en string
-        $formModif['dateDebut']->setData($projet->getDateDebut()->format('m/d/Y'));
-        $formModif['dateFin']->setData($projet->getDateFin()->format('m/d/Y'));
+        $formModif['dateDebut']->setData($projet->getDateDebut()->format('d/m/Y'));
+        $formModif['dateFin']->setData($projet->getDateFin()->format('d/m/Y'));
 
 //        mise du formulaire en attente de submit
         $formModif->handleRequest($request);
+
+        //        récupération des commentaires appartenant au porjet actuel
+        $repositoryCommentaire = $em->getRepository('IUTOLivretBundle:Commentaire');
+        $com = $repositoryCommentaire->findByProjet($projet);
+
+        //recuperation des commentaires
+        $commentaires = array();
+        foreach($com as $elem)
+        {
+            $x=array();
+            $user = $elem->getUser();
+            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $elem->getContenu());
+            array_push($x, $elem->getDate());
+            array_push($x, $user->getRole());
+            array_push($commentaires, $x);
+        };
 
 //        vérification de la validité du formulaire et de si il à été envoyer
         if ($formModif->isSubmitted() && $formModif->isValid())
@@ -122,14 +139,15 @@ class TeacherController extends Controller
             $newProjet->setValiderProjet($projet->getValiderProjet());
             $newProjet->setNomDpt($projet->getNomDpt());
             $newProjet->setImages($projet->getImages());
+            $newProjet->setDescriptionClientProjet(($projet->getDescriptionClientProjet()));
 
 //            récupération des dates du formulaire
             $dateFormD = $formModif['dateDebut']->getData();
             $dateFormF = $formModif['dateFin']->getData();
 
 //            affectation des valeurs des dates dans le projet
-            $newProjet->setDateDebut(new \DateTime($dateFormD));
-            $newProjet->setDateFin(new \DateTime($dateFormF));
+            $newProjet->setDateDebut(\DateTime::createFromFormat('d/m/Y', $dateFormD));
+            $newProjet->setDateFin(\DateTime::createFromFormat('d/m/Y', $dateFormF));
 
             $etus = $formModif['etudiants']->getData();
             $tuts = $formModif['tuteurs']->getData();
@@ -147,6 +165,11 @@ class TeacherController extends Controller
                 $tut->addProjetSuivi($newProjet);
                 $newProjet->addTuteur($tut);
                 $em->persist($tut);
+            }
+
+            foreach ( $com as $c )
+            {
+                $c->setProjet($newProjet);
             }
 
             // enregistrement des données dans la base
@@ -167,22 +190,7 @@ class TeacherController extends Controller
             );
         }
 
-//        récupération des commentaires appartenant au porjet actuel
-        $repositoryCommentaire = $em->getRepository('IUTOLivretBundle:Commentaire');
-        $com = $repositoryCommentaire->findByProjet($projet);
 
-        //recuperation des commentaires
-        $commentaires = array();
-        foreach($com as $elem)
-        {
-            $x=array();
-            $user = $elem->getUser();
-            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
-            array_push($x, $elem->getContenu());
-            array_push($x, $elem->getDate());
-            array_push($x, $user->getRole());
-            array_push($commentaires, $x);
-        };
 
         $idProjet = $projet->getId();
 
@@ -542,13 +550,13 @@ class TeacherController extends Controller
             $em->flush();
 
 //            rendu du home de teacher
-            return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
+            return $this->redirectToRoute('iuto_livret_correctionProf4',
                 array(
                     'formSetValide' => $formSetValide->createView(),
                     'formSetMarquant' => $formSetMarquant->createView(),
                     'formUnSetValide' => $formUnSetValide->createView(),
                     'formUnSetMarquant' => $formUnSetMarquant->createView(),
-                    'id' => $id,
+                    'projet' => $projet->getId(),
                     'statutCAS' => 'professeur',
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
                     'routing_statutCAShome' => '/professeur',
@@ -557,27 +565,27 @@ class TeacherController extends Controller
                     'routing_options' => array('/correctionProf1', '/projetsValides1'),
                     'professeur' => $professeur,
                     'pagePrec' => '/'.$idProjet.'/correctionProf3',
-                    'projet' => $projet,
+                    'projetO' => $projet,
                 ));
         }
 
         if ($formUnSetValide->isSubmitted() && $formUnSetValide->isValid())
         {
 //            validation du projet si le formaulaire est envoyé
-            $projet->setValiderProjet(false);
+            $projet->setValiderProjet(0);
 
 //            enregistrement des données dans la base
             $em->persist($projet);
             $em->flush();
 
 //            rendu du home de teacher
-            return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
+            return $this->redirectToRoute('iuto_livret_correctionProf4',
                 array(
                     'formSetValide' => $formSetValide->createView(),
                     'formSetMarquant' => $formSetMarquant->createView(),
                     'formUnSetValide' => $formUnSetValide->createView(),
                     'formUnSetMarquant' => $formUnSetMarquant->createView(),
-                    'id' => $id,
+                    'projet' => $projet->getId(),
                     'statutCAS' => 'professeur',
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
                     'routing_statutCAShome' => '/professeur',
@@ -586,7 +594,7 @@ class TeacherController extends Controller
                     'routing_options' => array('/correctionProf1', '/projetsValides1'),
                     'professeur' => $professeur,
                     'pagePrec' => '/'.$idProjet.'/correctionProf3',
-                    'projet' => $projet,
+                    'projetO' => $projet,
                 ));
         }
 
@@ -597,13 +605,13 @@ class TeacherController extends Controller
             $em->persist($projet);
             $em->flush();
 
-            return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
+            return $this->redirectToRoute('iuto_livret_correctionProf4',
                 array(
                     'formSetValide' => $formSetValide->createView(),
                     'formSetMarquant' => $formSetMarquant->createView(),
                     'formUnSetValide' => $formUnSetValide->createView(),
                     'formUnSetMarquant' => $formUnSetMarquant->createView(),
-                    'id' => $id,
+                    'projet' => $projet->getId(),
                     'statutCAS' => 'professeur',
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
                     'routing_statutCAShome' => '/professeur',
@@ -612,7 +620,7 @@ class TeacherController extends Controller
                     'routing_options' => array('/correctionProf1', '/projetsValides1'),
                     'professeur' => $professeur,
                     'pagePrec' => '/'.$idProjet.'/correctionProf3',
-                    'projet' => $projet,
+                    'projetO' => $projet,
                 ));
         }
         if ($formUnSetMarquant->isSubmitted() && $formUnSetMarquant->isValid())
@@ -622,13 +630,13 @@ class TeacherController extends Controller
             $em->persist($projet);
             $em->flush();
 
-            return $this->render('IUTOLivretBundle:Teacher:correctionTeacher4.html.twig',
+            return $this->redirectToRoute('iuto_livret_correctionProf4',
                 array(
                     'formSetValide' => $formSetValide->createView(),
                     'formSetMarquant' => $formSetMarquant->createView(),
                     'formUnSetValide' => $formUnSetValide->createView(),
                     'formUnSetMarquant' => $formUnSetMarquant->createView(),
-                    'id' => $id,
+                    'projet' => $projet->getId(),
                     'statutCAS' => 'professeur',
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
                     'routing_statutCAShome' => '/professeur',
@@ -637,7 +645,7 @@ class TeacherController extends Controller
                     'routing_options' => array('/correctionProf1', '/projetsValides1'),
                     'professeur' => $professeur,
                     'pagePrec' => '/'.$idProjet.'/correctionProf3',
-                    'projet' => $projet,
+                    'projetO' => $projet,
                 ));
         }
 
@@ -648,13 +656,13 @@ class TeacherController extends Controller
                 'formSetMarquant' => $formSetMarquant->createView(),
                 'formUnSetValide' => $formUnSetValide->createView(),
                 'formUnSetMarquant' => $formUnSetMarquant->createView(),
-                'id' => $id,
+                'projet' => $id,
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/correctionProf1', '/projetsValides1'),
                 'pagePrec' => '/'.$idProjet.'/correctionProf3',
-                'projet' => $projet,
+                'projetO' => $projet,
                 )
         );
     }
@@ -753,6 +761,135 @@ class TeacherController extends Controller
             'pagePrec' => '/professeur',
         ));
 
+    }
+
+//    controlleur pour l'affichage du formulaire de suppression d'un projet
+    public function deleteProjetAction(Request $request, Projet $projet)
+    {
+        // récupération des inforamtions dur l'utilsateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+//        creation d'un formulaire vide pour supprimmer le projet
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ( $form->isSubmitted() && $form->isValid() )
+        {
+//            suppression des images associées au projet
+            $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+            foreach ( $images as $img)
+            {
+                $em->remove($img);
+            }
+//            suppression des commentaires associés au projet
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+            foreach ( $com as $c)
+            {
+                $em->remove($c);
+            }
+
+//            suppression du projet et enregistrement des modification dans la base de données
+            $em->remove($projet);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('info', "Le projet a bien été supprimé.");
+
+//            redirection vers la page de choix des projets non finis
+            return $this->redirectToRoute('iuto_livret_correctionProf1', array(
+                'statutCAS' => 'professeur',
+                'routing_statutCAShome' => '/professeur',
+                'info' => array('Demandes de correction', 'Projets validés'),
+                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'projet' => $projet,
+            ));
+        }
+
+//        creation du rendu de la prage de suppression d'un projet
+        return $this->render('IUTOLivretBundle:Teacher:confirmProjectDelete.html.twig', array(
+            'projet' => $projet,
+            'form'   => $form->createView(),
+            'statutCAS' => 'professeur',
+            'routing_statutCAShome' => '/professeur',
+            'info' => array('Demandes de correction', 'Projets validés'),
+            'routing_info' => array('/correctionProf1', '/projetsValides1'),
+        ));
+    }
+
+    public function deleteImageAction(Request $request, Image $image)
+    {
+        // récupération des inforamtions dur l'utilsateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $teacher = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+        $projet = $image->getProjet();
+
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ( $form->isSubmitted() && $form->isValid() )
+        {
+
+            $em->remove($image);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('info', "L'image a bien été supprimée.");
+
+            $projets = $teacher->getProjetFaits();
+            $projetsSuivis = array();
+            $projetsFinis = array();
+
+            // récupération des projets fait et non fait de l'étudiant
+            foreach ( $projets as $proj ){
+                if ( $proj->getValiderProjet() == 1){
+                    // ajout du projet à la liste si il est valider
+                    $projetsFinis[] = $proj;
+                }
+                else{
+                    // ajout du projet à la liste si il est en cours de suivi
+                    $projetsSuivis[] = $proj;
+                }
+            }
+            //actualisation des commentaires une fois le nouveau ajouté
+            //recupération des commentaires associé au projet
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+            $commentaires = array();
+            foreach ($com as $elem) {
+                $x = array();
+                $user = $elem->getUser();
+                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
+                array_push($x, $elem->getContenu());
+                array_push($x, $elem->getDate());
+                array_push($x, $user->getRole());
+                array_push($commentaires, $x);
+
+            };
+
+            $images = $em->getRepository(Image::class)->findByProjet($image->getProjet());
+            $motsCles = $projet->getMotsClesProjet();
+
+            return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
+                'projet' => $projet->getId(),
+                'statutCAS' => 'professeur',
+                'routing_statutCAShome' => '/professeur',
+                'info' => array('Demandes de correction', 'Projets validés'),
+                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'images' => $images,
+                'motsCles' => $motsCles,
+                'commentaires' => $commentaires,
+            ));
+        }
+
+
+        return $this->render('IUTOLivretBundle:Teacher:confirmImageDelete.html.twig', array(
+            'image' => $image,
+            'form'   => $form->createView(),
+            'statutCAS' => 'professeur',
+            'routing_statutCAShome' => '/professeur',
+            'info' => array('Demandes de correction', 'Projets validés'),
+            'routing_info' => array('/correctionProf1', '/projetsValides1'),
+            'projet' => $projet,
+        ));
     }
 
 }

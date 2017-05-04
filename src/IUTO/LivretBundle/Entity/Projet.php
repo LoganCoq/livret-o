@@ -64,6 +64,12 @@ class Projet
      */
     private $clientProjet;
     /**
+     * @var string
+     *
+     * @ORM\Column(name="descriptionClientProjet", type="text", nullable=true)
+     */
+    private $descriptionClientProjet;
+    /**
      * @var bool
      *
      * @ORM\Column(name="validerProjet", type="boolean")
@@ -536,5 +542,29 @@ class Projet
     public function setimages($listeImages)
     {
         $this->images = $listeImages;
+    }
+
+    /**
+     * Get descriptionClientProjet
+     *
+     * @return string
+     */
+    public function getDescriptionClientProjet()
+    {
+        return $this->descriptionClientProjet;
+    }
+
+    /**
+     * Set descriptionClientProjet
+     *
+     * @param string $descriptionClientProjet
+     *
+     * @return Projet
+     */
+    public function setDescriptionClientProjet($descriptionClientProjet)
+    {
+        $this->descriptionClientProjet = $descriptionClientProjet;
+
+        return $this;
     }
 }

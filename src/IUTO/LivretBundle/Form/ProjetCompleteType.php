@@ -29,6 +29,10 @@ class ProjetCompleteType extends AbstractType
                 'label' => 'Client',
                 'required' => false,
             ))
+            ->add('descriptionClientProjet', TextareaType::class, array(
+                'label' => 'Description du client',
+                'required' => false,
+            ))
             ->add('descripProjet', TextareaType::class, array(
                 'label' => 'Description',
                 'required' => false,
@@ -93,14 +97,15 @@ class ProjetCompleteType extends AbstractType
             ->add('submit', SubmitType::class, array(
                 'label' => 'Enregistrer modifications et continuer',
                 'attr' => [
-                    'onclick' => "return confirm('Etes vous sûr ?')",
                     'class' => 'btn-primary',
+                    'data-toggle' => 'confirmation',
+                    'data-singleton' => true,
+                    'data-popout' => true,
+                    'data-title' => 'Êtes-vous sûr ?',
+                    'data-content' => 'Les modifications seront enregistrées',
+                    'data-btn-ok-label' => 'Continuer',
+                    'data-btn-cancel-label' => 'Annuler'
                 ],
-//                'attr' => [
-//                    'data-toggle' => "confirmation",
-//                    'class' => "btn-default confirmation",
-//                    'style' => "margin: 2em 10em;",
-//                ],
             ))
             ;
     }

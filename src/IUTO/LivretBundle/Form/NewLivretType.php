@@ -4,11 +4,12 @@ namespace IUTO\LivretBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class AddImageType extends AbstractType
+class NewLivretType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -16,26 +17,27 @@ class AddImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imageFile', VichImageType::class, [
-                'label' => 'Ajout d\'une image',
+            ->add('intituleLivret', TextType::class, array(
+                'label' => 'Intitulé livret',
                 'required' => true,
+            ))
+            ->add('editoLivret', TextareaType::class, array(
+                'label' => 'Edito livret',
+                'required' => false,
+            ))
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Passer au choix des projets',
                 'attr' => [
-                    'class' => 'btn btn-default'
-                ]
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Ajouter l\'image',
-                'attr' => [
-                    'class' => 'btn btn-success',
                     'data-toggle' => 'confirmation',
                     'data-singleton' => true,
                     'data-popout' => true,
                     'data-title' => 'Êtes-vous sûr ?',
-                    'data-content' => 'L\'image sera ajoutée au projet',
+                    'data-content' => 'Le livret sera créer',
                     'data-btn-ok-label' => 'Continuer',
                     'data-btn-cancel-label' => 'Annuler'
                 ]
-            ]);
+            ))
+        ;
     }
 
     /**
@@ -44,7 +46,7 @@ class AddImageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'IUTO\LivretBundle\Entity\Image'
+            'data_class' => 'IUTO\LivretBundle\Entity\Livret',
         ));
     }
 
@@ -53,7 +55,7 @@ class AddImageType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'iuto_livretbundle_image';
+        return 'iuto_livretbundle_livret';
     }
 
 

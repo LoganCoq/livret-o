@@ -2,16 +2,17 @@
 
 namespace IUTO\LivretBundle\Form;
 
+use IUTO\LivretBundle\Entity\Projet;
+use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProjetContenuType extends AbstractType
+class LivretChooseProjectsType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -19,34 +20,31 @@ class ProjetContenuType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('clientProjet', TextType::class, array(
-                'label' => 'Client',
-                'required' => false,
-            ))
-            ->add('descriptionClientProjet', TextareaType::class, array(
-                'label' => 'Description du client',
-                'required' => false,
-            ))
-            ->add('descripProjet', TextareaType::class, array(
-                'label' => 'Description du projet',
-                'required' => false,
-            ))
-            ->add('bilanProjet', TextareaType::class, array(
-                'label' => 'Bilan du projet',
-                'required' => false,
+            ->add('projects', EntityType::class, array(
+                'class' => Projet::class,
+                'label' => 'Projets',
+                'choice_label' => function (Projet $projet) {
+                    return $projet->getIntituleProjet();
+                },
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'selectpicker',
+                    'data-live-search' => true,
+                    'data-width' => 'auto',
+                ],
             ))
             ->add('submit', SubmitType::class, array(
-                'label' => 'Enregistrer le contenu et continuer',
+                'label' => 'Valider la selection',
                 'attr' => [
-                    'class' => "btn-primary",
+                    'class' => 'btn btn-primary',
                     'data-toggle' => 'confirmation',
                     'data-singleton' => true,
                     'data-popout' => true,
                     'data-title' => 'Êtes-vous sûr ?',
-                    'data-content' => 'Le projet sera enregistré',
+                    'data-content' => 'Le livret sera créer avec les projets sélectionnés',
                     'data-btn-ok-label' => 'Continuer',
                     'data-btn-cancel-label' => 'Annuler'
-                ],
+                ]
             ));
     }
 
@@ -56,7 +54,7 @@ class ProjetContenuType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'IUTO\LivretBundle\Entity\Projet'
+            'data_class' => null,
         ));
     }
 
@@ -65,7 +63,7 @@ class ProjetContenuType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'iuto_livretbundle_projet';
+        return 'iuto_livretbundle_livret_projects';
     }
 
 

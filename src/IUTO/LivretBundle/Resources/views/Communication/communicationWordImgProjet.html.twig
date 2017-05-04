@@ -30,7 +30,7 @@
                 <label class="control-label" for="project_btn_add_img">
                     Images
                 </label>
-                <a type="button" href="{{ path('iuto_livret_add_img', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
+                <a type="button" href="{{ path('iuto_livret_communication_addImg_projet', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
                     {# icone #}
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     Ajouter une image au projet
@@ -65,13 +65,13 @@
             </div>
         </div>
 
-        <a type="button" href="{{ path('iuto_livret_confirmCompleteProject', {'projet': projet.id }) }}" class="btn btn-success" id="correction_accept_wordImg">
+        <a type="button" href="{{ path('iuto_livret_communicationChoix', {'projet': projet.id }) }}" class="btn btn-success" id="correction_accept_wordImg">
             <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
             Terminer
         </a>
 
         {# bouton retour accueil #}
-        <a type="button" href="{{ path('iuto_livret_chooseProject') }}" class="btn btn-danger" id="livret_cancel_create_student">
+        <a type="button" href="{{ path('iuto_livret_communicationChoix') }}" class="btn btn-danger" id="livret_cancel_create_student">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             Annuler
         </a>
@@ -109,8 +109,8 @@
                         {% endif %}
 
                         {# vérification du role de l'utilisateur pour le commentaire actuel #}
-                        {# le commentaire se trouve à gauche si ce n'est pas un étudiant #}
-                        {% if commentaires[o][3] == "ROLE_faculty" or commentaires[o][3] == "ROLE_employee" %}
+                        {# le commentaire se trouve à gauche si c'est un étudiant #}
+                        {% if commentaires[o][3] == "ROLE_student" %}
                             <div class="direct-chat-msg-left">
                                 {% if o != 0 %}
                                     {# affichage du nom de l'utilisateur si le commentaire précédent n'avais pas le même propriétaire #}
@@ -131,8 +131,8 @@
                                 </div>
                             </div>
                         {% endif %}
-                        {# le commentaire se met à droite si c'est un étudiant #}
-                        {% if commentaires[o][3] == "ROLE_student" %}
+                        {# le commentaire se met à droite si c'est un professeur ou un employe#}
+                        {% if commentaires[o][3] == "ROLE_faculty" or commentaires[o][3] == "ROLE_employee" %}
                             <div class="direct-chat-msg-right">
                                 {% if o != 0 %}
                                     {# affichage du nom de l'utilisateur si le commentaire précédent n'avais pas le même propriétaire #}

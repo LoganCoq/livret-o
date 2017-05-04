@@ -3,7 +3,6 @@
 namespace IUTO\LivretBundle\Form;
 
 use IUTO\LivretBundle\Entity\User;
-use IUTO\LivretBundle\Repository\ProjetRepository;
 use IUTO\LivretBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -27,14 +26,14 @@ class ProjetCreateType extends AbstractType
                 'label' => 'Date de début',
                 'attr' => [
                     'data-provide' => 'datepicker',
-                    'class' => 'datepicker',
+                    'class' => 'datepicker from_date',
                 ],
             ))
             ->add('dateFin', TextType::class, array(
                 'label' => 'Date de fin',
                 'attr' => [
                     'data-provide' => 'datepicker',
-                    'class' => 'datepicker',
+                    'class' => 'datepicker to_date',
                 ],
             ))
             ->add('nomDep', TextType::class, array(
@@ -79,23 +78,17 @@ class ProjetCreateType extends AbstractType
                         ->where("u.role <> 'Etudiant' and u.role <> 'ROLE_student' and u.role <> 'ROLE_employee'");
                 }
             ))
-//            ->add('motsClesProjet', TextType::class, array(
-//                'label' => 'Mots clés projet',
-//                'choice_label' => function ( string $mot){
-//                    return $mot)
-//                },
-//                'multiple' => true,
-//                'attr' => [
-//                    'class' => 'selectpicker',
-//                    'data-live-search' => true,
-//                    'data-width' => 'auto'
-//                ],
-//            ))
             ->add('submit', SubmitType::class, array(
                 'label' => 'Suivant',
                 'attr' => [
-                    'onclick' => "return confirm('Etes vous sûr ?')",
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-primary',
+                    'data-toggle' => 'confirmation',
+                    'data-singleton' => true,
+                    'data-popout' => true,
+                    'data-title' => 'Êtes-vous sûr ?',
+                    'data-content' => 'Le projet sera enregistré',
+                    'data-btn-ok-label' => 'Continuer',
+                    'data-btn-cancel-label' => 'Annuler'
                 ]
             ));
     }

@@ -113,8 +113,9 @@ ul {
 
 .div_home {
     text-align: center;
-    padding-top: 77vh;
-    transform: translateY(-50%);
+    padding-top: 17%;
+    /*padding-top: 77vh;*/
+    /*transform: translateY(-50%);*/
 }
 
 /* =====
@@ -136,7 +137,7 @@ ul {
 .popup-box {
     background-color: #ffffff;
     border: 1px solid #b0b0b0;
-    height: 67%;
+    height: 89.2%;
     right: 0;
     width: 22%;
     font-family: 'Open Sans', sans-serif;
@@ -149,11 +150,11 @@ ul {
     border: 1px solid #b0b0b0;
     right: 0;
     width: 22%;
-    height: 12%;
+    height: 20%;
     font-family: 'Open Sans', sans-serif;
     float: right;
     position: fixed;
-    top: 67%;
+    top: 69.2%;
 }
 
 .popup-box .popup-head {
@@ -161,8 +162,8 @@ ul {
     clear: both;
     color: #7b7b7b;
     display: inline-table;
-    font-size: 21px;
-    padding: 7px 10px;
+    font-size: 159%;
+    padding: 2% 3%;
     width: 100%;
     font-family: Oswald, serif;
 }
@@ -179,8 +180,8 @@ ul {
 
 .popup-box .popup-messages {
     background: rgb(68, 25, 25) none repeat scroll 0 0;
-    height: 475px;
     overflow: auto;
+    height: 71.3%;
 }
 
 .direct-chat-messages-left {
@@ -313,12 +314,8 @@ ul {
 }
 
 .projetPublicLi {
-    width: 31.7em;
-    display: inline-block;
-    margin: 0.5em 30em;
     padding: 0.5em 0;
     background-color: #c3c3c3;
-    border-radius: 6px;
 }
 
 .projetPublicLi:hover {
@@ -357,17 +354,20 @@ ul {
 
 #iuto_livretbundle_commentaire_contenu
 {
-    width: 19em;
-    height: 4em;
+    width: 90%;
     color: #000000;
+    margin-left: 1em;
+    margin-top: -5%;
 }
 #iuto_livretbundle_commentaire_submit
 {
-    margin-left: 19.3em;
+    margin-left: 70%;
+    margin-right: 2% !important;
     color: #000000;
 }
 #iuto_livretbundle_commentaire > div > label
 {
     color: #000000;
     margin-right: 1em;
+    margin-top: 0%;
 }

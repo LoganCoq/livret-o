@@ -29,7 +29,7 @@ class ProjetNotMarquantType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'IUTO\LivretBundle\Entity\Projet'
+            'data_class' => null
         ));
     }
 
@@ -38,7 +38,7 @@ class ProjetNotMarquantType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'iuto_livretbundle_projet';
+        return 'iuto_livretbundle_projet_not_marquant';
     }
 
 

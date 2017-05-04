@@ -1,0 +1,61 @@
+
+.btn
+{
+    font-size: 1.2em;
+}
+
+#livret_btn_goto_home
+{
+    margin: 2em;
+}
+
+
+#livret_btn_choose_nvalide
+{
+    margin-top: 5%;
+    margin-left: 35%;
+}
+
+#livret_btn_choose_valide
+{
+    margin-top: 5%;
+    margin-left: 1%;
+}
+
+
+.projetPublic
+{
+    width: 100%;
+    padding: 1em;
+}
+
+.projetPublic:hover
+{
+    background-color: lightgrey;
+
+}
+
+#choose_project_name
+{
+    font-size: 1.2em;
+}
+
+#listeProjets
+{
+    margin: 3em;
+    text-align: center;
+}
+
+.titre
+{
+    margin-top: 0;
+    text-align: center;
+    padding: 2em;
+    font-size: 3em;
+}
+
+.selection
+{
+    text-align: center;
+    padding: 1em;
+}
