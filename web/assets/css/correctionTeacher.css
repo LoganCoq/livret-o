@@ -33,6 +33,7 @@
     height: 12em;
     font-size: 1.2em;
     margin-left: 4em;
+    margin-bottom: 4em;
 }
 
 #iuto_livretbundle_projet_submit
@@ -76,11 +77,18 @@
     margin-bottom: 1em;
 }
 
+#livret_cancel_correction2
+{
+    margin-left: 42em;
+    font-size: 1.2em;
+    margin-top: -7.5em;
+}
+
 #livret_cancel_correction
 {
     margin-left: 42em;
-    margin-top: -7.5em;
     font-size: 1.2em;
+    margin-top: -7.5em;
 }
 
 #iuto_livretbundle_projet_clientProjet

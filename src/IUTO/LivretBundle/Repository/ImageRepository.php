@@ -1,6 +1,6 @@
 <?php
 
-namespace IUTO\LivretBundle\Entity;
+namespace IUTO\LivretBundle\Repository;
 
 /**
  * ImageRepository

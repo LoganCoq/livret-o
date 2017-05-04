@@ -3,6 +3,7 @@
 namespace IUTO\LivretBundle\Form;
 
 use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\IUTOLivretBundle;
 use IUTO\LivretBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -36,17 +37,6 @@ class ProjetCompleteType extends AbstractType
                 'label' => 'Bilan du projet',
                 'required' => false,
             ))
-            ->add('motsClesProjet', CollectionType::class, array( //TODO mots clés
-                'allow_add' => true,
-                'allow_delete' => true,
-                'entry_type' => TextType::class,
-                'entry_options' => array(
-
-                ),
-                'prototype' => true,
-                'prototype_data' => 'New Tag Placeholder',
-                'required' => false,
-            ))
             ->add('dateDebut', TextType::class, array(
                 'label' => 'Date de début',
                 'attr' => [
@@ -62,7 +52,7 @@ class ProjetCompleteType extends AbstractType
                 ],
             ))
             ->add('etudiants', EntityType::class, array(
-                'class' => User::class,
+                'class' => 'IUTOLivretBundle:User',
                 'label' => 'Etudiants',
                 'choice_label' => function (User $etudiant) {
                     return $etudiant->getNomUser() . ' ' . $etudiant->getPrenomUser();
@@ -101,7 +91,7 @@ class ProjetCompleteType extends AbstractType
                 }
             ))
             ->add('submit', SubmitType::class, array(
-                'label' => 'Enregistrer modifications et envoyer en correction',
+                'label' => 'Enregistrer modifications et continuer',
                 'attr' => [
                     'onclick' => "return confirm('Etes vous sûr ?')",
                     'class' => 'btn-primary',
@@ -121,7 +111,8 @@ class ProjetCompleteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'IUTO\LivretBundle\Entity\Projet'
+            'data_class' => 'IUTO\LivretBundle\Entity\Projet',
+            'allow_extra_fields' => true,
         ));
     }
 

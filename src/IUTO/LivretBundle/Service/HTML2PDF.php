@@ -26,4 +26,14 @@ class HTML2PDF
         $this->pdf->writeHTML($template);
         return $this->pdf->Output($name.'.pdf', 'D');
     }
+
+    public function write($template)
+    {
+        $this->pdf->writeHTML($template);
+    }
+
+    public function getOutputPdf($name)
+    {
+        return $this->pdf->Output($name.'.pdf');
+    }
 }

@@ -1,3 +1,4 @@
+<page>
 <head>
     <meta charset="utf-8">
     <style>
@@ -9,7 +10,7 @@
         .titre {
             font-size: 45px;
             white-space: nowrap;
-            margin-bottom: 0;
+            margin-bottom: 10px;
         }
 
         .client {
@@ -43,7 +44,7 @@
             {% if departement == 'Informatique' %}
                 <img src=".{{ asset('assets/images/Info.jpg') }}" alt="Logo IUT" style="max-height: 125px"/>
             {% else %}
-                <img src=".{{ asset('assets/images/' ~ departement ~ '.jpg') }}" alt="Logo IUT"/>
+                <img src=".{{ asset('assets/images/' ~ departement ~ '.jpg') }}" alt="Logo IUT"
                      style="max-height: 125px"/>
             {% endif %}
         </td>
@@ -65,20 +66,55 @@
     </tr>
 </table>
 
-<div class="entete_projet">
-    <h1 class="titre"> {{ nom }} </h1>
-    <p class="client"> À destination de {{ client }} </p>
-</div>
+<table>
+    <tr>
+        <td>
+            <div class="entete_projet">
+                <h1 class="titre"> {{ nom }} </h1>
+                <p class="client"> À destination de {{ client }} </p>
+            </div>
+        </td>
+    </tr>
+</table>
+<table>
+    <tr style="width: 100%;">
+        <td style="width: 70%; text-align: justify">
+            <div class="presentation_projet">
+                <h4 class="titre_info"> Description du projet </h4>
+                <p> {{ descrip }} </p>
+            </div>
+        </td>
+        <td style="width:30%; height: 10%">
+            <div class="image" style="text-align: center">
+                {% if image1 != null %}
+                    <img src=".{{ asset('images/projects/' ~ image1.imageName) }}" alt="Image 1" style="max-height: 200px; max-width: 200px"/>
+                {% else %}
+                    <p style="text-align: center">Image 1</p>
+                {% endif %}
+            </div>
+        </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td style="width:30%" >
+            <div class="image" style="text-align: center">
+                {% if image2 != null %}
+                    <img src=".{{ asset('images/projects/' ~ image2.imageName) }}" alt="Image 2" style="max-height: 200px; max-width: 200px"/>
+                {% else %}
+                    <p style="text-align: center">Image 2</p>
+                {% endif %}
+            </div>
+        </td>
+        <td style="width: 70%; text-align: justify;">
+            <div class="bilan_projet">
+                <h4 class="titre_info"> Bilan du projet </h4>
+                <p> {{ bilan }} </p>
+            </div>
+        </td>
+    </tr>
+</table>
 
-<div class="presentation_projet">
-    <h4 class="titre_info"> Description du projet </h4>
-    <p> {{ descrip }} </p>
-</div>
-
-<div class="bilan_projet">
-    <h4 class="titre_info"> Bilan du projet </h4>
-    <p> {{ bilan }} </p>
-</div>
 
 <page_footer>
     <table>
@@ -124,3 +160,4 @@
     </table>
 </page_footer>
 </body>
+</page>

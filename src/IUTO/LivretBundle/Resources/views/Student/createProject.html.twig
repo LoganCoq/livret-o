@@ -26,17 +26,16 @@
 
 {% block content %}
 
-    {# chargement du theme pour le formulaire #}
-    {% form_theme form 'bootstrap_3_layout.html.twig' %}
-    {{ form(form) }}
+        {# chargement du theme pour le formulaire #}
+        {% form_theme form 'bootstrap_3_layout.html.twig' %}
+        {{ form(form) }}
 
-    {# bouton d'annulation / retour accueil #}
-    <a type="button" href="{{ path('iuto_livret_studenthomepage') }}" class="btn btn-danger" id="livret_cancel_create_student">
-        {#icone#}
-        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-        Annuler
-    </a>
-
+        {# bouton d'annulation / retour accueil #}
+        <a type="button" href="{{ path('iuto_livret_studenthomepage') }}" class="btn btn-danger" id="livret_cancel_create_student">
+            {#icone#}
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            Annuler
+        </a>
 
     {#{{ parent() }}#}
 {% endblock %}
@@ -44,13 +43,18 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 
-    <script src="bootstrap-datepicker.fr.js" charset="UTF-8">
-        $('.datepicker').datepicker({
-            autoclose: true
+    <script type="text/javascript">
+        $(function (){
+            $('.datepicker').datetimepicker(
+                {
+                    format: 'DD/MM/YYYY'
+                }
+            );
+            $('.datepicker').data("DateTimePicker").locale('fr');
         });
     </script>
 

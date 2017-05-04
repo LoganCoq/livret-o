@@ -10,29 +10,67 @@
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css"/>
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css"/>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css"/>
 
-    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/completeProjectStudent.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/addWordImageTeacher.css") }}"/>
 {% endblock %}
 
 
 {% block content %}
     <div class="form-complete">
-        {# initialisation du theme pourle formulaire #}
-        {% form_theme form 'bootstrap_3_layout.html.twig' %}
-        {# génération automatique du formulaire #}
-        {{ form(form) }}
+
+        <div id="images_projet">
+            <div id="livret_add_img">
+                <label class="control-label" for="project_btn_add_img">
+                    Images
+                </label>
+                <a type="button" href="{{ path('iuto_livret_add_img_teacher', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
+                    {# icone #}
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Ajouter une image au projet
+                </a>
+            </div>
+            <div id="images">
+                {% for img in images %}
+                    <a href="/images/projects/{{ img.imageName }}">
+                        <img href="/images/projects/{{ img.imageName }}" alt="" src="/images/projects/{{ img.imageName }}"/>
+                    </a>
+                    <a type="button" id="rm_img_{{ img.id }}" class="rmv_img">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="key_words_project">
+            <div id="livret_add_word">
+                {% form_theme formMot 'bootstrap_3_layout.html.twig' %}
+                {{ form(formMot) }}
+            </div>
+            <div id="key_words">
+                {% if motsCle|length == 0 %}
+                    <h3><small>Il n'y a pas de mots clés pour ce projet</small></h3>
+                {% else %}
+                    <label>Mots clés du du projet :</label>
+                    {% for mot in motsCle %}
+                        <span class="label label-info">{{ mot }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+        </div>
+
+        <a type="button" href="{{ path('iuto_livret_correctionProf4', {'projet': projet.id }) }}" class="btn btn-success" id="correction_accept_wordImg">
+            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+            Terminer
+        </a>
 
         {# bouton retour accueil #}
-        <a type="button" href="{{ path('iuto_livret_chooseProject') }}" class="btn btn-danger" id="livret_cancel_create_student">
+        <a type="button" href="{{ path('iuto_livret_correctionProf1') }}" class="btn btn-danger" id="livret_cancel_correction_wordImg">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             Annuler
         </a>
     </div>
+
 
     {# section pour le chat de correction #}
     <div class="popup-box">
@@ -44,66 +82,54 @@
 
         <div class="popup-messages">
             <div class="direct-chat-messages">
-                {# vérification que des commentaires existe pour ce projet #}
                 {% if commentaires|length > 0 %}
-                    {# parcours des commentaires du projet #}
                     {% for o in range(0, commentaires|length - 1) %}
-                        {# vérification que le commentaire est le premier ou non #}
                         {% if o != 0 %}
-                            {# affichagede la date si le commentaire n'as pas la même date que le précédent #}
                             {% if commentaires[o][2]|date('d-m-Y') != commentaires[o-1][2]|date('d-m-Y') %}
                                 <div class="chat-box-single-line">
                                     <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
                                 </div>
                             {% endif %}
                         {% endif %}
-                        {# affichage de la date si ce commentaire est le premier #}
+
                         {% if o == 0 %}
                             <div class="chat-box-single-line">
                                 <abbr class="timestamp"> {{ commentaires[o][2]|date('d-m-Y') }} </abbr>
                             </div>
                         {% endif %}
 
-                        {# vérification du role de l'utilisateur pour le commentaire actuel #}
-                        {# le commentaire se trouve à gauche si ce n'est pas un étudiant #}
-                        {% if commentaires[o][3] == "ROLE_faculty" or commentaires[o][3] == "ROLE_employee" %}
+                        {% if commentaires[o][3] == "ROLE_student" %}
                             <div class="direct-chat-msg-left">
                                 {% if o != 0 %}
-                                    {# affichage du nom de l'utilisateur si le commentaire précédent n'avais pas le même propriétaire #}
                                     {% if commentaires[o][0] != commentaires[o-1][0]  %}
                                         <div class="direct-chat-info clearfix">
                                             <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
                                         </div>
                                     {% endif %}
-                                {# affichage du nom si c'est le premier commentaire #}
                                 {% else %}
                                     <div class="direct-chat-info clearfix">
                                         <span class="direct-chat-name-left"> {{ commentaires[o][0] }} </span>
                                     </div>
                                 {% endif %}
-                                {# affichage du contenu du commentaire #}
                                 <div class="direct-chat-text-left">
                                     {{ commentaires[o][1] }}
                                 </div>
                             </div>
                         {% endif %}
-                        {# le commentaire se met à droite si c'est un étudiant #}
-                        {% if commentaires[o][3] == "ROLE_student" %}
+
+                        {% if commentaires[o][3] == "ROLE_faculty" or commentaires[o][3] == "ROLE_employee"%}
                             <div class="direct-chat-msg-right">
                                 {% if o != 0 %}
-                                    {# affichage du nom de l'utilisateur si le commentaire précédent n'avais pas le même propriétaire #}
                                     {% if commentaires[o][0] != commentaires[o-1][0]  %}
                                         <div class="direct-chat-info clearfix">
                                             <span class="direct-chat-name-right"> {{ commentaires[o][0] }} </span>
                                         </div>
                                     {% endif %}
-                                {# affichage du nom si c'est le premier commentaire #}
                                 {% else %}
                                     <div class="direct-chat-info clearfix">
                                         <span class="direct-chat-name-right"> {{ commentaires[o][0] }} </span>
                                     </div>
                                 {% endif %}
-                                {# affichage du contenu du commentaire #}
                                 <div class="direct-chat-text-right">
                                     {{ commentaires[o][1] }}
                                 </div>
@@ -112,11 +138,8 @@
                     {% endfor %}
                 {% endif %}
             </div>
-
             <div class="reponseCorrection">
-                {# chargement du theme pour le formulaire #}
-                {% form_theme form 'bootstrap_3_layout.html.twig' %}
-                {# génération automatique du formulaire d'ajout d'un commentaire #}
+                {% form_theme formCom 'bootstrap_3_layout.html.twig' %}
                 {{ form(formCom) }}
             </div>
         </div>
@@ -139,12 +162,20 @@
     </script>
 
     <script type="text/javascript">
-        $('.selectpicker').selectpicker('refresh');
         $subBtn = document.getElementById('iuto_livretbundle_projet_submit');
         $glyph = document.createElement('span');
         $glyph.className = 'glyphicon glyphicon-chevron-right';
         $subBtn.appendChild($glyph);
     </script>
 
+    {#<script type="text/javascript">#}
+    {#$imagesProj = document.getElementsByClassName('rmv_img');#}
+    {#for ( $img of $imagesProj)#}
+    {#{#}
+    {#$img.onclick = function () {#}
+    {##}
+    {#}#}
+    {#}#}
+    {#</script>#}
 
 {% endblock %}

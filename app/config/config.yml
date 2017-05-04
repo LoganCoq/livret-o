@@ -71,6 +71,15 @@ swiftmailer:
     spool:     { type: memory }
 
 
+#
+#l3_cas:
+#    host: auth.univ-orleans.fr/cas                       # Serveur CAS
+#    path: ~                                              # Chemin de l'application CAS si elle ne se trouve pas à la racine
+#    port: 443                                            # Port du serveur CAS
+#    ca: false                                            # Définition d'un certificat SSL pour le serveur CAS
+#    handleLogoutRequest: false                           # Activiation du Single Sign Out (défaut: false)
+#    casLogoutTarget: livreto.iut45.univ-orleans.fr       # Page de redirection après la déconnexion de l'application
+#    force: true
 
 l3_cas:
     host: auth.univ-orleans.fr/cas                          # Serveur CAS
@@ -80,3 +89,12 @@ l3_cas:
     handleLogoutRequest: false                           # Activiation du Single Sign Out (défaut: false)
     casLogoutTarget: auth.univ-orleans.fr/cas     # Page de redirection après la déconnexion de l'application
     force: false
+vich_uploader:
+    db_driver: orm
+    mappings:
+        projet_image:
+            uri_prefix:         /images/projects
+            upload_destination: '%kernel.root_dir%/../web/images/projects'
+            namer:              vich_uploader.namer_origname
+            delete_on_remove: true
+

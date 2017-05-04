@@ -29,6 +29,7 @@
 }
 .form-complete {
     margin-left: 2em;
+    margin-bottom: 5em;
 }
 
 #iuto_livretbundle_projet_descripProjet
@@ -89,7 +90,6 @@ form[name=iuto_livretbundle_projet]
 #livret_cancel_create_student
 {
     margin-left: 35em;
-    margin-top: -7.5em;
     font-size: 1.2em;
+    margin-top: -7em;
 }
-

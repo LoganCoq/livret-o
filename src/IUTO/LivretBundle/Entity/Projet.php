@@ -69,30 +69,40 @@ class Projet
      * @ORM\Column(name="validerProjet", type="boolean")
      */
     private $validerProjet;
+
     /**
      * @var date
      *
      * @ORM\Column(name="dateDebut", type="date")
      */
     private $dateDebut;
+
     /**
      * @var date
      *
      * @ORM\Column(name="dateFin", type="date")
      */
     private $dateFin;
+
     /**
     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\User", mappedBy="projetFaits")
     */
     private $etudiants;
+
     /**
      * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\User", mappedBy="projetSuivis")
      */
     private $tuteurs;
+
     /**
      * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Livret", inversedBy="projets")
      */
     private $livrets;
+
+    /**
+     * @ORM\OneToMany(targetEntity="IUTO\LivretBundle\Entity\Image", mappedBy="projet")
+     */
+    private $images;
 
     /**
      * Constructor
@@ -100,7 +110,7 @@ class Projet
     public function __construct()
     {
         $this->etudiants = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tuteur = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tuteurs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -251,6 +261,20 @@ class Projet
     }
 
     /**
+     * Add motsClesProjet
+     *
+     * @param string $mot
+     *
+     * @return Projet
+     */
+    public function addMotCleProjet($mot)
+    {
+        $this->motsClesProjet[] = $mot;
+
+        return $this;
+    }
+
+    /**
      * Get clientProjet
      *
      * @return string
@@ -357,6 +381,8 @@ class Projet
     {
         $this->etudiants[] = $etudiant;
 
+//        $etudiant->addProjetFait($this);
+
         return $this;
     }
 
@@ -368,16 +394,26 @@ class Projet
     public function removeEtudiant(\IUTO\LivretBundle\Entity\User $etudiant)
     {
         $this->etudiants->removeElement($etudiant);
+
+        $etudiant->removeProjetFait($this);
     }
 
     /**
      * Get etudiants
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getEtudiants()
     {
         return $this->etudiants;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $listeEtudiants
+     */
+    public function setEtudiants($listeEtudiants)
+    {
+        $this->etudiants = $listeEtudiants;
     }
 
     /**
@@ -391,6 +427,8 @@ class Projet
     {
         $this->tuteurs[] = $tuteur;
 
+//        $tuteur->addProjetSuivi($this);
+
         return $this;
     }
 
@@ -402,16 +440,26 @@ class Projet
     public function removeTuteur(\IUTO\LivretBundle\Entity\User $tuteur)
     {
         $this->tuteurs->removeElement($tuteur);
+
+        $tuteur->removeProjetSuivi($this);
     }
 
     /**
      * Get tuteurs
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getTuteurs()
     {
         return $this->tuteurs;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $tuteurs
+     */
+    public function setTuteurs($tuteurs)
+    {
+        $this->tuteurs = $tuteurs;
     }
 
     /**
@@ -446,5 +494,47 @@ class Projet
     public function getLivrets()
     {
         return $this->livrets;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \IUTO\LivretBundle\Entity\Image $image
+     *
+     * @return Projet
+     */
+    public function addImage(\IUTO\LivretBundle\Entity\Image $image)
+    {
+        $this->images[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \IUTO\LivretBundle\Entity\Image $image
+     */
+    public function removeImage(\IUTO\LivretBundle\Entity\Image $image)
+    {
+        $this->images->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $listeImages
+     */
+    public function setimages($listeImages)
+    {
+        $this->images = $listeImages;
     }
 }

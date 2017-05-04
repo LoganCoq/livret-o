@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new IUTO\LivretBundle\IUTOLivretBundle(),
             new L3\Bundle\CasBundle\L3CasBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
@@ -34,11 +35,6 @@ class AppKernel extends Kernel
         }
 
         return $bundles;
-    }
-
-    public function getRootDir()
-    {
-        return __DIR__;
     }
 
     public function getCacheDir()
@@ -54,5 +50,10 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');
+    }
+
+    public function getRootDir()
+    {
+        return __DIR__;
     }
 }

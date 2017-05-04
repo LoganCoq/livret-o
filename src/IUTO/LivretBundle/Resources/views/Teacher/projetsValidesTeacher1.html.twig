@@ -26,7 +26,7 @@
         #livreto_see_btn
         {
             margin-top: -4.7em;
-            margin-left: 5em;
+            margin-left: 2em;
         }
 
         .list-group-item
@@ -34,8 +34,8 @@
             padding: 0.2em;
             margin: 0.2em;
             height: auto;
-            width: 61em;
-            margin-left: 4em;
+            width: 75em;
+            margin-left: 2em;
         }
 
         #livret_btn_goto_home
@@ -46,6 +46,13 @@
             font-size: 1.2em;
         }
 
+        #livreto_download_finished
+        {
+            margin-left: 2em;
+            margin-top: -4.7em;
+
+        }
+
     </style>
 
 
@@ -54,8 +61,8 @@
 
 {% block content %}
 
-    <a type="button" href="{{ path('iuto_livret_teacherhomepage') }}" class="btn btn-success" id="livret_btn_goto_home">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <a type="button" href="{{ path('iuto_livret_teacherhomepage') }}" class="btn btn-primary" id="livret_btn_goto_home">
+        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
         Accueil
     </a>
 
@@ -76,6 +83,11 @@
                             <a href="/generate/{{ projet.id }}" class="btn btn-success" id="livreto_see_btn">
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                 Aperçu du projet
+                            </a>
+                            <a href="{{ path('iuto_livret_download', {'id': projet.id}) }}" class="btn btn-default download_confirm" id="livreto_download_finished">
+                                {#icone telechargement#}
+                                <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                                Enregistrer sur l'ordinateur
                             </a>
                         </li>
                     {% endfor %}

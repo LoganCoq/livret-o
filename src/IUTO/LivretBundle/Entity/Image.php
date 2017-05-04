@@ -11,13 +11,13 @@ use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
-
  * @ORM\Table(name="image")
-
- * @ORM\Entity(repositoryClass="IUTO\LivretBundle\Entity\ImageRepository")
-
+ * @ORM\Entity(repositoryClass="IUTO\LivretBundle\Repository\ImageRepository")
+ * @Vich\Uploadable
  */
 
 class Image
@@ -25,38 +25,33 @@ class Image
 {
 
     /**
-
      * @ORM\Column(name="id", type="integer")
-
      * @ORM\Id
-
      * @ORM\GeneratedValue(strategy="AUTO")
-
      */
 
     private $id;
 
 
     /**
-
-     * @ORM\Column(name="url", type="string", length=255)
-
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     *
+     * @Vich\UploadableField(mapping="projet_image", fileNameProperty="imageName", size="imageSize")
+     *
+     * @var File
      */
-
-    private $url;
-
+    private $imageFile;
 
     /**
-
-     * @ORM\Column(name="alt", type="string", length=255)
-
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
      */
-
-    private $alt;
+    private $imageName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Projet")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Projet", inversedBy="images")
+     * @ORM\JoinColumn(name="projet_id", referencedColumnName="id", nullable=false)
      */
     private $projet;
 
@@ -70,53 +65,6 @@ class Image
         return $this->id;
     }
 
-    /**
-     * Get url
-     *
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * Set url
-     *
-     * @param string $url
-     *
-     * @return Image
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * Get alt
-     *
-     * @return string
-     */
-    public function getAlt()
-    {
-        return $this->alt;
-    }
-
-    /**
-     * Set alt
-     *
-     * @param string $alt
-     *
-     * @return Image
-     */
-    public function setAlt($alt)
-    {
-        $this->alt = $alt;
-
-        return $this;
-    }
 
     /**
      * Get projet
@@ -138,6 +86,52 @@ class Image
     public function setProjet(\IUTO\LivretBundle\Entity\Projet $projet)
     {
         $this->projet = $projet;
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File $image
+     *
+     * @return Image
+     */
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImageName()
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * @param string $imageName
+     *
+     * @return Image
+     */
+    public function setImageName($imageName)
+    {
+        $this->imageName = $imageName;
 
         return $this;
     }

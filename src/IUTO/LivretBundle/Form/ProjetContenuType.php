@@ -2,7 +2,9 @@
 
 namespace IUTO\LivretBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,7 +32,7 @@ class ProjetContenuType extends AbstractType
                 'required' => false,
             ))
             ->add('submit', SubmitType::class, array(
-                'label' => 'Enregistrer le contenu et envoyer en correction',
+                'label' => 'Enregistrer le contenu et continuer',
                 'attr' => [
                     'onclick' => "return confirm('Etes vous sûr ?')",
                     'class' => "btn-primary",
