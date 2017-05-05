@@ -1,0 +1,32 @@
+{# on entend base.html.twig pour avoir le menu sur la gauche #}
+{% extends 'base.html.twig' %}
+
+
+{# block titre pour changer le titre de l'onglet #}
+{% block title %}
+    Livret'O - Admin
+{% endblock %}
+
+
+{% block content %}
+    {#affichage d'un message si un flashBag portant le nom "success" existe#}
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {# affichage du message#}
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="div_home">
+        <h1 class="h1_home">
+            {# affichage du status CAS de l'utilisateur (ici etudiant)#}
+            {{ statutCAS|capitalize }} <br/>
+            {# affichage des informations de base sur l'utilisateur (nom prénom) #}
+        </h1>
+        {# affichage des boutons deonnées en paramètres de la pages par le controlleur #}
+        {% for o in range(0, options|length - 1) %}
+            <a href="{{ routing_options[o] }}" class="buttonhome">{{ options[o] }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
