@@ -537,7 +537,6 @@ class CommunicationController extends Controller
             $comReponse->setProjet($projet);
             // ajout de l'user au commentaire
             $repository2 = $em->getRepository('IUTOLivretBundle:User');
-            $user = $repository2->findOneById($id);
             $comReponse->setUser($user);
             $comReponse->setContenu($formCom['contenu']->getData());
 
@@ -811,6 +810,67 @@ class CommunicationController extends Controller
             'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
             'routing_statutCAShome' => '/communication',
+        ));
+    }
+
+    public function communicationDeleteImageAction(Request $request, Image $image)
+    {
+        // récupération des inforamtions dur l'utilsateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+        $projet = $image->getProjet();
+
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ( $form->isSubmitted() && $form->isValid() )
+        {
+
+            $em->remove($image);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('info', "L'image a bien été supprimée.");
+
+            //actualisation des commentaires une fois le nouveau ajouté
+            //recupération des commentaires associé au projet
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+            $commentaires = array();
+            foreach ($com as $elem) {
+                $x = array();
+                $user = $elem->getUser();
+                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
+                array_push($x, $elem->getContenu());
+                array_push($x, $elem->getDate());
+                array_push($x, $user->getRole());
+                array_push($commentaires, $x);
+
+            };
+
+            $images = $em->getRepository(Image::class)->findByProjet($image->getProjet());
+            $motsCles = $projet->getMotsClesProjet();
+
+            return $this->redirectToRoute('iuto_livret_communication_wordImg_projet', array(
+                'projet' => $projet->getId(),
+                'statutCAS' => 'communication',
+                'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+                'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                'routing_statutCAShome' => '/communication',
+                'images' => $images,
+                'motsCles' => $motsCles,
+                'commentaires' => $commentaires,
+            ));
+        }
+
+
+        return $this->render('IUTOLivretBundle:Communication:communicationConfirmImageDelete.html.twig', array(
+            'image' => $image,
+            'form'   => $form->createView(),
+            'statutCAS' => 'communication',
+            'info' => array('Créer un livret', 'Voir les livrets', 'Corriger des projets'),
+            'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+            'routing_statutCAShome' => '/communication',
+            'projet' => $projet,
         ));
     }
 }

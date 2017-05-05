@@ -239,6 +239,10 @@ iuto_livret_communicationChoixLivret:
     path: /communication/chooseLivret
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChooseLivret}
 
+iuto_livret_communication_deleteImage:
+    path: /communication/image/{image}/delete
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationDeleteImage}
+
 iuto_livret_deleteLivret:
     path: /communication/delete/livret/{livret}
     defaults: { _controller: IUTOLivretBundle:Communication:communicationDeleteLivret }

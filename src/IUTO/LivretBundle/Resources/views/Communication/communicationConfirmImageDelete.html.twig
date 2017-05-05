@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}
+
+    Suppression - {{ parent() }}
+
+{% endblock %}
+
+
+{% block content %}
+
+
+    <h2>Supprimer</h2>
+    <p>
+        Etes-vous certain de vouloir supprimer l'image ?
+    </p>
+
+    <img href="/images/projects/{{ image.imageName }}" alt="" src="/images/projects/{{ image.imageName }}"/>
+
+    {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+    <form action="{{ path('iuto_livret_communication_deleteImage', {'image': image.id}) }}" method="post">
+        <a href="{{ path('iuto_livret_communication_wordImg_projet', {'projet' : projet.id }) }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour à la correction du projet
+        </a>
+        {% if projet.validerProjet != true %}
+            <input type="submit" value="Supprimer" class="btn btn-danger" />
+            {# Ceci va générer le champ CSRF #}
+            {{ form_rest(form) }}
+        {% endif %}
+    </form>
+
+{% endblock %}
