@@ -170,6 +170,14 @@ class PDFGeneratorController extends Controller
 //        Création du pdf au format A4
         $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
 
+        $title = $livret->getIntituleLivret();
+
+        $template = $this->renderView('::couverture.html.twig',
+            [
+               'intituleLivret' => $title,
+            ]);
+        $html2pdf->write($template);
+
         $edito = $livret->getEditoLivret();
 //        Création du template pour la génération de l'édito du livret
 //        si le champ n'est pas vide
@@ -260,6 +268,14 @@ class PDFGeneratorController extends Controller
         $html2pdf = $this->get('app.html2pdf');
 //        Création du pdf au format A4
         $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
+
+        $title = $livret->getIntituleLivret();
+
+        $template = $this->renderView('::couverture.html.twig',
+            [
+                'intituleLivret' => $title,
+            ]);
+        $html2pdf->write($template);
 
         $edito = $livret->getEditoLivret();
 //        Création du template pour la génération de l'édito du livret
