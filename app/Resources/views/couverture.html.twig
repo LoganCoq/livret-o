@@ -36,12 +36,18 @@
             <tr>
                 <td class="athird-percent">
                     Départements :
+                    {% for dpt in departements %}
+                        {{ dpt }}
+                    {% endfor %}
                 </td>
                 <td class="athird-percent">
                     Promotions :
+                    {% for prom in promotions %}
+                        {{ prom }}
+                    {% endfor %}
                 </td>
                 <td class="athird-percent">
-                    Année :
+                    Année : {{ minYear }} - {{ maxYear }}
                 </td>
             </tr>
         </table>

@@ -170,11 +170,47 @@ class PDFGeneratorController extends Controller
 //        Création du pdf au format A4
         $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
 
+//        Récupération des projets du livret
+        $projets = $livret->getProjets();
+
         $title = $livret->getIntituleLivret();
+        $departements = array();
+        $promotions = array();
+        $minYear = 1000000;
+        $maxYear = 0;
+
+        foreach ( $projets as $curProj)
+        {
+            $curForm =$curProj->getEtudiants()[0]->getFormations()[0];
+            $curDpt = $curForm->getDepartement()->getNomDpt();
+            if ( !in_array($curDpt, $departements))
+            {
+                array_push($departements, $curDpt);
+            }
+            $curTypeForm = $curForm->getTypeFormation();
+            if ( !in_array($curTypeForm, $promotions))
+            {
+                array_push($promotions, $curTypeForm);
+            }
+            $curYearStart = $curForm->getDateDebut()->format('Y');
+            $curYearEnd = $curForm->getDateFin()->format('Y');
+            if ( $maxYear<$curYearEnd )
+            {
+                $maxYear = $curYearEnd;
+            }
+            if( $minYear> $curYearStart)
+            {
+                $minYear = $curYearStart;
+            }
+        }
 
         $template = $this->renderView('::couverture.html.twig',
             [
                'intituleLivret' => $title,
+                'minYear' => $minYear,
+                'maxYear' => $maxYear,
+                'departements' => $departements,
+                'promotions' => $promotions,
             ]);
         $html2pdf->write($template);
 
@@ -189,9 +225,6 @@ class PDFGeneratorController extends Controller
 //            Ecriture du template dans le pdf
             $html2pdf->write($template);
         }
-
-//        Récupération des projets du livret
-        $projets = $livret->getProjets();
 
 //        Parcours des projets afin d'écrire page par page
         foreach ( $projets as $projet)
