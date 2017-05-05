@@ -10,7 +10,7 @@
                 font-size: 45px;
                 white-space: nowrap;
                 margin-bottom: 20px;
-                margin-top: 180px;
+                margin-top: 170px;
                 text-align: center;
             }
             h3
@@ -19,16 +19,22 @@
                 margin-bottom: 100px;
             }
             .fifty-percent {
+                top: 0;
                 width: 50%;
+                vertical-align: top;
             }
             .athird-percent
             {
                 width: 33%;
                 text-align: center;
             }
+            .type-info
+            {
+                margin-left: 10px;
+            }
             .infos
             {
-                margin-left: 20px;
+                margin-left: 30px;
             }
         </style>
     </head>
@@ -55,7 +61,7 @@
                     <div class="infos">
                         {% for dpt in departements %}
                             {% if dpt == 'Informatique' %}
-                                <img src=".{{ asset('assets/images/Info.jpg') }}" alt="Logo IUT" style="max-height: 100px; max-width: 150px;"/>
+                                <img src=".{{ asset('assets/images/Info.jpg') }}" alt="Logo IUT" style="max-height: 75px; max-width: 115px;"/>
                             {% else %}
                                 <img src=".{{ asset('assets/images/' ~ dpt ~ '.jpg') }}" alt="Logo IUT"
                                      style="max-height: 125px"/>
@@ -63,13 +69,13 @@
                         {% endfor %}
                     </div>
                 </td>
-                <td class="fifty-percent">
+                <td class="fifty-percent" style="border-left: dotted; border-left-color: lightgray; border-left-width: 3px">
                     <div class="type-info">
-                        <h4>Promotions :</h4>
+                        <h4>Projets :</h4>
                     </div>
                     <div class="infos">
-                        {% for prom in promotions %}
-                            {{ prom }}
+                        {% for inti in intitules %}
+                            {{ inti }}
                         {% endfor %}
                     </div>
                 </td>
@@ -80,7 +86,7 @@
                 <tr>
                     <td class="fifty-percent">
                         <p style="text-align: left">
-                            16 rue d'Issoudun, Orléans 45100, Loiret
+                            16 rue d'Issoudun, Orléans, 45100 Loiret
                         </p>
                     </td>
                     <td class="fifty-percent">

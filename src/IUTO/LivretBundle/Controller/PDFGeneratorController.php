@@ -177,6 +177,7 @@ class PDFGeneratorController extends Controller
         $title = $livret->getIntituleLivret();
         $departements = array();
         $promotions = array();
+        $intitules = array();
         $minYear = 1000000;
         $maxYear = 0;
         $dateCrea = $livret->getDateCreationLivret()->format('d-m-Y');
@@ -205,6 +206,7 @@ class PDFGeneratorController extends Controller
             {
                 $minYear = $curYearStart;
             }
+            array_push($intitules, $curProj->getIntituleProjet());
         }
 
         $template = $this->renderView('::couverture.html.twig',
@@ -215,6 +217,7 @@ class PDFGeneratorController extends Controller
                 'departements' => $departements,
                 'promotions' => $promotions,
                 'dateCrea' => $dateCrea,
+                'intitules' => $intitules,
             ]);
         $html2pdf->write($template);
 
