@@ -1,6 +1,6 @@
 <page>
     <head>
-        <meta charset="uth-8">
+        <meta charset="utf-8">
         <style>
             table
             {
@@ -9,8 +9,14 @@
             .titre {
                 font-size: 45px;
                 white-space: nowrap;
-                margin-bottom: 0;
+                margin-bottom: 20px;
+                margin-top: 180px;
                 text-align: center;
+            }
+            h3
+            {
+                text-align: center;
+                margin-bottom: 100px;
             }
             .fifty-percent {
                 width: 50%;
@@ -18,11 +24,16 @@
             .athird-percent
             {
                 width: 33%;
+                text-align: center;
+            }
+            .infos
+            {
+                margin-left: 20px;
             }
         </style>
     </head>
     <body>
-        <table>
+        <table class="page_top">
             <tr>
                 <td class="fifty-percent">
                     <img src=".{{ asset('assets/images/IUTO.jpg') }}" alt="Logo IUT" style="max-height: 125px"/>
@@ -31,25 +42,54 @@
         </table>
         <div class="title">
            <h1 class="titre">{{ intituleLivret }}</h1>
+            <h3>
+                Année(s) : {{ minYear }} - {{ maxYear }}
+            </h3>
         </div>
         <table>
             <tr>
-                <td class="athird-percent">
-                    Départements :
-                    {% for dpt in departements %}
-                        {{ dpt }}
-                    {% endfor %}
+                <td class="fifty-percent">
+                    <div class="type-info">
+                        <h4>Départements :</h4>
+                    </div>
+                    <div class="infos">
+                        {% for dpt in departements %}
+                            {% if dpt == 'Informatique' %}
+                                <img src=".{{ asset('assets/images/Info.jpg') }}" alt="Logo IUT" style="max-height: 100px; max-width: 150px;"/>
+                            {% else %}
+                                <img src=".{{ asset('assets/images/' ~ dpt ~ '.jpg') }}" alt="Logo IUT"
+                                     style="max-height: 125px"/>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </td>
-                <td class="athird-percent">
-                    Promotions :
-                    {% for prom in promotions %}
-                        {{ prom }}
-                    {% endfor %}
-                </td>
-                <td class="athird-percent">
-                    Année : {{ minYear }} - {{ maxYear }}
+                <td class="fifty-percent">
+                    <div class="type-info">
+                        <h4>Promotions :</h4>
+                    </div>
+                    <div class="infos">
+                        {% for prom in promotions %}
+                            {{ prom }}
+                        {% endfor %}
+                    </div>
                 </td>
             </tr>
         </table>
+        <page_footer>
+            <table class="footer">
+                <tr>
+                    <td class="fifty-percent">
+                        <p style="text-align: left">
+                            16 rue d'Issoudun, Orléans 45100, Loiret
+                        </p>
+                    </td>
+                    <td class="fifty-percent">
+                        <p style="text-align: right">
+                            Créer le {{ dateCrea }}
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </page_footer>
     </body>
 </page>

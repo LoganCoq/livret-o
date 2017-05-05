@@ -173,12 +173,15 @@ class PDFGeneratorController extends Controller
 //        Récupération des projets du livret
         $projets = $livret->getProjets();
 
+//        Récupération des informations pour la page de garde
         $title = $livret->getIntituleLivret();
         $departements = array();
         $promotions = array();
         $minYear = 1000000;
         $maxYear = 0;
+        $dateCrea = $livret->getDateCreationLivret()->format('d-m-Y');
 
+//        Récupération des données projets par projets
         foreach ( $projets as $curProj)
         {
             $curForm =$curProj->getEtudiants()[0]->getFormations()[0];
@@ -211,6 +214,7 @@ class PDFGeneratorController extends Controller
                 'maxYear' => $maxYear,
                 'departements' => $departements,
                 'promotions' => $promotions,
+                'dateCrea' => $dateCrea,
             ]);
         $html2pdf->write($template);
 
