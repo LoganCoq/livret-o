@@ -17,7 +17,7 @@
 
 
     <h2>Supprimer</h2>
-    <p>
+    <p id="message_confirm">
         Etes-vous certain de vouloir supprimer le projet "{{ projet.intituleProjet }}" ?
     </p>
 
@@ -28,7 +28,7 @@
             Retour au choix des projets
         </a>
         {% if projet.validerProjet != true %}
-            <input type="submit" value="Supprimer" class="btn btn-danger" />
+            <input type="submit" value="Supprimer" class="btn btn-danger" id="btn_delete"/>
             {# Ceci va générer le champ CSRF #}
             {{ form_rest(form) }}
         {% endif %}

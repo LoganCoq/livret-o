@@ -17,11 +17,11 @@
 
 
     <h2>Supprimer</h2>
-    <p>
+    <p id="message_confirm">
         Etes-vous certain de vouloir supprimer l'image ?
     </p>
 
-    <img href="/images/projects/{{ image.imageName }}" alt="" src="/images/projects/{{ image.imageName }}"/>
+    <img href="/images/projects/{{ image.imageName }}" alt="" src="/images/projects/{{ image.imageName }}" id="to_delete_img"/>
 
     {# On met l'id de l'annonce dans la route de l'action du formulaire #}
     <form action="{{ path('iuto_livret_deleteImage', {'image': image.id}) }}" method="post">
@@ -30,7 +30,7 @@
             Retour à la correction du projet
         </a>
         {% if projet.validerProjet != true %}
-            <input type="submit" value="Supprimer" class="btn btn-danger" />
+            <input type="submit" value="Supprimer" class="btn btn-danger" id="btn_delete"/>
             {# Ceci va générer le champ CSRF #}
             {{ form_rest(form) }}
         {% endif %}

@@ -6,7 +6,7 @@ h2
     padding: 2%;
 }
 
-p
+#message_confirm
 {
     padding: 2%;
 }
@@ -16,13 +16,13 @@ form
     padding: 2%;
 }
 
-img
+#to_delete_img
 {
     padding: 2%;
     margin-left: 5%;
 }
 
-.btn-danger
+#btn_delete
 {
     margin-left: 10%;
 }
