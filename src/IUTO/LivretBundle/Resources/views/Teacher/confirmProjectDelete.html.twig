@@ -7,6 +7,11 @@
 
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/confirmDelete.css') }}">
+{% endblock %}
 
 {% block content %}
 
