@@ -3,24 +3,38 @@
 namespace IUTO\LivretBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Ldap\Adapter\ExtLdap\Adapter;
-use Symfony\Component\Ldap\Ldap;
 use Symfony\Component\Ldap\Enty;
-use IUTO\LivretBundle\Entity\User;
-use IUTO\LivretBundle\Entity\Formation;
-use IUTO\LivretBundle\Entity\Departement;
-
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\Validator\Constraints\Date;
-use Symfony\Component\Validator\Constraints\DateTime;
-
+use Symfony\Component\HttpFoundation\Request;
+use phpCAS;
 
 class LogoutController extends Controller
 {
-    public function logoutAction()
+    public function logoutAction(Request $request)
     {
-        return $this->redirectToRoute("iuto_livret_homepage");
+	$this->get('security.token_storage')->setToken(null);
+	$request->getSession()->invalidate();
+//	\phpCAS::handleLogoutRequests();
+//	\phpCAS::logoutWithRedirectService(urlencode($this->container->getParameter('cas_login_target')));
+//	\phpCAS::logout();
+
+	$target = urlencode($this->container->getParameter('cas_logout_target'));
+        $url = 'https://'.$this->container->getParameter('cas_host') . '/logout?service=';
+	
+	return $this->redirect($url . $target);
     }
+
+//    /**
+//     * @Route("/force", name="force")
+//     */
+//    public function forceAction() {
+
+//        if (!isset($_SESSION)) {
+//            session_start();
+//        }
+
+//        session_destroy();
+
+//        return $this->redirect($this->generateUrl('iuto_livret_homepage'));
+//    }
+
 }
