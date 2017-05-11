@@ -76,7 +76,7 @@
                     {% for projet in projets %}
                         <li class="list-group-item">
                             <p id="choose_project_name">{{ projet.intituleProjet }}</p>
-                            <a href="/{{ projet.id }}/correctionProf2" class="btn btn-warning" id="livret_modif_btn"
+                            <a href="{{ path('iuto_livret_correctionProf2', {'projet' : projet.id}) }}" class="btn btn-warning" id="livret_modif_btn"
                                 data-toggle="confirmation" data-singleton="true" data-popout="true" data-title="Êtes-vous sûr"
                                 data-content="Ce projet est un projet validé" data-btn-ok-label="Continuer" data-btn-cancel-label="Annuler">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
