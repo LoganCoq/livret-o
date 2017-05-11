@@ -28,51 +28,51 @@ iuto_livret_studenthomepage:
 
 #==========CREER PROJET====#
 iuto_livret_createProject:
-    path: /create/project
+    path: /etudiant/create/project
     defaults: { _controller: IUTOLivretBundle:Student:createProject }
 
 #======CONTENU PROJET======#
 iuto_livret_contenuProject:
-    path: /{projet}/contenu
+    path: /etudiant/{projet}/contenu
     defaults: { _controller: IUTOLivretBundle:Student:contenuProject }
 
 #==========CREER PROJET====#
 iuto_livret_chooseProject:
-    path: /choose/project
+    path: /etudiant/choose/project
     defaults: { _controller: IUTOLivretBundle:Student:chooseProject }
 
 #======COMPLETER PROJET====#
 iuto_livret_completeProject:
-    path: /{projet}/complete
+    path: /etudiant/{projet}/complete
     defaults: { _controller: IUTOLivretBundle:Student:completeProject }
 
 #====AJOUT MOT ET IMAGE====#
 iuto_livret_add_word_image:
-    path: /{projet}/complete/words_images
+    path: /etudiant/{projet}/complete/words_images
     defaults: { _controller: IUTOLivretBundle:Student:addWordImage }
 
 #=====AJOUT D'UNE IMAGE====#
 iuto_livret_add_img:
-    path: /{projet}/addImg
+    path: /etudiant/{projet}/addImg
     defaults: { _controller: IUTOLivretBundle:Student:addImage }
 
 #====VALIDER MODIFICATION===#
 iuto_livret_confirmCompleteProject:
-    path:  /{projet}/validate
+    path:  /etudiant/{projet}/validate
     defaults: { _controller: IUTOLivretBundle:Student:confirmCompleteProject }
 
 #====VOIR PROJET FINI=======#
 iuto_livret_finishedProject:
-    path: /{projet}/finishedProject
+    path: /etudiant/{projet}/finishedProject
     defaults: { _controller: IUTOLivretBundle:Student:viewFinishedProject }
 
 #====SUPPRIMER UN PROJET====#
 iuto_livret_deleteProject:
-    path: /delete/{projet}
+    path: /etudiant/delete/{projet}
     defaults: { _controller: IUTOLivretBundle:Student:deleteProjet }
 
 iuto_livret_deleteImage:
-    path: /delete/image/{image}
+    path: /etudiant/delete/image/{image}
     defaults: { _controller: IUTOLivretBundle:Student:deleteImage }
 
 #==========================================================#
