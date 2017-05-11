@@ -1,0 +1,28 @@
+
+
+h2
+{
+    margin-top: 0;
+    padding: 2%;
+}
+
+#message_confirm
+{
+    padding: 2%;
+}
+
+form
+{
+    padding: 2%;
+}
+
+#to_delete_img
+{
+    padding: 2%;
+    margin-left: 5%;
+}
+
+#btn_delete
+{
+    margin-left: 10%;
+}

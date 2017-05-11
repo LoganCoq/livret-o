@@ -41,7 +41,7 @@
                     <a href="/images/projects/{{ img.imageName }}">
                         <img href="/images/projects/{{ img.imageName }}" alt="" src="/images/projects/{{ img.imageName }}"/>
                     </a>
-                    <a href="{{ path('iuto_livret_deleteImage', {'image': img.id}) }}" id="delete_btn">
+                    <a href="{{ path('iuto_livret_communication_deleteImage', {'image': img.id}) }}" id="delete_btn">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </a>
                 {% endfor %}

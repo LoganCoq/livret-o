@@ -23,13 +23,13 @@
     <img href="/images/projects/{{ image.imageName }}" alt="" src="/images/projects/{{ image.imageName }}" id="to_delete_img"/>
 
     {# On met l'id de l'annonce dans la route de l'action du formulaire #}
-    <form action="{{ path('iuto_livret_teacher_deleteImage', {'image': image.id}) }}" method="post">
-        <a href="{{ path('iuto_livret_add_img_word_teacher', {'projet' : projet.id }) }}" class="btn btn-default">
+    <form action="{{ path('iuto_livret_communication_deleteImage', {'image': image.id}) }}" method="post">
+        <a href="{{ path('iuto_livret_communication_wordImg_projet', {'projet' : projet.id }) }}" class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i>
             Retour à la correction du projet
         </a>
         {% if projet.validerProjet != true %}
-            <input type="submit" value="Supprimer" class="btn btn-danger"  id="btn_delete"/>
+            <input type="submit" value="Supprimer" class="btn btn-danger" id="btn_delete"/>
             {# Ceci va générer le champ CSRF #}
             {{ form_rest(form) }}
         {% endif %}

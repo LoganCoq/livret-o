@@ -1,4 +1,8 @@
-#==================ROUTE HOME==============================#
+#==========================================================#
+#==========================================================#
+#=====================ROUTE HOME===========================#
+#==========================================================#
+#==========================================================#
 iuto_livret_homepage:
     path:     /
     defaults: { _controller: IUTOLivretBundle:Home:index }
@@ -11,7 +15,11 @@ iuto_livret_logout:
     path: /logout
     defaults: { _controller: IUTOLivretBundle:Logout:logout}
 
+#==========================================================#
+#==========================================================#
 #==================ROUTES MODULE ETUDIANT==================#
+#==========================================================#
+#==========================================================#
 #==========HOME============#
 
 iuto_livret_studenthomepage:
@@ -67,7 +75,11 @@ iuto_livret_deleteImage:
     path: /delete/image/{image}
     defaults: { _controller: IUTOLivretBundle:Student:deleteImage }
 
+#==========================================================#
+#==========================================================#
 #==================ROUTES MODULE PROFESSEUR================#
+#==========================================================#
+#==========================================================#
 #==========HOME============#
 iuto_livret_teacherhomepage:
     path: /professeur
@@ -117,7 +129,11 @@ iuto_livret_teacher_deleteImage:
     path: /teacher/delete/image/{image}
     defaults: { _controller: IUTOLivretBundle:Teacher:deleteImage}
 
+#==========================================================#
+#==========================================================#
 #==================ROUTES MODULE CHEF DEPARTEMENT==========#
+#==========================================================#
+#==========================================================#
 #==========HOME============#
 iuto_livret_chiefhomepage:
     path: /{id}/chef
@@ -158,8 +174,11 @@ iuto_livret_correctionChief4:
     path: /{id}/{projet}/correctionChief4
     defaults: { _controller: IUTOLivretBundle:Chief:correctionChief4 }
 
-
-#==================ROUTES MODULE COMMUNICATIONN============#
+#==========================================================#
+#==========================================================#
+#================ROUTES MODULE COMMUNICATIONN==============#
+#==========================================================#
+#==========================================================#
 #==========HOME============#
 iuto_livret_communicationhomepage:
     path: /communication
@@ -239,11 +258,21 @@ iuto_livret_communicationChoixLivret:
     path: /communication/chooseLivret
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChooseLivret}
 
+iuto_livret_communication_deleteImage:
+    path: /communication/image/{image}/delete
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationDeleteImage}
+
 iuto_livret_deleteLivret:
     path: /communication/delete/livret/{livret}
     defaults: { _controller: IUTOLivretBundle:Communication:communicationDeleteLivret }
 
-#==================ROUTES MODULES ANNEXES============#
+
+
+#==========================================================#
+#==========================================================#
+#==================ROUTES MODULES ANNEXES==================#
+#==========================================================#
+#==========================================================#
 #=====GENERATION PDF GENERATOR=====#
 
 
@@ -269,7 +298,11 @@ iuto_livret_livretgenerator:
     path: /generate/livret/{idLivret}
     defaults: { _controller: IUTOLivretBundle:PDFGenerator:generatorMany}
 
-#==================ROUTES MODULES PUBLIC============#
+#==========================================================#
+#==========================================================#
+#=====================ROUTES MODULES PUBLIC================#
+#==========================================================#
+#==========================================================#
 #=====INDEX MODULE PUBLIC=====#
 iuto_livret_public:
     path: /public
@@ -283,3 +316,13 @@ iuto_livret_publicProjet:
 iuto_livret_iutoProjet:
     path: /public/iuto
     defaults: {_controller: IUTOLivretBundle:Public:iuto}
+
+#==========================================================#
+#==========================================================#
+#==============ROUTES MODULE ADMINISTRATEUR================#
+#==========================================================#
+#==========================================================#
+
+iuto_livret_administrateur:
+    path: /admin
+    defaults: { _controller: IUTOLivretBundle:Administrateur:adminHome}

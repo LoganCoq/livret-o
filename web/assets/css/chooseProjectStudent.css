@@ -100,7 +100,9 @@ h2
     margin-left: 4em;
 }
 
-#delete_btn
+.dropdown
 {
-    margin-left: 4%;
+    margin-left: 95%;
+    margin-top: -6%;
+    margin-bottom: 2%;
 }

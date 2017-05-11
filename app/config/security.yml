@@ -13,9 +13,11 @@ security:
         in_memory:
             memory: ~
     access_control:
-            - { path: /etudiant, roles: ROLE_student }
-            - { path: /professeur, roles: ROLE_faculty }
-            - { path: ^/communication, roles: ROLE_employee }
+            - { path: /etudiant,        roles: ROLE_student }
+            - { path: /professeur,      roles: ROLE_faculty }
+            - { path: ^/communication,  roles: ROLE_employee }
+            - { path: /chef,            roles: ROLE_chief }
+            - { path: /administrateur,  roles: ROLE_admin }
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:

@@ -7,15 +7,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class PDFGeneratorController extends Controller
 {
+    /**
+     * @param $id
+     * @return mixed
+     *
+     *  Controlleur gérant la génération et l'affichage d'un projet
+     *  au format pdf
+     */
     public function generatorAction($id)
     {
+//        Récupération du repository des projets
         $repository = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('IUTOLivretBundle:Projet');
 
+//        Récupération du projet que l'on veut générer
         $projet = $repository->findOneById($id);
 
+//        Récupération des informations sur le projet
         $nomP = $projet->getIntituleProjet();
 //        $descripP = $projet->getDescripProjet();
         $descripP = preg_replace("/\r\n/","\ ",$projet->getDescripProjet());
@@ -27,6 +37,8 @@ class PDFGeneratorController extends Controller
         $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
         $departement = $etudiants{0}->getFormations(){0}->getDepartement()->getNomDpt();
 
+//        Récupération des images du projet, on met la valeur a
+//        null si l'image n'existe pas afin d'éviter les erreurs
         if ( $projet->getImages()->count() == 2 )
         {
             $image1 = $projet->getImages(){0};
@@ -42,6 +54,7 @@ class PDFGeneratorController extends Controller
             $image2 = null;
         }
 
+//        Création du template du projet avec les informations de celui-ci
         $template = $this->renderView('::pdf.html.twig',
             ['nom' => $nomP,
                 'descrip' => $descripP,
@@ -56,25 +69,37 @@ class PDFGeneratorController extends Controller
                 'image2' => $image2,
             ]);
 
-
+//        Récupération de l'application de génération de pdf
         $html2pdf = $this->get('app.html2pdf');
+//        Création d'un pdf
         $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
 
+//        Génération du pdf et affichage
         return $html2pdf->generatePdf($template, "projetPDF");
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     *
+     *  Controlleur gérant la génération et le téléchargement d'un projet
+     *  au format pdf
+     */
     public function downloadAction($id)
     {
+        //        Récupération du repository des projets
         $repository = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('IUTOLivretBundle:Projet');
 
+//        Récupération du projet que l'on veut générer
         $projet = $repository->findOneById($id);
 
+//        Récupération des informations sur le projet
         $nomP = $projet->getIntituleProjet();
-        $descripP = $projet->getDescripProjet();
-//        $descripP = preg_replace("/\r\n|\r|\n/","<br/>\n",$descripP);
+//        $descripP = $projet->getDescripProjet();
+        $descripP = preg_replace("/\r\n/","\ ",$projet->getDescripProjet());
         $bilanP = $projet->getBilanProjet();
         $clientP = $projet->getClientProjet();
         $descripCli = $projet->getDescriptionClientProjet();
@@ -83,6 +108,8 @@ class PDFGeneratorController extends Controller
         $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
         $departement = $etudiants{0}->getFormations(){0}->getDepartement()->getNomDpt();
 
+//        Récupération des images du projet, on met la valeur a
+//        null si l'image n'existe pas afin d'éviter les erreurs
         if ( $projet->getImages()->count() == 2 )
         {
             $image1 = $projet->getImages(){0};
@@ -98,6 +125,7 @@ class PDFGeneratorController extends Controller
             $image2 = null;
         }
 
+//        Création du template du projet avec les informations de celui-ci
         $template = $this->renderView('::pdf.html.twig',
             ['nom' => $nomP,
                 'descrip' => $descripP,
@@ -112,150 +140,249 @@ class PDFGeneratorController extends Controller
                 'image2' => $image2,
             ]);
 
-
+//        Récupération de l'application de génération de pdf
         $html2pdf = $this->get('app.html2pdf');
+//        Création d'un pdf
         $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
 
+//        Génération du pdf et téléchargement de celui-ci
         return $html2pdf->downloadPdf($template, "projetPDF");
     }
 
+    /**
+     * @param $idLivret
+     *
+     *  Controlleur gérant la génération du pdf d'un livret et qui l'affiche
+     */
     public function generatorManyAction($idLivret)
     {
+//        Récupération du repository des livrets
         $repLivret = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('IUTOLivretBundle:Livret');
 
-        $repProjet = $this->getDoctrine()->getManager()->getRepository('IUTOLivretBundle:Projet');
-
+//        Récupération du livret que l'on veux générer
         $livret = $repLivret->findOneById($idLivret);
 
+//        Récupération de l'application de génération de pdf
         $html2pdf = $this->get('app.html2pdf');
+//        Création du pdf au format A4
         $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
 
-        $template = $this->renderView('::edito.html.twig',
-            ['texte' => $livret->getEditoLivret(),
-            ]);
-
-        $html2pdf->write($template);
-
+//        Récupération des projets du livret
         $projets = $livret->getProjets();
 
-        foreach ( $projets as $projet)
+//        Récupération des informations pour la page de garde
+        $title = $livret->getIntituleLivret();
+        $departements = array();
+        $promotions = array();
+        $intitules = array();
+        $minYear = 1000000;
+        $maxYear = 0;
+        $dateCrea = $livret->getDateCreationLivret()->format('d-m-Y');
+
+//        Récupération des données projets par projets
+        foreach ( $projets as $curProj)
         {
-
-            $nomP = $projet->getIntituleProjet();
-            $descripP = $projet->getDescripProjet();
-            $bilanP = $projet->getBilanProjet();
-            $clientP = $projet->getClientProjet();
-            $descripCli = $projet->getDescriptionClientProjet();
-            $etudiants = $projet->getEtudiants();
-            $tuteurs = $projet->getTuteurs();
-            $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
-            $departement = $etudiants{0}->getFormations(){0}->getDepartement()->getNomDpt();
-
-            if ( $projet->getImages()->count() == 2 )
+            $curForm =$curProj->getEtudiants()[0]->getFormations()[0];
+            $curDpt = $curForm->getDepartement()->getNomDpt();
+            if ( !in_array($curDpt, $departements))
             {
-                $image1 = $projet->getImages(){0};
-                $image2 = $projet->getImages(){1};
+                array_push($departements, $curDpt);
             }
-            elseif ( $projet->getImages()->count() == 1 )
+            $curTypeForm = $curForm->getTypeFormation();
+            if ( !in_array($curTypeForm, $promotions))
             {
-                $image1 = $projet->getImages(){0};
-                $image2 = null;
+                array_push($promotions, $curTypeForm);
             }
-            else{
-                $image1 = null;
-                $image2 = null;
+            $curYearStart = $curForm->getDateDebut()->format('Y');
+            $curYearEnd = $curForm->getDateFin()->format('Y');
+            if ( $maxYear<$curYearEnd )
+            {
+                $maxYear = $curYearEnd;
             }
-
-            $template = $this->renderView('::pdf.html.twig',
-                ['nom' => $nomP,
-                    'descrip' => $descripP,
-                    'bilan' => $bilanP,
-                    'client' => $clientP,
-                    'descripCli' => $descripCli,
-                    'etudiants' => $etudiants,
-                    'tuteurs' => $tuteurs,
-                    'formation' => $formation,
-                    'departement' => $departement,
-                    'image1' => $image1,
-                    'image2' => $image2,
-                ]);
-
-	        $html2pdf->write($template);
+            if( $minYear> $curYearStart)
+            {
+                $minYear = $curYearStart;
+            }
+            array_push($intitules, $curProj->getIntituleProjet());
         }
 
-        $html2pdf->getOutputPdf("livret");
-    }
-
-    public function downloadLivretAction($id)
-    {
-        $repLivret = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('IUTOLivretBundle:Livret');
-
-        $repProjet = $this->getDoctrine()->getManager()->getRepository('IUTOLivretBundle:Projet');
-
-        $livret = $repLivret->findOneById($id);
-
-        $html2pdf = $this->get('app.html2pdf');
-        $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
-
-        $template = $this->renderView('::edito.html.twig',
-            ['texte' => $livret->getEditoLivret(),
+        $template = $this->renderView('::couverture.html.twig',
+            [
+               'intituleLivret' => $title,
+                'minYear' => $minYear,
+                'maxYear' => $maxYear,
+                'departements' => $departements,
+                'promotions' => $promotions,
+                'dateCrea' => $dateCrea,
+                'intitules' => $intitules,
             ]);
-
         $html2pdf->write($template);
 
-        $projets = $livret->getProjets();
-
-        foreach ( $projets as $projet)
+        $edito = $livret->getEditoLivret();
+//        Création du template pour la génération de l'édito du livret
+//        si le champ n'est pas vide
+        if ( $edito != null and $edito != "") // TODO vérification
         {
-
-            $nomP = $projet->getIntituleProjet();
-            $descripP = $projet->getDescripProjet();
-            $bilanP = $projet->getBilanProjet();
-            $clientP = $projet->getClientProjet();
-            $descripCli = $projet->getDescriptionClientProjet();
-            $etudiants = $projet->getEtudiants();
-            $tuteurs = $projet->getTuteurs();
-            $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
-            $departement = $etudiants{0}->getFormations(){0}->getDepartement()->getNomDpt();
-
-            if ( $projet->getImages()->count() == 2 )
-            {
-                $image1 = $projet->getImages(){0};
-                $image2 = $projet->getImages(){1};
-            }
-            elseif ( $projet->getImages()->count() == 1 )
-            {
-                $image1 = $projet->getImages(){0};
-                $image2 = null;
-            }
-            else{
-                $image1 = null;
-                $image2 = null;
-            }
-
-            $template = $this->renderView('::pdf.html.twig',
-                ['nom' => $nomP,
-                    'descrip' => $descripP,
-                    'bilan' => $bilanP,
-                    'client' => $clientP,
-                    'descripCli' => $descripCli,
-                    'etudiants' => $etudiants,
-                    'tuteurs' => $tuteurs,
-                    'formation' => $formation,
-                    'departement' => $departement,
-                    'image1' => $image1,
-                    'image2' => $image2,
+            $template = $this->renderView('::edito.html.twig',
+                ['texte' => $livret->getEditoLivret(),
                 ]);
-
+//            Ecriture du template dans le pdf
             $html2pdf->write($template);
         }
 
+//        Parcours des projets afin d'écrire page par page
+        foreach ( $projets as $projet)
+        {
+//            Récupération des informations sur le projet actuel
+            $nomP = $projet->getIntituleProjet();
+            $descripP = $projet->getDescripProjet();
+            $bilanP = $projet->getBilanProjet();
+            $clientP = $projet->getClientProjet();
+            $descripCli = $projet->getDescriptionClientProjet();
+            $etudiants = $projet->getEtudiants();
+            $tuteurs = $projet->getTuteurs();
+            $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
+            $departement = $etudiants{0}->getFormations(){0}->getDepartement()->getNomDpt();
+
+//            Récupération des images du projet, on met à null si il n'y a pas d'image
+//            afin d'éviter les erreurs
+            if ( $projet->getImages()->count() == 2 )
+            {
+                $image1 = $projet->getImages(){0};
+                $image2 = $projet->getImages(){1};
+            }
+            elseif ( $projet->getImages()->count() == 1 )
+            {
+                $image1 = $projet->getImages(){0};
+                $image2 = null;
+            }
+            else{
+                $image1 = null;
+                $image2 = null;
+            }
+
+//            Creation du template pour le projet actuel
+            $template = $this->renderView('::pdf.html.twig',
+                ['nom' => $nomP,
+                    'descrip' => $descripP,
+                    'bilan' => $bilanP,
+                    'client' => $clientP,
+                    'descripCli' => $descripCli,
+                    'etudiants' => $etudiants,
+                    'tuteurs' => $tuteurs,
+                    'formation' => $formation,
+                    'departement' => $departement,
+                    'image1' => $image1,
+                    'image2' => $image2,
+                ]);
+
+//            Ecriture du template dans le pdf
+	        $html2pdf->write($template);
+        }
+
+//        Affichage du pdf
+        $html2pdf->getOutputPdf("livret");
+    }
+
+    /**
+     * @param $id
+     *
+     *  Controlleur gérant la génération d'un livret au format pdf et proposant
+     *  le téléchargement de ce dernier
+     */
+    public function downloadLivretAction($id)
+    {
+//        Récupération du repository des livrets
+        $repLivret = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('IUTOLivretBundle:Livret');
+
+//        Récupération du livret que l'on veux générer
+        $livret = $repLivret->findOneById($id);
+
+//        Récupération de l'application de génération de pdf
+        $html2pdf = $this->get('app.html2pdf');
+//        Création du pdf au format A4
+        $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
+
+        $title = $livret->getIntituleLivret();
+
+        $template = $this->renderView('::couverture.html.twig',
+            [
+                'intituleLivret' => $title,
+            ]);
+        $html2pdf->write($template);
+
+        $edito = $livret->getEditoLivret();
+//        Création du template pour la génération de l'édito du livret
+//        si le champ n'est pas vide
+        if ( $edito != null and $edito != "") // TODO vérification
+        {
+            $template = $this->renderView('::edito.html.twig',
+                ['texte' => $livret->getEditoLivret(),
+                ]);
+//            Ecriture du template dans le pdf
+            $html2pdf->write($template);
+        }
+
+//        Récupération des projets du livret
+        $projets = $livret->getProjets();
+
+//        Parcours des projets afin d'écrire page par page
+        foreach ( $projets as $projet)
+        {
+//            Récupération des informations sur le projet actuel
+            $nomP = $projet->getIntituleProjet();
+            $descripP = $projet->getDescripProjet();
+            $bilanP = $projet->getBilanProjet();
+            $clientP = $projet->getClientProjet();
+            $descripCli = $projet->getDescriptionClientProjet();
+            $etudiants = $projet->getEtudiants();
+            $tuteurs = $projet->getTuteurs();
+            $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
+            $departement = $etudiants{0}->getFormations(){0}->getDepartement()->getNomDpt();
+
+//            Récupération des images du projet, on met à null si il n'y a pas d'image
+//            afin d'éviter les erreurs
+            if ( $projet->getImages()->count() == 2 )
+            {
+                $image1 = $projet->getImages(){0};
+                $image2 = $projet->getImages(){1};
+            }
+            elseif ( $projet->getImages()->count() == 1 )
+            {
+                $image1 = $projet->getImages(){0};
+                $image2 = null;
+            }
+            else{
+                $image1 = null;
+                $image2 = null;
+            }
+
+//            Creation du template pour le projet actuel
+            $template = $this->renderView('::pdf.html.twig',
+                ['nom' => $nomP,
+                    'descrip' => $descripP,
+                    'bilan' => $bilanP,
+                    'client' => $clientP,
+                    'descripCli' => $descripCli,
+                    'etudiants' => $etudiants,
+                    'tuteurs' => $tuteurs,
+                    'formation' => $formation,
+                    'departement' => $departement,
+                    'image1' => $image1,
+                    'image2' => $image2,
+                ]);
+
+//            Ecriture du template dans le pdf
+            $html2pdf->write($template);
+        }
+
+//        Envoie de la demande de téléchargement du pdf
         $html2pdf->getDownloadPdf("livret");
     }
 
