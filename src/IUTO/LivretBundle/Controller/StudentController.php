@@ -27,7 +27,7 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // recupération de l'utilisateur connecté
-	$idUniv = phpCAS::getUser();
+	    $idUniv = phpCAS::getUser();
         //$idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
@@ -54,7 +54,7 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // Recuperation de l'étudiant connecté
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
@@ -153,7 +153,7 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         //recuperation des informations sur l'utilisateur
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
@@ -203,7 +203,7 @@ class StudentController extends Controller
     {
         //récupération des informations sur l'utilisateur
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
@@ -246,7 +246,7 @@ class StudentController extends Controller
     {
         //récupération des informations de l'utilisateur connecter
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
@@ -430,7 +430,7 @@ class StudentController extends Controller
 //        récupération de l'entity manager
         $em = $this->getDoctrine()->getManager();
         //récupération des informations de l'utilisateur connecter
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
@@ -562,7 +562,7 @@ class StudentController extends Controller
 //        récupération de l'entity manager
         $em = $this->getDoctrine()->getManager();
 //        récupération des données sur l'étudiant connecté
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
@@ -628,7 +628,7 @@ class StudentController extends Controller
     {
         // récupération des informations de l'utilisateur connecter
         $manager = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
@@ -652,7 +652,7 @@ class StudentController extends Controller
 
         // récupération des inforamtions dur l'utilsateur connecté
         $manager = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
 //      rendu de la vue pour un projet fini
@@ -670,7 +670,7 @@ class StudentController extends Controller
     {
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
         $form = $this->get('form.factory')->create();
@@ -735,7 +735,7 @@ class StudentController extends Controller
     {
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
         $projet = $image->getProjet();
