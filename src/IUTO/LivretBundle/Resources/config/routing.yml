@@ -87,46 +87,46 @@ iuto_livret_teacherhomepage:
 
 #==========CORRECTION1=====#
 iuto_livret_correctionProf1:
-    path: /correctionProf1
+    path: /professeur/correctionProf1
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher1 }
 
 #==========CORRECTION2=====#
 iuto_livret_correctionProf2:
-    path: /{projet}/correctionProf2
+    path: /professeur/{projet}/correctionProf2
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher2 }
 
 #==========CORRECTION3=====#
 iuto_livret_correctionProf3:
-    path: /{projet}/correctionProf3
+    path: /professeur/{projet}/correctionProf3
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher3 }
 
 #==========CORRECTION4=====#
 iuto_livret_correctionProf4:
-    path: /{projet}/correctionProf4
+    path: /professeur/{projet}/correctionProf4
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacher4 }
 
 
 #=====AJOUT IMAGE ET MOT====#
 iuto_livret_add_img_word_teacher:
-    path: /{projet}/correction/addImgWord
+    path: /professeur/{projet}/correction/addImgWord
     defaults: { _controller: IUTOLivretBundle:Teacher:correctionTeacherWordImage }
 
 #====AJOUT D'UNE IMAGE======#
 iuto_livret_add_img_teacher:
-    path: /{projet}/correction/addImg
+    path: /professeur/{projet}/correction/addImg
     defaults: { _controller: IUTOLivretBundle:Teacher:addImageCorrection }
 
 #==========PROJETS VALIDES1=====#
 iuto_livret_projetsValides1:
-    path: /projetsValides1
+    path: /professeur/projetsValides1
     defaults: { _controller: IUTOLivretBundle:Teacher:projetsValidesTeacher1 }
 
 iuto_livret_teacher_deleteProjet:
-    path: /teacher/delete/projet/{projet}
+    path: /professeur/teacher/delete/projet/{projet}
     defaults: { _controller: IUTOLivretBundle:Teacher:deleteProjet }
 
 iuto_livret_teacher_deleteImage:
-    path: /teacher/delete/image/{image}
+    path: /professeur/teacher/delete/image/{image}
     defaults: { _controller: IUTOLivretBundle:Teacher:deleteImage}
 
 #==========================================================#

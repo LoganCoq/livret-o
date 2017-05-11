@@ -16,6 +16,7 @@ use IUTO\LivretBundle\Form\ProjetModifType;
 use IUTO\LivretBundle\Form\ProjetNotMarquantType;
 use IUTO\LivretBundle\Form\ProjetNotValideType;
 use IUTO\LivretBundle\Form\ProjetValideType;
+use phpCAS;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,7 +31,7 @@ class TeacherController extends Controller
     {
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
@@ -42,8 +43,8 @@ class TeacherController extends Controller
             'routing_statutCAShome' => '/professeur',
             'id' => $id,
             'professeur' => $professeur,
-            'routing_info' => array('/correctionProf1', '/projetsValides1'),
-            'routing_options' => array('/correctionProf1', '/projetsValides1'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
+            'routing_options' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
             '#'));
     }
 
@@ -55,7 +56,7 @@ class TeacherController extends Controller
     {
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
@@ -79,7 +80,7 @@ class TeacherController extends Controller
             'projets' => $projetsValides,
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
-            'routing_info' => array('/correctionProf1', '/projetsValides1'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
             'pagePrec' => '/professeur',
         ));
 
@@ -93,7 +94,7 @@ class TeacherController extends Controller
     {
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
@@ -184,7 +185,7 @@ class TeacherController extends Controller
                 'iuto_livret_correctionProf3', array(
                     'statusCAS' => 'professeur',
                     'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'projet' => $newProjet->getId(),
                 )
             );
@@ -241,10 +242,10 @@ class TeacherController extends Controller
                     'info' => array('Demandes de correction', 'Projets validés'),
                     'routing_statutCAShome' => '/professeur',
                     'commentaires' => $commentaires,
-                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'routing_options' => array('#', '#'),
-                    'pagePrec' => '/correctionProf1',
-                    'pageSuiv' => '/'.$idProjet.'/correctionProf3',
+                    'pagePrec' => '/professeur/correctionProf1',
+                    'pageSuiv' => '/professeur/'.$idProjet.'/correctionProf3',
                 ));
         }
 
@@ -256,10 +257,10 @@ class TeacherController extends Controller
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_statutCAShome' => '/professeur',
                 'commentaires' => $commentaires,
-                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                 'routing_options' => array('#', '#'),
-                'pagePrec' => '/correctionProf1',
-                'pageSuiv' => '/'.$idProjet.'/correctionProf3'
+                'pagePrec' => '/professeur/correctionProf1',
+                'pageSuiv' => '/professeur/'.$idProjet.'/correctionProf3'
             ));
     }
 
@@ -271,7 +272,7 @@ class TeacherController extends Controller
     {
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
@@ -291,7 +292,7 @@ class TeacherController extends Controller
             return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
                     'statusCAS' => 'professeur',
                     'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'projet' => $projet->getId(),
                 )
             );
@@ -358,10 +359,10 @@ class TeacherController extends Controller
                     'info' => array('Demandes de correction', 'Projets validés'),
                     'routing_statutCAShome' => '/professeur',
                     'commentaires' => $commentaires,
-                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'routing_options' => array('#', '#'),
-                    'pagePrec' => '/correctionProf1',
-                    'pageSuiv' => '/'.$idProjet.'/correctionProf3',
+                    'pagePrec' => '/professeur/correctionProf1',
+                    'pageSuiv' => '/professeur/'.$idProjet.'/correctionProf3',
                     'projet' => $projet,
                     'image' => $images,
                 ));
@@ -375,10 +376,10 @@ class TeacherController extends Controller
                 'commentaires' => $commentaires,
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                 'routing_options' => array('#', '#'),
-                'pagePrec' => '/'.$idProjet.'/correctionProf2',
-                'pageSuiv' => '/'.$idProjet.'/correctionProf4',
+                'pagePrec' => '/professeur/'.$idProjet.'/correctionProf2',
+                'pageSuiv' => '/professeur/'.$idProjet.'/correctionProf4',
                 'projet' => $projet,
                 'images' => $images,
             ));
@@ -392,7 +393,7 @@ class TeacherController extends Controller
     {
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
@@ -464,7 +465,7 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                 'routing_options' => array('#', '#'),
                 'projet' => $projet,
                 'motsCle' => $motsCles,
@@ -489,7 +490,7 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                 'routing_options' => array('#', '#'),
                 'projet' => $projet,
                 'motsCle' => $motsCles,
@@ -503,7 +504,7 @@ class TeacherController extends Controller
             'statutCAS' => 'professeur',
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
-            'routing_info' => array('/correctionProf1', '/projetsValides1'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
             'routing_options' => array('#', '#'),
             'projet' => $projet,
             'motsCle' => $motsCles,
@@ -520,7 +521,7 @@ class TeacherController extends Controller
     {
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
@@ -561,10 +562,10 @@ class TeacherController extends Controller
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
                     'routing_statutCAShome' => '/professeur',
                     'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
-                    'routing_options' => array('/correctionProf1', '/projetsValides1'),
+                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
+                    'routing_options' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'professeur' => $professeur,
-                    'pagePrec' => '/'.$idProjet.'/correctionProf3',
+                    'pagePrec' => '/professeur/'.$idProjet.'/correctionProf3',
                     'projetO' => $projet,
                 ));
         }
@@ -590,10 +591,10 @@ class TeacherController extends Controller
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
                     'routing_statutCAShome' => '/professeur',
                     'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
-                    'routing_options' => array('/correctionProf1', '/projetsValides1'),
+                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
+                    'routing_options' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'professeur' => $professeur,
-                    'pagePrec' => '/'.$idProjet.'/correctionProf3',
+                    'pagePrec' => '/professeur/'.$idProjet.'/correctionProf3',
                     'projetO' => $projet,
                 ));
         }
@@ -616,10 +617,10 @@ class TeacherController extends Controller
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
                     'routing_statutCAShome' => '/professeur',
                     'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
-                    'routing_options' => array('/correctionProf1', '/projetsValides1'),
+                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
+                    'routing_options' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'professeur' => $professeur,
-                    'pagePrec' => '/'.$idProjet.'/correctionProf3',
+                    'pagePrec' => '/professeur/'.$idProjet.'/correctionProf3',
                     'projetO' => $projet,
                 ));
         }
@@ -641,10 +642,10 @@ class TeacherController extends Controller
                     'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
                     'routing_statutCAShome' => '/professeur',
                     'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
-                    'routing_options' => array('/correctionProf1', '/projetsValides1'),
+                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
+                    'routing_options' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'professeur' => $professeur,
-                    'pagePrec' => '/'.$idProjet.'/correctionProf3',
+                    'pagePrec' => '/professeur/'.$idProjet.'/correctionProf3',
                     'projetO' => $projet,
                 ));
         }
@@ -660,8 +661,8 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/correctionProf1', '/projetsValides1'),
-                'pagePrec' => '/'.$idProjet.'/correctionProf3',
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
+                'pagePrec' => '/professeur/'.$idProjet.'/correctionProf3',
                 'projetO' => $projet,
                 )
         );
@@ -674,7 +675,7 @@ class TeacherController extends Controller
     public function addImageCorrectionAction(Request $request, Projet $projet)
     {
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
@@ -707,7 +708,7 @@ class TeacherController extends Controller
                     'statutCAS' => 'professeur',
                     'routing_statutCAShome' => '/professeur',
                     'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'projet' => $projet->getId(),
                     'images' => $images,
                     'motsCle' => $motsCles,
@@ -721,7 +722,7 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                 'projet' => $projet,
             )
         );
@@ -734,7 +735,7 @@ class TeacherController extends Controller
     {
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $professeur->getId();
 
@@ -757,7 +758,7 @@ class TeacherController extends Controller
             'projets' => $projetsValides,
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
-            'routing_info' => array('/correctionProf1', '/projetsValides1'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
             'pagePrec' => '/professeur',
         ));
 
@@ -768,7 +769,7 @@ class TeacherController extends Controller
     {
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
 //        creation d'un formulaire vide pour supprimmer le projet
@@ -800,7 +801,7 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                 'projet' => $projet,
             ));
         }
@@ -812,7 +813,7 @@ class TeacherController extends Controller
             'statutCAS' => 'professeur',
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
-            'routing_info' => array('/correctionProf1', '/projetsValides1'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
         ));
     }
 
@@ -820,7 +821,7 @@ class TeacherController extends Controller
     {
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $teacher = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
         $projet = $image->getProjet();
@@ -873,7 +874,7 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/correctionProf1', '/projetsValides1'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                 'images' => $images,
                 'motsCles' => $motsCles,
                 'commentaires' => $commentaires,
@@ -887,7 +888,7 @@ class TeacherController extends Controller
             'statutCAS' => 'professeur',
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
-            'routing_info' => array('/correctionProf1', '/projetsValides1'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
             'projet' => $projet,
         ));
     }
