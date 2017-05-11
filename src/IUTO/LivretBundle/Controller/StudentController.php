@@ -15,6 +15,7 @@ use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use phpCAS;
 
 class StudentController extends Controller
 {
@@ -26,7 +27,8 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // recupération de l'utilisateur connecté
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+	$idUniv = phpCAS::getUser();
+        //$idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 

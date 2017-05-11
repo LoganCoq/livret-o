@@ -17,3 +17,5 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+    cas_login_target: livreto.iut45.univ-orleans.fr/login
+    cas_host: auth.univ-orleans.fr/cas

@@ -4,9 +4,12 @@ security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-#        main:
-#            class: IUTO\LivretBundle\Entity\User
-#            property: idUniv
+        main:
+            entity:
+               class: IUTO\LivretBundle\Entity\User
+#        my_provider:
+#            entity:
+#                id: app.my_user_provider
         in_memory:
             memory: ~
     access_control:
@@ -19,19 +22,19 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-#        l3_firewall:
-#            pattern: ^/
-#            security: true
-#            cas: true
+        l3_firewall:
+            pattern: ^/(login|connexion|etudiant|professeur|communication|chef)
+            security: true
+            cas: true
 
         main:
             pattern: ^/
             anonymous: true
             provider: main
-            logout:
-                  invalidate_session: true
-                  path: /logout
-                  target: /
+#            logout:
+#                  invalidate_session: true
+#                  path: /logout
+#                  target: auth.univ-orleans.fr/cas/logout
             # activate different ways to authenticate
 
             # http_basic: ~

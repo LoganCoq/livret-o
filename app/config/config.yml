@@ -89,8 +89,9 @@ l3_cas:
     port: 443                                           # Port du serveur CAS
     ca: false                                           # Définition d'un certificat SSL pour le serveur CAS
     handleLogoutRequest: false                           # Activiation du Single Sign Out (défaut: false)
-    casLogoutTarget: auth.univ-orleans.fr/cas     # Page de redirection après la déconnexion de l'application
-    force: false
+    casLogoutTarget: auth.univ-orleans.fr/cas/logout     # Page de redirection après la déconnexion de l'application
+    force: true
+
 vich_uploader:
     db_driver: orm
     mappings:

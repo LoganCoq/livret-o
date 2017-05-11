@@ -8,6 +8,6 @@ class HomeController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('IUTOLivretBundle:Home:index.html.twig', array('onclick' => '/connexion','modulePublic' => '/public'));
+        return $this->render('IUTOLivretBundle:Home:index.html.twig', array('onclick' => '/login','modulePublic' => '/public'));
     }
 }

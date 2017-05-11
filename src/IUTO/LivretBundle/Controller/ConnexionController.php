@@ -11,7 +11,7 @@ use Symfony\Component\Ldap\Adapter\ExtLdap\Adapter;
 use Symfony\Component\Ldap\Ldap;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-
+use phpCAS;
 
 class ConnexionController extends Controller
 {
@@ -36,8 +36,9 @@ class ConnexionController extends Controller
 
 
 //        -----COMMUNICATION-----
-        $numPersonne = "p51955";
+//        $numPersonne = "p51955";
 
+	$numPersonne = phpCAS::getUser();
         $config = array(
             'host' => 'ldap-univ.iut45.univ-orleans.fr',
             'port' => 636,
@@ -142,7 +143,7 @@ class ConnexionController extends Controller
         } else {
             // TODO vérifier avec LDAP si les infos sont à jours
         }
-        $token = new UsernamePasswordToken($user->getIdUniv(), null, "main", array($user->getRoles()));
+        $token = new UsernamePasswordToken($user->getIdUniv(), null, "main", $user->getRoles());
         $this->get("security.token_storage")->setToken($token);
 
         $request = new Request();

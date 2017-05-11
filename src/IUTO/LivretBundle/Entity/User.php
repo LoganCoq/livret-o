@@ -74,6 +74,7 @@ class User implements UserInterface
     */
     private $projetSuivis;
 
+
     /**
      * Constructor
      */
@@ -86,7 +87,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return $this->role;
+        return array($this->role);
     }
 
     public function getPassword()

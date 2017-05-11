@@ -11,6 +11,21 @@ class LoginController extends Controller
         $target = urlencode($this->container->getParameter('cas_login_target'));
         $url = 'https://'.$this->container->getParameter('cas_host') . '/login?service=';
 
-        return $this->redirect($url . $target . '/force');
+        return $this->redirect($url . $target );
     }
+
+    /**
+     * @Route("/force", name="force")
+     */
+    public function forceAction() {
+
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        session_destroy();
+
+        return $this->redirect($this->generateUrl('iuto_livret_login'));
+    }
+
 }
