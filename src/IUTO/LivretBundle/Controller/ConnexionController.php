@@ -151,16 +151,16 @@ class ConnexionController extends Controller
         $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
         $id = $em->getRepository("IUTOLivretBundle:User")->findOneByIdUniv($numPersonne)->getId();
 
-        if (strcmp($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0], "student") == 0)
+	if (strcmp($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0], "student") == 0)
         {
 //            if (strcmp($primaryaffil, "student") == 0)
             return $this->redirectToRoute("iuto_livret_studenthomepage", array("id" => $id));
         }
-        else if (strcmp($user->getRoles(), "ROLE_employee") == 0)
+        else if (strcmp($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0], "employee") == 0)
         {
             return $this->redirectToRoute("iuto_livret_communicationhomepage", array("id" => $id));
         }
-        else
+        else if (strcmp($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0], "faculty") == 0)
         {
             return $this->redirectToRoute("iuto_livret_teacherhomepage", array("id" => $id));
         }
