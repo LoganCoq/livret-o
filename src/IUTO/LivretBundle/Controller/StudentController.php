@@ -16,6 +16,8 @@ use IUTO\LivretBundle\Form\ProjetCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use phpCAS;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class StudentController extends Controller
 {
@@ -25,23 +27,28 @@ class StudentController extends Controller
     public function studenthomeAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         // recupération de l'utilisateur connecté
 	    $idUniv = phpCAS::getUser();
         //$idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
-        $id = $etudiant->getId();
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $user->getId();
+	
+	$token = new UsernamePasswordToken($user->getIdUniv(), null, "main", $user->getRoles());
+        $this->get("security.token_storage")->setToken($token);
 
+        $request = new Request();
+        $event = new InteractiveLoginEvent($request, $token);
+        $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
         // creation de la vue home
         return $this->render('IUTOLivretBundle:Student:studenthome.html.twig', array(
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
             'options' => array('Créer un compte rendu', 'Voir mes projets'),
-            'routing_info' => array('/create/project', '/choose/project', '#'),
-            'routing_options' => array('/create/project', '/choose/project', '#'),
+            'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#'),
+            'routing_options' => array('/etudiant/create/project', '/etudiant/choose/project', '#'),
             'routing_statutCAShome' => '/etudiant',
             'id' => $id,
-            'user' => $etudiant,
+            'user' => $user,
         ));
     }
 
@@ -52,9 +59,8 @@ class StudentController extends Controller
     {
 //        récupération de l'entity manager
         $em = $this->getDoctrine()->getManager();
-
+	$idUniv = phpCAS::getUser();
         // Recuperation de l'étudiant connecté
-        $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
