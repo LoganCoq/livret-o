@@ -72,25 +72,15 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-
-#
-#l3_cas:
-#    host: auth.univ-orleans.fr/cas                       # Serveur CAS
-#    path: ~                                              # Chemin de l'application CAS si elle ne se trouve pas à la racine
-#    port: 443                                            # Port du serveur CAS
-#    ca: false                                            # Définition d'un certificat SSL pour le serveur CAS
-#    handleLogoutRequest: false                           # Activiation du Single Sign Out (défaut: false)
-#    casLogoutTarget: livreto.iut45.univ-orleans.fr       # Page de redirection après la déconnexion de l'application
-#    force: true
-
+#Configuration pour la connection au serveur cas
 l3_cas:
-    host: auth.univ-orleans.fr/cas                          # Serveur CAS
-    path: ~                                             # Chemin de l'application CAS si elle ne se trouve pas à la racine
-    port: 443                                           # Port du serveur CAS
-    ca: false                                           # Définition d'un certificat SSL pour le serveur CAS
-    handleLogoutRequest: false                           # Activiation du Single Sign Out (défaut: false)
-    casLogoutTarget: auth.univ-orleans.fr/cas/logout     # Page de redirection après la déconnexion de l'application
-    force: true
+    host: auth.univ-orleans.fr/cas                        # Serveur CAS
+    path: ~                                               # Chemin de l'application CAS si elle ne se trouve pas à la racine
+    port: 443                                             # Port du serveur CAS
+    ca: false                                             # Définition d'un certificat SSL pour le serveur CAS
+    handleLogoutRequest: false                            # Activiation du Single Sign Out (défaut: false)
+    casLogoutTarget: auth.univ-orleans.fr/cas/logout      # Page de redirection après la déconnexion de l'application
+    force: true                                           # Force l'authentification
 
 vich_uploader:
     db_driver: orm

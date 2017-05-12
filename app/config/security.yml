@@ -4,14 +4,17 @@ security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
+        # Définition de l'user provider pour la connexion
         main:
-            entity:
+            entity: # L'utilisateur est une entité
+                # Définition du type de l'utilisateur
+                # La récupération de l'utilisateur est définie dans UserRepository
                class: IUTO\LivretBundle\Entity\User
-#        my_provider:
-#            entity:
-#                id: app.my_user_provider
+
         in_memory:
             memory: ~
+
+    # Définition des routes accessibles selon le ROLE de l'user connecté
     access_control:
             - { path: /etudiant,        roles: ROLE_student }
             - { path: /professeur,      roles: ROLE_faculty }
@@ -23,20 +26,23 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
+        # paramètrage du firewall CAS
         l3_firewall:
+            # définition des routes affectées par le firewall ( toute autres routes seront accessibles sans authentification)
             pattern: ^/(login|connexion|etudiant|professeur|communication|chef)
+            # Activation de la sécurité sur les routes de pattern
             security: true
+            # Activation de CAS
             cas: true
 
         main:
             pattern: ^/
             anonymous: true
+            # Définition de l'user provider ( ce qui va nous permettre de récupérer l'utilisateur )
+            # qouhaitant se connecter
             provider: main
-#            logout:
-#                  invalidate_session: true
-#                  path: /logout
-#                  target: auth.univ-orleans.fr/cas/logout
+
+
             # activate different ways to authenticate
 
             # http_basic: ~

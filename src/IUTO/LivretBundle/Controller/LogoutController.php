@@ -9,32 +9,22 @@ use phpCAS;
 
 class LogoutController extends Controller
 {
+//    Action pour la déconnexion de l'utilisateur
     public function logoutAction(Request $request)
     {
-	$this->get('security.token_storage')->setToken(null);
-	$request->getSession()->invalidate();
-//	\phpCAS::handleLogoutRequests();
-//	\phpCAS::logoutWithRedirectService(urlencode($this->container->getParameter('cas_login_target')));
-//	\phpCAS::logout();
+//      On met le token de sécurité a null
+	    $this->get('security.token_storage')->setToken(null);
+//	    On invalide la session afin de déconnectée l'utilisateur
+	    $request->getSession()->invalidate();
 
-	$target = urlencode($this->container->getParameter('cas_logout_target'));
+//        On récupére la route vers laquelle CAS va nous redirigé après le logout
+	    $target = urlencode($this->container->getParameter('cas_logout_target'));
+//	      On récupére l'url de déconnexion CAS
         $url = 'https://'.$this->container->getParameter('cas_host') . '/logout?service=';
-	
-	return $this->redirect($url . $target);
+//        On redirige vers l'url de déconnexion cas en précisant vers quelle route l'utilisateur
+//        va être rédirigé après sa déconnexion
+	    return $this->redirect($url . $target);
     }
 
-//    /**
-//     * @Route("/force", name="force")
-//     */
-//    public function forceAction() {
-
-//        if (!isset($_SESSION)) {
-//            session_start();
-//        }
-
-//        session_destroy();
-
-//        return $this->redirect($this->generateUrl('iuto_livret_homepage'));
-//    }
 
 }
