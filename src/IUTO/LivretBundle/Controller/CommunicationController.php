@@ -15,6 +15,7 @@ use IUTO\LivretBundle\Form\LivretChooseProjectsType;
 use IUTO\LivretBundle\Form\NewLivretType;
 use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
 use IUTO\LivretBundle\Form\ProjetCompleteType;
+use phpCAS;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Form\EditoType;
 use IUTO\LivretBundle\Form\LivretCreateType;
@@ -30,7 +31,7 @@ class CommunicationController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // recupération de l'utilisateur connecté
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
         return $this->render('IUTOLivretBundle:Communication:communicationhome.html.twig', array(
@@ -49,7 +50,7 @@ class CommunicationController extends Controller
     {
         $manager = $this->getDoctrine()->getManager();
 
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $user = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
 
@@ -85,7 +86,7 @@ class CommunicationController extends Controller
     {
         $manager = $this->getDoctrine()->getManager();
 
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $user = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
         $newLivret = new Livret();
@@ -122,6 +123,7 @@ class CommunicationController extends Controller
 
     public function communicationgenerationlivretAction(Request $request, Livret $livretId)
     {
+        $idUniv = phpCAS::getUser();
 
         $manager = $this->getDoctrine()->getManager();
         $repositoryProjet = $manager->getRepository('IUTOLivretBundle:Projet');
@@ -200,7 +202,7 @@ class CommunicationController extends Controller
     public function communicationSelectProjectsAction(Request $request, Livret $livret)
     {
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
         $oldProjects = $livret->getProjets();
@@ -252,7 +254,7 @@ class CommunicationController extends Controller
     {
         //récupération des informations sur l'utilisateur
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
@@ -273,7 +275,7 @@ class CommunicationController extends Controller
     public function communicationModifLivretAction(Request $request, Livret $livret)
     {
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $formModif = $this->createForm(NewLivretType::class, $livret);
@@ -329,7 +331,7 @@ class CommunicationController extends Controller
 
     public function communicationChoixValideAction()
     {
-
+        $idUniv = phpCAS::getUser();
         $manager = $this->getDoctrine()->getManager();
         $dpt = $manager->getRepository(Departement::class)->findAll();
         $projets = $manager->getRepository(Projet::class)->findByValiderProjet(1);
@@ -352,6 +354,8 @@ class CommunicationController extends Controller
 
     public function communicationChoixNValideAction()
     {
+        $idUniv = phpCAS::getUser();
+
         $manager = $this->getDoctrine()->getManager();
         $dpt = $manager->getRepository(Departement::class)->findAll();
         $projets = $manager->getRepository(Projet::class)->findByValiderProjet(0);
@@ -374,6 +378,8 @@ class CommunicationController extends Controller
 
     public function communicationSelectionlivretAction(Request $request)
     {
+        $idUniv = phpCAS::getUser();
+
         $manager = $this->getDoctrine()->getManager();
         $livrets = $manager->getRepository(Livret::class)->findAll();
         $l = array();
@@ -416,7 +422,7 @@ class CommunicationController extends Controller
     public function communicationCorrectionProjetAction(Request $request, Projet $projet)
     {
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $formCorrect = $this->createForm(ProjetCompleteType::class, $projet);
@@ -592,7 +598,7 @@ class CommunicationController extends Controller
         //        récupération de l'entity manager
         $em = $this->getDoctrine()->getManager();
         //récupération des informations de l'utilisateur connecter
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
 //        récupération des mots clés du projet
@@ -716,7 +722,7 @@ class CommunicationController extends Controller
         //        récupération de l'entity manager
         $em = $this->getDoctrine()->getManager();
 //        récupération des données sur l'étudiant connecté
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
 //        récupération des images du projet
@@ -775,7 +781,7 @@ class CommunicationController extends Controller
     {
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
         $form = $this->get('form.factory')->create();
@@ -817,7 +823,7 @@ class CommunicationController extends Controller
     {
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
-        $idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
+        $idUniv = phpCAS::getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
         $projet = $image->getProjet();
