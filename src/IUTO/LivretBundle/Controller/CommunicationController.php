@@ -32,7 +32,7 @@ class CommunicationController extends Controller
 
         // recupération de l'utilisateur connecté
         $idUniv = phpCAS::getUser();
-        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         return $this->render('IUTOLivretBundle:Communication:communicationhome.html.twig', array(
             'statutCAS' => 'service de communication',
@@ -51,12 +51,12 @@ class CommunicationController extends Controller
         $manager = $this->getDoctrine()->getManager();
 
         $idUniv = phpCAS::getUser();
-        $user = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $user = $manager->getRepository(User::class)->findOneByIdUniv($idUniv);
 
 
         $session = $this->get('session');
 
-        $livret = $manager->getRepository(Livret::class)->findOneById($session->get("numEdito")); //TODO recuperation cas
+        $livret = $manager->getRepository(Livret::class)->findOneById($session->get("numEdito"));
         $form = $this->createForm(EditoType::class, $livret);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -87,7 +87,7 @@ class CommunicationController extends Controller
         $manager = $this->getDoctrine()->getManager();
 
         $idUniv = phpCAS::getUser();
-        $user = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $user = $manager->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $newLivret = new Livret();
 
@@ -203,7 +203,7 @@ class CommunicationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $oldProjects = $livret->getProjets();
 
@@ -255,7 +255,7 @@ class CommunicationController extends Controller
         //récupération des informations sur l'utilisateur
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
         $id = $etudiant->getId();
 
         // récuperation des projets d'un étudiant
@@ -599,7 +599,7 @@ class CommunicationController extends Controller
         $em = $this->getDoctrine()->getManager();
         //récupération des informations de l'utilisateur connecter
         $idUniv = phpCAS::getUser();
-        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
 //        récupération des mots clés du projet
         $motsCles = $projet->getMotsClesProjet();
@@ -723,7 +723,7 @@ class CommunicationController extends Controller
         $em = $this->getDoctrine()->getManager();
 //        récupération des données sur l'étudiant connecté
         $idUniv = phpCAS::getUser();
-        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
 //        récupération des images du projet
         $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
@@ -782,7 +782,7 @@ class CommunicationController extends Controller
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $form = $this->get('form.factory')->create();
         $form->handleRequest($request);
@@ -824,7 +824,7 @@ class CommunicationController extends Controller
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $projet = $image->getProjet();
 

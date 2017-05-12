@@ -32,7 +32,7 @@ class TeacherController extends Controller
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
 //        rendu de la page home du professeur avec les arguments nécessaires
         return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig', array(
@@ -55,7 +55,7 @@ class TeacherController extends Controller
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
 //        récupération des projets suivis par l'utilisateur
         $repositoryUser = $em->getRepository('IUTOLivretBundle:User');
@@ -91,7 +91,7 @@ class TeacherController extends Controller
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
         $id = $professeur->getId();
 
 //        creation du formulaire de modification
@@ -266,7 +266,7 @@ class TeacherController extends Controller
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
         $id = $professeur->getId();
 
         $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
@@ -378,7 +378,7 @@ class TeacherController extends Controller
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
         $id = $professeur->getId();
 
 
@@ -503,7 +503,7 @@ class TeacherController extends Controller
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
         $id = $professeur->getId();
 
 //        creation du formulaire de validation d'un projet
@@ -612,7 +612,7 @@ class TeacherController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
         $id = $etudiant->getId();
 
 //        récupération des images du projet
@@ -668,7 +668,7 @@ class TeacherController extends Controller
         // recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
         $id = $professeur->getId();
 
 //        recupération des projets suivis par l'utilisateur
@@ -702,7 +702,7 @@ class TeacherController extends Controller
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
 //        creation d'un formulaire vide pour supprimmer le projet
         $form = $this->get('form.factory')->create();
@@ -750,7 +750,7 @@ class TeacherController extends Controller
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $teacher = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $teacher = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $projet = $image->getProjet();
 

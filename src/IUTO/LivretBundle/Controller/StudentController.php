@@ -30,7 +30,7 @@ class StudentController extends Controller
         // recupération de l'utilisateur connecté
 	    $idUniv = phpCAS::getUser();
         //$idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
-        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
         $id = $user->getId();
 	
         // creation de la vue home
