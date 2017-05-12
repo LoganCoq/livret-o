@@ -19,7 +19,7 @@
         {% form_theme form 'bootstrap_3_layout.html.twig' %}
         {{ form(form) }}
 
-        <a type="button" class="btn btn-danger" href="{{ pagePrec }}" id="livret_cancel_correction">
+        <a type="button" class="btn btn-danger" href="{{ path('iuto_livret_correctionProf2', {'projet' : projet.id}) }}" id="livret_cancel_correction">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
             Retour
         </a>
