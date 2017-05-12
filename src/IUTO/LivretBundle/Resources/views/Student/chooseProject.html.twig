@@ -38,7 +38,7 @@
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                             Modifier le projet
                         </a>
-                        <a href="/generate/{{ projet.id }}" class="btn btn-success" id="livreto_see_btn">
+                        <a href="{{ path('iuto_livret_pdfgenerator', {'id' : projet.id}) }}" class="btn btn-success" id="livreto_see_btn">
                             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                             Aperçu du projet
                         </a>
@@ -71,7 +71,7 @@
                     {% for projet in projetsFinis %}
                         <li class="list-group-item">
                             <p id="choose_project_name">{{ projet.intituleProjet }}</p>
-                            <a href="/generate/{{ projet.id }}" class="btn btn-success" id="livreto_see_finished_btn">
+                            <a href="{{ path('iuto_livret_pdfgenerator', {'id' : projet.id}) }}" class="btn btn-success" id="livreto_see_finished_btn">
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                 Aperçu du projet
                             </a>

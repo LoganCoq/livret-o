@@ -8,8 +8,7 @@
 
 {% block content %}
     <div class="div_confirm_complete">
-        <a href="/generate/{{ projet.id }}" class="btn btn-success">Aperçu du compte rendu</a>
-        {#TODO telechargement pdf#}
-        <a href="" class="btn btn-default">Enregistrer sur l'ordinateur</a>
+        <a href="{{ path('iuto_livret_pdfgenerator', {'id' : projet.id}) }}" class="btn btn-success">Aperçu du compte rendu</a>
+        <a href="{{ path('iuto_livret_download', {'id' : projet.id}) }}" class="btn btn-default">Enregistrer sur l'ordinateur</a>
     </div>
 {% endblock %}
