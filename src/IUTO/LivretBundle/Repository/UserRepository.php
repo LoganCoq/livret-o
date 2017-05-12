@@ -50,7 +50,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
         $AdapterInterface = new Adapter($config);
         $ldap = new Ldap($AdapterInterface);
         $ldap->bind();
-        $infosPersonne = $ldap->query("ou=People,dc=univ-orleans,dc=fr", "uid=" . $username)->execute()->toArray()[0];
+        $infosPersonne = $ldap->query("ou=People,dc=univ-orleans,dc=fr", "uid=" . $username)->execute()->toArray();
 
         $em = $this->getEntityManager();
         $user = $this->findOneByIdUniv($username);
@@ -84,8 +84,9 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
             'ILPO29' => array('LPMCF', 'GEA'),
             'ILPO21' => array('LPEBSI', 'GTE'),
         );
-	if ($infosPersonne){
-          if (!$user) {
+	if ($infosPersonne[0]){
+	    $infosPersonne = $infosPersonne[0];
+        if (!$user) {
             $user = new User();
 
              $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
@@ -135,8 +136,8 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
           } else {
             // TODO vérifier avec LDAP si les infos sont à jours
           }
-	  return $user;
-	}
+	    return $user;
+	    }
         throw new UsernameNotFoundException(
             sprintf('Username "%s" does not exist.', $username)
         );
