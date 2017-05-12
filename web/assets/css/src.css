@@ -68,7 +68,7 @@ h1 {
 }
 
 .sidebar-nav > li > a:hover {
-    background-color: #252424;
+    background-color: #252424 !important;
     text-decoration: none;
 }
 
