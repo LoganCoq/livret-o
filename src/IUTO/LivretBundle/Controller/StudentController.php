@@ -33,12 +33,6 @@ class StudentController extends Controller
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $user->getId();
 	
-	$token = new UsernamePasswordToken($user->getIdUniv(), null, "main", $user->getRoles());
-        $this->get("security.token_storage")->setToken($token);
-
-        $request = new Request();
-        $event = new InteractiveLoginEvent($request, $token);
-        $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
         // creation de la vue home
         return $this->render('IUTOLivretBundle:Student:studenthome.html.twig', array(
             'statutCAS' => 'étudiant',
