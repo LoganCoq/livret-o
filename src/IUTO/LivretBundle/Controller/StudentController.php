@@ -53,7 +53,7 @@ class StudentController extends Controller
     {
 //        récupération de l'entity manager
         $em = $this->getDoctrine()->getManager();
-	$idUniv = phpCAS::getUser();
+	    $idUniv = phpCAS::getUser();
         // Recuperation de l'étudiant connecté
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
@@ -119,18 +119,14 @@ class StudentController extends Controller
 
             //redirection vers la page suivante
             return $this->redirectToRoute('iuto_livret_contenuProject', array(
-                    'statutCAS' => 'étudiant',
-                    'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                    'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
-                    'routing_statutCAShome' => '/etudiant',
                     'id' => $id,
                     'projet' => $projet->getId())
             );
         }
 
         // affichage de la page du formulaire
-        return $this->render('IUTOLivretBundle:Student:createProject.html.twig',
-            array('form' => $form->createView(),
+        return $this->render('IUTOLivretBundle:Student:createProject.html.twig', array(
+                'form' => $form->createView(),
                 'statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
                 'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
@@ -170,17 +166,13 @@ class StudentController extends Controller
 
             // redirection vers le home de l'étudiant
             return $this->redirectToRoute('iuto_livret_studenthomepage', array(
-                    'statutCAS' => 'étudiant',
-                    'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                    'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
-                    'routing_statutCAShome' => '/etudiant',
                     'id' => $id,)
             );
         }
 
         // affichage de la page du formulaire d'ajout de contenu au projet
-        return $this->render('IUTOLivretBundle:Student:contenuProject.html.twig',
-            array('form' => $form->createView(),
+        return $this->render('IUTOLivretBundle:Student:contenuProject.html.twig', array(
+                'form' => $form->createView(),
                 'statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
                 'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
@@ -219,8 +211,8 @@ class StudentController extends Controller
         }
 
         // affichage de la page de selection du projet à modifier ou prévisualiser
-        return $this->render('IUTOLivretBundle:Student:chooseProject.html.twig',
-            array('statutCAS' => 'étudiant',
+        return $this->render('IUTOLivretBundle:Student:chooseProject.html.twig', array(
+                'statutCAS' => 'étudiant',
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
                 'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
                 'routing_statutCAShome' => '/etudiant',
@@ -338,10 +330,6 @@ class StudentController extends Controller
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_add_word_image', array(
-                    'statutCAS' => 'étudiant',
-                    'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                    'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
-                    'routing_statutCAShome' => '/etudiant',
                     'id' => $id,
                     'projet' => $newProjet->getId(),
                 )
@@ -589,10 +577,6 @@ class StudentController extends Controller
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_add_word_image', array(
-                    'statutCAS' => 'étudiant',
-                    'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                    'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
-                    'routing_statutCAShome' => '/etudiant',
                     'id' => $id,
                     'projet' => $projet->getId(),
                     'images' => $images,
@@ -700,10 +684,6 @@ class StudentController extends Controller
             }
 
             return $this->redirectToRoute('iuto_livret_chooseProject', array(
-                'statutCAS' => 'étudiant',
-                'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
-                'routing_statutCAShome' => '/etudiant',
                 'projetsSuivis' => $projetsSuivis,
                 'projetsFinis' => $projetsFinis,
                 'projet' => $projet,
@@ -775,10 +755,6 @@ class StudentController extends Controller
 
             return $this->redirectToRoute('iuto_livret_add_word_image', array(
                 'projet' => $projet->getId(),
-                'statutCAS' => 'étudiant',
-                'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
-                'routing_statutCAShome' => '/etudiant',
                 'images' => $images,
                 'motsCles' => $motsCles,
                 'commentaires' => $commentaires,
