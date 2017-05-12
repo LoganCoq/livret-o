@@ -33,7 +33,6 @@ class TeacherController extends Controller
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
-        $id = $professeur->getId();
 
 //        rendu de la page home du professeur avec les arguments nécessaires
         return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig', array(
@@ -41,7 +40,6 @@ class TeacherController extends Controller
             'info' => array('Demandes de correction', 'Projets validés'),
             'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
             'routing_statutCAShome' => '/professeur',
-            'id' => $id,
             'professeur' => $professeur,
             'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
             'routing_options' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
@@ -58,11 +56,10 @@ class TeacherController extends Controller
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
-        $id = $professeur->getId();
 
 //        récupération des projets suivis par l'utilisateur
         $repositoryUser = $em->getRepository('IUTOLivretBundle:User');
-        $projets = $repositoryUser->findOneById($id)->getProjetSuivis();
+        $projets = $professeur->getProjetSuivis();
 
 
         $projetsValides = array();
@@ -75,7 +72,6 @@ class TeacherController extends Controller
 
 //        rendu de la page d'affichage des projets suivis
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher1.html.twig', array(
-            'id' => $id,
             'statutCAS' => 'professeur',
             'projets' => $projetsValides,
             'routing_statutCAShome' => '/professeur',
@@ -183,9 +179,6 @@ class TeacherController extends Controller
 //            redirection vers le formulaire de modification suivant une fois le formulaire envoyer
             return $this->redirectToRoute(
                 'iuto_livret_correctionProf3', array(
-                    'statusCAS' => 'professeur',
-                    'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'projet' => $newProjet->getId(),
                 )
             );
@@ -290,9 +283,6 @@ class TeacherController extends Controller
 
 //            redirection vers la page de fin de correction du projet
             return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
-                    'statusCAS' => 'professeur',
-                    'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'projet' => $projet->getId(),
                 )
             );
@@ -360,9 +350,6 @@ class TeacherController extends Controller
                     'routing_statutCAShome' => '/professeur',
                     'commentaires' => $commentaires,
                     'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-                    'routing_options' => array('#', '#'),
-                    'pagePrec' => '/professeur/correctionProf1',
-                    'pageSuiv' => '/professeur/'.$idProjet.'/correctionProf3',
                     'projet' => $projet,
                     'image' => $images,
                 ));
@@ -377,9 +364,6 @@ class TeacherController extends Controller
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-                'routing_options' => array('#', '#'),
-                'pagePrec' => '/professeur/'.$idProjet.'/correctionProf2',
-                'pageSuiv' => '/professeur/'.$idProjet.'/correctionProf4',
                 'projet' => $projet,
                 'images' => $images,
             ));
@@ -466,7 +450,6 @@ class TeacherController extends Controller
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-                'routing_options' => array('#', '#'),
                 'projet' => $projet,
                 'motsCle' => $motsCles,
                 'images' => $images,
@@ -491,7 +474,6 @@ class TeacherController extends Controller
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-                'routing_options' => array('#', '#'),
                 'projet' => $projet,
                 'motsCle' => $motsCles,
                 'images' => $images,
@@ -505,7 +487,6 @@ class TeacherController extends Controller
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-            'routing_options' => array('#', '#'),
             'projet' => $projet,
             'motsCle' => $motsCles,
             'images' => $images,
@@ -553,19 +534,8 @@ class TeacherController extends Controller
 //            rendu du home de teacher
             return $this->redirectToRoute('iuto_livret_correctionProf4',
                 array(
-                    'formSetValide' => $formSetValide->createView(),
-                    'formSetMarquant' => $formSetMarquant->createView(),
-                    'formUnSetValide' => $formUnSetValide->createView(),
-                    'formUnSetMarquant' => $formUnSetMarquant->createView(),
                     'projet' => $projet->getId(),
-                    'statutCAS' => 'professeur',
-                    'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
-                    'routing_statutCAShome' => '/professeur',
-                    'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-                    'routing_options' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'professeur' => $professeur,
-                    'pagePrec' => '/professeur/'.$idProjet.'/correctionProf3',
                     'projetO' => $projet,
                 ));
         }
@@ -582,19 +552,8 @@ class TeacherController extends Controller
 //            rendu du home de teacher
             return $this->redirectToRoute('iuto_livret_correctionProf4',
                 array(
-                    'formSetValide' => $formSetValide->createView(),
-                    'formSetMarquant' => $formSetMarquant->createView(),
-                    'formUnSetValide' => $formUnSetValide->createView(),
-                    'formUnSetMarquant' => $formUnSetMarquant->createView(),
                     'projet' => $projet->getId(),
-                    'statutCAS' => 'professeur',
-                    'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
-                    'routing_statutCAShome' => '/professeur',
-                    'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-                    'routing_options' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'professeur' => $professeur,
-                    'pagePrec' => '/professeur/'.$idProjet.'/correctionProf3',
                     'projetO' => $projet,
                 ));
         }
@@ -608,19 +567,8 @@ class TeacherController extends Controller
 
             return $this->redirectToRoute('iuto_livret_correctionProf4',
                 array(
-                    'formSetValide' => $formSetValide->createView(),
-                    'formSetMarquant' => $formSetMarquant->createView(),
-                    'formUnSetValide' => $formUnSetValide->createView(),
-                    'formUnSetMarquant' => $formUnSetMarquant->createView(),
                     'projet' => $projet->getId(),
-                    'statutCAS' => 'professeur',
-                    'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
-                    'routing_statutCAShome' => '/professeur',
-                    'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-                    'routing_options' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'professeur' => $professeur,
-                    'pagePrec' => '/professeur/'.$idProjet.'/correctionProf3',
                     'projetO' => $projet,
                 ));
         }
@@ -633,19 +581,8 @@ class TeacherController extends Controller
 
             return $this->redirectToRoute('iuto_livret_correctionProf4',
                 array(
-                    'formSetValide' => $formSetValide->createView(),
-                    'formSetMarquant' => $formSetMarquant->createView(),
-                    'formUnSetValide' => $formUnSetValide->createView(),
-                    'formUnSetMarquant' => $formUnSetMarquant->createView(),
                     'projet' => $projet->getId(),
-                    'statutCAS' => 'professeur',
-                    'options' => array('Voir les demande de correction de projets', 'Voir les projets validés'),
-                    'routing_statutCAShome' => '/professeur',
-                    'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-                    'routing_options' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'professeur' => $professeur,
-                    'pagePrec' => '/professeur/'.$idProjet.'/correctionProf3',
                     'projetO' => $projet,
                 ));
         }
@@ -657,12 +594,11 @@ class TeacherController extends Controller
                 'formSetMarquant' => $formSetMarquant->createView(),
                 'formUnSetValide' => $formUnSetValide->createView(),
                 'formUnSetMarquant' => $formUnSetMarquant->createView(),
-                'projet' => $id,
+                'projet' => $idProjet,
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
                 'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-                'pagePrec' => '/professeur/'.$idProjet.'/correctionProf3',
                 'projetO' => $projet,
                 )
         );
@@ -705,10 +641,6 @@ class TeacherController extends Controller
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
                     'id' => $id,
-                    'statutCAS' => 'professeur',
-                    'routing_statutCAShome' => '/professeur',
-                    'info' => array('Demandes de correction', 'Projets validés'),
-                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                     'projet' => $projet->getId(),
                     'images' => $images,
                     'motsCle' => $motsCles,
@@ -798,10 +730,6 @@ class TeacherController extends Controller
 
 //            redirection vers la page de choix des projets non finis
             return $this->redirectToRoute('iuto_livret_correctionProf1', array(
-                'statutCAS' => 'professeur',
-                'routing_statutCAShome' => '/professeur',
-                'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                 'projet' => $projet,
             ));
         }
@@ -871,10 +799,6 @@ class TeacherController extends Controller
 
             return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
                 'projet' => $projet->getId(),
-                'statutCAS' => 'professeur',
-                'routing_statutCAShome' => '/professeur',
-                'info' => array('Demandes de correction', 'Projets validés'),
-                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
                 'images' => $images,
                 'motsCles' => $motsCles,
                 'commentaires' => $commentaires,
