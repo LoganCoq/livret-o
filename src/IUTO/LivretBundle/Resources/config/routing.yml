@@ -233,15 +233,6 @@ iuto_livret_communicationChoix:
     path: /communication/selection
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChoix}
 
-#=====SELECTION PROJET VALIDE=====#
-iuto_livret_communicationChoixValide:
-    path: /communication/selection/valide
-    defaults: { _controller: IUTOLivretBundle:Communication:communicationChoixValide}
-
-iuto_livret_communicationChoixNValide:
-    path: /communication/selection/nvalide
-    defaults: { _controller: IUTOLivretBundle:Communication:communicationChoixNValide}
-
 iuto_livret_communication_correct_projet:
     path: /communication/projet/{projet}/correction
     defaults: { _controller: IUTOLivretBundle:Communication:communicationCorrectionProjet }

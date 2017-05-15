@@ -324,55 +324,6 @@ class CommunicationController extends Controller
         ));
     }
 
-    public function communicationChoixValideAction()
-    {
-        $idUniv = phpCAS::getUser();
-        $manager = $this->getDoctrine()->getManager();
-        $dpt = $manager->getRepository(Departement::class)->findAll();
-        $projets = $manager->getRepository(Projet::class)->findByValiderProjet(1);
-        $annee = array(1 => date("y"), 2 => date("y") - 1, 3 => date("y") - 2, 4 => date("y") - 3, 5 => date("y") - 4);
-        $proms = array(1 => "1A", 2 => "2A", 3 => "AS", 4 => "LP");
-
-
-        return $this->render('IUTOLivretBundle:Communication:communicationChoixValide.html.twig', array(
-            'statutCAS' => 'communication',
-            'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets'),
-            'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
-            'options' => array('Valider', 'Retour'),
-            'routing_statutCAShome' => '/communication',
-            'routing_options' => array('/generate/1', '/communication'),
-            'dpt' => $dpt,
-            'projets' => $projets,
-            'annee' => $annee,
-            'promos' => $proms,
-            ));
-    }
-
-    public function communicationChoixNValideAction()
-    {
-        $idUniv = phpCAS::getUser();
-
-        $manager = $this->getDoctrine()->getManager();
-        $dpt = $manager->getRepository(Departement::class)->findAll();
-        $projets = $manager->getRepository(Projet::class)->findByValiderProjet(0);
-        $annee = array(1 => date("y"), 2 => date("y") - 1, 3 => date("y") - 2, 4 => date("y") - 3, 5 => date("y") - 4);
-        $proms = array(1 => "1A", 2 => "2A", 3 => "AS", 4 => "LP");
-
-
-        return $this->render('IUTOLivretBundle:Communication:communicationChoixNValide.html.twig', array(
-            'statutCAS' => 'communication',
-            'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets'),
-            'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
-            'options' => array('Valider', 'Retour'),
-            'routing_statutCAShome' => '/communication',
-            'routing_options' => array('/generate/1', '/communication'),
-            'dpt' => $dpt,
-            'projets' => $projets,
-            'annee' => $annee,
-            'promos' => $proms,
-        ));
-    }
-
     public function communicationSelectionlivretAction(Request $request)
     {
         $idUniv = phpCAS::getUser();
