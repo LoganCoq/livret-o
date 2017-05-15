@@ -153,8 +153,8 @@
                         document.getElementById("o" + pro[0]).className = "";
                         document.getElementById("l" + pro[0]).className = "btn";
                     }
-                } else if (dptS.length < 1 && AnnS.length > 0 && promS.length > 0 && pro[4] == valS) {
-                    if (ann.includes(pro[2]) && prom.includes(pro[3])) {
+                } else if (dptS.length < 1 && AnnS.length > 0 && promS.length > 0 ) {
+                    if (ann.includes(pro[2]) && prom.includes(pro[3]) && pro[4] == valS) {
                         document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
                         document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
@@ -165,8 +165,8 @@
                         document.getElementById("o" + pro[0]).className = "";
                         document.getElementById("l" + pro[0]).className = "btn";
                     }
-                } else if (dptS.length > 0 && AnnS.length < 1 && promS.length > 0 && pro[4] == valS) {
-                    if (dpt.includes(pro[1]) && prom.includes(pro[3])) {
+                } else if (dptS.length > 0 && AnnS.length < 1 && promS.length > 0 ) {
+                    if (dpt.includes(pro[1]) && prom.includes(pro[3]) && pro[4] == valS) {
                         document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
                         document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
@@ -177,8 +177,8 @@
                         document.getElementById("o" + pro[0]).className = "";
                         document.getElementById("l" + pro[0]).className = "btn";
                     }
-                } else if (dptS.length > 0 && AnnS.length > 0 && promS.length < 1 && pro[4] == valS) {
-                    if (dpt.includes(pro[1]) && ann.includes(pro[2])) {
+                } else if (dptS.length > 0 && AnnS.length > 0 && promS.length < 1 ) {
+                    if (dpt.includes(pro[1]) && ann.includes(pro[2]) && pro[4] == valS) {
                         document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
                         document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
