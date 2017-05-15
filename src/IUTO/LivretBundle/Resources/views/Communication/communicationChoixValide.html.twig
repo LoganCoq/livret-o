@@ -80,13 +80,17 @@
         projets = [];
 
         {% for p in projets %}
-        a = [];
-        a.push({{ p.id }});
-        a.push("{{ p.etudiants[0].formations[0].departement.nomDpt }}");
-        a.push("{{ p.dateDebut|date('Y') }}");
-        a.push("{{ p.etudiants[0].formations[0].typeFormation }}");
-        a.push("{{ p.validerProjet }}");
-        projets.push(a);
+            a = [];
+            a.push({{ p.id }});
+            a.push("{{ p.etudiants[0].formations[0].departement.nomDpt }}");
+            a.push("{{ p.dateDebut|date('Y') }}");
+            a.push("{{ p.etudiants[0].formations[0].typeFormation }}");
+            {% if p.validerProjet == 0 %}
+                a.push(false);
+            {% else %}
+                a.push(true);
+            {% endif %}
+            projets.push(a);
         {% endfor %}
 
         liste = document.getElementById("listeProjets");
