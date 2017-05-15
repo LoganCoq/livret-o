@@ -305,7 +305,7 @@ class CommunicationController extends Controller
         $idUniv = phpCAS::getUser();
         $manager = $this->getDoctrine()->getManager();
         $dpt = $manager->getRepository(Departement::class)->findAll();
-        $projets = $manager->getRepository(Projet::class);
+        $projets = $manager->getRepository(Projet::class)->findAll();
         $annee = array(1 => date("y"), 2 => date("y") - 1, 3 => date("y") - 2, 4 => date("y") - 3, 5 => date("y") - 4);
         $proms = array(1 => "1A", 2 => "2A", 3 => "AS", 4 => "LP");
 
