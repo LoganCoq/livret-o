@@ -17,10 +17,15 @@ security:
     # Définition des routes accessibles selon le ROLE de l'user connecté
     access_control:
             - { path: /etudiant,        roles: ROLE_student }
+            - { path: /etudiant,        roles: ROLE_affiliate }
             - { path: /professeur,      roles: ROLE_faculty }
+            - { path: /professeur,      roles: ROLE_affiliate }
             - { path: ^/communication,  roles: ROLE_employee }
+            - { path: ^/communication,  roles: ROLE_affiliate }
             - { path: /chef,            roles: ROLE_chief }
+            - { path: /chef,            roles: ROLE_affiliate }
             - { path: /administrateur,  roles: ROLE_admin }
+            - { path: /administrateur,  roles: ROLE_affiliate }
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:

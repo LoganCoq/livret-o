@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Livret'O - Modules
+{% endblock %}
+
+{% block content %}
+{% if app.session.flashBag.has('success') %}
+<div class="alert alert-success">
+    {% for msg in app.session.flashBag.get('success') %}
+    {{ msg }}
+    {% endfor %}
+</div>
+{% endif %}
+<div class="div_home">
+
+    <a href="{{ path('iuto_livret_studenthomepage') }}" class="buttonhome">Etudiant</a>
+    <a href="{{ path('iuto_livret_teacherhomepage') }}" class="buttonhome">Professeur</a>
+    <a href="{{ path('iuto_livret_communicationhomepage') }}" class="buttonhome">Communcation</a>
+    <a href="{{ path('iuto_livret_chiefhomepage') }}" class="buttonhome">Chef de département</a>
+    <a href="{{ path('iuto_livret_public') }}" class="buttonhome">Public</a>
+
+</div>
+
+
+{% endblock %}

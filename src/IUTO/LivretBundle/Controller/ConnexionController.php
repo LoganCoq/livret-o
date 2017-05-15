@@ -164,5 +164,10 @@ class ConnexionController extends Controller
         {
             return $this->redirectToRoute("iuto_livret_teacherhomepage", array("id" => $id));
         }
+        else if (strcmp($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0], "affiliate") == 0)
+        {
+            return $this->redirectToRoute("iuto_livret_choose_module", array("id" => $id));
+        }
+        return $this->redirectToRoute("iuto_livret_public");
     }
 }
