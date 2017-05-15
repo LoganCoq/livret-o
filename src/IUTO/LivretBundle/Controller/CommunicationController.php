@@ -302,16 +302,26 @@ class CommunicationController extends Controller
 
     public function communicationChoixAction()
     {
+        $idUniv = phpCAS::getUser();
+        $manager = $this->getDoctrine()->getManager();
+        $dpt = $manager->getRepository(Departement::class)->findAll();
+        $projets = $manager->getRepository(Projet::class);
+        $annee = array(1 => date("y"), 2 => date("y") - 1, 3 => date("y") - 2, 4 => date("y") - 3, 5 => date("y") - 4);
+        $proms = array(1 => "1A", 2 => "2A", 3 => "AS", 4 => "LP");
 
-        return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array(
+
+        return $this->render('IUTOLivretBundle:Communication:communicationChoixValide.html.twig', array(
             'statutCAS' => 'communication',
             'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets'),
             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
             'options' => array('Valider', 'Retour'),
             'routing_statutCAShome' => '/communication',
-            'routing_options' => array('/communication/validation', '/communication'),
+            'routing_options' => array('/generate/1', '/communication'),
+            'dpt' => $dpt,
+            'projets' => $projets,
+            'annee' => $annee,
+            'promos' => $proms,
         ));
-
     }
 
     public function communicationChoixValideAction()
