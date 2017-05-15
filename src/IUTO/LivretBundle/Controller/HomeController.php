@@ -16,6 +16,11 @@ class HomeController extends Controller
 
     public function chooseModuleAction()
     {
-        return $this->render('IUTOLivretBundle:Home:chooseModule.html.twig');
+        return $this->render('IUTOLivretBundle:Home:chooseModule.html.twig', array(
+            'statutCAS' => 'Test',
+            'info' => array('Rien'),
+            'routing_info' => array('#'),
+            'routing_statutCAShome' => '/modules',
+        ));
     }
 }

@@ -166,10 +166,7 @@ class ConnexionController extends Controller
         }
         else if (strcmp($infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0], "affiliate") == 0)
         {
-            return $this->redirectToRoute("iuto_livret_choose_module", array("id" => $id, 'statutCAS' => 'test',
-                'info' => array('#'),
-                'routing_info' => array('#'),
-                'routing_statutCAShome' => '/modules',));
+            return $this->redirectToRoute("iuto_livret_choose_module", array("id" => $id));
         }
         return $this->redirectToRoute("iuto_livret_public");
     }
