@@ -61,13 +61,13 @@ h2
     margin-left: 1em;
     margin-top: 0.5em;
     font-size: 1.5em;
-    width: 50%;
+    width: 45%;
 }
 
 #livret_modif_btn
 {
     margin-top: -7%;
-    margin-left: 50%;
+    margin-left: 45%;
 }
 #livreto_see_btn
 {
@@ -77,14 +77,14 @@ h2
 #livreto_see_finished_btn
 {
     margin-top: -7%;
-    margin-left: 50%;
+    margin-left: 45%;
 }
 .list-group-item
 {
     padding: 0.2em;
     margin: 0.2em;
     height: auto;
-    width: 77%;
+    width: 85%;
     margin-left: 4em;
 }
 
