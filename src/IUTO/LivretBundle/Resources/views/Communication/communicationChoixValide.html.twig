@@ -27,6 +27,12 @@
                 <option value="{{ d }}">20{{ d }}</option>
             {% endfor %}
         </select>
+        <select id="selectionPromo" class="selectpicker form-control" data-live-search="data-live-search"
+                data-width="auto" multiple="multiple" title="Aucune promotions sélectionnées">
+            {% for p in promos %}
+                <option value="{{ p }}">{{ p }}</option>
+            {% endfor %}
+        </select>
     </div>
     <br/>
 
@@ -74,6 +80,7 @@
         a.push({{ p.id }});
         a.push("{{ p.etudiants[0].formations[0].departement.nomDpt }}");
         a.push("{{ p.dateDebut|date('Y') }}");
+        a.push("{{ p.etudiants[0].formations[0].typeFormation }}");
         projets.push(a);
         {% endfor %}
 
@@ -89,6 +96,11 @@
             actualiserProjets();
         };
 
+        selProm = document.getElementById("selectionProm");
+        selProm.onchange = function (evenement) {
+            actualiserProjets();
+        };
+
         allHidden();
         function allHidden() {
             for (pro of projets) {
@@ -100,6 +112,7 @@
         function actualiserProjets() {
             dptS = selDpt.selectedOptions;
             AnnS = selAnnee.selectedOptions;
+            promS = selProm.selectedOptions;
             dpt = [];
             for (d of dptS) {
                 dpt.push(d.innerHTML);
@@ -108,9 +121,49 @@
             for (a of AnnS) {
                 ann.push(20 + a.value);
             }
+            pro = [];
+            for (pr of promS) {
+                pro.push(pr.value);
+            }
             for (pro of projets) {
-                if (dptS.length > 0 && AnnS.length > 0) {
-                    if (dpt.includes(pro[1]) && ann.includes(pro[2])) {
+                if (dptS.length > 0 && AnnS.length > 0 && promS.length > 0) {
+                    if (dpt.includes(pro[1]) && ann.includes(pro[2]) && pro.includes(pro[3])) {
+                        document.getElementById("o" + pro[0]).style.display = "inline-block";
+                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                        document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
+                    }
+
+                    else {
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
+                        document.getElementById("l" + pro[0]).className = "btn";
+                    }
+                } else if (dptS.length < 1 && AnnS.length > 0 && promS.length > 0) {
+                    if (ann.includes(pro[2]) && pro.includes(pro[3])) {
+                        document.getElementById("o" + pro[0]).style.display = "inline-block";
+                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                        document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
+                    }
+
+                    else {
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
+                        document.getElementById("l" + pro[0]).className = "btn";
+                    }
+                } else if (dptS.length > 0 && AnnS.length < 1 && promS.length > 0) {
+                    if (dpt.includes(pro[1]) && pro.includes(pro[3])) {
+                        document.getElementById("o" + pro[0]).style.display = "inline-block";
+                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                        document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
+                    }
+
+                    else {
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
+                        document.getElementById("l" + pro[0]).className = "btn";
+                    }
+                } else if (dptS.length > 0 && AnnS.length > 0 && promS.length < 1) {
+                    if (dpt.includes(pro[1]) && pro.includes(pro[2])) {
                         document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
                         document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
@@ -123,7 +176,7 @@
                     }
                 }
                 else {
-                    if (dpt.includes(pro[1]) || ann.includes(pro[2])) {
+                    if (dpt.includes(pro[1]) || ann.includes(pro[2]) || pro.includes(pro[3])) {
                         document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
                         document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
