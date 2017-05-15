@@ -11,6 +11,10 @@ iuto_livret_connexion:
     path: /connexion
     defaults: { _controller: IUTOLivretBundle:Connexion:connexion}
 
+iuto_livret_choose_module:
+    path: /modules
+    defaults: { _controller: IUTOLivretBundle:Home:chooseModule}
+
 iuto_livret_logout:
     path: /logout
     defaults: { _controller: IUTOLivretBundle:Logout:logout}
