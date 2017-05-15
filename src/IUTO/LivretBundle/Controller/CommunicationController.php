@@ -321,7 +321,7 @@ class CommunicationController extends Controller
         $dpt = $manager->getRepository(Departement::class)->findAll();
         $projets = $manager->getRepository(Projet::class)->findByValiderProjet(1);
         $annee = array(1 => date("y"), 2 => date("y") - 1, 3 => date("y") - 2, 4 => date("y") - 3, 5 => date("y") - 4);
-
+        $proms = array(1 => "1A", 2 => "2A", 3 => "AS", 4 => "LP");
 
 
         return $this->render('IUTOLivretBundle:Communication:communicationChoixValide.html.twig', array(
@@ -334,6 +334,7 @@ class CommunicationController extends Controller
             'dpt' => $dpt,
             'projets' => $projets,
             'annee' => $annee,
+            'promos' => $proms,
             ));
     }
 
@@ -345,7 +346,7 @@ class CommunicationController extends Controller
         $dpt = $manager->getRepository(Departement::class)->findAll();
         $projets = $manager->getRepository(Projet::class)->findByValiderProjet(0);
         $annee = array(1 => date("y"), 2 => date("y") - 1, 3 => date("y") - 2, 4 => date("y") - 3, 5 => date("y") - 4);
-
+        $proms = array(1 => "1A", 2 => "2A", 3 => "AS", 4 => "LP");
 
 
         return $this->render('IUTOLivretBundle:Communication:communicationChoixNValide.html.twig', array(
@@ -358,6 +359,7 @@ class CommunicationController extends Controller
             'dpt' => $dpt,
             'projets' => $projets,
             'annee' => $annee,
+            'promos' => $proms,
         ));
     }
 
