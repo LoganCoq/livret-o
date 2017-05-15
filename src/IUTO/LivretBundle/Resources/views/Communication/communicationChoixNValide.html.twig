@@ -121,13 +121,13 @@
             for (a of AnnS) {
                 ann.push(20 + a.value);
             }
-            pro = [];
+            prom = [];
             for (pr of promS) {
-                pro.push(pr.value);
+                prom.push(pr.value);
             }
             for (pro of projets) {
                 if (dptS.length > 0 && AnnS.length > 0 && promS.length > 0) {
-                    if (dpt.includes(pro[1]) && ann.includes(pro[2]) && pro.includes(pro[3])) {
+                    if (dpt.includes(pro[1]) && ann.includes(pro[2]) && prom.includes(pro[3])) {
                         document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
                         document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
@@ -139,7 +139,7 @@
                         document.getElementById("l" + pro[0]).className = "btn";
                     }
                 } else if (dptS.length < 1 && AnnS.length > 0 && promS.length > 0) {
-                    if (ann.includes(pro[2]) && pro.includes(pro[3])) {
+                    if (ann.includes(pro[2]) && prom.includes(pro[3])) {
                         document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
                         document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
@@ -151,7 +151,7 @@
                         document.getElementById("l" + pro[0]).className = "btn";
                     }
                 } else if (dptS.length > 0 && AnnS.length < 1 && promS.length > 0) {
-                    if (dpt.includes(pro[1]) && pro.includes(pro[3])) {
+                    if (dpt.includes(pro[1]) && prom.includes(pro[3])) {
                         document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
                         document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
@@ -163,7 +163,7 @@
                         document.getElementById("l" + pro[0]).className = "btn";
                     }
                 } else if (dptS.length > 0 && AnnS.length > 0 && promS.length < 1) {
-                    if (dpt.includes(pro[1]) && pro.includes(pro[2])) {
+                    if (dpt.includes(pro[1]) && ann.includes(pro[2])) {
                         document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
                         document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
@@ -176,7 +176,7 @@
                     }
                 }
                 else {
-                    if (dpt.includes(pro[1]) || ann.includes(pro[2]) || pro.includes(pro[3])) {
+                    if (dpt.includes(pro[1]) || ann.includes(pro[2]) || prom.includes(pro[3])) {
                         document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
                         document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
