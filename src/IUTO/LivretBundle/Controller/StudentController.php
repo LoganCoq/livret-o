@@ -336,7 +336,7 @@ class StudentController extends Controller
             $comReponse->setProjet($projet);
             // ajout de l'user au commentaire
             $repository2 = $em->getRepository('IUTOLivretBundle:User');
-            $user = $repository2->findOneById($id);
+            $user = $repository2->findOneByIdUniv($idUniv);
             $comReponse->setUser($user);
             $comReponse->setContenu($formCom['contenu']->getData());
 
