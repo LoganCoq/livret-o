@@ -51,7 +51,7 @@ class Image
 
     /**
      * @ORM\ManyToOne(targetEntity="IUTO\LivretBundle\Entity\Projet", inversedBy="images")
-     * @ORM\JoinColumn(name="projet_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="projet_id", referencedColumnName="id", nullable=true)
      */
     private $projet;
 
