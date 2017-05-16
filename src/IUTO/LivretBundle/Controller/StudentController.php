@@ -797,7 +797,7 @@ class StudentController extends Controller
             $projet->setLogoClientProjet($image);
             $em->persist($image);
             $em->persist($projet);
-            $em->flush()
+            $em->flush();
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_add_word_image', array(
@@ -805,7 +805,6 @@ class StudentController extends Controller
                     'projet' => $projet->getId(),
                 )
             );
-
         }
 
         return $this->render('IUTOLivretBundle:Student:addImageProject.html.twig', array(
