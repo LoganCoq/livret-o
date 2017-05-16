@@ -837,8 +837,8 @@ class StudentController extends Controller
 
         if ( $form->isSubmitted() && $form->isValid() )
         {
-            $projet->removeLogoClientProjet($image);
-            $em->persist($projet);
+//            $projet->removeLogoClientProjet($image);
+//            $em->persist($projet);
             $em->remove($image);
             $em->flush();
             $request->getSession()->getFlashBag()->add('info', "Le logo a bien été supprimée.");
