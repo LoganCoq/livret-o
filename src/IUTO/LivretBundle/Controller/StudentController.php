@@ -442,6 +442,9 @@ class StudentController extends Controller
 //        récupération des images du projet
         $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
 
+//        récupération du logo client
+        $logo = $projet->getLogoClientProjet();
+
         // vérification de la validité du formulaire si celui-ci à été envoyer
         if ($formCom->isSubmitted() && $formCom->isValid()) {
             // création et affectation des informations dans le nouveau commentaire
@@ -485,6 +488,7 @@ class StudentController extends Controller
                 'images' => $images,
                 'motsCles' => $motsCles,
                 'commentaires' => $commentaires,
+                'logo' => $logo,
             ));
         }
 
@@ -514,6 +518,7 @@ class StudentController extends Controller
                 'images' => $images,
                 'motsCles' => $motsCles,
                 'commentaires' => $commentaires,
+                'logo' => $logo,
             ));
         }
 
@@ -529,6 +534,7 @@ class StudentController extends Controller
             'images' => $images,
             'motsCles' => $motsCles,
             'commentaires' => $commentaires,
+            'logo' => $logo,
         ));
 
     }
