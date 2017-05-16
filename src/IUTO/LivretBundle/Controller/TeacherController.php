@@ -381,9 +381,22 @@ class TeacherController extends Controller
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
         $id = $professeur->getId();
 
-
 //        récupération des images du projet
-        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+        $imagesL = $projet->getImages();
+        $images = array();
+        $logo = null;
+        foreach ($imagesL as $img)
+        {
+            if ($img->getIsLogo())
+            {
+                $logo = $img;
+            }
+            else
+            {
+                array_push($images, $img);
+            }
+        }
+
 //        récupération des mots clés du projet
         $motsCles = $projet->getMotsClesProjet();
 
@@ -453,6 +466,7 @@ class TeacherController extends Controller
                 'projet' => $projet,
                 'motsCle' => $motsCles,
                 'images' => $images,
+                'logo' => $logo,
                 'commentaires' => $commentaires,
             ));
         }
@@ -477,6 +491,7 @@ class TeacherController extends Controller
                 'projet' => $projet,
                 'motsCle' => $motsCles,
                 'images' => $images,
+                'logo' => $logo,
                 'commentaires' => $commentaires,
             ));
         }
@@ -490,6 +505,7 @@ class TeacherController extends Controller
             'projet' => $projet,
             'motsCle' => $motsCles,
             'images' => $images,
+            'logo' => $logo,
             'commentaires' => $commentaires,
         ));
     }
@@ -817,4 +833,44 @@ class TeacherController extends Controller
         ));
     }
 
+    public function addLogoAction(Request $request, Projet $projet)
+    {
+        //        récupération de l'entity manager
+        $em = $this->getDoctrine()->getManager();
+//        récupération des données sur l'étudiant connecté
+        $idUniv = phpCAS::getUser();
+
+
+//        création d'une entité image qui va être remplie dans le formulaire
+        $image = new Image();
+        $image->setIsLogo(true);
+
+//        creation du formulaire d'ajout d'image
+        $form = $this->createForm(AddImageType::class, $image);
+        $form->handleRequest($request);
+
+//        vérification de l'envoie du formulaire et de sa validité
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $image->setProjet($projet);
+            $em->persist($image);
+            $em->flush();
+
+            // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
+            return $this->redirectToRoute('iuto_livret_add_word_image_teacher', array(
+                    'projet' => $projet->getId(),
+                )
+            );
+        }
+
+        return $this->render('IUTOLivretBundle:Teacher:addImageProject.html.twig', array(
+                'form' => $form->createView(),
+                'statutCAS' => 'professeur',
+                'routing_statutCAShome' => '/professeur',
+                'info' => array('Demandes de correction', 'Projets validés'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
+                'projet' => $projet,
+            )
+        );
+    }
 }

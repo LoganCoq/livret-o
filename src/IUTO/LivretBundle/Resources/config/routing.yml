@@ -126,6 +126,12 @@ iuto_livret_add_img_teacher:
     path: /professeur/{projet}/correction/addImg
     defaults: { _controller: IUTOLivretBundle:Teacher:addImageCorrection }
 
+#=====AJOUT LOGO CLIENT====#
+iuto_livret_add_logo:
+    path: /professeur/{projet}/addLogo
+    defaults: { _controller: IUTOLivretBundle:Teacher:addLogo }
+
+
 #==========PROJETS VALIDES1=====#
 iuto_livret_projetsValides1:
     path: /professeur/projetsValides1
