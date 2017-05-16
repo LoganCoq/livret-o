@@ -439,11 +439,21 @@ class StudentController extends Controller
         $formCom = $this->createForm(CommentaireCreateType::class, $com);
         $formCom->handleRequest($request);
 
-//        récupération des images du projet
-        $images = $projet->getImages();
 
-//        récupération du logo client
-        $logo = $projet->getLogoClientProjet();
+//        récupération des images du projet
+        $imagesL = $projet->getImages();
+        $images = array();
+        foreach ($imagesL as $img)
+        {
+            if ($img->isLogo())
+            {
+                $logo = $img;
+            }
+            else
+            {
+                array_push($images, $img);
+            }
+        }
 
         // vérification de la validité du formulaire si celui-ci à été envoyer
         if ($formCom->isSubmitted() && $formCom->isValid()) {
