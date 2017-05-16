@@ -18,7 +18,9 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 class Projet
 {
     public $nomDep;
+
     public $listeEtudiants;
+
     /**
      * @var int
      *
@@ -27,48 +29,61 @@ class Projet
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @var string
      *
      * @ORM\Column(name="intituleProjet", type="text")
      */
     private $intituleProjet;
+
     /**
      * @var string
      *
      * @ORM\Column(name="descripProjet", type="text", nullable=true)
      */
     private $descripProjet;
+
     /**
      * @var string
      *
      * @ORM\Column(name="bilanProjet", type="text", nullable=true)
      */
     private $bilanProjet;
+
     /**
      * @var bool
      *
      * @ORM\Column(name="marquantProjet", type="boolean")
      */
     private $marquantProjet;
+
     /**
      * @var array
      *
      * @ORM\Column(name="motsClesProjet", type="array", nullable=true)
      */
     private $motsClesProjet;
+
     /**
      * @var string
      *
      * @ORM\Column(name="clientProjet", type="string", length=255, nullable=true)
      */
     private $clientProjet;
+
     /**
      * @var string
      *
      * @ORM\Column(name="descriptionClientProjet", type="text", nullable=true)
      */
     private $descriptionClientProjet;
+
+    /**
+     * @ORM\OneToOne(targetEntity="IUTO\LivretBundle\Entity\Image", mappedBy="projet")
+     */
+    private $logoClientProjet;
+
     /**
      * @var bool
      *
@@ -566,5 +581,34 @@ class Projet
         $this->descriptionClientProjet = $descriptionClientProjet;
 
         return $this;
+    }
+
+
+    /**
+     * Remove image
+     *
+     * @param \IUTO\LivretBundle\Entity\Image $image
+     */
+    public function removeLogoClientProjet($image)
+    {
+        $this->logoClientProjet ->removeElement($image);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLogoClientProjet()
+    {
+        return $this->logoClientProjet;
+    }
+
+    /**
+     * @param \IUTO\LivretBundle\Entity\Image $image
+     */
+    public function setLogoClientProjet($image)
+    {
+        $this->logoClientProjet = $image;
     }
 }
