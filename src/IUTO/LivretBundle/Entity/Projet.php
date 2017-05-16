@@ -80,7 +80,7 @@ class Projet
     private $descriptionClientProjet;
 
     /**
-     * @ORM\OneToOne(targetEntity="IUTO\LivretBundle\Entity\Image", mappedBy="projet")
+     * @ORM\OneToOne(targetEntity="IUTO\LivretBundle\Entity\Image", cascade={"persist"})
      */
     private $logoClientProjet;
 
