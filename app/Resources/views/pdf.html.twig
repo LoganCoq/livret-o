@@ -81,7 +81,7 @@
                 <td>
                     <div class="entete_projet">
                         <h1 class="titre"> {{ nom }} </h1>
-                        {% if client != null || client != "" %}
+                        {% if client != null or client != "" %}
                             <p class="client"> À destination de {{ client }} </p>
                         {% endif %}
                     </div>
