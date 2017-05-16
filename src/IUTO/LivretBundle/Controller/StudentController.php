@@ -440,7 +440,7 @@ class StudentController extends Controller
         $formCom->handleRequest($request);
 
 //        récupération des images du projet
-        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+        $images = $projet->getImages();
 
 //        récupération du logo client
         $logo = $projet->getLogoClientProjet();
@@ -589,7 +589,6 @@ class StudentController extends Controller
                     'motsCles' => $motsCles,
                 )
             );
-
         }
 
         return $this->render('IUTOLivretBundle:Student:addImageProject.html.twig', array(
@@ -801,6 +800,7 @@ class StudentController extends Controller
         {
 
             $projet->setLogoClientProjet($image);
+            $image->setProjet($projet);
             $em->persist($image);
             $em->persist($projet);
             $em->flush();
