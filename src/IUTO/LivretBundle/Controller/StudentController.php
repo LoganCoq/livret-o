@@ -31,8 +31,7 @@ class StudentController extends Controller
 	    $idUniv = phpCAS::getUser();
         //$idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
-        $id = $user->getId();
-	
+
         // creation de la vue home
         return $this->render('IUTOLivretBundle:Student:studenthome.html.twig', array(
             'statutCAS' => 'étudiant',
@@ -41,7 +40,6 @@ class StudentController extends Controller
             'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#'),
             'routing_options' => array('/etudiant/create/project', '/etudiant/choose/project', '#'),
             'routing_statutCAShome' => '/etudiant',
-            'id' => $id,
             'user' => $user,
         ));
     }
@@ -56,7 +54,6 @@ class StudentController extends Controller
 	    $idUniv = phpCAS::getUser();
         // Recuperation de l'étudiant connecté
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
-        $id = $etudiant->getId();
 
         //creation d'un nouveau projet
         $projet = new Projet();
@@ -67,8 +64,6 @@ class StudentController extends Controller
 
         // remplissage des données de bases du projet
         $projet->setNomDpt($departement);
-        $projet->setMarquantProjet(false);
-        $projet->setValiderProjet(false);
         $projet->addEtudiant($etudiant);
 
         // création du formulaire de création d'un projet
@@ -119,7 +114,6 @@ class StudentController extends Controller
 
             //redirection vers la page suivante
             return $this->redirectToRoute('iuto_livret_contenuProject', array(
-                    'id' => $id,
                     'projet' => $projet->getId())
             );
         }
@@ -131,7 +125,7 @@ class StudentController extends Controller
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
                 'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
                 'routing_statutCAShome' => '/etudiant',
-                'id' => $id,)
+                )
         );
     }
 
@@ -146,9 +140,6 @@ class StudentController extends Controller
 
         //recuperation des informations sur l'utilisateur
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
-        $id = $etudiant->getId();
-
 
         //creation du formulaire d'ajout de contenu au projet
         $form = $this->createForm(ProjetContenuType::class, $projet);
@@ -166,7 +157,7 @@ class StudentController extends Controller
 
             // redirection vers le home de l'étudiant
             return $this->redirectToRoute('iuto_livret_studenthomepage', array(
-                    'id' => $id,)
+                    )
             );
         }
 
@@ -177,7 +168,6 @@ class StudentController extends Controller
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
                 'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
                 'routing_statutCAShome' => '/etudiant',
-                'id' => $id,
                 'projet' => $projet->getId())
             );
     }
@@ -191,7 +181,6 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
-        $id = $etudiant->getId();
 
         // récuperation des projets d'un étudiant
         $projets = $etudiant->getProjetFaits();
@@ -216,7 +205,6 @@ class StudentController extends Controller
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
                 'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
                 'routing_statutCAShome' => '/etudiant',
-                'id' => $id,
                 'projetsFinis' => $projetsFinis,
                 'projetsSuivis' => $projetsSuivis,)
         );
@@ -232,7 +220,6 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
-        $id = $etudiant->getId();
 
         //creation du formulaire pour completer un projet
         $form = $this->createForm(ProjetCompleteType::class, $projet);
@@ -330,7 +317,6 @@ class StudentController extends Controller
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_add_word_image', array(
-                    'id' => $id,
                     'projet' => $newProjet->getId(),
                 )
             );
@@ -412,8 +398,6 @@ class StudentController extends Controller
         //récupération des informations de l'utilisateur connecter
         $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
-        $id = $etudiant->getId();
-
 
 //        récupération des mots clés du projet
         $motsCles = $projet->getMotsClesProjet();
@@ -559,8 +543,6 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
 //        récupération des données sur l'étudiant connecté
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
-        $id = $etudiant->getId();
 
 
 //        création d'une entité image qui va être remplie dans le formulaire
@@ -589,7 +571,6 @@ class StudentController extends Controller
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_add_word_image', array(
-                    'id' => $id,
                     'projet' => $projet->getId(),
                 )
             );
@@ -612,10 +593,7 @@ class StudentController extends Controller
     public function confirmCompleteProjectAction(Projet $projet)
     {
         // récupération des informations de l'utilisateur connecter
-        $manager = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
-        $id = $etudiant->getId();
 
         // affichage de la page de confirmation des modification du projet
         return $this->render('IUTOLivretBundle:Student:confirmCompleteProject.html.twig', array(
@@ -623,7 +601,6 @@ class StudentController extends Controller
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
             'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
             'routing_statutCAShome' => '/etudiant',
-            'id' => $id,
             'projet' => $projet)
         );
     }
@@ -634,9 +611,7 @@ class StudentController extends Controller
     public function viewFinishedProjectAction(Projet $projet){
 
         // récupération des inforamtions dur l'utilsateur connecté
-        $manager = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $manager->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
 //      rendu de la vue pour un projet fini
         return $this->render('IUTOLivretBundle:Student:finishedProject.html.twig', array(
@@ -654,7 +629,6 @@ class StudentController extends Controller
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
         $form = $this->get('form.factory')->create();
         $form->handleRequest($request);
@@ -676,26 +650,8 @@ class StudentController extends Controller
             $em->flush();
             $request->getSession()->getFlashBag()->add('info', "Le projet a bien été supprimé.");
 
-            $projets = $etudiant->getProjetFaits();
-            $projetsSuivis = array();
-            $projetsFinis = array();
-
-            // récupération des projets fait et non fait de l'étudiant
-            foreach ( $projets as $proj ){
-                if ( $proj->getValiderProjet() == 1){
-                    // ajout du projet à la liste si il est valider
-                    $projetsFinis[] = $proj;
-                }
-                else{
-                    // ajout du projet à la liste si il est en cours de suivi
-                    $projetsSuivis[] = $proj;
-                }
-            }
 
             return $this->redirectToRoute('iuto_livret_chooseProject', array(
-                'projetsSuivis' => $projetsSuivis,
-                'projetsFinis' => $projetsFinis,
-                'projet' => $projet,
             ));
         }
 
@@ -729,44 +685,9 @@ class StudentController extends Controller
             $em->flush();
             $request->getSession()->getFlashBag()->add('info', "L'image a bien été supprimée.");
 
-            $projets = $etudiant->getProjetFaits();
-            $projetsSuivis = array();
-            $projetsFinis = array();
-
-            // récupération des projets fait et non fait de l'étudiant
-            foreach ( $projets as $proj ){
-                if ( $proj->getValiderProjet() == 1){
-                    // ajout du projet à la liste si il est valider
-                    $projetsFinis[] = $proj;
-                }
-                else{
-                    // ajout du projet à la liste si il est en cours de suivi
-                    $projetsSuivis[] = $proj;
-                }
-            }
-            //actualisation des commentaires une fois le nouveau ajouté
-            //recupération des commentaires associé au projet
-            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
-            $commentaires = array();
-            foreach ($com as $elem) {
-                $x = array();
-                $user = $elem->getUser();
-                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
-                array_push($x, $elem->getContenu());
-                array_push($x, $elem->getDate());
-                array_push($x, $user->getRole());
-                array_push($commentaires, $x);
-
-            };
-
-            $images = $em->getRepository(Image::class)->findByProjet($image->getProjet());
-            $motsCles = $projet->getMotsClesProjet();
 
             return $this->redirectToRoute('iuto_livret_add_word_image', array(
                 'projet' => $projet->getId(),
-                'images' => $images,
-                'motsCles' => $motsCles,
-                'commentaires' => $commentaires,
             ));
         }
 
@@ -788,8 +709,6 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
 //        récupération des données sur l'étudiant connecté
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
-        $id = $etudiant->getId();
 
 
 //        création d'une entité image qui va être remplie dans le formulaire
@@ -809,7 +728,6 @@ class StudentController extends Controller
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_add_word_image', array(
-                    'id' => $id,
                     'projet' => $projet->getId(),
                 )
             );
@@ -831,7 +749,6 @@ class StudentController extends Controller
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
 
         $form = $this->get('form.factory')->create();

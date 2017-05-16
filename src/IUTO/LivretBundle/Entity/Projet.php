@@ -127,6 +127,8 @@ class Projet
     {
         $this->etudiants = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tuteurs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->validerProjet = false;
+        $this->marquantProjet = false;
     }
 
     /**
