@@ -310,7 +310,7 @@ class CommunicationController extends Controller
         $proms = array(1 => "1A", 2 => "2A", 3 => "AS", 4 => "LP");
 
 
-        return $this->render('IUTOLivretBundle:Communication:communicationChoixValide.html.twig', array(
+        return $this->render('IUTOLivretBundle:Communication:communicationChoix.html.twig', array(
             'statutCAS' => 'communication',
             'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets'),
             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
