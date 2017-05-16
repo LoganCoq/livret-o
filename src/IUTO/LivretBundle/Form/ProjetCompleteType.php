@@ -98,13 +98,6 @@ class ProjetCompleteType extends AbstractType
                 'label' => 'Enregistrer modifications et continuer',
                 'attr' => [
                     'class' => 'btn-primary',
-                    'data-toggle' => 'confirmation',
-                    'data-singleton' => true,
-                    'data-popout' => true,
-                    'data-title' => 'Êtes-vous sûr ?',
-                    'data-content' => 'Les modifications seront enregistrées',
-                    'data-btn-ok-label' => 'Continuer',
-                    'data-btn-cancel-label' => 'Annuler'
                 ],
             ))
             ;

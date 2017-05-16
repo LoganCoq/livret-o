@@ -39,13 +39,6 @@ class ProjetContenuType extends AbstractType
                 'label' => 'Enregistrer le contenu et continuer',
                 'attr' => [
                     'class' => "btn-primary",
-                    'data-toggle' => 'confirmation',
-                    'data-singleton' => true,
-                    'data-popout' => true,
-                    'data-title' => 'Êtes-vous sûr ?',
-                    'data-content' => 'Le projet sera enregistré',
-                    'data-btn-ok-label' => 'Continuer',
-                    'data-btn-cancel-label' => 'Annuler'
                 ],
             ));
     }
