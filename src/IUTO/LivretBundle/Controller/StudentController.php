@@ -823,4 +823,40 @@ class StudentController extends Controller
             )
         );
     }
+
+    public function deleteLogoAction(Request $request, Image $image, Projet $projet)
+    {
+        // récupération des inforamtions dur l'utilsateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = phpCAS::getUser();
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ( $form->isSubmitted() && $form->isValid() )
+        {
+            $projet->removeLogoClientProjet($image);
+            $em->persist($projet);
+            $em->remove($image);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('info', "Le logo a bien été supprimée.");
+
+            return $this->redirectToRoute('iuto_livret_add_word_image', array(
+                'projet' => $projet->getId(),
+            ));
+        }
+
+
+        return $this->render('IUTOLivretBundle:Student:confirmImageDelete.html.twig', array(
+            'image' => $image,
+            'form'   => $form->createView(),
+            'statutCAS' => 'étudiant',
+            'info' => array('Créer un compte rendu', 'Voir mes projets'),
+            'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
+            'routing_statutCAShome' => '/etudiant',
+            'projet' => $projet,
+        ));
+    }
 }
