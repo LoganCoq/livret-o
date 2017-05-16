@@ -768,7 +768,7 @@ class StudentController extends Controller
         }
 
 
-        return $this->render('IUTOLivretBundle:Student:confirmImageDelete.html.twig', array(
+        return $this->render('IUTOLivretBundle:Student:confirmLogoDelete.html.twig', array(
             'image' => $image,
             'form'   => $form->createView(),
             'statutCAS' => 'étudiant',
