@@ -25,6 +25,28 @@
 {% block content %}
     <div class="form-complete">
 
+        <div id="logo_client">
+            <div id="livret_add_logo">
+                <label class="control-label" for="project_btn_add_img">
+                    Logo client
+                </label>
+                <a type="button" href="{{ path('iuto_livret_add_logo_communication', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
+                    {# icone #}
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    Ajouter le logo du client
+                </a>
+            </div>
+            <div id="logo">
+                {% if logo != null %}
+                    <a href="/images/projects/{{ logo.imageName }}">
+                        <img href="/images/projects/{{ logo.imageName }}" alt="" src="/images/projects/{{ logo.imageName }}"/>
+                    </a>
+                    <a href="{{ path('iuto_livret_communication_deleteImage', {'image': logo.id }) }}" id="delete_btn">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
         <div id="images_projet">
             <div id="livret_add_img">
                 <label class="control-label" for="project_btn_add_img">

@@ -257,6 +257,10 @@ iuto_livret_communication_addImg_projet:
     path: /communication/projet/{projet}/addImg
     defaults: { _controller: IUTOLivretBundle:Communication:communicationAddImage}
 
+iuto_livret_add_logo_communication:
+    path: /communication/projet/{projet}/add/logoClient
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationAddLogo}
+
 iuto_livret_communicationSelectionLivret:
     path: /communication/selectionlivret
     defaults: { _controller: IUTOLivretBundle:Communication:communicationSelectionLivret}

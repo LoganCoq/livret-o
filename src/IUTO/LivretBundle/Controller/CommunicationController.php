@@ -574,8 +574,20 @@ class CommunicationController extends Controller
         $formCom->handleRequest($request);
 
 //        récupération des images du projet
-        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
-
+        $imagesL = $projet->getImages();
+        $images = array();
+        $logo = null;
+        foreach ($imagesL as $img)
+        {
+            if ($img->getIsLogo())
+            {
+                $logo = $img;
+            }
+            else
+            {
+                array_push($images, $img);
+            }
+        }
         // vérification de la validité du formulaire si celui-ci à été envoyer
         if ($formCom->isSubmitted() && $formCom->isValid()) {
             // création et affectation des informations dans le nouveau commentaire
@@ -618,6 +630,7 @@ class CommunicationController extends Controller
                 'images' => $images,
                 'motsCles' => $motsCles,
                 'commentaires' => $commentaires,
+                'logo' => $logo,
             ));
         }
 
@@ -647,6 +660,7 @@ class CommunicationController extends Controller
                 'images' => $images,
                 'motsCles' => $motsCles,
                 'commentaires' => $commentaires,
+                'logo' => $logo,
             ));
         }
 
@@ -662,6 +676,7 @@ class CommunicationController extends Controller
             'images' => $images,
             'motsCles' => $motsCles,
             'commentaires' => $commentaires,
+            'logo' => $logo,
         ));
     }
 
@@ -814,5 +829,46 @@ class CommunicationController extends Controller
             'routing_statutCAShome' => '/communication',
             'projet' => $projet,
         ));
+    }
+
+    public function communicationAddLogoAction(Request $request, Projet $projet)
+    {
+        //        récupération de l'entity manager
+        $em = $this->getDoctrine()->getManager();
+//        récupération des données sur l'étudiant connecté
+        $idUniv = phpCAS::getUser();
+
+
+//        création d'une entité image qui va être remplie dans le formulaire
+        $image = new Image();
+        $image->setIsLogo(true);
+
+//        creation du formulaire d'ajout d'image
+        $form = $this->createForm(AddImageType::class, $image);
+        $form->handleRequest($request);
+
+//        vérification de l'envoie du formulaire et de sa validité
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $image->setProjet($projet);
+            $em->persist($image);
+            $em->flush();
+
+            // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
+            return $this->redirectToRoute('iuto_livret_communication_wordImg_projet', array(
+                    'projet' => $projet->getId(),
+                )
+            );
+        }
+
+        return $this->render('IUTOLivretBundle:Communication:communicationAddImage.html.twig', array(
+                'form' => $form->createView(),
+                'statutCAS' => 'communication',
+                'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets'),
+                'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '#'),
+                'routing_statutCAShome' => '/communication',
+                'projet' => $projet,
+            )
+        );
     }
 }
