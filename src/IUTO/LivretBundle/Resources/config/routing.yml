@@ -60,6 +60,11 @@ iuto_livret_add_img:
     path: /etudiant/{projet}/addImg
     defaults: { _controller: IUTOLivretBundle:Student:addImage }
 
+#=====AJOUT LOGO CLIENT====#
+iuto_livret_add_logo:
+    path: /etudiant/{projet}/addLogo
+    defaults: { _controller: IUTOLivretBundle:Student:addLogo }
+
 #====VALIDER MODIFICATION===#
 iuto_livret_confirmCompleteProject:
     path:  /etudiant/{projet}/validate

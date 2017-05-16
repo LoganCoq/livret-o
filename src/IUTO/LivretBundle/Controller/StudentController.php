@@ -772,4 +772,50 @@ class StudentController extends Controller
             'projet' => $projet,
         ));
     }
+
+    public function addLogoAction(Request $request, Projet $projet)
+    {
+        //        récupération de l'entity manager
+        $em = $this->getDoctrine()->getManager();
+//        récupération des données sur l'étudiant connecté
+        $idUniv = phpCAS::getUser();
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $id = $etudiant->getId();
+
+
+//        création d'une entité image qui va être remplie dans le formulaire
+        $image = new Image();
+
+//        creation du formulaire d'ajout d'image
+        $form = $this->createForm(AddImageType::class, $image);
+        $form->handleRequest($request);
+
+//        vérification de l'envoie du formulaire et de sa validité
+        if ($form->isSubmitted() && $form->isValid())
+        {
+
+            $projet->setLogoClientProjet($image);
+            $em->persist($image);
+            $em->persist($projet);
+            $em->flush()
+
+            // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
+            return $this->redirectToRoute('iuto_livret_add_word_image', array(
+                    'id' => $id,
+                    'projet' => $projet->getId(),
+                )
+            );
+
+        }
+
+        return $this->render('IUTOLivretBundle:Student:addImageProject.html.twig', array(
+                'form' => $form->createView(),
+                'statutCAS' => 'étudiant',
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
+                'routing_statutCAShome' => '/etudiant',
+                'projet' => $projet,
+            )
+        );
+    }
 }
