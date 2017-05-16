@@ -591,7 +591,7 @@ class Projet
      */
     public function removeLogoClientProjet($image)
     {
-        $this->logoClientProjet ->removeElement($image);
+        $this->logoClientProjet->removeElement($image);
     }
 
     /**
