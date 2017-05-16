@@ -58,7 +58,6 @@ class TeacherController extends Controller
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
 //        récupération des projets suivis par l'utilisateur
-        $repositoryUser = $em->getRepository('IUTOLivretBundle:User');
         $projets = $professeur->getProjetSuivis();
 
 
@@ -77,7 +76,6 @@ class TeacherController extends Controller
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés'),
             'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-            'pagePrec' => '/professeur',
         ));
 
     }
@@ -92,7 +90,6 @@ class TeacherController extends Controller
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
-        $id = $professeur->getId();
 
 //        creation du formulaire de modification
         $formModif = $this->createForm(ProjetModifType::class, $projet);
@@ -124,7 +121,6 @@ class TeacherController extends Controller
 //        vérification de la validité du formulaire et de si il à été envoyer
         if ($formModif->isSubmitted() && $formModif->isValid())
         {
-
             $newProjet = new Projet();
 
             $newProjet->setIntituleProjet($projet->getIntituleProjet());
@@ -156,22 +152,18 @@ class TeacherController extends Controller
                 $newProjet->addEtudiant($etu);
                 $em->persist($etu);
             }
-
             foreach ( $tuts as $tut )
             {
                 $tut->addProjetSuivi($newProjet);
                 $newProjet->addTuteur($tut);
                 $em->persist($tut);
             }
-
             foreach ( $com as $c )
             {
                 $c->setProjet($newProjet);
             }
-
             // enregistrement des données dans la base
             $em->persist($newProjet);
-
 //            suppression de l'ancien projet de la base
             $em->remove($projet);
             $em->flush();
@@ -180,13 +172,8 @@ class TeacherController extends Controller
             return $this->redirectToRoute(
                 'iuto_livret_correctionProf3', array(
                     'projet' => $newProjet->getId(),
-                )
-            );
+                ));
         }
-
-
-
-        $idProjet = $projet->getId();
 
 //        creation du formulaire d'ajout d'un commentaire
         $formCom = $this->createForm(CommentaireCreateType::class, $com);
@@ -203,9 +190,8 @@ class TeacherController extends Controller
             $comReponse->setDate();
             $comReponse->setProjet($projet);
 
-            $user = $repositoryUser->findOneById($id);
 
-            $comReponse->setUser($user);
+            $comReponse->setUser($professeur);
             $comReponse->setContenu($formCom['contenu']->getData());
 
 //            enregistrement des données dans la base
@@ -236,9 +222,6 @@ class TeacherController extends Controller
                     'routing_statutCAShome' => '/professeur',
                     'commentaires' => $commentaires,
                     'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-                    'routing_options' => array('#', '#'),
-                    'pagePrec' => '/professeur/correctionProf1',
-                    'pageSuiv' => '/professeur/'.$idProjet.'/correctionProf3',
                 ));
         }
 
@@ -251,9 +234,6 @@ class TeacherController extends Controller
                 'routing_statutCAShome' => '/professeur',
                 'commentaires' => $commentaires,
                 'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
-                'routing_options' => array('#', '#'),
-                'pagePrec' => '/professeur/correctionProf1',
-                'pageSuiv' => '/professeur/'.$idProjet.'/correctionProf3'
             ));
     }
 
@@ -267,7 +247,6 @@ class TeacherController extends Controller
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
-        $id = $professeur->getId();
 
         $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
 //        creation du formulaire de modification du contenu du projet
@@ -319,8 +298,7 @@ class TeacherController extends Controller
             $comReponse = new Commentaire;
             $comReponse->setDate();
             $comReponse->setProjet($projet);
-            $user = $repositoryUser->findOneById($id);
-            $comReponse->setUser($user);
+            $comReponse->setUser($professeur);
             $comReponse->setContenu($formCom['contenu']->getData());
 
 //            enregistrement du commentaire dans la base
@@ -431,9 +409,7 @@ class TeacherController extends Controller
             $comReponse->setDate();
             $comReponse->setProjet($projet);
             // ajout de l'user au commentaire
-            $repository2 = $em->getRepository('IUTOLivretBundle:User');
-            $user = $repository2->findOneById($id);
-            $comReponse->setUser($user);
+            $comReponse->setUser($professeur);
             $comReponse->setContenu($formCom['contenu']->getData());
 
             // sauvegarde des commentaires dans la base de données
@@ -520,7 +496,6 @@ class TeacherController extends Controller
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
-        $id = $professeur->getId();
 
 //        creation du formulaire de validation d'un projet
         $formSetValide = $this->createForm(ProjetValideType::class, $projet);
@@ -628,13 +603,6 @@ class TeacherController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
-        $id = $etudiant->getId();
-
-//        récupération des images du projet
-        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
-//        récupération des mots clés du projet
-        $motsCles = $projet->getMotsClesProjet();
 
         $image = new Image();
 
@@ -656,17 +624,13 @@ class TeacherController extends Controller
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
-                    'id' => $id,
                     'projet' => $projet->getId(),
-                    'images' => $images,
-                    'motsCle' => $motsCles,
                 )
             );
         }
 
         return $this->render('IUTOLivretBundle:Teacher:addImageProject.html.twig', array(
                 'form' => $form->createView(),
-                'id' => $id,
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés'),
@@ -766,7 +730,6 @@ class TeacherController extends Controller
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $teacher = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $projet = $image->getProjet();
 
@@ -780,44 +743,9 @@ class TeacherController extends Controller
             $em->flush();
             $request->getSession()->getFlashBag()->add('info', "L'image a bien été supprimée.");
 
-            $projets = $teacher->getProjetFaits();
-            $projetsSuivis = array();
-            $projetsFinis = array();
-
-            // récupération des projets fait et non fait de l'étudiant
-            foreach ( $projets as $proj ){
-                if ( $proj->getValiderProjet() == 1){
-                    // ajout du projet à la liste si il est valider
-                    $projetsFinis[] = $proj;
-                }
-                else{
-                    // ajout du projet à la liste si il est en cours de suivi
-                    $projetsSuivis[] = $proj;
-                }
-            }
-            //actualisation des commentaires une fois le nouveau ajouté
-            //recupération des commentaires associé au projet
-            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
-            $commentaires = array();
-            foreach ($com as $elem) {
-                $x = array();
-                $user = $elem->getUser();
-                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
-                array_push($x, $elem->getContenu());
-                array_push($x, $elem->getDate());
-                array_push($x, $user->getRole());
-                array_push($commentaires, $x);
-
-            };
-
-            $images = $em->getRepository(Image::class)->findByProjet($image->getProjet());
-            $motsCles = $projet->getMotsClesProjet();
 
             return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
                 'projet' => $projet->getId(),
-                'images' => $images,
-                'motsCles' => $motsCles,
-                'commentaires' => $commentaires,
             ));
         }
 
