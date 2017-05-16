@@ -861,7 +861,7 @@ class CommunicationController extends Controller
             );
         }
 
-        return $this->render('IUTOLivretBundle:Communication:communicationAddImage.html.twig', array(
+        return $this->render('IUTOLivretBundle:Communication:communicationAddImg.html.twig', array(
                 'form' => $form->createView(),
                 'statutCAS' => 'communication',
                 'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets'),
