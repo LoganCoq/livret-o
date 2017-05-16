@@ -552,14 +552,10 @@ class StudentController extends Controller
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
         $id = $etudiant->getId();
 
-//        récupération des images du projet
-        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
-
-//        récupération des mots clés du projet
-        $motsCles = $projet->getMotsClesProjet();
 
 //        création d'une entité image qui va être remplie dans le formulaire
         $image = new Image();
+        $image->setIsLogo(false);
 
 //        creation du formulaire d'ajout d'image
         $form = $this->createForm(AddImageType::class, $image);
@@ -569,7 +565,7 @@ class StudentController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
 //            vérification que la limite du nombre d'images est respectée
-            if ( count($projet->getImages()) < 2 )
+            if ( count($projet->getImages()) < 3 )
             {
                 $image->setProjet($projet);
                 $em->persist($image);
@@ -585,8 +581,6 @@ class StudentController extends Controller
             return $this->redirectToRoute('iuto_livret_add_word_image', array(
                     'id' => $id,
                     'projet' => $projet->getId(),
-                    'images' => $images,
-                    'motsCles' => $motsCles,
                 )
             );
         }
@@ -790,6 +784,7 @@ class StudentController extends Controller
 
 //        création d'une entité image qui va être remplie dans le formulaire
         $image = new Image();
+        $image->setIsLogo(true);
 
 //        creation du formulaire d'ajout d'image
         $form = $this->createForm(AddImageType::class, $image);
@@ -798,11 +793,8 @@ class StudentController extends Controller
 //        vérification de l'envoie du formulaire et de sa validité
         if ($form->isSubmitted() && $form->isValid())
         {
-
-            $projet->setLogoClientProjet($image);
             $image->setProjet($projet);
             $em->persist($image);
-            $em->persist($projet);
             $em->flush();
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
@@ -837,8 +829,6 @@ class StudentController extends Controller
 
         if ( $form->isSubmitted() && $form->isValid() )
         {
-//            $projet->removeLogoClientProjet($image);
-//            $em->persist($projet);
             $em->remove($image);
             $em->flush();
             $request->getSession()->getFlashBag()->add('info', "Le logo a bien été supprimée.");

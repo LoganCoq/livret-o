@@ -80,11 +80,6 @@ class Projet
     private $descriptionClientProjet;
 
     /**
-     * @ORM\OneToOne(targetEntity="IUTO\LivretBundle\Entity\Image", cascade={"persist"})
-     */
-    private $logoClientProjet;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="validerProjet", type="boolean")
@@ -581,34 +576,5 @@ class Projet
         $this->descriptionClientProjet = $descriptionClientProjet;
 
         return $this;
-    }
-
-
-    /**
-     * Remove image
-     *
-     * @param \IUTO\LivretBundle\Entity\Image $image
-     */
-    public function removeLogoClientProjet($image)
-    {
-        $this->logoClientProjet->removeElement($image);
-    }
-
-    /**
-     * Get images
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLogoClientProjet()
-    {
-        return $this->logoClientProjet;
-    }
-
-    /**
-     * @param \IUTO\LivretBundle\Entity\Image $image
-     */
-    public function setLogoClientProjet($image)
-    {
-        $this->logoClientProjet = $image;
     }
 }

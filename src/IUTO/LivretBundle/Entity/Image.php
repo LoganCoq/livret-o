@@ -56,6 +56,14 @@ class Image
     private $projet;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="isLogo", type="boolean")
+     */
+    private $isLogo;
+
+
+    /**
      * Get id
      *
      * @return integer
@@ -132,6 +140,30 @@ class Image
     public function setImageName($imageName)
     {
         $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * Get isLogo
+     *
+     * @return bool
+     */
+    public function getIsLogo()
+    {
+        return $this->isLogo;
+    }
+
+    /**
+     * Set marquantProjet
+     *
+     * @param boolean $isLogo
+     *
+     * @return Image
+     */
+    public function setIsLogo($isLogo)
+    {
+        $this->isLogo = $isLogo;
 
         return $this;
     }
