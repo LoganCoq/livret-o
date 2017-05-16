@@ -427,9 +427,10 @@ class StudentController extends Controller
 //        récupération des images du projet
         $imagesL = $projet->getImages();
         $images = array();
+	$logo = null;
         foreach ($imagesL as $img)
         {
-            if ($img->isLogo())
+            if ($img->getIsLogo())
             {
                 $logo = $img;
             }
