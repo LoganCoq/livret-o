@@ -183,7 +183,6 @@ class TeacherController extends Controller
 //        vérification de lavalidité du formulaire et de son envoi
         if ($formCom->isSubmitted() && $formCom->isValid())
         {
-            $repositoryUser = $em->getRepository('IUTOLivretBundle:User');
 //            création d'une nouvelle entité de commentaire
             $comReponse = new Commentaire;
 //            ajout des infirmations nécessaire au commentaire
@@ -267,7 +266,6 @@ class TeacherController extends Controller
             );
         }
 
-        $repositoryUser = $em->getRepository('IUTOLivretBundle:User');
         $repositoryCommentaire = $em->getRepository('IUTOLivretBundle:Commentaire');
 //        recupération des commentaires associés au projet actuel
         $com = $repositoryCommentaire->findByProjet($projet);
@@ -284,7 +282,6 @@ class TeacherController extends Controller
             array_push($commentaires, $x);
         };
 
-        $idProjet = $projet->getId();
 
 //        creation du formulaire d'ajout d'un commentaire
         $formCom = $this->createForm(CommentaireCreateType::class, $com);
@@ -357,7 +354,6 @@ class TeacherController extends Controller
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
-        $id = $professeur->getId();
 
 //        récupération des images du projet
         $imagesL = $projet->getImages();
@@ -649,11 +645,9 @@ class TeacherController extends Controller
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
-        $id = $professeur->getId();
 
 //        recupération des projets suivis par l'utilisateur
-        $repositoryUser = $em->getRepository('IUTOLivretBundle:User');
-        $projets = $repositoryUser->findOneById($id)->getProjetSuivis();
+        $projets = $professeur->getProjetSuivis();
 
 
         $projetsValides = array();
@@ -665,7 +659,6 @@ class TeacherController extends Controller
         };
     //  rendu de la page de selections des projets validés
         return $this->render('IUTOLivretBundle:Teacher:projetsValidesTeacher1.html.twig', array(
-            'id' => $id,
             'statutCAS' => 'professeur',
             'projets' => $projetsValides,
             'routing_statutCAShome' => '/professeur',
@@ -682,7 +675,6 @@ class TeacherController extends Controller
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
 //        creation d'un formulaire vide pour supprimmer le projet
         $form = $this->get('form.factory')->create();
