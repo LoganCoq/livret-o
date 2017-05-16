@@ -87,7 +87,6 @@ class CommunicationController extends Controller
         $manager = $this->getDoctrine()->getManager();
 
         $idUniv = phpCAS::getUser();
-        $user = $manager->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $newLivret = new Livret();
 
@@ -195,7 +194,6 @@ class CommunicationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $oldProjects = $livret->getProjets();
 
@@ -244,8 +242,6 @@ class CommunicationController extends Controller
         //récupération des informations sur l'utilisateur
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
-        $id = $etudiant->getId();
 
         // récuperation des projets d'un étudiant
         $livrets = $em->getRepository('IUTOLivretBundle:Livret')->findAll();
@@ -265,7 +261,6 @@ class CommunicationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $formModif = $this->createForm(NewLivretType::class, $livret);
         $formModif->handleRequest($request);
@@ -686,13 +681,7 @@ class CommunicationController extends Controller
         $em = $this->getDoctrine()->getManager();
 //        récupération des données sur l'étudiant connecté
         $idUniv = phpCAS::getUser();
-        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
-//        récupération des images du projet
-        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
-
-//        récupération des mots clés du projet
-        $motsCles = $projet->getMotsClesProjet();
 
 //        création d'une entité image qui va être remplie dans le formulaire
         $image = new Image();
@@ -705,7 +694,7 @@ class CommunicationController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
 //            vérification que la limite du nombre d'images est respectée
-            if ( count($projet->getImages()) < 2 )
+            if ( count($projet->getImages()) < 3 )
             {
                 $image->setProjet($projet);
                 $em->persist($image);
@@ -720,8 +709,6 @@ class CommunicationController extends Controller
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_communication_wordImg_projet', array(
                     'projet' => $projet->getId(),
-                    'images' => $images,
-                    'motsCles' => $motsCles,
                 )
             );
         }
@@ -779,7 +766,6 @@ class CommunicationController extends Controller
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $projet = $image->getProjet();
 
@@ -793,29 +779,9 @@ class CommunicationController extends Controller
             $em->flush();
             $request->getSession()->getFlashBag()->add('info', "L'image a bien été supprimée.");
 
-            //actualisation des commentaires une fois le nouveau ajouté
-            //recupération des commentaires associé au projet
-            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
-            $commentaires = array();
-            foreach ($com as $elem) {
-                $x = array();
-                $user = $elem->getUser();
-                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
-                array_push($x, $elem->getContenu());
-                array_push($x, $elem->getDate());
-                array_push($x, $user->getRole());
-                array_push($commentaires, $x);
-
-            };
-
-            $images = $em->getRepository(Image::class)->findByProjet($image->getProjet());
-            $motsCles = $projet->getMotsClesProjet();
 
             return $this->redirectToRoute('iuto_livret_communication_wordImg_projet', array(
                 'projet' => $projet->getId(),
-                'images' => $images,
-                'motsCles' => $motsCles,
-                'commentaires' => $commentaires,
             ));
         }
 
