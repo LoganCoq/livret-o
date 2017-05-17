@@ -13,14 +13,18 @@ security:
 
         in_memory:
             memory: ~
-
+    role_hierarchy:
+        ROLE_chief: [ROLE_faculty]
+        ROLE_admin: [ROLE_chief, ROLE_employee, ROLE_student]
+        ROLE_affiliate: ROLE_admin
     # Définition des routes accessibles selon le ROLE de l'user connecté
     access_control:
-            - { path: /etudiant,        roles: [ROLE_student, ROLE_affiliate] }
-            - { path: /professeur,      roles: [ROLE_faculty, ROLE_affiliate] }
-            - { path: ^/communication,  roles: [ROLE_employee, ROLE_affiliate] }
-            - { path: /chef,            roles: [ROLE_chief, ROLE_affiliate] }
-            - { path: /administrateur,  roles: [ROLE_admin, ROLE_affiliate] }
+            - { path: /etudiant,        roles: ROLE_student }
+            - { path: /professeur,      roles: ROLE_faculty }
+            - { path: ^/communication,  roles: ROLE_employee }
+            - { path: /chef,            roles: ROLE_chief }
+            - { path: /administrateur,  roles: ROLE_admin }
+
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
