@@ -38,6 +38,11 @@
                 </nav>
                 <div style="position:absolute ;bottom: 5%; width: 100%;text-align:center">
                     <img src="{{ asset('assets/images/IUTO_transp.png') }}" alt="Logo IUT" style="max-height: 125px"/>
+                    <a href="https://goo.gl/forms/HxRlrZnElph8aSSU2">
+                        <button type="button" class="btn btn-primary" style="width: 100%">
+                            Envoyer un rapport d'erreur / amélioration
+                        </button>
+                    </a>
                     {% if statutCAS != "Public" %}
                         <a href="{{ path('iuto_livret_logout') }}">
                             {#TODO style#}
