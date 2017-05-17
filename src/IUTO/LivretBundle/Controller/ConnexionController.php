@@ -17,13 +17,16 @@ class ConnexionController extends Controller
 {
     public function connexionAction()
     {
-
+//        Récupération de l'utilisateur connecté et à rediriger
 	    $numPersonne = phpCAS::getUser();
-	    $em = $this->getDoctrine()->getManager();
-	    $user = $em->getRepository(User::class)->findOneByIdUniv($numPersonne);
 
+	    $em = $this->getDoctrine()->getManager();
+//	    Récupération de l'utilisateur grâce a son numéro universitaire
+	    $user = $em->getRepository(User::class)->findOneByIdUniv($numPersonne);
+//        Récupération du role de l'utilisateur pour effectuer la redirection
         $role = $user->getRole();
 
+//        Vérificate du role de l'utilisateur et redirection suivant celui-ci
 	    if (strcmp($role, "ROLE_student") == 0)
         {
             return $this->redirectToRoute("iuto_livret_studenthomepage", array());

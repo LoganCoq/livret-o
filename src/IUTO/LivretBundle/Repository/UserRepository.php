@@ -40,6 +40,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
 
     public function loadUserByUsername($username)
     {
+//        Parametres de configuration pour la recherche ldap
         $config = array(
             'host' => 'ldap-univ.iut45.univ-orleans.fr',
             'port' => 636,
@@ -49,11 +50,15 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
         $AdapterInterface = new Adapter($config);
         $ldap = new Ldap($AdapterInterface);
         $ldap->bind();
+//        Récupération des infos de la personne qui se connecte via ldap avec son numero universitaire
         $infosPersonne = $ldap->query("ou=People,dc=univ-orleans,dc=fr", "uid=" . $username)->execute()->toArray()[0];
 
+//        Récupération de l'entity Manager
         $em = $this->getEntityManager();
+//        Récupération de l'uitilisateur dans la base de données ( null si non existant )
         $user = $this->findOneByIdUniv($username);
 
+//        Correspondance entre les formations et l'intitulé des formations dans ldap
         $corresLDAP = array(
             'IO1320' => array('1A', 'Chimie'),
             'IO1321' => array('2A', 'Chimie'),
@@ -83,60 +88,73 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
             'ILPO29' => array('LPMCF', 'GEA'),
             'ILPO21' => array('LPEBSI', 'GTE'),
         );
-	if ($infosPersonne){
-        if (!$user) {
-            $user = new User();
+//        On vérifie que l'utilisateur à été trouver dans la base ldap
+        if ($infosPersonne){
+//            On regarde si l'utilisateur est déjà existant
+            if (!$user) {
+//                Création d'un nouvel utilisateur si il n'est pas déjà existant
+                $user = new User();
 
-            $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
-            $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
-            $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
-            $user->setRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
-            $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
+//                Affectation des valeurs récupérée dans ldap à l'utilisateur
+                $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
+                $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
+                $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
+                $user->setRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
+                $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
 
-            if ($user->getRole() == "ROLE_student")
-            {
-                $codeFormation = $infosPersonne->getAttribute("unrcEtape")[0];
-
-                $infForm = $corresLDAP[$codeFormation];
-                $formation = $em->getRepository(Formation::class)->findOneBy(array("departement" => ($em->getRepository(Departement::class)->findOneByNomDpt($infForm[0])), "typeFormation" => $infForm[0]));
-                if (!$formation)
+//                On regarde si l'utilisateur est un étudiant
+//                Si c'est le cas, on va lui ajouter une formation
+                if ($user->getRole() == "ROLE_student")
                 {
-                    $newF = new Formation();
-                    $newF->setTypeFormation($infForm[0]);
-                    $newF->setDepartement($em->getRepository("IUTOLivretBundle:Departement")->findOneByNomDpt($corresLDAP[$codeFormation][1]));
-                    $dDeb = new \DateTime();
-                    $dFin = new \DateTime();
-                    if (date("m") < 9)
-                    {
-                        $dDeb->setDate(date("y"), 1, 15);
-                        $dFin->setDate(date("y"), 8, 15);
-                        $newF->setSemestre(2);
+                    $codeFormation = $infosPersonne->getAttribute("unrcEtape")[0];
 
-                    }
-                    else
+                    $infForm = $corresLDAP[$codeFormation];
+//                    Récupération de la formation dans la base de données
+                    $formation = $em->getRepository(Formation::class)->findOneBy(array("departement" => ($em->getRepository(Departement::class)->findOneByNomDpt($infForm[0])), "typeFormation" => $infForm[0]));
+                    if (!$formation)
                     {
-                        $dDeb->setDate(date("y") - 1, 8, 16);
-                        $dFin->setDate(date("y"), 1, 14);
-                        $newF->setSemestre(1);
+//                        On crée la formation si elle n'as pas déjà été ajoutée a la base
+                        $newF = new Formation();
+                        $newF->setTypeFormation($infForm[0]);
+                        $newF->setDepartement($em->getRepository("IUTOLivretBundle:Departement")->findOneByNomDpt($corresLDAP[$codeFormation][1]));
+                        $dDeb = new \DateTime();
+                        $dFin = new \DateTime();
+                        if (date("m") < 9)
+                        {
+                            $dDeb->setDate(date("y"), 1, 15);
+                            $dFin->setDate(date("y"), 8, 15);
+                            $newF->setSemestre(2);
+
+                        }
+                        else
+                        {
+                            $dDeb->setDate(date("y") - 1, 8, 16);
+                            $dFin->setDate(date("y"), 1, 14);
+                            $newF->setSemestre(1);
+                        }
+                        $newF->setDateDebut($dDeb);
+                        $newF->setDateFin($dFin);
+                        $formation = $newF;
+                        $em->persist($formation);
                     }
-                    $newF->setDateDebut($dDeb);
-                    $newF->setDateFin($dFin);
-                    $formation = $newF;
-                    $em->persist($formation);
+//                    Ajout de la formation à l'utilisateur
+                    $user->addFormation($formation);
+//                    Ajout de l'utilisateur à la formation
+                    $formation->addUser($user);
                 }
-                $user->addFormation($formation);
-                $formation->addUser($user);
+
+            } else {
+//                Actualisation des informations sur l'utilisateur
             }
+//            Enregistrement de l'utilisateur dans la base
+            $em->persist($user);
+            $em->flush();
 
+            return $user;
         } else {
-
+//            Exeption si l'utilisateur n'existe pas dans la base ldap
+            throw new UsernameNotFoundException('Username "'.$username.'" does not exist.');
         }
-        $em->persist($user);
-        $em->flush();
-
-	    return $user;
-	}
-	throw new UsernameNotFoundException('Username "'.$username.'" does not exist.');
     }
 
     public function supportsClass($class)
