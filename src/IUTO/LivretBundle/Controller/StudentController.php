@@ -339,7 +339,6 @@ class StudentController extends Controller
             $comReponse->setContenu($formCom['contenu']->getData());
 
             // sauvegarde des commentaires dans la base de données
-            $em->persist($projet);
             $em->persist($comReponse);
             $em->flush();
 
@@ -418,6 +417,7 @@ class StudentController extends Controller
             $em->persist($newProjet);
 //            suppression de l'ancien projet
             $em->remove($projet);
+            $em->flush();
 
             //rechargement du formulaire pour les commentaires
             return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
