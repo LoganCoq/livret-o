@@ -76,3 +76,23 @@
 {
     margin-left: 2em;
 }
+
+#livret_add_logo
+{
+    padding-top: 5%;
+    margin-left: 2em;
+    width: 40%;
+    margin-bottom: 2em;
+}
+
+#livret_add_logo > a
+{
+    margin-top: auto;
+    margin-left: 2em;
+}
+
+#logo
+{
+    margin-left: 2em;
+    width: 60%;
+}
