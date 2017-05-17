@@ -322,8 +322,6 @@ class StudentController extends Controller
             );
         }
 
-
-
         //creation du formulaire pour la section de chat/commentaire
         $formCom = $this->createForm(CommentaireCreateType::class, $com);
         $formCom->handleRequest($request);
@@ -341,6 +339,7 @@ class StudentController extends Controller
             $comReponse->setContenu($formCom['contenu']->getData());
 
             // sauvegarde des commentaires dans la base de données
+            $em->persist($projet);
             $em->persist($comReponse);
             $em->flush();
 
