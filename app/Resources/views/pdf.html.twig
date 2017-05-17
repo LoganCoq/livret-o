@@ -81,6 +81,9 @@
                 <td>
                     <div class="entete_projet">
                         <h1 class="titre"> {{ nom }} </h1>
+                        {% if logo != null %}
+                            <img src=".{{ asset('images/projects/' ~ logo.imageName) }}" alt="Logo client" style="max-height: 100px; max-width: 100px"/>
+                        {% endif %}
                         {% if client != null or client != "" %}
                             <p class="client"> À destination de {{ client }} </p>
                         {% endif %}

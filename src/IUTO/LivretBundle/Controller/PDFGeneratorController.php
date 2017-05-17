@@ -37,21 +37,58 @@ class PDFGeneratorController extends Controller
         $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
         $departement = $etudiants{0}->getFormations(){0}->getDepartement()->getNomDpt();
 
-//        Récupération des images du projet, on met la valeur a
-//        null si l'image n'existe pas afin d'éviter les erreurs
-        if ( $projet->getImages()->count() == 2 )
+//            Récupération des images du projet, on met à null si il n'y a pas d'image
+//            afin d'éviter les erreurs
+        $images = $projet->getImages();
+        $logo = null;
+        $image1 = null;
+        $image2 = null;
+        if ( $images->count() == 3 ) //TODO cleaner
         {
-            $image1 = $projet->getImages(){0};
-            $image2 = $projet->getImages(){1};
+            if ($images{0}->getIsLogo()){
+                $logo = $images{0};
+            } else {
+                $image1 = $images{0};
+            }
+            if ($images{1}->getIsLogo()){
+                $logo = $images{1};
+            } else {
+                if ($image1 != null)
+                {
+                    $image1 = $images{1};
+                } else {
+                    $image2 = $images{1};
+                }
+            }
+            if ($images{2}->getIsLogo()){
+                $logo = $images{2};
+            } else {
+                $image2 = $images{2};
+            }
         }
-        elseif ( $projet->getImages()->count() == 1 )
+        elseif ( $images->count() == 2 )
         {
-            $image1 = $projet->getImages(){0};
-            $image2 = null;
-        }
-        else{
-            $image1 = null;
-            $image2 = null;
+            if ($images{0}->getIsLogo()){
+                $logo = $images{0};
+            } else {
+                $image1 = $images{0};
+            }
+            if ($images{1}->getIsLogo()){
+                $logo = $images{1};
+            } else {
+                if ($image1 != null)
+                {
+                    $image1 = $images{1};
+                } else {
+                    $image2 = $images{1};
+                }
+            }
+        } elseif ( $images->count() == 1){
+            if ($images{0}->getIsLogo()){
+                $logo = $images{0};
+            } else {
+                $image1 = $images{0};
+            }
         }
 
 //        Création du template du projet avec les informations de celui-ci
@@ -67,6 +104,7 @@ class PDFGeneratorController extends Controller
                 'departement' => $departement,
                 'image1' => $image1,
                 'image2' => $image2,
+                'logo' => $logo,
             ]);
 
 //        Récupération de l'application de génération de pdf
@@ -108,21 +146,58 @@ class PDFGeneratorController extends Controller
         $formation = $etudiants{0}->getFormations(){0}->getTypeFormation();
         $departement = $etudiants{0}->getFormations(){0}->getDepartement()->getNomDpt();
 
-//        Récupération des images du projet, on met la valeur a
-//        null si l'image n'existe pas afin d'éviter les erreurs
-        if ( $projet->getImages()->count() == 2 )
+//            Récupération des images du projet, on met à null si il n'y a pas d'image
+//            afin d'éviter les erreurs
+        $images = $projet->getImages();
+        $logo = null;
+        $image1 = null;
+        $image2 = null;
+        if ( $images->count() == 3 ) //TODO cleaner
         {
-            $image1 = $projet->getImages(){0};
-            $image2 = $projet->getImages(){1};
+            if ($images{0}->getIsLogo()){
+                $logo = $images{0};
+            } else {
+                $image1 = $images{0};
+            }
+            if ($images{1}->getIsLogo()){
+                $logo = $images{1};
+            } else {
+                if ($image1 != null)
+                {
+                    $image1 = $images{1};
+                } else {
+                    $image2 = $images{1};
+                }
+            }
+            if ($images{2}->getIsLogo()){
+                $logo = $images{2};
+            } else {
+                $image2 = $images{2};
+            }
         }
-        elseif ( $projet->getImages()->count() == 1 )
+        elseif ( $images->count() == 2 )
         {
-            $image1 = $projet->getImages(){0};
-            $image2 = null;
-        }
-        else{
-            $image1 = null;
-            $image2 = null;
+            if ($images{0}->getIsLogo()){
+                $logo = $images{0};
+            } else {
+                $image1 = $images{0};
+            }
+            if ($images{1}->getIsLogo()){
+                $logo = $images{1};
+            } else {
+                if ($image1 != null)
+                {
+                    $image1 = $images{1};
+                } else {
+                    $image2 = $images{1};
+                }
+            }
+        } elseif ( $images->count() == 1){
+            if ($images{0}->getIsLogo()){
+                $logo = $images{0};
+            } else {
+                $image1 = $images{0};
+            }
         }
 
 //        Création du template du projet avec les informations de celui-ci
@@ -138,6 +213,7 @@ class PDFGeneratorController extends Controller
                 'departement' => $departement,
                 'image1' => $image1,
                 'image2' => $image2,
+                'logo' => $logo,
             ]);
 
 //        Récupération de l'application de génération de pdf
@@ -249,20 +325,58 @@ class PDFGeneratorController extends Controller
 
 //            Récupération des images du projet, on met à null si il n'y a pas d'image
 //            afin d'éviter les erreurs
-            if ( $projet->getImages()->count() == 2 )
+            $images = $projet->getImages();
+            $logo = null;
+            $image1 = null;
+            $image2 = null;
+            if ( $images->count() == 3 ) //TODO cleaner
             {
-                $image1 = $projet->getImages(){0};
-                $image2 = $projet->getImages(){1};
+                if ($images{0}->getIsLogo()){
+                    $logo = $images{0};
+                } else {
+                    $image1 = $images{0};
+                }
+                if ($images{1}->getIsLogo()){
+                    $logo = $images{1};
+                } else {
+                    if ($image1 != null)
+                    {
+                        $image1 = $images{1};
+                    } else {
+                        $image2 = $images{1};
+                    }
+                }
+                if ($images{2}->getIsLogo()){
+                    $logo = $images{2};
+                } else {
+                    $image2 = $images{2};
+                }
             }
-            elseif ( $projet->getImages()->count() == 1 )
+            elseif ( $images->count() == 2 )
             {
-                $image1 = $projet->getImages(){0};
-                $image2 = null;
+                if ($images{0}->getIsLogo()){
+                    $logo = $images{0};
+                } else {
+                    $image1 = $images{0};
+                }
+                if ($images{1}->getIsLogo()){
+                    $logo = $images{1};
+                } else {
+                    if ($image1 != null)
+                    {
+                        $image1 = $images{1};
+                    } else {
+                        $image2 = $images{1};
+                    }
+                }
+            } elseif ( $images->count() == 1){
+                if ($images{0}->getIsLogo()){
+                    $logo = $images{0};
+                } else {
+                    $image1 = $images{0};
+                }
             }
-            else{
-                $image1 = null;
-                $image2 = null;
-            }
+
 
 //            Creation du template pour le projet actuel
             $template = $this->renderView('::pdf.html.twig',
@@ -277,6 +391,7 @@ class PDFGeneratorController extends Controller
                     'departement' => $departement,
                     'image1' => $image1,
                     'image2' => $image2,
+                    'logo' => $logo,
                 ]);
 
 //            Ecriture du template dans le pdf
@@ -388,19 +503,56 @@ class PDFGeneratorController extends Controller
 
 //            Récupération des images du projet, on met à null si il n'y a pas d'image
 //            afin d'éviter les erreurs
-            if ( $projet->getImages()->count() == 2 )
+            $images = $projet->getImages();
+            $logo = null;
+            $image1 = null;
+            $image2 = null;
+            if ( $images->count() == 3 ) //TODO cleaner
             {
-                $image1 = $projet->getImages(){0};
-                $image2 = $projet->getImages(){1};
+                if ($images{0}->getIsLogo()){
+                    $logo = $images{0};
+                } else {
+                    $image1 = $images{0};
+                }
+                if ($images{1}->getIsLogo()){
+                    $logo = $images{1};
+                } else {
+                    if ($image1 != null)
+                    {
+                        $image1 = $images{1};
+                    } else {
+                        $image2 = $images{1};
+                    }
+                }
+                if ($images{2}->getIsLogo()){
+                    $logo = $images{2};
+                } else {
+                    $image2 = $images{2};
+                }
             }
-            elseif ( $projet->getImages()->count() == 1 )
+            elseif ( $images->count() == 2 )
             {
-                $image1 = $projet->getImages(){0};
-                $image2 = null;
-            }
-            else{
-                $image1 = null;
-                $image2 = null;
+                if ($images{0}->getIsLogo()){
+                    $logo = $images{0};
+                } else {
+                    $image1 = $images{0};
+                }
+                if ($images{1}->getIsLogo()){
+                    $logo = $images{1};
+                } else {
+                    if ($image1 != null)
+                    {
+                        $image1 = $images{1};
+                    } else {
+                        $image2 = $images{1};
+                    }
+                }
+            } elseif ( $images->count() == 1){
+                if ($images{0}->getIsLogo()){
+                    $logo = $images{0};
+                } else {
+                    $image1 = $images{0};
+                }
             }
 
 //            Creation du template pour le projet actuel
@@ -416,6 +568,7 @@ class PDFGeneratorController extends Controller
                     'departement' => $departement,
                     'image1' => $image1,
                     'image2' => $image2,
+                    'logo' => $logo,
                 ]);
 
 //            Ecriture du template dans le pdf
