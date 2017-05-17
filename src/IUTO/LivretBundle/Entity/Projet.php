@@ -549,9 +549,9 @@ class Projet
     }
 
     /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $listeImages
+     * @param \Doctrine\Common\Collections\Collection $listeImages
      */
-    public function setimages($listeImages)
+    public function setImages($listeImages)
     {
         $this->images = $listeImages;
     }
