@@ -302,18 +302,61 @@ class PDFGeneratorController extends Controller
             ->getRepository('IUTOLivretBundle:Livret');
 
 //        Récupération du livret que l'on veux générer
-        $livret = $repLivret->findOneById($id);
+        $livret = $repLivret->findOneById($idLivret);
 
 //        Récupération de l'application de génération de pdf
         $html2pdf = $this->get('app.html2pdf');
 //        Création du pdf au format A4
         $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
 
+//        Récupération des projets du livret
+        $projets = $livret->getProjets();
+
+//        Récupération des informations pour la page de garde
         $title = $livret->getIntituleLivret();
+        $departements = array();
+        $promotions = array();
+        $intitules = array();
+        $minYear = 1000000;
+        $maxYear = 0;
+        $dateCrea = $livret->getDateCreationLivret()->format('d-m-Y');
+
+//        Récupération des données projets par projets
+        foreach ( $projets as $curProj)
+        {
+            $curForm =$curProj->getEtudiants()[0]->getFormations()[0];
+            $curDpt = $curForm->getDepartement()->getNomDpt();
+            if ( !in_array($curDpt, $departements))
+            {
+                array_push($departements, $curDpt);
+            }
+            $curTypeForm = $curForm->getTypeFormation();
+            if ( !in_array($curTypeForm, $promotions))
+            {
+                array_push($promotions, $curTypeForm);
+            }
+            $curYearStart = $curForm->getDateDebut()->format('Y');
+            $curYearEnd = $curForm->getDateFin()->format('Y');
+            if ( $maxYear<$curYearEnd )
+            {
+                $maxYear = $curYearEnd;
+            }
+            if( $minYear> $curYearStart)
+            {
+                $minYear = $curYearStart;
+            }
+            array_push($intitules, $curProj->getIntituleProjet());
+        }
 
         $template = $this->renderView('::couverture.html.twig',
             [
                 'intituleLivret' => $title,
+                'minYear' => $minYear,
+                'maxYear' => $maxYear,
+                'departements' => $departements,
+                'promotions' => $promotions,
+                'dateCrea' => $dateCrea,
+                'intitules' => $intitules,
             ]);
         $html2pdf->write($template);
 
@@ -328,9 +371,6 @@ class PDFGeneratorController extends Controller
 //            Ecriture du template dans le pdf
             $html2pdf->write($template);
         }
-
-//        Récupération des projets du livret
-        $projets = $livret->getProjets();
 
 //        Parcours des projets afin d'écrire page par page
         foreach ( $projets as $projet)
@@ -381,7 +421,6 @@ class PDFGeneratorController extends Controller
 //            Ecriture du template dans le pdf
             $html2pdf->write($template);
         }
-
 //        Envoie de la demande de téléchargement du pdf
         $html2pdf->getDownloadPdf("livret");
     }
