@@ -40,7 +40,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
 
     public function loadUserByUsername($username)
     {
-      $config = array(
+        $config = array(
             'host' => 'ldap-univ.iut45.univ-orleans.fr',
             'port' => 636,
             'version' => 3,
@@ -51,7 +51,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
         $ldap->bind();
         $infosPersonne = $ldap->query("ou=People,dc=univ-orleans,dc=fr", "uid=" . $username)->execute()->toArray()[0];
 
-
+        $em = $this->getEntityManager();
         $user = $this->findOneByIdUniv($username);
 
         $corresLDAP = array(
@@ -84,18 +84,18 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
             'ILPO21' => array('LPEBSI', 'GTE'),
         );
 	if ($infosPersonne){
-          if (!$user) {
+        if (!$user) {
             $user = new User();
 
-             $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
-             $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
-             $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
-             $user->setRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
-             $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
+            $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
+            $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
+            $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
+            $user->setRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
+            $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
 
             if ($user->getRole() == "ROLE_student")
             {
-                 $codeFormation = $infosPersonne->getAttribute("unrcEtape")[0];
+                $codeFormation = $infosPersonne->getAttribute("unrcEtape")[0];
 
                 $infForm = $corresLDAP[$codeFormation];
                 $formation = $em->getRepository(Formation::class)->findOneBy(array("departement" => ($em->getRepository(Departement::class)->findOneByNomDpt($infForm[0])), "typeFormation" => $infForm[0]));
@@ -128,17 +128,15 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
                 $formation->addUser($user);
             }
 
-            $em->persist($user);
-            $em->flush();
+        } else {
 
-          } else {
-            // TODO vérifier avec LDAP si les infos sont à jours
-          }
-	  return $user;
+        }
+        $em->persist($user);
+        $em->flush();
+
+	    return $user;
 	}
-        throw new UsernameNotFoundException(
-            sprintf('Username "%s" does not exist.', $username)
-        );
+	throw new UsernameNotFoundException('Username "'.$username.'" does not exist.');
     }
 
     public function supportsClass($class)
@@ -146,14 +144,4 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
         return User::class === $class;
     }
 
-//    public function findOneByName($name)
-//    {
-//        $qb = $this->createQueryBuilder('e');
-//
-//        $qb
-//            ->where('e.nomEtu = :name')
-//            ->setParameter('name', $name);
-//
-//        return $qb->getQuery()->getResult();
-//    }
 }
