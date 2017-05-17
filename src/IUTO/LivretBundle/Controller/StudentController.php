@@ -358,6 +358,67 @@ class StudentController extends Controller
 
             };
 
+            //            création d'un nouveau projet afin d'enregistrer les
+            $newProjet = new Projet();
+
+//            récupération et affectation des données du projet dans le nouveau projet
+            $newProjet->setIntituleProjet($projet->getIntituleProjet());
+            $newProjet->setDescripProjet($projet->getDescripProjet());
+            $newProjet->setBilanProjet($projet->getBilanProjet());
+            $newProjet->setMarquantProjet($projet->getMarquantProjet());
+            $newProjet->setMotsClesProjet($projet->getMotsClesProjet());
+            $newProjet->setClientProjet($projet->getClientProjet());
+            $newProjet->setValiderProjet($projet->getValiderProjet());
+            $newProjet->setNomDpt($projet->getNomDpt());
+            $newProjet->setImages($projet->getImages());
+            $newProjet->setDescriptionClientProjet($projet->getDescriptionClientProjet());
+
+//            actualisation du projet associé aux images du projet
+            foreach ( $newProjet->getImages() as $oneImg )
+            {
+                $oneImg->setProjet($newProjet);
+            }
+
+            // recupération des dates dans le formulaire
+            $dateFormD = $form['dateDebut']->getData();
+            $dateFormF = $form['dateFin']->getData();
+
+            //affectations des date dans le formulaire au bon format
+            //stockage de la date dans le projet
+            $newProjet->setDateDebut(\DateTime::createFromFormat('d/m/Y', $dateFormD));
+            $newProjet->setDateFin(\DateTime::createFromFormat('d/m/Y', $dateFormF));
+
+//            récupération des étudiants et tuteurs selectionnées dans le formulaire
+            $etus = $form['etudiants']->getData();
+            $tuts = $form['tuteurs']->getData();
+
+//            opérations sur les étudiant selectionnées
+            foreach ( $etus as $etu )
+            {
+                $etu->addProjetFait($newProjet);
+                $newProjet->addEtudiant($etu);
+                $em->persist($etu);
+            }
+
+//            opérations sur les tuteurs sélectionnés
+            foreach ( $tuts as $tut )
+            {
+                $tut->addProjetSuivi($newProjet);
+                $newProjet->addTuteur($tut);
+                $em->persist($tut);
+            }
+
+//            actualisation du projet associé aux commentaires
+            foreach ( $com as $c )
+            {
+                $c->setProjet($newProjet);
+            }
+
+            // enregistrement des données dans la base
+            $em->persist($newProjet);
+//            suppression de l'ancien projet
+            $em->remove($projet);
+
             //rechargement du formulaire pour les commentaires
             return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
                     'form' => $form->createView(),
@@ -366,7 +427,7 @@ class StudentController extends Controller
                     'info' => array('Créer un compte rendu', 'Voir mes projets'),
                     'routing_statutCAShome' => '/etudiant',
                     'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project'),
-                    'projet' => $projet,
+                    'projet' => $newProjet,
                     'commentaires' => $commentaires,
                 ));
         }
