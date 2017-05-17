@@ -362,16 +362,16 @@ class StudentController extends Controller
             $newProjet = new Projet();
 
 //            récupération et affectation des données du projet dans le nouveau projet
-            $newProjet->setIntituleProjet($projet->getIntituleProjet());
-            $newProjet->setDescripProjet($projet->getDescripProjet());
-            $newProjet->setBilanProjet($projet->getBilanProjet());
+            $newProjet->setIntituleProjet($form['intituleProjet']);
+            $newProjet->setDescripProjet($form['descripProjet']);
+            $newProjet->setBilanProjet($form['bilanProjet']);
             $newProjet->setMarquantProjet($projet->getMarquantProjet());
             $newProjet->setMotsClesProjet($projet->getMotsClesProjet());
-            $newProjet->setClientProjet($projet->getClientProjet());
+            $newProjet->setClientProjet($form['clientProjet']);
             $newProjet->setValiderProjet($projet->getValiderProjet());
             $newProjet->setNomDpt($projet->getNomDpt());
             $newProjet->setImages($projet->getImages());
-            $newProjet->setDescriptionClientProjet($projet->getDescriptionClientProjet());
+            $newProjet->setDescriptionClientProjet($form['descriptionClientProjet']);
 
 //            actualisation du projet associé aux images du projet
             foreach ( $newProjet->getImages() as $oneImg )
