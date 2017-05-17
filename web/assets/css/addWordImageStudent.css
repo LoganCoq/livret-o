@@ -26,6 +26,11 @@
     margin-left: 2em;
     width: 60%;
 }
+#images > a > img
+{
+    max-height: 30%;
+    max-width: 30%;
+}
 
 #key_words_project
 {

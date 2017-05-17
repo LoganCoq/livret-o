@@ -55,7 +55,7 @@
                 <label class="control-label" for="project_btn_add_img">
                     Images
                 </label>
-                {% if images|length < 3 %}
+                {% if images|length < 2 %}
                     <a type="button" href="{{ path('iuto_livret_add_img', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
                         {# icone #}
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
