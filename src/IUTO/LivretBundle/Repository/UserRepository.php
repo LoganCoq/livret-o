@@ -152,7 +152,9 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
                 $role = $user->getRoles();
                 $type = gettype($role);
                 if ( $type == "string"){
-                    $user->setRoles(array($role));
+                    $newRoles = array();
+                    array_push($newRoles, $role);
+                    $user->setRoles($newRoles);
                 } else {
                     $user->setRoles($role);
                 }
