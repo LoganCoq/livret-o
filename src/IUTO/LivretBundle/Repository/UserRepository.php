@@ -99,7 +99,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
                 $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
                 $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
                 $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
-                $user->setRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
+                $user->addRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
                 $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
 
 //                On regarde si l'utilisateur est un étudiant
