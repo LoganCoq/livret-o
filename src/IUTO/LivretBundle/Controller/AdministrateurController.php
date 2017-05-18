@@ -15,14 +15,26 @@ class AdministrateurController extends Controller
 {
     public function adminHomeAction()
     {
+
         // creation de la vue home
         return $this->render('IUTOLivretBundle:Administrateur:adminHome.html.twig', array(
             'statutCAS' => 'administrateur',
             'info' => array('Gérer un utilisateur'),
             'options' => array('Gérer un utilisateur'),
-            'routing_info' => array('#', '#'),
-            'routing_options' => array('#', '#'),
+            'routing_info' => array('/admin/users', '#'),
+            'routing_options' => array('/admin/users', '#'),
             'routing_statutCAShome' => '/administrateur',
+        ));
+    }
+
+    public function adminChooseUser()
+    {
+
+        return $this->render('IUTOLivretBundle:Administrateur:adminChooseUser.html.twig', array(
+            'statusCAs' => 'administrateur',
+            'info' => array('Gérer un utilisateur'),
+            'routing_info' => array("/admin/users","#"),
+            'routing_statutCAShome' => 'administrateur',
         ));
     }
 }

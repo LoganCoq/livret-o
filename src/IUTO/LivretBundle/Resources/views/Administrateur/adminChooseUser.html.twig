@@ -1,0 +1,81 @@
+{# on entend base.html.twig pour avoir le menu sur la gauche #}
+{% extends 'base.html.twig' %}
+
+
+{# block titre pour changer le titre de l'onglet #}
+{% block title %}
+    Livret'O - Admin
+{% endblock %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+
+{% endblock %}
+
+{% block content %}
+
+    <div id="users">
+        <div id="chiefs">
+            <label class="user-type">Chefs de département</label>
+            <h2><small>ROLE_chief</small></h2>
+            <div class="role_users">
+                <select class="selectpicker" data-live-search="true">
+                    <option>Prénom Nom</option>
+                </select>
+            </div>
+        </div>
+        <div id="teachers">
+            <label class="user-type">Enseignants</label>
+            <h2><small>ROLE_teacher</small></h2>
+            <div class="role_users">
+                <select class="selectpicker" data-live-search="true">
+                    <option>Prénom Nom</option>
+                </select>
+            </div>
+        </div>
+        <div id="students">
+            <label class="user-type">Etudiants</label>
+            <h2><small>ROLE_student</small></h2>
+            <div class="role_users">
+                <select class="selectpicker" data-live-search="true">
+                    <option>Prénom Nom</option>
+                </select>
+            </div>
+        </div>
+        <div id="employees">
+            <label class="user-type">Communication / Administration / Personnel</label>
+            <h2><small>ROLE_employee</small></h2>
+            <div class="role_users">
+                <select class="selectpicker" data-live-search="true">
+                    <option>Prénom Nom</option>
+                </select>
+            </div>
+        </div>
+        <div id="admins">
+            <label class="user-type">Administrateurs</label>
+            <h2><small>ROLE_admin</small></h2>
+            <div class="role_users">
+                <select class="selectpicker" data-live-search="true">
+                    <option>Prénom Nom</option>
+                </select>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+    <script>
+        $('.selectpicker').selectpicker({
+            style: 'btn-info',
+        });
+    </script>
+
+{% endblock %}

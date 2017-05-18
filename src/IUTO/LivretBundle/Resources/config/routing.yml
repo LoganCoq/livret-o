@@ -336,4 +336,8 @@ iuto_livret_iutoProjet:
 
 iuto_livret_administrateur:
     path: /admin
-    defaults: { _controller: IUTOLivretBundle:Administrateur:adminHome}
+    defaults: { _controller: IUTOLivretBundle:Administrateur:adminHome }
+
+iuto_livret_admin_chooseUser:
+    path: /admin/users
+    defaults: { _controller: IUTOLivretBundle:Administrateur:adminChooseUser }
