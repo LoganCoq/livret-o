@@ -56,7 +56,7 @@ class ProjetCreateType extends AbstractType
                     $options;
                     return $er->createQueryBuilder('u')
                         ->select('u')
-                        ->where("u.role = 'Etudiant' or u.role = 'ROLE_student'");
+                        ->where("'ROLE_student' in u.roles");
                 }
             ))
             ->add('tuteurs', EntityType::class, array(
@@ -75,7 +75,7 @@ class ProjetCreateType extends AbstractType
                 'query_builder' => function (UserRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->select('u')
-                        ->where("u.role <> 'Etudiant' and u.role <> 'ROLE_student' and u.role <> 'ROLE_employee'");
+                        ->where("'ROLE_student' not IN (u.roles) and 'ROLE_employee' not IN (u.roles)");
                 }
             ))
             ->add('submit', SubmitType::class, array(
