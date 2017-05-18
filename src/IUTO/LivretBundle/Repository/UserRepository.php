@@ -145,15 +145,17 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
 
             } else {
 //                Actualisation des informations sur l'utilisateur
-                //                Affectation des valeurs récupérée dans ldap à l'utilisateur
+//                Affectation des valeurs récupérée dans ldap à l'utilisateur
                 $user->setPrenomUser($infosPersonne->getAttribute("givenName")[0]);
                 $user->setNomUser($infosPersonne->getAttribute("sn")[0]);
                 $user->setMailUser($infosPersonne->getAttribute("mail")[0]);
-                $user->addRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
+                $user->setRoles($user->getRoles());
+                if ( !$user->getRoles()->contains("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]))
+                {
+                    $user->addRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
+                }
                 $user->setIdUniv($infosPersonne->getAttribute("uid")[0]);
 
-//                On regarde si l'utilisateur est un étudiant
-//                Si c'est le cas, on va lui ajouter une formation
             }
 //            Enregistrement de l'utilisateur dans la base
             $em->persist($user);

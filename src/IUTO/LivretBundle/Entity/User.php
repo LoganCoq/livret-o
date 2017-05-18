@@ -91,6 +91,20 @@ class User implements UserInterface
         return $this->roles;
     }
 
+    /**
+     * Set role
+     *
+     * @param \Doctrine\Common\Collections\ArrayCollection $newRoles
+     *
+     * @return User
+     */
+    public function setRoles($newRoles)
+    {
+        $this->roles = $newRoles;
+
+        return $this;
+    }
+
     public function getPassword()
     {
         return "";
@@ -213,20 +227,6 @@ class User implements UserInterface
     public function addRole($role)
     {
         $this->roles[] = $role;
-
-        return $this;
-    }
-
-    /**
-     * Set role
-     *
-     * @param \Doctrine\Common\Collections\ArrayCollection $newRoles
-     *
-     * @return User
-     */
-    public function setRole($newRoles)
-    {
-        $this->roles = $newRoles;
 
         return $this;
     }
