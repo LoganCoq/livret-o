@@ -46,8 +46,8 @@ class User implements UserInterface
     private $mailUser;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     * @ORM\Column(name="roles", type="string", length=255)
+     * @var array
+     * @ORM\Column(name="roles", type="array")
      */
     private $roles;
 
@@ -83,7 +83,6 @@ class User implements UserInterface
         $this->formations = new ArrayCollection();
         $this->projetFaits = new ArrayCollection();
         $this->projetSuivis = new ArrayCollection();
-        $this->roles = new ArrayCollection();
     }
 
     public function getRoles()
@@ -94,14 +93,17 @@ class User implements UserInterface
     /**
      * Set role
      *
-     * @param \Doctrine\Common\Collections\ArrayCollection $newRoles
+     * @param array $newRoles
      *
      * @return User
      */
     public function setRoles($newRoles)
     {
-        $this->roles = $newRoles;
-
+        $this->roles = array();
+	foreach ($newRoles as $cur)
+	{
+	    $this->addRole($cur);
+	}
         return $this;
     }
 
