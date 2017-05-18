@@ -73,6 +73,7 @@ class ProjetCompleteType extends AbstractType
             ->add('tuteurs', EntityType::class, array(
                 'class' => User::class,
                 'label' => 'Tuteurs',
+                'required' => false,
                 'choice_label' => function (User $personnel) {
                     return $personnel->getNomUser() . ' ' . $personnel->getPrenomUser();
                 },
@@ -102,6 +103,8 @@ class ProjetCompleteType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'IUTO\LivretBundle\Entity\Projet',
             'allow_extra_fields' => true,
+            'etudiants' => array(),
+            'tuteurs' => array(),
         ));
     }
 

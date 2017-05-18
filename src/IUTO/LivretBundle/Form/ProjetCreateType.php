@@ -57,6 +57,7 @@ class ProjetCreateType extends AbstractType
             ->add('tuteurs', EntityType::class, array(
                 'class' => User::class,
                 'label' => 'Tuteurs',
+		'required' => false,
                 'choice_label' => function (User $personnel) {
                     return $personnel->getNomUser() . ' ' . $personnel->getPrenomUser();
                 },
