@@ -43,18 +43,13 @@ class ProjetModifType extends AbstractType
                 return $etudiant->getNomUser() . ' ' . $etudiant->getPrenomUser();
             },
             'multiple' => true,
+            'choices' => $options['etudiants'],
             'attr' => [
                 'class' => 'selectpicker',
                 'data-live-search' => true,
                 'data-width' => 'auto',
                 'id' => 'livreto_project_students',
             ],
-            'query_builder' => function (UserRepository $er) use ($options) {
-                $options;
-                return $er->createQueryBuilder('u')
-                    ->select('u')
-                    ->where("u.role = 'Etudiant' or u.role = 'ROLE_student'");
-            }
         ))
         ->add('tuteurs', EntityType::class, array(
             'class' => User::class,
@@ -62,17 +57,13 @@ class ProjetModifType extends AbstractType
                 return $personnel->getNomUser() . ' ' . $personnel->getPrenomUser();
             },
             'multiple' => true,
+            'choices' => $options['tuteurs'],
             'attr' => [
                 'class' => 'selectpicker',
                 'data-live-search' => true,
                 'data-width' => 'auto',
                 'id' => 'livreto_project_tuteurs',
             ],
-            'query_builder' => function (UserRepository $er) {
-                return $er->createQueryBuilder('u')
-                    ->select('u')
-                    ->where("u.role <> 'Etudiant' and u.role <> 'ROLE_student' and u.role <> 'ROLE_employee'");
-            }
         ))
             ->add('submit', SubmitType::class, array(
                 'label' => 'Suivant',
@@ -95,7 +86,9 @@ class ProjetModifType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'IUTO\LivretBundle\Entity\Projet'
+            'data_class' => 'IUTO\LivretBundle\Entity\Projet',
+            'etudiants' => array(),
+            'tuteurs' => array(),
         ));
     }
 

@@ -45,7 +45,7 @@ class ProjetCreateType extends AbstractType
                 'choice_label' => function (User $etudiant) {
                     return $etudiant->getNomUser() . ' ' . $etudiant->getPrenomUser();
                 },
-		'choices' => $options['etudiants'],
+		        'choices' => $options['etudiants'],
                 'multiple' => true,
                 'attr' => [
                     'class' => 'selectpicker',
@@ -61,7 +61,7 @@ class ProjetCreateType extends AbstractType
                     return $personnel->getNomUser() . ' ' . $personnel->getPrenomUser();
                 },
                 'multiple' => true,
-		'choices' => $options['tuteurs'],
+		        'choices' => $options['tuteurs'],
                 'attr' => [
                     'class' => 'selectpicker',
                     'data-live-search' => true,
