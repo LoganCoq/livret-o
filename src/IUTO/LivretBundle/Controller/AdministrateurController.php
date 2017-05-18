@@ -61,7 +61,7 @@ class AdministrateurController extends Controller
         }
 
         return $this->render('IUTOLivretBundle:Administrateur:adminChooseUser.html.twig', array(
-            'statusCAS' => 'administrateur',
+            'statutCAS' => 'administrateur',
             'info' => array('Gérer un utilisateur'),
             'routing_info' => array("/admin/users","#"),
             'routing_statutCAShome' => 'administrateur',
