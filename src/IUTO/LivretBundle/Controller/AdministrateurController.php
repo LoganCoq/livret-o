@@ -46,7 +46,7 @@ class AdministrateurController extends Controller
             {
                 if ( $role == "ROLE_chief"){
                     array_push($chiefs, $curUser);
-                } elseif ( $role == "ROLE_teacher" ) {
+                } elseif ( $role == "ROLE_faculty" ) {
                     array_push($teachers, $curUser);
                 } elseif ( $role == "ROLE_student") {
                     array_push($students, $curUser);
