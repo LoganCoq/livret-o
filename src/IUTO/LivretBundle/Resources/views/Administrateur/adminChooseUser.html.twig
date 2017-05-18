@@ -24,7 +24,9 @@
             <h2><small>ROLE_chief</small></h2>
             <div class="role_users">
                 <select class="selectpicker" data-live-search="true">
-                    <option>Prénom Nom</option>
+                    {% for chief in chiefs %}
+                        <option>{{ chief.prenomUser }} {{ chief.nomUser }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
@@ -33,7 +35,9 @@
             <h2><small>ROLE_teacher</small></h2>
             <div class="role_users">
                 <select class="selectpicker" data-live-search="true">
-                    <option>Prénom Nom</option>
+                    {% for teacher in teachers %}
+                        <option>{{ teacher.prenomUser }} {{ teacher.nomUser }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
@@ -42,7 +46,9 @@
             <h2><small>ROLE_student</small></h2>
             <div class="role_users">
                 <select class="selectpicker" data-live-search="true">
-                    <option>Prénom Nom</option>
+                    {% for student in students %}
+                        <option>{{ student.prenomUser }} {{ student.nomUser }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
@@ -51,7 +57,9 @@
             <h2><small>ROLE_employee</small></h2>
             <div class="role_users">
                 <select class="selectpicker" data-live-search="true">
-                    <option>Prénom Nom</option>
+                    {% for employee in employees %}
+                        <option>{{ employee.prenomUser }} {{ employee.nomUser }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
@@ -60,7 +68,20 @@
             <h2><small>ROLE_admin</small></h2>
             <div class="role_users">
                 <select class="selectpicker" data-live-search="true">
-                    <option>Prénom Nom</option>
+                    {% for admin in admins %}
+                        <option>{{ admin.prenomUser }} {{ admin.nomUser }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div id="others">
+            <label class="user-type">Autres (affiliés, etc)</label>
+            <h2><small>ROLE_affiliate</small></h2>
+            <div class="role_users">
+                <select class="selectpicker" data-live-search="true">
+                    {% for other in others %}
+                        <option>{{ other.prenomUser }} {{ other.nomUser }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
