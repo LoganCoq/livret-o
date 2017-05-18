@@ -65,9 +65,19 @@ class StudentController extends Controller
         // remplissage des données de bases du projet
         $projet->setNomDpt($departement);
         $projet->addEtudiant($etudiant);
-
+	
+	$allUsers = $em->getRepository(User::class)->findAll();
+	$etudiants = array();
+	$tuteurs = array();
+	foreach ( $allUsers as $curUser ){
+	    if ( in_array('ROLE_student',$curUser->getRoles())){
+		array_push($etudiants, $curUser);
+	    } elseif ( in_array('ROLE_faculty',$curUser->getRoles())){
+		array_push($tuteurs, $curUser);
+	    }
+	}
         // création du formulaire de création d'un projet
-        $form = $this->createForm(ProjetCreateType::class, $projet, ['annee' => $formation->getYearDebut()]);
+        $form = $this->createForm(ProjetCreateType::class, $projet, ['annee' => $formation->getYearDebut(), 'etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
         $form->handleRequest($request);
 
         //verifie si le formulaire est valide ou non et si il est envoyé
