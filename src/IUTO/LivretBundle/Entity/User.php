@@ -46,10 +46,10 @@ class User implements UserInterface
     private $mailUser;
 
     /**
-     * @var string
-     * @ORM\Column(name="role", type="string", length=255)
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @ORM\Column(name="roles", type="string", length=255)
      */
-    private $role;
+    private $roles;
 
     /**
      * @var string
@@ -87,7 +87,7 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return array($this->role);
+        return $this->roles;
     }
 
     public function getPassword()
@@ -199,21 +199,45 @@ class User implements UserInterface
      */
     public function getRole()
     {
-        return $this->role;
+        return $this->roles[0];
     }
 
     /**
-     * Set role
+     * Add role
      *
      * @param string $role
      *
      * @return User
      */
-    public function setRole($role)
+    public function addRole($role)
     {
-        $this->role = $role;
+        $this->roles[] = $role;
 
         return $this;
+    }
+
+    /**
+     * Set role
+     *
+     * @param \Doctrine\Common\Collections\ArrayCollection $newRoles
+     *
+     * @return User
+     */
+    public function setRole($newRoles)
+    {
+        $this->roles = $newRoles;
+
+        return $this;
+    }
+
+    /**
+     * Remove role
+     *
+     * @param string $role
+     */
+    public function removeRole($role)
+    {
+        $this->roles->removeElement($role);
     }
 
     /**
