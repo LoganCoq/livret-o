@@ -27,7 +27,7 @@ class AdministrateurController extends Controller
         ));
     }
 
-    public function adminChooseUser()
+    public function adminChooseUserAction()
     {
 
         return $this->render('IUTOLivretBundle:Administrateur:adminChooseUser.html.twig', array(
