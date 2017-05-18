@@ -104,7 +104,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
 
 //                On regarde si l'utilisateur est un étudiant
 //                Si c'est le cas, on va lui ajouter une formation
-                if ($user->getRoles()->contains("ROLE_student"))
+                if (in_array("ROLE_student",$user->getRoles()))
                 {
                     $codeFormation = $infosPersonne->getAttribute("unrcEtape")[0];
 
@@ -158,7 +158,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
                 } else {
                     $user->setRoles($role);
                 }
-                if ( !$user->getRoles()->contains("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]))
+                if ( !in_array("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0],$user->getRoles()))
                 {
                     $user->addRole("ROLE_" . $infosPersonne->getAttribute("eduPersonPrimaryAffiliation")[0]);
                 }
