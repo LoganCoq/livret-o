@@ -66,16 +66,16 @@ class StudentController extends Controller
         $projet->setNomDpt($departement);
         $projet->addEtudiant($etudiant);
 	
-	$allUsers = $em->getRepository(User::class)->findAll();
-	$etudiants = array();
-	$tuteurs = array();
-	foreach ( $allUsers as $curUser ){
-	    if ( in_array('ROLE_student',$curUser->getRoles())){
-		array_push($etudiants, $curUser);
-	    } elseif ( in_array('ROLE_faculty',$curUser->getRoles())){
-		array_push($tuteurs, $curUser);
+	    $allUsers = $em->getRepository(User::class)->findAll();
+	    $etudiants = array();
+	    $tuteurs = array();
+	    foreach ( $allUsers as $curUser ){
+	        if ( in_array('ROLE_student',$curUser->getRoles())){
+		        array_push($etudiants, $curUser);
+	        } elseif ( in_array('ROLE_faculty',$curUser->getRoles())){
+		        array_push($tuteurs, $curUser);
+	        }
 	    }
-	}
         // création du formulaire de création d'un projet
         $form = $this->createForm(ProjetCreateType::class, $projet, ['annee' => $formation->getYearDebut(), 'etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
         $form->handleRequest($request);
@@ -231,8 +231,19 @@ class StudentController extends Controller
         $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
+        $allUsers = $em->getRepository(User::class)->findAll();
+        $etudiants = array();
+        $tuteurs = array();
+        foreach ( $allUsers as $curUser ){
+            if ( in_array('ROLE_student',$curUser->getRoles())){
+                array_push($etudiants, $curUser);
+            } elseif ( in_array('ROLE_faculty',$curUser->getRoles())){
+                array_push($tuteurs, $curUser);
+            }
+        }
+
         //creation du formulaire pour completer un projet
-        $form = $this->createForm(ProjetCompleteType::class, $projet);
+        $form = $this->createForm(ProjetCompleteType::class, $projet, ['etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
 
         // insertion des dates en string
         $form['dateDebut']->setData($projet->getDateDebut()->format('d/m/Y'));

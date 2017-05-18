@@ -62,18 +62,13 @@ class ProjetCompleteType extends AbstractType
                     return $etudiant->getNomUser() . ' ' . $etudiant->getPrenomUser();
                 },
                 'multiple' => true,
+                'choices' => $options['etudiants'],
                 'attr' => [
                     'class' => 'selectpicker',
                     'data-live-search' => true,
                     'data-width' => 'auto',
                     'id' => 'livreto_project_studs',
                 ],
-                'query_builder' => function (UserRepository $er) use ($options) {
-                    $options;
-                    return $er->createQueryBuilder('u')
-                        ->select('u')
-                        ->where("u.role = 'Etudiant' or u.role = 'ROLE_student'");
-                }
             ))
             ->add('tuteurs', EntityType::class, array(
                 'class' => User::class,
@@ -82,17 +77,13 @@ class ProjetCompleteType extends AbstractType
                     return $personnel->getNomUser() . ' ' . $personnel->getPrenomUser();
                 },
                 'multiple' => true,
+                'choices' => $options['tuteurs'],
                 'attr' => [
                     'class' => 'selectpicker',
                     'data-live-search' => true,
                     'data-width' => 'auto',
                     'id' => 'livreto_project_tuts',
                 ],
-                'query_builder' => function (UserRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->select('u')
-                        ->where("u.role <> 'Etudiant' and u.role <> 'ROLE_student' and u.role <> 'ROLE_employee'");
-                }
             ))
             ->add('submit', SubmitType::class, array(
                 'label' => 'Enregistrer modifications et continuer',
