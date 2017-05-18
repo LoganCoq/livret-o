@@ -80,9 +80,10 @@ class User implements UserInterface
      */
     public function __construct()
     {
-        $this->formations = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->projetFaits = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->projetSuivis = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->formations = new ArrayCollection();
+        $this->projetFaits = new ArrayCollection();
+        $this->projetSuivis = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     public function getRoles()
