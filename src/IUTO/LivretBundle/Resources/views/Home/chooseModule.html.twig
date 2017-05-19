@@ -5,14 +5,15 @@ Livret'O - Modules
 {% endblock %}
 
 {% block content %}
-{% if app.session.flashBag.has('success') %}
-<div class="alert alert-success">
-    {% for msg in app.session.flashBag.get('success') %}
-    {{ msg }}
-    {% endfor %}
-</div>
-{% endif %}
+
 <div class="div_home">
+
+    <h1 class="h1_home">
+        {# affichage du status CAS de l'utilisateur (ici etudiant)#}
+        {{ statutCAS|capitalize }} <br/>
+        {# affichage des informations de base sur l'utilisateur (nom prénom) #}
+        <small>Connecté(e) en tant que : {{ user.prenomUser }} {{ user.nomUser }}</small>
+    </h1>
 
     {% if ROLE_student %}
         <a href="{{ path('iuto_livret_studenthomepage') }}" class="buttonhome">Etudiant</a>
@@ -21,13 +22,13 @@ Livret'O - Modules
         <a href="{{ path('iuto_livret_teacherhomepage') }}" class="buttonhome">Professeur</a>
     {% endif %}
     {% if ROLE_employee %}
-        <a href="{{ path('iuto_livret_communicationhomepage') }}" class="buttonhome">Communcation</a>
+        <a href="{{ path('iuto_livret_communicationhomepage') }}" class="buttonhome">Communication</a>
     {% endif %}
     {% if ROLE_chief %}
         <a href="{{ path('iuto_livret_chiefhomepage',{'id':1}) }}" class="buttonhome">Chef de département</a>
     {% endif %}
     {% if ROLE_admin %}
-        <a href="{{ path('iuto_livret_administrateur') }}" class="buttonhome">Admin</a>
+        <a href="{{ path('iuto_livret_administrateur') }}" class="buttonhome">Administrateur</a>
     {% endif %}
     <a href="{{ path('iuto_livret_public') }}" class="buttonhome">Public</a>
 

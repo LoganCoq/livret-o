@@ -31,8 +31,8 @@ class HomeController extends Controller
         $role_chie = in_array('ROLE_chief', $roles);
 
         return $this->render('IUTOLivretBundle:Home:chooseModule.html.twig', array(
-            'statutCAS' => 'Test',
-            'info' => array('Rien'),
+            'statutCAS' => 'modules',
+            'info' => array(),
             'routing_info' => array('#'),
             'routing_statutCAShome' => '/modules',
             'ROLE_student' => $role_stud,
@@ -40,6 +40,7 @@ class HomeController extends Controller
             'ROLE_faculty' => $role_facu,
             'ROLE_admin' => $role_admi,
             'ROLE_chief' => $role_chie,
+            'user' => $user,
         ));
     }
 }
