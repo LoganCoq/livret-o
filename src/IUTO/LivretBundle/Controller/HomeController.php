@@ -32,8 +32,8 @@ class HomeController extends Controller
 
         return $this->render('IUTOLivretBundle:Home:chooseModule.html.twig', array(
             'statutCAS' => 'modules',
-            'info' => array(),
-            'routing_info' => array('#'),
+            'info' => array('Choix module'),
+            'routing_info' => array('/modules'),
             'routing_statutCAShome' => '/modules',
             'ROLE_student' => $role_stud,
             'ROLE_employee' => $role_empl,
