@@ -143,7 +143,11 @@ iuto_livret_teacher_deleteProjet:
 
 iuto_livret_teacher_deleteImage:
     path: /professeur/teacher/delete/image/{image}
-    defaults: { _controller: IUTOLivretBundle:Teacher:deleteImage}
+    defaults: { _controller: IUTOLivretBundle:Teacher:deleteImage }
+
+iuto_livret_teacher_choose_project:
+    path: /professeur/projets/choose
+    defaults: { _controller: IUTOLivretBundle:Teacher:chooseProject }
 
 #==========================================================#
 #==========================================================#

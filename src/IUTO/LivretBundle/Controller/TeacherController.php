@@ -41,8 +41,8 @@ class TeacherController extends Controller
             'options' => array('Voir les demandes de correction de projets', 'Voir les projets validés', 'Voir tous les projets'),
             'routing_statutCAShome' => '/professeur',
             'professeur' => $professeur,
-            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
-            'routing_options' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
+            'routing_options' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
             '#'));
     }
 
@@ -75,7 +75,7 @@ class TeacherController extends Controller
             'projets' => $projetsValides,
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
         ));
 
     }
@@ -231,7 +231,7 @@ class TeacherController extends Controller
                     'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
                     'routing_statutCAShome' => '/professeur',
                     'commentaires' => $commentaires,
-                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
                 ));
         }
 
@@ -243,7 +243,7 @@ class TeacherController extends Controller
                 'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
                 'routing_statutCAShome' => '/professeur',
                 'commentaires' => $commentaires,
-                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
             ));
     }
 
@@ -335,7 +335,7 @@ class TeacherController extends Controller
                     'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
                     'routing_statutCAShome' => '/professeur',
                     'commentaires' => $commentaires,
-                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
                     'projet' => $projet,
                     'image' => $images,
                 ));
@@ -349,7 +349,7 @@ class TeacherController extends Controller
                 'commentaires' => $commentaires,
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
                 'projet' => $projet,
                 'images' => $images,
             ));
@@ -445,7 +445,7 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
                 'projet' => $projet,
                 'motsCle' => $motsCles,
                 'images' => $images,
@@ -470,7 +470,7 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
                 'projet' => $projet,
                 'motsCle' => $motsCles,
                 'images' => $images,
@@ -484,7 +484,7 @@ class TeacherController extends Controller
             'statutCAS' => 'professeur',
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
             'projet' => $projet,
             'motsCle' => $motsCles,
             'images' => $images,
@@ -596,7 +596,7 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
                 'projetO' => $projet,
                 )
         );
@@ -641,7 +641,7 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
                 'projet' => $projet,
             )
         );
@@ -674,7 +674,7 @@ class TeacherController extends Controller
             'projets' => $projetsValides,
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
             'pagePrec' => '/professeur',
         ));
 
@@ -724,7 +724,7 @@ class TeacherController extends Controller
             'statutCAS' => 'professeur',
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
         ));
     }
 
@@ -759,7 +759,7 @@ class TeacherController extends Controller
             'statutCAS' => 'professeur',
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
             'projet' => $projet,
         ));
     }
@@ -799,9 +799,44 @@ class TeacherController extends Controller
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '#'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
                 'projet' => $projet,
             )
+        );
+    }
+
+    public function chooseProjectAction()
+    {
+        //récupération des informations sur l'utilisateur
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = phpCAS::getUser();
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+
+        // récuperation des projets d'un étudiant
+        $projets = $em->getRepository(Projet::class)->findAll();
+        $projetsSuivis = array();
+        $projetsFinis = array();
+
+        // récupération des projets fait et non fait de l'étudiant
+        foreach ( $projets as $proj ){
+            if ( $proj->getValiderProjet() == 1){
+                // ajout du projet à la liste si il est valider
+                $projetsFinis[] = $proj;
+            }
+            else{
+                // ajout du projet à la liste si il est en cours de suivi
+                $projetsSuivis[] = $proj;
+            }
+        }
+
+        // affichage de la page de selection du projet à modifier ou prévisualiser
+        return $this->render('IUTOLivretBundle:Professeur:chooseProject.html.twig', array(
+                'statutCAS' => 'professeur',
+                'routing_statutCAShome' => '/professeur',
+                'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
+                'projetsFinis' => $projetsFinis,
+                'projetsSuivis' => $projetsSuivis,)
         );
     }
 }

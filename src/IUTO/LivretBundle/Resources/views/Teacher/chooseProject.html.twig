@@ -1,0 +1,92 @@
+{# on entend base.html.twig pour avoir le menu sur la gauche #}
+{% extends 'base.html.twig' %}
+
+
+{# block titre pour changer le titre de l'onglet #}
+{% block title %}
+    Livret'O - Mes projets
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link type="text/css" rel="stylesheet" href="{{ asset("assets/css/chooseProjectStudent.css") }}"/>
+
+{% endblock %}
+
+{% block content %}
+
+    {# bouton de retour à l'accueil #}
+    <a type="button" href="{{ path('iuto_livret_teacherhomepage') }}" class="btn btn-primary" id="livret_btn_goto_home">
+        {# icone #}
+        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+        Accueil
+    </a>
+
+    {# section d'affichage des projet en cours et des projet validés #}
+    <div id="all_projects">
+        <h1>Projets :</h1>
+        {#section pour les projet en cours de réalisation#}
+        <div id="choose_project_enCours">
+            <h2>Projets en cours</h2>
+            {% if projetsSuivis|length > 0 %}
+                <ul class="list-group">
+                    {# parcours des projets en cours #}
+                    {% for projet in projetsSuivis %}
+                        <li class="list-group-item">
+                            <p id="choose_project_name">{{ projet.intituleProjet }}</p>
+                            <a href="{{ path('iuto_livret_correctionProf2', {'projet': projet.id}) }}" class="btn btn-warning" id="livret_modif_btn">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                Modifier le projet
+                            </a>
+                            <a href="{{ path('iuto_livret_pdfgenerator', {'id' : projet.id}) }}" class="btn btn-success" id="livreto_see_btn">
+                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                Aperçu du projet
+                            </a>
+                            <div class="dropdown">
+                                <a class="btn dropdown-toggle" type="button" data-toggle="dropdown" id="btn_drop_{{ projet.id }}" aria-haspopup="true" aria-expanded="true">
+                                    <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="btn_drop_{{ projet.id }}">
+                                    <li>
+                                        <a href="{{ path('iuto_livret_teacher_deleteProject', {'projet': projet.id}) }}" id="delete_btn">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer le projet
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Il n'y a pas de projets en cours.</p>
+            {% endif %}
+        </div>
+        {#section pour les projets terminés#}
+        <div id="choose_project_fini">
+            <h2>Projets finis</h2>
+            {#vérification de l'existance de projets validés #}
+            {% if projetsFinis|length > 0 %}
+                <ul class="list-group">
+                    {# parcours des projets finis et validés #}
+                    {% for projet in projetsFinis %}
+                        <li class="list-group-item">
+                            <p id="choose_project_name">{{ projet.intituleProjet }}</p>
+                            <a href="{{ path('iuto_livret_pdfgenerator', {'id' : projet.id}) }}" class="btn btn-success" id="livreto_see_finished_btn">
+                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                Aperçu du projet
+                            </a>
+                            <a href="{{ path('iuto_livret_download', {'id': projet.id}) }}" class="btn btn-default download_confirm" id="livreto_download_finished">
+                                {#icone telechargement#}
+                                <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                                Enregistrer sur l'ordinateur
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Il n'y a pas de projets finis.</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
