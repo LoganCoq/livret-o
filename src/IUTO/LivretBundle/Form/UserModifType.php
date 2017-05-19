@@ -36,6 +36,8 @@ class UserModifType extends AbstractType
                     'ROLE_student' => 'ROLE_student',
                     'ROLE_faculty' => 'ROLE_faculty',
                     'ROLE_admin' => 'ROLE_admin',
+                    'ROLE_employee' => 'ROLE_employee',
+                    'ROLE_affiliate' => 'ROLE_affiliate',
                 ),
                 'multiple' => true,
             ))
