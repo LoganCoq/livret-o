@@ -40,7 +40,7 @@ class ConnexionController extends Controller
                 'ROLE_faculty' => $role_facu,
                 'ROLE_admin' => $role_admi,
                 'ROLE_chief' => $role_chie,
-            ))
+            ));
         } else {
             //        Vérificate du role de l'utilisateur et redirection suivant celui-ci
             if (strcmp($roles[0], "ROLE_student") == 0)
