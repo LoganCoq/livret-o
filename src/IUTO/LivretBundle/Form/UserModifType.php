@@ -38,7 +38,6 @@ class UserModifType extends AbstractType
                     'ROLE_admin' => 'ROLE_admin',
                 ),
                 'multiple' => true,
-                'place'
             ))
             ->add('submit', SubmitType::class, array(
                 'label' => 'Valider les modifications',
