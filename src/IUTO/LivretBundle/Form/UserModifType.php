@@ -34,7 +34,7 @@ class UserModifType extends AbstractType
                 'choices' => array(
                     'ROLE_chief' => "ROLE_chief",
                     'ROLE_student' => 'ROLE_student',
-                    'ROLE_teacher' => 'ROLE_teacher',
+                    'ROLE_faculty' => 'ROLE_faculty',
                     'ROLE_admin' => 'ROLE_admin',
                 ),
                 'multiple' => true,
