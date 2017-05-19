@@ -24,3 +24,5 @@ src/IUTO/LivretBundle/.DS_Store
 src/IUTO/LivretBundle/Controller/.DS_Store
 /var/bootstrap.php.cache
 #/web/images
+/app/config/parameters.yml
+/app/config/parameters.yml.dist
