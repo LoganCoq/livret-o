@@ -26,7 +26,7 @@ class AdministrateurController extends Controller
             'options' => array('Gérer un utilisateur'),
             'routing_info' => array('/admin/users', '#'),
             'routing_options' => array('/admin/users', '#'),
-            'routing_statutCAShome' => '/administrateur',
+            'routing_statutCAShome' => '/admin',
         ));
     }
 
@@ -68,7 +68,7 @@ class AdministrateurController extends Controller
             'statutCAS' => 'administrateur',
             'info' => array('Gérer un utilisateur'),
             'routing_info' => array("/admin/users","#"),
-            'routing_statutCAShome' => 'administrateur',
+            'routing_statutCAShome' => '/admin',
             'chiefs' => $chiefs,
             'teachers' => $teachers,
             'students' => $students,
@@ -103,7 +103,7 @@ class AdministrateurController extends Controller
             'statutCAS' => 'administrateur',
             'info' => array('Gérer un utilisateur'),
             'routing_info' => array("/admin/users","#"),
-            'routing_statutCAShome' => 'administrateur',
+            'routing_statutCAShome' => '/admin',
             'user' => $user,
             'form' => $form->createView(),
         ));
