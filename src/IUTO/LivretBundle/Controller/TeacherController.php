@@ -830,7 +830,7 @@ class TeacherController extends Controller
         }
 
         // affichage de la page de selection du projet à modifier ou prévisualiser
-        return $this->render('IUTOLivretBundle:Professeur:chooseProject.html.twig', array(
+        return $this->render('IUTOLivretBundle:Teacher:chooseProject.html.twig', array(
                 'statutCAS' => 'professeur',
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
