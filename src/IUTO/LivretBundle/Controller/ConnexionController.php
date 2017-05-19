@@ -24,24 +24,41 @@ class ConnexionController extends Controller
 //	    Récupération de l'utilisateur grâce a son numéro universitaire
 	    $user = $em->getRepository(User::class)->findOneByIdUniv($numPersonne);
 //        Récupération du role de l'utilisateur pour effectuer la redirection
-        $role = $user->getRole();
+        $roles = $user->getRoles();
 
-//        Vérificate du role de l'utilisateur et redirection suivant celui-ci
-	    if (strcmp($role, "ROLE_student") == 0)
+        if (count($roles) > 1)
         {
-            return $this->redirectToRoute("iuto_livret_studenthomepage", array());
-        }
-        else if (strcmp($role, "ROLE_employee") == 0)
-        {
-            return $this->redirectToRoute("iuto_livret_communicationhomepage", array());
-        }
-        else if (strcmp($role, "ROLE_faculty") == 0)
-        {
-            return $this->redirectToRoute("iuto_livret_teacherhomepage", array());
-        }
-        else if (strcmp($role, "ROLE_affiliate") == 0)
-        {
-            return $this->redirectToRoute("iuto_livret_choose_module", array());
+            $role_stud = in_array('ROLE_student', $roles);
+            $role_empl = in_array('ROLE_employee', $roles);
+            $role_facu = in_array('ROLE_faculty', $roles);
+            $role_admi = in_array('ROLE_admin', $roles);
+            $role_chie = in_array('ROLE_chief', $roles);
+
+            return $this->redirectToRoute("iuto_livret_choose_module", array(
+                'ROLE_student' => $role_stud,
+                'ROLE_employee' => $role_empl,
+                'ROLE_faculty' => $role_facu,
+                'ROLE_admin' => $role_admi,
+                'ROLE_chief' => $role_chie,
+            ))
+        } else {
+            //        Vérificate du role de l'utilisateur et redirection suivant celui-ci
+            if (strcmp($roles[0], "ROLE_student") == 0)
+            {
+                return $this->redirectToRoute("iuto_livret_studenthomepage", array());
+            }
+            else if (strcmp($roles[0], "ROLE_employee") == 0)
+            {
+                return $this->redirectToRoute("iuto_livret_communicationhomepage", array());
+            }
+            else if (strcmp($roles[0], "ROLE_faculty") == 0)
+            {
+                return $this->redirectToRoute("iuto_livret_teacherhomepage", array());
+            }
+            else if (strcmp($roles[0], "ROLE_affiliate") == 0)
+            {
+                return $this->redirectToRoute("iuto_livret_choose_module", array());
+            }
         }
         return $this->redirectToRoute("iuto_livret_public");
     }

@@ -14,12 +14,22 @@ Livret'O - Modules
 {% endif %}
 <div class="div_home">
 
-    <a href="{{ path('iuto_livret_studenthomepage') }}" class="buttonhome">Etudiant</a>
-    <a href="{{ path('iuto_livret_teacherhomepage') }}" class="buttonhome">Professeur</a>
-    <a href="{{ path('iuto_livret_communicationhomepage') }}" class="buttonhome">Communcation</a>
-    <a href="{{ path('iuto_livret_chiefhomepage',{'id':1}) }}" class="buttonhome">Chef de département</a>
+    {% if ROLE_student %}
+        <a href="{{ path('iuto_livret_studenthomepage') }}" class="buttonhome">Etudiant</a>
+    {% endif %}
+    {% if ROLE_faculty %}
+        <a href="{{ path('iuto_livret_teacherhomepage') }}" class="buttonhome">Professeur</a>
+    {% endif %}
+    {% if ROLE_employee %}
+        <a href="{{ path('iuto_livret_communicationhomepage') }}" class="buttonhome">Communcation</a>
+    {% endif %}
+    {% if ROLE_chief %}
+        <a href="{{ path('iuto_livret_chiefhomepage',{'id':1}) }}" class="buttonhome">Chef de département</a>
+    {% endif %}
+    {% if ROLE_admin %}
+        <a href="{{ path('iuto_livret_administrateur') }}" class="buttonhome">Admin</a>
+    {% endif %}
     <a href="{{ path('iuto_livret_public') }}" class="buttonhome">Public</a>
-    <a href="{{ path('iuto_livret_administrateur') }}" class="buttonhome">Admin</a>
 
 </div>
 
