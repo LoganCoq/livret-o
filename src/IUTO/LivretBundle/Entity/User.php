@@ -107,6 +107,20 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * Add role
+     *
+     * @param string $role
+     *
+     * @return User
+     */
+    public function addRole($role)
+    {
+        $this->roles[] = $role;
+
+        return $this;
+    }
+
     public function getPassword()
     {
         return "";
@@ -220,27 +234,21 @@ class User implements UserInterface
     }
 
     /**
-     * Add role
-     *
-     * @param string $role
-     *
-     * @return User
-     */
-    public function addRole($role)
-    {
-        $this->roles[] = $role;
-
-        return $this;
-    }
-
-    /**
      * Remove role
      *
      * @param string $role
      */
     public function removeRole($role)
     {
-        $this->roles->removeElement($role);
+        $i = 0;
+
+        foreach ($this->roles as $cur)
+        {
+            if ($cur == $role)
+            {
+                unset($this->roles[$i]);
+            }
+        }
     }
 
     /**
