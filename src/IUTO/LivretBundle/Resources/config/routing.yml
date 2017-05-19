@@ -156,12 +156,12 @@ iuto_livret_teacher_choose_project:
 #==========================================================#
 #==========HOME============#
 iuto_livret_chiefhomepage:
-    path: /{id}/chef
+    path: /chef
     defaults: { _controller: IUTOLivretBundle:Chief:chiefhome }
 
 #==========PRESENTATION====#
 iuto_livret_chiefPresentation:
-    path: /{id}/chef/presentation
+    path: /chef/presentation
     defaults: { _controller: IUTOLivretBundle:Chief:chiefPresentation }
 
 #==========PRESENTATIONPDF===========#
@@ -171,27 +171,27 @@ iuto_livret_chiefEditoPrevisualiser:
 
 #==========LISTE====#
 iuto_livret_chiefliste:
-    path: /{id}/chef/liste
+    path: /chef/liste
     defaults: { _controller: IUTOLivretBundle:Chief:chiefliste }
 
 #==========CORRECTION1=====#
 iuto_livret_correctionChief1:
-    path: /{id}/correctionChief1
+    path: /chef/correctionChief1
     defaults: { _controller: IUTOLivretBundle:Chief:correctionChief1 }
 
 #==========CORRECTION2=====#
 iuto_livret_correctionChief2:
-    path: /{id}/{projet}/correctionChief2
+    path: /chef/{projet}/correctionChief2
     defaults: { _controller: IUTOLivretBundle:Chief:correctionChief2 }
 
 #==========CORRECTION3=====#
 iuto_livret_correctionChief3:
-    path: /{id}/{projet}/correctionChief3
+    path: /chef/{projet}/correctionChief3
     defaults: { _controller: IUTOLivretBundle:Chief:correctionChief3 }
 
 #==========CORRECTION4=====#
 iuto_livret_correctionChief4:
-    path: /{id}/{projet}/correctionChief4
+    path: /chef/{projet}/correctionChief4
     defaults: { _controller: IUTOLivretBundle:Chief:correctionChief4 }
 
 #==========================================================#
