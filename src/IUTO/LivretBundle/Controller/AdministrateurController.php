@@ -3,6 +3,7 @@
 namespace IUTO\LivretBundle\Controller;
 
 use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Form\UserModifType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetModifType;
@@ -16,6 +17,7 @@ class AdministrateurController extends Controller
 {
     public function adminHomeAction()
     {
+        $idUniv = \phpCAS::getUser();
 
         // creation de la vue home
         return $this->render('IUTOLivretBundle:Administrateur:adminHome.html.twig', array(
@@ -30,6 +32,8 @@ class AdministrateurController extends Controller
 
     public function adminChooseUserAction()
     {
+        $idUniv = \phpCAS::getUser();
+
         $repUser = $this->getDoctrine()->getRepository(User::class);
         $users = $repUser->findAll();
 
@@ -71,6 +75,37 @@ class AdministrateurController extends Controller
             'employees' => $employees,
             'admins' => $admins,
             'others' => $others,
+        ));
+    }
+
+    public function modifUserAction(Request $request, User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = \phpCAS::getUser();
+
+        $form = $this->createForm(UserModifType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em->persist($user);
+            $em->flush();
+
+            // affichage d'un message de confirmation que le projet à bien été créer
+            $request->getSession()->getFlashBag()->add('success', 'Utilisateur bien modifié.');
+
+            return $this->redirectToRoute('iuto_livret_admin_chooseUser', array(
+
+            ));
+        }
+
+        return $this->render('IUTOLivretBundle:adminManageUser.html.twig', array(
+            'statutCAS' => 'administrateur',
+            'info' => array('Gérer un utilisateur'),
+            'routing_info' => array("/admin/users","#"),
+            'routing_statutCAShome' => 'administrateur',
+            'user' => $user,
+            'form' => $form->createView(),
         ));
     }
 }
