@@ -97,6 +97,10 @@
         $('.selectpicker').selectpicker({
             style: 'btn-info',
         });
+
+        $('.selectpicker').on('changed.bs.select', function (e) {
+            location.href = e.newValue;
+        });
     </script>
 
 {% endblock %}
