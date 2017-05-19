@@ -348,4 +348,4 @@ iuto_livret_admin_chooseUser:
 
 iuto_livret_admin_modifUser:
     path: /admin/manage/user/{user}
-    defaults: { _controller: IUTOLivretBundle:Administrateur:modifUserAction }
+    defaults: { _controller: IUTOLivretBundle:Administrateur:modifUser }
