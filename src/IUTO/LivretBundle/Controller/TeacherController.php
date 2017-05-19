@@ -91,8 +91,19 @@ class TeacherController extends Controller
         $idUniv = phpCAS::getUser();
         $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
+        $allUsers = $em->getRepository(User::class)->findAll();
+        $etudiants = array();
+        $tuteurs = array();
+        foreach ( $allUsers as $curUser ){
+            if ( in_array('ROLE_student',$curUser->getRoles())){
+                array_push($etudiants, $curUser);
+            } elseif ( in_array('ROLE_faculty',$curUser->getRoles())){
+                array_push($tuteurs, $curUser);
+            }
+        }
+
 //        creation du formulaire de modification
-        $formModif = $this->createForm(ProjetModifType::class, $projet);
+        $formModif = $this->createForm(ProjetModifType::class, $projet, ['etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
 
         // insertion des dates en string
         $formModif['dateDebut']->setData($projet->getDateDebut()->format('d/m/Y'));
