@@ -23,9 +23,9 @@
             <label class="user-type">Chefs de département</label>
             <h2><small>ROLE_chief</small></h2>
             <div class="role_users">
-                <select class="selectpicker" data-live-search="true">
+                <select class="selectpicker" data-live-search="true" onchange="javascript:location.href = this.value">
                     {% for chief in chiefs %}
-                        <option href="{{ path('iuto_livret_admin_modifUser', {'user' : chief.id}) }}">{{ chief.prenomUser }} {{ chief.nomUser }}</option>
+                        <option value="{{ path('iuto_livret_admin_modifUser', {'user' : chief.id}) }}">{{ chief.prenomUser }} {{ chief.nomUser }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -34,9 +34,9 @@
             <label class="user-type">Enseignants</label>
             <h2><small>ROLE_faculty</small></h2>
             <div class="role_users">
-                <select class="selectpicker" data-live-search="true">
+                <select class="selectpicker" data-live-search="true" onchange="javascript:location.href = this.value">
                     {% for teacher in teachers %}
-                        <option href="{{ path('iuto_livret_admin_modifUser', {'user' : teacher.id}) }}">{{ teacher.prenomUser }} {{ teacher.nomUser }}</option>
+                        <option value="{{ path('iuto_livret_admin_modifUser', {'user' : teacher.id}) }}">{{ teacher.prenomUser }} {{ teacher.nomUser }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -45,9 +45,9 @@
             <label class="user-type">Etudiants</label>
             <h2><small>ROLE_student</small></h2>
             <div class="role_users">
-                <select class="selectpicker" data-live-search="true">
+                <select class="selectpicker" data-live-search="true" onchange="javascript:location.href = this.value">
                     {% for student in students %}
-                        <option href="{{ path('iuto_livret_admin_modifUser', {'user' : student.id}) }}">{{ student.prenomUser }} {{ student.nomUser }}</option>
+                        <option value="{{ path('iuto_livret_admin_modifUser', {'user' : student.id}) }}">{{ student.prenomUser }} {{ student.nomUser }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -56,9 +56,9 @@
             <label class="user-type">Communication / Administration / Personnel</label>
             <h2><small>ROLE_employee</small></h2>
             <div class="role_users">
-                <select class="selectpicker" data-live-search="true">
+                <select class="selectpicker" data-live-search="true" onchange="javascript:location.href = this.value">
                     {% for employee in employees %}
-                        <option href="{{ path('iuto_livret_admin_modifUser', {'user' : employee.id}) }}">{{ employee.prenomUser }} {{ employee.nomUser }}</option>
+                        <option value="{{ path('iuto_livret_admin_modifUser', {'user' : employee.id}) }}">{{ employee.prenomUser }} {{ employee.nomUser }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -67,9 +67,9 @@
             <label class="user-type">Administrateurs</label>
             <h2><small>ROLE_admin</small></h2>
             <div class="role_users">
-                <select class="selectpicker" data-live-search="true">
+                <select class="selectpicker" data-live-search="true" onchange="javascript:location.href = this.value">
                     {% for admin in admins %}
-                        <option href="{{ path('iuto_livret_admin_modifUser', {'user' : admin.id}) }}">{{ admin.prenomUser }} {{ admin.nomUser }}</option>
+                        <option value="{{ path('iuto_livret_admin_modifUser', {'user' : admin.id}) }}">{{ admin.prenomUser }} {{ admin.nomUser }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -78,9 +78,9 @@
             <label class="user-type">Autres (affiliés, etc)</label>
             <h2><small>ROLE_affiliate</small></h2>
             <div class="role_users">
-                <select class="selectpicker" data-live-search="true">
+                <select class="selectpicker" data-live-search="true" onchange="javascript:location.href = this.value">
                     {% for other in others %}
-                        <option href="{{ path('iuto_livret_admin_modifUser', {'user' : other.id}) }}">{{ other.prenomUser }} {{ other.nomUser }}</option>
+                        <option value="{{ path('iuto_livret_admin_modifUser', {'user' : other.id}) }}">{{ other.prenomUser }} {{ other.nomUser }}</option>
                     {% endfor %}
                 </select>
             </div>
