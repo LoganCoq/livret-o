@@ -33,7 +33,7 @@ security:
         # paramètrage du firewall CAS
         l3_firewall:
             # définition des routes affectées par le firewall ( toute autres routes seront accessibles sans authentification)
-            pattern: ^/(login|connexion|etudiant|professeur|communication|chef|modules)
+            pattern: ^/(login|connexion|etudiant|professeur|communication|chef|modules|admin)
             # Activation de la sécurité sur les routes de pattern
             security: true
             # Activation de CAS
