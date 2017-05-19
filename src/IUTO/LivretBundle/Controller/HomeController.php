@@ -2,6 +2,7 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use IUTO\LivretBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HomeController extends Controller
@@ -16,11 +17,29 @@ class HomeController extends Controller
 
     public function chooseModuleAction()
     {
+        $idUniv = \phpCAS::getUser();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
+        $roles = $user->getRoles();
+
+        $role_stud = in_array('ROLE_student', $roles);
+        $role_empl = in_array('ROLE_employee', $roles);
+        $role_facu = in_array('ROLE_faculty', $roles);
+        $role_admi = in_array('ROLE_admin', $roles);
+        $role_chie = in_array('ROLE_chief', $roles);
+
         return $this->render('IUTOLivretBundle:Home:chooseModule.html.twig', array(
             'statutCAS' => 'Test',
             'info' => array('Rien'),
             'routing_info' => array('#'),
             'routing_statutCAShome' => '/modules',
+            'ROLE_student' => $role_stud,
+            'ROLE_employee' => $role_empl,
+            'ROLE_faculty' => $role_facu,
+            'ROLE_admin' => $role_admi,
+            'ROLE_chief' => $role_chie,
         ));
     }
 }

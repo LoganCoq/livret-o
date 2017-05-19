@@ -28,18 +28,8 @@ class ConnexionController extends Controller
 
         if (count($roles) > 1)
         {
-            $role_stud = in_array('ROLE_student', $roles);
-            $role_empl = in_array('ROLE_employee', $roles);
-            $role_facu = in_array('ROLE_faculty', $roles);
-            $role_admi = in_array('ROLE_admin', $roles);
-            $role_chie = in_array('ROLE_chief', $roles);
 
             return $this->redirectToRoute("iuto_livret_choose_module", array(
-                'ROLE_student' => $role_stud,
-                'ROLE_employee' => $role_empl,
-                'ROLE_faculty' => $role_facu,
-                'ROLE_admin' => $role_admi,
-                'ROLE_chief' => $role_chie,
             ));
         } else {
             //        Vérificate du role de l'utilisateur et redirection suivant celui-ci
