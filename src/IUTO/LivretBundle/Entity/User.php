@@ -248,6 +248,7 @@ class User implements UserInterface
             {
                 unset($this->roles[$i]);
             }
+            $i = $i + 1;
         }
     }
 
