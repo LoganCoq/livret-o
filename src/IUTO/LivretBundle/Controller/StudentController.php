@@ -70,7 +70,7 @@ class StudentController extends Controller
 	    $etudiants = array();
 	    $tuteurs = array();
 	    foreach ( $allUsers as $curUser ){
-	        if ( in_array('ROLE_student',$curUser->getRoles())){
+	        if ( in_array('ROLE_student',$curUser->getRoles()) && !$curUser->getFormations()->isEmpty()){
 	            $curForm = $curUser->getFormations()->last()->getDepartement()->getNomDpt();
 	            if ( $curForm === $departement)
                 {
@@ -243,7 +243,7 @@ class StudentController extends Controller
         $etudiants = array();
         $tuteurs = array();
         foreach ( $allUsers as $curUser ){
-            if ( in_array('ROLE_student',$curUser->getRoles())){
+            if ( in_array('ROLE_student',$curUser->getRoles()) && !$curUser->getFormations()->isEmpty()){
                 $curForm = $curUser->getFormations()->last()->getDepartement()->getNomDpt();
                 if ( $curForm === $departement)
                 {
