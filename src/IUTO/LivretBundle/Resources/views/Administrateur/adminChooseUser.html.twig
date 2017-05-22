@@ -275,8 +275,8 @@
         {% for user in users %}
             u = [];
             u.push({{ user.id }});
-            u.push({{ user.prenomUser }});
-            u.push({{ user.nomUser }});
+            u.push("{{ user.prenomUser }}");
+            u.push("{{ user.nomUser }}");
             users.push(u);
         {% endfor %}
 
