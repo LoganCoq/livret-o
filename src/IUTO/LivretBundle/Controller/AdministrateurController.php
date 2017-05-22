@@ -75,6 +75,7 @@ class AdministrateurController extends Controller
             'employees' => $employees,
             'admins' => $admins,
             'others' => $others,
+            'users' => $users,
         ));
     }
 
