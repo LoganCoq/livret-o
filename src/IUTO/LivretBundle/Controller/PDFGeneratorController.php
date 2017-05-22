@@ -256,7 +256,6 @@ class PDFGeneratorController extends Controller
         $intitules = array();
         $minYear = 1000000;
         $maxYear = 0;
-        $year = $livret->getDateCreationLivret();
         $dateCrea = $livret->getDateCreationLivret()->format('d-m-Y');
 
 //        Récupération des données projets par projets
@@ -291,7 +290,6 @@ class PDFGeneratorController extends Controller
                'intituleLivret' => $title,
                 'minYear' => $minYear,
                 'maxYear' => $maxYear,
-                'year' => $year,
                 'departements' => $departements,
                 'promotions' => $promotions,
                 'dateCrea' => $dateCrea,
