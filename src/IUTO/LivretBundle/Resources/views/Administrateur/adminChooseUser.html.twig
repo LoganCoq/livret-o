@@ -296,7 +296,7 @@
             txt = champRecherche.value;
             for ( us of users) {
                 if ( txt.length > 0 ) {
-                    if ( ( us[1].indexOf(txt) !== -1 ) || (us[2].indexOf(txt) !== -1) || (us[1] + " " + us[2]).indexOf(txt) !== -1)
+                    if ( ( us[1].toLowerCase().indexOf(txt.toLowerCase()) !== -1 ) || (us[2].toLowerCase().indexOf(txt.toLowerCase()) !== -1) || (us[1].toLowerCase() + " " + us[2].toLowerCase()).indexOf(txt.toLowerCase()) !== -1)
                     {
                         document.getElementById("user_" + us[0]).style.display = "block";
                     } else {
