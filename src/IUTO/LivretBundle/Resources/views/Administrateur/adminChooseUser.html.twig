@@ -288,7 +288,7 @@
         allHidden();
         function allHidden() {
             for (u of users) {
-                document.getElementById("user_" + u[0]).hidden = true;
+                document.getElementById("user_" + u[0]).style.display = "none";
             }
         }
 
@@ -298,9 +298,9 @@
                 if ( txt.length > 0 ) {
                     if ( ( us[1].indexOf(txt) !== -1 ) || (us[2].indexOf(txt) !== -1))
                     {
-                        document.getElementById("user_" + us[0]).hidden = false;
+                        document.getElementById("user_" + us[0]).style.display = "inline";
                     } else {
-                        document.getElementById("user_" + us[0]).hidden = true;
+                        document.getElementById("user_" + us[0]).style.display = "none";
                     }
                 } else {
                     allHidden();
