@@ -281,9 +281,9 @@
         {% endfor %}
 
         champRecherche = document.getElementById("search_field");
-        champRecherche.onchange = function (evenement) {
+        $('#search_field').on("input", function (evenement) {
             updateUsers();
-        };
+        });
 
         allHidden();
         function allHidden() {
