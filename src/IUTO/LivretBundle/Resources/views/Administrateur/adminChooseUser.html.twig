@@ -21,6 +21,38 @@
 {% block content %}
 
     <div id="users">
+        <div id="search_user">
+            <h2>Rechercher un utilisateur</h2>
+            <input type="text" id="search_filed">
+            <ul class="list-group">
+                {% for user in users %}
+                    <li class="list-group-item" id="user_{{ user.id }}">
+                        <p id="choose_project_name">{{ user.prenomUser }} {{ user.nomUser }}</p>
+                        <a href="{{ path('iuto_livret_admin_modifUser', {'user': user.id}) }}" class="btn btn-warning" id="livret_modif_btn">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            Modifier l'utilisateur
+                        </a>
+                        <a href="#" class="btn btn-success" id="livreto_see_btn">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                            Aperçu de l'utilisateur
+                        </a>
+                        <div class="dropdown">
+                            <a class="btn dropdown-toggle" type="button" data-toggle="dropdown" id="btn_drop_{{ user.id }}" aria-haspopup="true" aria-expanded="true">
+                                <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="btn_drop_{{ user.id }}">
+                                <li>
+                                    <a href="#" id="delete_btn">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer l'utilisateur
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
         <div id="chiefs">
             <h2 class="user-type">Chefs de département <small>ROLE_chief</small></h2>
             <div class="role_users">
@@ -235,6 +267,44 @@
         $('.selectpicker').on('changed.bs.select', function (e) {
             location.href = e.newValue;
         });
+    </script>
+
+    <script>
+        users = [];
+
+        {% for user in users %}
+            u = [];
+            u.push({{ user.id }});
+            u.push({{ user.prenomUser }});
+            u.push({{ user.nomUser }});
+            users.push(u);
+        {% endfor %}
+
+        champRecherche = document.getElementById("search_field");
+        champRecherche.onchange = function (evenement) {
+            updateUsers();
+        };
+
+        allHidden();
+        function allHidden() {
+            for (u of users) {
+                document.getElementById("user_" + u[0]).hidden = true;
+            }
+        }
+
+        function updateUsers() {
+            txt = champRecherche.value;
+            for ( us of users) {
+                if ( txt.length > 0 ) {
+                    if (us[1].includes(txt) || us[2].includes(txt))
+                    {
+                        document.getElementById("user_" + us[0]);
+                    }
+                } else {
+                    allHidden();
+                }
+            }
+        }
     </script>
 
 {% endblock %}
