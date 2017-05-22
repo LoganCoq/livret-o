@@ -1,5 +1,5 @@
 
-.btn
+content .btn
 {
     font-size: 1.2em;
 }
@@ -25,8 +25,11 @@
 
 .projetPublic
 {
-    width: 100%;
+    width: 95%;
     padding: 1em;
+    border-style: solid;
+    border-width: 2px;
+    border-color: lightgrey;
 }
 
 .projetPublic:hover
@@ -38,12 +41,12 @@
 #choose_project_name
 {
     font-size: 1.2em;
+    width:50%;
 }
 
 #listeProjets
 {
     margin: 3em;
-    text-align: center;
 }
 
 .titre
@@ -58,4 +61,22 @@
 {
     text-align: center;
     padding: 1em;
+}
+
+.dropdown
+{
+    margin-left: 95%;
+    margin-top: -5%;
+}
+
+#livret_modif_btn
+{
+    margin-left: 55%;
+    margin-top: -5%;
+}
+
+ #livret_btn_see
+{
+    margin-left: 2%;
+    margin-top: -5%;
 }
