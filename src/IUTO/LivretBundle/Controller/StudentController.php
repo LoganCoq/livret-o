@@ -71,8 +71,8 @@ class StudentController extends Controller
 	    $tuteurs = array();
 	    foreach ( $allUsers as $curUser ){
 	        if ( in_array('ROLE_student',$curUser->getRoles())){
-	            $curForm = $curUser->getFormations()->last();
-	            if ( $curForm === $formation)
+	            $curForm = $curUser->getFormations()->last()->getDepartement()->getNomDpt();
+	            if ( $curForm === $departement)
                 {
                     array_push($etudiants, $curUser);
                 }
@@ -235,12 +235,20 @@ class StudentController extends Controller
         $idUniv = phpCAS::getUser();
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
+        // Recuperation des informations sur la formation de l'étudiant connecté
+        $formation = $etudiant->getFormations()->last();
+        $departement = $formation->getDepartement()->getNomDpt();
+
         $allUsers = $em->getRepository(User::class)->findAll();
         $etudiants = array();
         $tuteurs = array();
         foreach ( $allUsers as $curUser ){
             if ( in_array('ROLE_student',$curUser->getRoles())){
-                array_push($etudiants, $curUser);
+                $curForm = $curUser->getFormations()->last()->getDepartement()->getNomDpt();
+                if ( $curForm === $departement)
+                {
+                    array_push($etudiants, $curUser);
+                }
             } elseif ( in_array('ROLE_faculty',$curUser->getRoles())){
                 array_push($tuteurs, $curUser);
             }
