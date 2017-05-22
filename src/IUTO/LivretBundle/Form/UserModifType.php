@@ -19,15 +19,19 @@ class UserModifType extends AbstractType
         $builder
             ->add('idUniv', TextType::class, array(
                 'label' => "Numéro universitaire",
+                'disabled' => true,
             ))
             ->add('nomUser', TextType::class, array(
                 'label' => "Nom",
+                'disabled' => true,
             ))
             ->add('prenomUser', TextType::class, array(
                 'label' => "Prénom",
+                'disabled' => true,
             ))
             ->add('mailUser', TextType::class, array(
                 'label' => 'Adresse mail',
+                'disabled' => true,
             ))
             ->add('roles', ChoiceType::class, array(
                 'label' => 'Roles',
