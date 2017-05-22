@@ -1,4 +1,39 @@
 
 h2 {
     margin-top: 0;
+    padding: 1%;
+}
+
+
+#users {
+    padding: 1%;
+}
+
+.role_users {
+    padding: 1%;
+}
+
+#choose_project_name {
+    font-size: 1.2em;
+}
+
+.list-group-item {
+    margin-left: 3%;
+    width: 70%;
+}
+
+#livret_modif_btn {
+    margin-left: 50%;
+    margin-top: -7.5%;
+}
+
+#livreto_see_btn {
+    margin-left: 2%;
+    margin-top: -7.5%;
+}
+
+.dropdown {
+    margin-left: 95%;
+    margin-top: -7%;
+    margin-bottom: 1%;
 }
