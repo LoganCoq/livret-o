@@ -38,8 +38,8 @@
                 </nav>
                 <div style="position:absolute ;bottom: 1%; width: 90%;text-align:center; margin-left: 5%;">
                     <img src="{{ asset('assets/images/IUTO_transp.png') }}" alt="Logo IUT" style="max-height: 125px"/>
-                    <a href="https://goo.gl/forms/HxRlrZnElph8aSSU2">
-                        <button type="button" class="btn btn-primary" style="width: 100%; margin-bottom: 1%">
+                    <a>
+                        <button type="button" class="btn btn-primary" style="width: 100%; margin-bottom: 1%" onclick="openReport()">
                             Rapport d'erreur / amélioration
                         </button>
                     </a>
@@ -73,6 +73,13 @@
 {% block javascripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
     <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
+    
+    <script>
+        function openReport() {
+            var win = window.open("https://goo.gl/forms/HxRlrZnElph8aSSU2", "_blank");
+            win.focus();
+        }
+    </script>
 {% endblock %}
 </body>
 </html>
