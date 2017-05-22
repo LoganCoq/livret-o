@@ -59,7 +59,7 @@ class StudentController extends Controller
         $projet = new Projet();
 
         // Recuperation des informations sur la formation de l'étudiant connecté
-        $formation = $etudiant->getFormations()[0];
+        $formation = end(array_values($etudiant->getFormations()));
         $departement = $formation->getDepartement()->getNomDpt();
 
         // remplissage des données de bases du projet
@@ -71,7 +71,11 @@ class StudentController extends Controller
 	    $tuteurs = array();
 	    foreach ( $allUsers as $curUser ){
 	        if ( in_array('ROLE_student',$curUser->getRoles())){
-		        array_push($etudiants, $curUser);
+	            $curForm = end(array_values($curUser->getFormations()));
+	            if ( $curForm === $formation)
+                {
+                    array_push($etudiants, $curUser);
+                }
 	        } elseif ( in_array('ROLE_faculty',$curUser->getRoles())){
 		        array_push($tuteurs, $curUser);
 	        }

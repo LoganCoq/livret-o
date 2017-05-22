@@ -121,15 +121,15 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
                         $dFin = new \DateTime();
                         if (date("m") < 9)
                         {
-                            $dDeb->setDate(date("y"), 1, 15);
-                            $dFin->setDate(date("y"), 8, 15);
+                            $dDeb->setDate(date("Y"), 1, 15);
+                            $dFin->setDate(date("Y"), 8, 15);
                             $newF->setSemestre(2);
 
                         }
                         else
                         {
-                            $dDeb->setDate(date("y") - 1, 8, 16);
-                            $dFin->setDate(date("y"), 1, 14);
+                            $dDeb->setDate(date("Y") - 1, 8, 16);
+                            $dFin->setDate(date("Y"), 1, 14);
                             $newF->setSemestre(1);
                         }
                         $newF->setDateDebut($dDeb);
