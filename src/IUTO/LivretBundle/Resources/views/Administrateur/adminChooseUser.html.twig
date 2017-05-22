@@ -296,9 +296,11 @@
             txt = champRecherche.value;
             for ( us of users) {
                 if ( txt.length > 0 ) {
-                    if (us[1].includes(txt) || us[2].includes(txt))
+                    if ( ( us[1].indexOf(txt) !== -1 ) || (us[2].indexOf(txt) !== -1))
                     {
-                        document.getElementById("user_" + us[0]);
+                        document.getElementById("user_" + us[0]).hidden = false;
+                    } else {
+                        document.getElementById("user_" + us[0]).hidden = true;
                     }
                 } else {
                     allHidden();
