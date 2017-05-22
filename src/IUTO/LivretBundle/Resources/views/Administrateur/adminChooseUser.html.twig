@@ -51,6 +51,7 @@
                     </li>
                 {% endfor %}
             </ul>
+            <h3 id="no_users"><small>Rien à afficher</small></h3>
         </div>
 
         <div id="chiefs">
@@ -289,6 +290,7 @@
         function allHidden() {
             for (u of users) {
                 document.getElementById("user_" + u[0]).style.display = "none";
+                document.getElementById("no_users").style.display = "block";
             }
         }
 
@@ -299,6 +301,7 @@
                     if ( ( us[1].toLowerCase().indexOf(txt.toLowerCase()) !== -1 ) || (us[2].toLowerCase().indexOf(txt.toLowerCase()) !== -1) || (us[1].toLowerCase() + " " + us[2].toLowerCase()).indexOf(txt.toLowerCase()) !== -1)
                     {
                         document.getElementById("user_" + us[0]).style.display = "block";
+                        document.getElementById("no_users").style.display = "none"
                     } else {
                         document.getElementById("user_" + us[0]).style.display = "none";
                     }
