@@ -13,9 +13,11 @@
 
 .form-control
 {
-    margin-right: 15em;
+    margin-right: 30%;
     font-size: 1.2em;
     height: auto;
+    width: 50%;
+    margin-left: 5%;
     /*text-align: center;*/
 }
 
@@ -27,8 +29,6 @@
     font-size: 1.2em;
 }
 
-form[name=iuto_livretbundle_user_modif]
-{
-    margin-left: 7em;
+form[name=iuto_livretbundle_user_modif] {
+    margin-left: 2%;
 }
-
