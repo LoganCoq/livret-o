@@ -2,9 +2,10 @@
 
 namespace IUTO\LivretBundle\Form;
 
+use IUTO\LivretBundle\Entity\Edito;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,9 +22,19 @@ class NewLivretType extends AbstractType
                 'label' => 'Intitulé livret',
                 'required' => true,
             ))
-            ->add('editoLivret', TextareaType::class, array(
+            ->add('editoLivret', EntityType::class, array(
                 'label' => 'Edito livret',
-                'required' => false,
+                'class' => Edito::class,
+                'choice_label' => function (Edito $edito) {
+                    return $edito->getTitre();
+                },
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'selectpicker',
+                    'data-live-search' => true,
+                    'data-width' => 'auto',
+                    'id' => 'livreto_editos',
+                ]
             ))
             ->add('submit', SubmitType::class, array(
                 'label' => 'Passer au choix des projets',

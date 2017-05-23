@@ -48,12 +48,6 @@ class Livret
      */
     private $dateCreationLivret;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="editoLivret", type="text", nullable=true)
-     */
-    private $editoLivret;
 
     /**
     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Projet", mappedBy="livrets")
@@ -156,29 +150,6 @@ class Livret
         return $this;
     }
 
-    /**
-     * Get editoLivret
-     *
-     * @return string
-     */
-    public function getEditoLivret()
-    {
-        return $this->editoLivret;
-    }
-
-    /**
-     * Set editoLivret
-     *
-     * @param string $editoLivret
-     *
-     * @return Livret
-     */
-    public function setEditoLivret($editoLivret)
-    {
-        $this->editoLivret = $editoLivret;
-
-        return $this;
-    }
 
     /**
      * Add projet
