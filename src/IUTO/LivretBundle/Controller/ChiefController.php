@@ -2,6 +2,7 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use IUTO\LivretBundle\Form\NewLivretType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetModifType;
@@ -21,47 +22,41 @@ class ChiefController extends Controller
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
             'options' => array('Générer un livret au format pdf', 'Modifier la présentation du département', 'Sélection des projets', 'Afficher la liste des projets du département', 'Ajouter un projet'),
-            'routing_info' => array('#', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
-            'routing_options' => array('#', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
+            'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
+            'routing_options' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
             'routing_statutCAShome' => '/chef',));
     }
 
-    public function chiefpresentationAction(Request $request)
+    public function chiefCreateLivretAction(Request $request)
     {
         $idUniv = \phpCAS::getUser();
 
-        $session = $this->get('session');
         $manager = $this->getDoctrine()->getManager();
-        $livret = $manager->getRepository(Livret::class)->findOneById($session->get("numEdito")); //TODO recuperation cas
-        $form = $this->createForm(PresentationType::class, $livret);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('submit')->isClicked()) {
-                $ed = $form['editoLivret']->getData();
-                $livret->setEditoLivret($ed);
-                $manager->persist($livret);
-                $manager->flush();
-            }
-            if ($form->get('previsualiser')->isClicked())
-            {
-                $session->set('edito',$ed = $form['editoLivret']->getData());
-                return $this->redirectToRoute('iuto_livret_chiefEditoPrevisualiser');
-            }
-            return $this->redirectToRoute('iuto_livret_chiefhomepage');
+
+        $newLivret = new Livret();
+
+        $newLivret->setDateCreationLivret(new \DateTime());
+
+        $formCreate = $this->createForm(NewLivretType::class, $newLivret);
+        $formCreate->handleRequest($request);
+
+        if ( $formCreate->isSubmitted() && $formCreate->isValid())
+        {
+            $manager->persist($newLivret);
+            $manager->flush();
+
+            return $this->redirectToRoute('iuto_livret_chief_livret_projects', array(
+                'livret' => $newLivret->getId(),
+            ));
         }
 
-
-
-
-        return $this->render('IUTOLivretBundle:Chief:chiefpresentation.html.twig', array(
+        return $this->render('IUTOLivretBundle:Chief:chiefCreateLivret.html.twig', array(
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'options' => array('Visualiser'),
-            'routing_statutCAShome' => '/chef',
-            'routing_info' => array('#', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
-            'routing_options' => array('/chef/editoprevisualiser'),
-            'form' => $form->createView()));
+            'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
+            'routing_statutCAShome' => '/chef',));
     }
+
 
     public function chieflisteAction()
     {

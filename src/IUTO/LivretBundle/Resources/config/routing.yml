@@ -159,6 +159,10 @@ iuto_livret_chiefhomepage:
     path: /chef
     defaults: { _controller: IUTOLivretBundle:Chief:chiefhome }
 
+iuto_livret_chief_create_livret:
+    path: /chef/create/livret
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefCreateLivret }
+
 #==========PRESENTATION====#
 iuto_livret_chiefPresentation:
     path: /chef/presentation
