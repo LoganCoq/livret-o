@@ -417,7 +417,7 @@ class PDFGeneratorController extends Controller
             ->getRepository('IUTOLivretBundle:Livret');
 
 //        Récupération du livret que l'on veux générer
-        $livret = $repLivret->findOneById($idLivret);
+        $livret = $repLivret->findOneById($id);
 
 //        Récupération de l'application de génération de pdf
         $html2pdf = $this->get('app.html2pdf');
@@ -578,31 +578,65 @@ class PDFGeneratorController extends Controller
         $html2pdf->getDownloadPdf("livret");
     }
 
-    function smart_wordwrap($string, $width = 70, $break = "<br>") {
-// split on problem words over the line length
-        $pattern = sprintf('/([^ ]{%d,})/', $width);
-        $output = '';
-        $words = preg_split($pattern, $string, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 
-        foreach ($words as $word) {
-            // normal behaviour, rebuild the string
-            if (false !== strpos($word, ' ')) {
-                $output .= $word;
-            } else {
-                // work out how many characters would be on the current line
-                $wrapped = explode($break, wordwrap($output, $width, $break));
-                $count = $width - (strlen(end($wrapped)) % $width);
+    public function generatorEditoAction($id)
+    {
+        //        Récupération du repository des projets
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('IUTOLivretBundle:Edito');
 
-                // fill the current line and add a break
-                $output .= substr($word, 0, $count) . $break;
+//        Récupération du projet que l'on veut générer
+        $edito = $repository->findOneById($id);
 
-                // wrap any remaining characters from the problem word
-                $output .= wordwrap(substr($word, $count), $width, $break, true);
-            }
-        }
+        $titre = $edito->getTitre();
+        $contenu = $edito->getContenuEdito();
 
-        // wrap the final output
-        return wordwrap($output, $width, $break);
+        //        Création du template du projet avec les informations de celui-ci
+        $template = $this->renderView('::edito.html.twig',
+            [
+                'titre' => $titre,
+                'contenu' => $contenu,
+            ]);
+
+//        Récupération de l'application de génération de pdf
+        $html2pdf = $this->get('app.html2pdf');
+//        Création d'un pdf
+        $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
+
+//        Génération du pdf et affichage
+        return $html2pdf->generatePdf($template, "editoPDF");
+    }
+
+    public function downloadEditoAction($id)
+    {
+        //        Récupération du repository des projets
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('IUTOLivretBundle:Edito');
+
+//        Récupération du projet que l'on veut générer
+        $edito = $repository->findOneById($id);
+
+        $titre = $edito->getTitre();
+        $contenu = $edito->getContenuEdito();
+
+        //        Création du template du projet avec les informations de celui-ci
+        $template = $this->renderView('::edito.html.twig',
+            [
+                'titre' => $titre,
+                'contenu' => $contenu,
+            ]);
+
+//        Récupération de l'application de génération de pdf
+        $html2pdf = $this->get('app.html2pdf');
+//        Création d'un pdf
+        $html2pdf->create('P', 'A4', 'fr', true, 'UTF-8', array(10, 15, 10, 15));
+
+//        Génération du pdf et affichage
+        return $html2pdf->downloadPdf($template, "editoPDF");
     }
 }
 

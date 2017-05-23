@@ -164,11 +164,6 @@ iuto_livret_chiefPresentation:
     path: /chef/presentation
     defaults: { _controller: IUTOLivretBundle:Chief:chiefPresentation }
 
-#==========PRESENTATIONPDF===========#
-iuto_livret_chiefEditoPrevisualiser:
-    path: /chef/editoprevisualiser
-    defaults: { _controller: IUTOLivretBundle:PresentationGenerator:generator }
-
 #==========LISTE====#
 iuto_livret_chiefliste:
     path: /chef/liste
@@ -219,15 +214,6 @@ iuto_livret_modif_livret:
     path: /communication/modif/livret/{livret}
     defaults: { _controller: IUTOLivretBundle:Communication:communicationModifLivret }
 
-#==========EDITO===========#
-iuto_livret_communicationEdito:
-    path: /communication/edito
-    defaults: { _controller: IUTOLivretBundle:Communication:communicationedito }
-
-#==========EDITOPDF===========#
-iuto_livret_communicationEditoPrevisualiser:
-    path: /communication/editoprevisualiser
-    defaults: { _controller: IUTOLivretBundle:EditoGenerator:generator }
 
 #=====GENERATION LIVRET====#
 iuto_livret_communication_livret_project_choice:
@@ -319,6 +305,14 @@ iuto_livret_download_livret:
 iuto_livret_livretgenerator:
     path: /generate/livret/{idLivret}
     defaults: { _controller: IUTOLivretBundle:PDFGenerator:generatorMany}
+
+iuto_livret_edito_pdf:
+    path: /generate/edito/{id}
+    defaults: { _controller: IUTOLivretBundle:PDFGenerator:generatorEdito }
+
+iuto_livret_edito_download:
+    path: /download/edito/{id}
+    defaults: { _controller: IUTOLivretBundle:PDFGenerator:downloadEdito }
 
 #==========================================================#
 #==========================================================#
