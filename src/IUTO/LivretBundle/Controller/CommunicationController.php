@@ -48,41 +48,6 @@ class CommunicationController extends Controller
         );
     }
 
-    public function communicationeditoAction(Request $request)
-    {
-        $manager = $this->getDoctrine()->getManager();
-
-        $idUniv = phpCAS::getUser();
-        $user = $manager->getRepository(User::class)->findOneByIdUniv($idUniv);
-
-
-        $session = $this->get('session');
-
-        $livret = $manager->getRepository(Livret::class)->findOneById($session->get("numEdito"));
-        $form = $this->createForm(EditoType::class, $livret);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('submit')->isClicked()) {
-                $ed = $form['editoLivret']->getData();
-                $livret->setEditoLivret($ed);
-                $manager->persist($livret);
-                $manager->flush();
-            }
-            if ($form->get('previsualiser')->isClicked())
-            {
-                $session->set('edito',$ed = $form['editoLivret']->getData());
-                return $this->redirectToRoute('iuto_livret_communicationEditoPrevisualiser');
-            }
-            return $this->redirectToRoute('iuto_livret_communicationhomepage');
-        }
-
-        return $this->render('IUTOLivretBundle:Communication:communicationedito.html.twig', array(
-            'statutCAS' => 'communication',
-            'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets', 'Créer un édito'),
-            'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '/communication/create/edito'),
-            'routing_statutCAShome' => '/communication',
-            'form' => $form->createView()));
-    }
 
     public function communicationCreateLivretAction(Request $request)
     {
