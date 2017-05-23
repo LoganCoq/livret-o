@@ -22,7 +22,7 @@ class NewLivretType extends AbstractType
                 'label' => 'Intitulé livret',
                 'required' => true,
             ))
-            ->add('editoLivret', EntityType::class, array(
+            ->add('editos', EntityType::class, array(
                 'label' => 'Edito livret',
                 'class' => Edito::class,
                 'choice_label' => function (Edito $edito) {
