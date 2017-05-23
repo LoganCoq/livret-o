@@ -61,11 +61,17 @@ class Livret
     private $projets;
 
     /**
+     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Edito", cascade={"persist"})
+     */
+    private $editos;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->projets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->editos = new ArrayCollection();
     }
 
     /**
@@ -206,5 +212,21 @@ class Livret
     public function getProjets()
     {
         return $this->projets;
+    }
+
+
+    public function addEdito(Edito $edito)
+    {
+        $this->editos[] = $edito;
+    }
+
+    public function removeCategory(Edito $edito)
+    {
+        $this->editos->removeElement($edito);
+    }
+
+    public function getEditos()
+    {
+        return $this->editos;
     }
 }
