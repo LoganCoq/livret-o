@@ -2,6 +2,7 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use IUTO\LivretBundle\Form\LivretCreateType;
 use IUTO\LivretBundle\Form\NewLivretType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Entity\Projet;
@@ -9,7 +10,6 @@ use IUTO\LivretBundle\Form\ProjetModifType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use Symfony\Component\HttpFoundation\Request;
-use IUTO\LivretBundle\Form\PresentationType;
 use IUTO\LivretBundle\Entity\Livret;
 
 class ChiefController extends Controller
@@ -45,7 +45,7 @@ class ChiefController extends Controller
             $manager->persist($newLivret);
             $manager->flush();
 
-            return $this->redirectToRoute('iuto_livret_chief_livret_projects', array(
+            return $this->redirectToRoute('iuto_livret_chief_newLivret_selectOptions', array(
                 'livret' => $newLivret->getId(),
             ));
         }
@@ -59,6 +59,77 @@ class ChiefController extends Controller
         ));
     }
 
+    public function chiefSelectOptionsLivretAction(Request $request, Livret $livret)
+    {
+        $idUniv = \phpCAS::getUser();
+
+        $manager = $this->getDoctrine()->getManager();
+        $repositoryProjet = $manager->getRepository('IUTOLivretBundle:Projet');
+
+        $form = $this->createForm(LivretCreateType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $dateDebutSelection = \DateTime::createFromFormat('d/m/Y', $form["dateDebut"]->getData());
+            $dateFinSelection = \DateTime::createFromFormat('d/m/Y', $form["dateFin"]->getData());
+            $formationsSelectionnes = $form["listeFormation"]->getData();
+            $departementsSelectionnes = $form["listeDepartements"]->getData();
+
+//            TODO projets marquants
+            $qb = $repositoryProjet->createQueryBuilder('p');
+            $qb->where('p.dateDebut > :dateDebut')
+                ->setParameter('dateDebut', $dateDebutSelection)
+                ->andWhere('p.dateFin < :dateFin')
+                ->setParameter('dateFin', $dateFinSelection)
+                ->andWhere('p.validerProjet = 1');
+
+            $projets = $qb->getQuery()->getResult();
+            $livretProjets =array();
+            foreach ( $projets as $curProj )
+            {
+                $curFormation = $curProj->getEtudiants()[0]->getFormations()[0];
+                $curDept = $curFormation->getDepartement()->getNomDpt();
+                $curTypeFormation = $curFormation->getTypeFormation();
+
+                foreach ( $formationsSelectionnes as $curFormSelected )
+                {
+                    if ( $curFormSelected == $curTypeFormation)
+                    {
+                        foreach ( $departementsSelectionnes as $curDeptSelected )
+                        {
+                            if ( $curDeptSelected == $curDept)
+                            {
+                                array_push($livretProjets, $curProj);
+                            }
+                        }
+                    }
+                }
+            }
+
+            $idProjs = array();
+            foreach ($livretProjets as $p)
+            {
+                $livret->addProjet($p);
+                $p->addLivret($livret);
+                array_push($idProjs, $p->getId());
+                $manager->persist($p);
+            }
+            $manager->persist($livret);
+            $manager->flush();
+
+            return $this->redirectToRoute('iuto_livret_choose_livret_projects', array(
+                'livret' => $livret->getId(),
+            ));
+        }
+
+        return $this->render('IUTOLivretBundle:Communication:communicationgenerationlivret.html.twig', array(
+            'form' => $form->createView(),
+            'statutCAS' => 'chef de département',
+            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
+            'routing_statutCAShome' => '/chef',
+        ));
+    }
 
     public function chieflisteAction()
     {

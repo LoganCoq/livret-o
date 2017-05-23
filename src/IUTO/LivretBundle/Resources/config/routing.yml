@@ -163,6 +163,10 @@ iuto_livret_chief_create_livret:
     path: /chef/create/livret
     defaults: { _controller: IUTOLivretBundle:Chief:chiefCreateLivret }
 
+iuto_livret_chief_newLivret_selectOptions:
+    path: /chef/create/livret/{livret}/options
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefSelectOptionsLivret }
+
 #==========PRESENTATION====#
 iuto_livret_chiefPresentation:
     path: /chef/presentation
