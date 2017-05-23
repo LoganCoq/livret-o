@@ -281,7 +281,9 @@ iuto_livret_deleteLivret:
     path: /communication/delete/livret/{livret}
     defaults: { _controller: IUTOLivretBundle:Communication:communicationDeleteLivret }
 
-
+iuto_livret_create_edito:
+    path: /communication/create/edito
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationCreateEdito }
 
 #==========================================================#
 #==========================================================#
