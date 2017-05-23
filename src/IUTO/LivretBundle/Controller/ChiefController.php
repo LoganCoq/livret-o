@@ -54,7 +54,9 @@ class ChiefController extends Controller
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
             'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
-            'routing_statutCAShome' => '/chef',));
+            'routing_statutCAShome' => '/chef',
+            'formCreate' => $formCreate->createView(),
+        ));
     }
 
 
