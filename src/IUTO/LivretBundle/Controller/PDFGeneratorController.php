@@ -597,7 +597,7 @@ class PDFGeneratorController extends Controller
         $template = $this->renderView('::edito.html.twig',
             [
                 'titre' => $titre,
-                'contenu' => $contenu,
+                'texte' => $contenu,
             ]);
 
 //        Récupération de l'application de génération de pdf
@@ -627,7 +627,7 @@ class PDFGeneratorController extends Controller
         $template = $this->renderView('::edito.html.twig',
             [
                 'titre' => $titre,
-                'contenu' => $contenu,
+                'texte' => $contenu,
             ]);
 
 //        Récupération de l'application de génération de pdf
