@@ -171,7 +171,10 @@ class CommunicationController extends Controller
             $newLivret = new Livret();
 
             $newLivret->setIntituleLivret($livret->getIntituleLivret());
-            $newLivret->setEditoLivret($livret->getEditoLivret());
+            foreach ($livret->getEditos() as $edito) {
+                $newLivret->addEdito($edito);
+            }
+
             $newLivret->setDateCreationLivret($livret->getDateCreationLivret());
 
             $newProjects = $form['projects']->getData();
