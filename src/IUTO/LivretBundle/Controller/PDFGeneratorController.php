@@ -297,13 +297,14 @@ class PDFGeneratorController extends Controller
             ]);
         $html2pdf->write($template);
 
-        $edito = $livret->getEditoLivret();
-//        Création du template pour la génération de l'édito du livret
-//        si le champ n'est pas vide
-        if ( $edito != null and $edito != "") // TODO vérification
+        $editos = $livret->getEditos();
+
+        foreach ($editos as $edito)
         {
             $template = $this->renderView('::edito.html.twig',
-                ['texte' => $livret->getEditoLivret(),
+                [
+                    'titre' => $edito->getTitre(),
+                    'texte' => $edito->getContenuEdito(),
                 ]);
 //            Ecriture du template dans le pdf
             $html2pdf->write($template);
@@ -475,18 +476,18 @@ class PDFGeneratorController extends Controller
             ]);
         $html2pdf->write($template);
 
-        $edito = $livret->getEditoLivret();
-//        Création du template pour la génération de l'édito du livret
-//        si le champ n'est pas vide
-        if ( $edito != null and $edito != "") // TODO vérification
+        $editos = $livret->getEditos();
+
+        foreach ($editos as $edito)
         {
             $template = $this->renderView('::edito.html.twig',
-                ['texte' => $livret->getEditoLivret(),
+                [
+                    'titre' => $edito->getTitre(),
+                    'texte' => $edito->getContenuEdito(),
                 ]);
 //            Ecriture du template dans le pdf
             $html2pdf->write($template);
         }
-
 //        Parcours des projets afin d'écrire page par page
         foreach ( $projets as $projet)
         {
