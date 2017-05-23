@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EditoCreateType extends AbstractType
+class EditoType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -24,7 +24,7 @@ class EditoCreateType extends AbstractType
                 'label' => 'Contenu',
             ))
             ->add('submit', SubmitType::class, array(
-                'label' => 'Créer l\'édito',
+                'label' => 'Valider',
                 'attr' => [
                     'class' => 'btn btn-primary',
                 ]

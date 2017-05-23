@@ -33,7 +33,7 @@
                     {% for edito in editos %}
                         <li class="list-group-item">
                             <p id="choose_livret_name">{{ edito.titre }}</p>
-                            <a href="" class="btn btn-warning" id="livreto_modif_livret">
+                            <a href="{{ path('iuto_livret_modif_edito', {'id' : edito.id}) }}" class="btn btn-warning" id="livreto_modif_livret">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 Modifier l'édito
                             </a>

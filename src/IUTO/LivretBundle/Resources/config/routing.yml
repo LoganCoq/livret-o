@@ -275,6 +275,10 @@ iuto_livret_communication_choose_edito:
     path: /communication/choose/edito
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChooseEdito}
 
+iuto_livret_communication_modif_edito:
+    path: /communication/update/edito/{id}
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationModifEdito }
+
 
 #==========================================================#
 #==========================================================#

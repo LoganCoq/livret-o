@@ -12,14 +12,13 @@ use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Form\AddImageType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
-use IUTO\LivretBundle\Form\EditoCreateType;
+use IUTO\LivretBundle\Form\EditoType;
 use IUTO\LivretBundle\Form\LivretChooseProjectsType;
 use IUTO\LivretBundle\Form\NewLivretType;
 use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
 use IUTO\LivretBundle\Form\ProjetCompleteType;
 use phpCAS;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use IUTO\LivretBundle\Form\EditoType;
 use IUTO\LivretBundle\Form\LivretCreateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -812,7 +811,7 @@ class CommunicationController extends Controller
 
         $edito = new Edito();
 
-        $formEdit = $this->createForm(EditoCreateType::class, $edito);
+        $formEdit = $this->createForm(EditoType::class, $edito);
         $formEdit->handleRequest($request);
 
         if ( $formEdit->isSubmitted() && $formEdit->isValid())
@@ -820,11 +819,11 @@ class CommunicationController extends Controller
             $manager->persist($edito);
             $manager->flush();
 
-            return $this->redirectToRoute( 'iuto_livret_communicationhomepage', array(
+            return $this->redirectToRoute( 'iuto_livret_communication_choose_edito', array(
 
             ));
         }
-        return $this->render('IUTOLivretBundle:Communication:communicationCreateEdito.html.twig', array(
+        return $this->render('IUTOLivretBundle:Communication:communicationEdito.html.twig', array(
             'statutCAS' => 'communication',
             'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets', 'Créer un édito', 'Voir les éditos'),
             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '/communication/create/edito', 'communication/choose/edito'),
@@ -850,5 +849,34 @@ class CommunicationController extends Controller
             'routing_statutCAShome' => '/communication',
             'editos' => $editos,
         ));
+    }
+
+    public function communicationModifEditoAction(Request $request, Edito $edito)
+    {
+        $manager = $this->getDoctrine()->getManager();
+
+        $idUniv = phpCAS::getUser();
+
+        $formEdit = $this->createForm(EditoType::class, $edito);
+        $formEdit->handleRequest($request);
+
+        if ( $formEdit->isSubmitted() && $formEdit->isValid())
+        {
+            $manager->persist($edito);
+            $manager->flush();
+
+            return $this->redirectToRoute( 'iuto_livret_communication_choose_edito', array(
+
+            ));
+        }
+
+        return $this->render('IUTOLivretBundle:Communication:communicationEdito.html.twig', array(
+            'statutCAS' => 'communication',
+            'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets', 'Créer un édito', 'Voir les éditos'),
+            'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '/communication/create/edito', 'communication/choose/edito'),
+            'routing_statutCAShome' => '/communication',
+            'formCreate' => $formEdit->createView(),
+        ));
+
     }
 }
