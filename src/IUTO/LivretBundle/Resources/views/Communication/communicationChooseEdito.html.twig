@@ -1,0 +1,76 @@
+{# on entend base.html.twig pour avoir le menu sur la gauche #}
+{% extends 'base.html.twig' %}
+
+
+{# block titre pour changer le titre de l'onglet #}
+{% block title %}
+    Livret'O - Livrets
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link type="text/css" rel="stylesheet" href="{{ asset("assets/css/chooseLivretCommunication.css") }}"/>
+
+{% endblock %}
+
+{% block content %}
+
+    {# bouton de retour à l'accueil #}
+    <a type="button" href="{{ path('iuto_livret_communicationhomepage') }}" class="btn btn-primary" id="livret_btn_goto_home">
+        {# icone #}
+        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+        Accueil
+    </a>
+
+    {# section d'affichage des projet en cours et des projet validés #}
+    <div id="all_projects">
+        <h1>Editos :</h1>
+        {#section pour les projet en cours de réalisation#}
+        <div>
+            {% if editos|length > 0 %}
+                <ul class="list-group">
+                    {# parcours des projets en cours #}
+                    {% for edito in editos %}
+                        <li class="list-group-item">
+                            <p id="choose_livret_name">{{ edito.titre }}</p>
+                            <a href="" class="btn btn-warning" id="livreto_modif_livret">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                Modifier l'édito
+                            </a>
+                            <a href="" class="btn btn-success" id="livreto_see_btn">
+                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                Aperçu de l'édito
+                            </a>
+                            <a href="" class="btn btn-default download_confirm" id="livreto_download_finished">
+                                {#icone telechargement#}
+                                <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                                Enregistrer sur l'ordinateur
+                            </a>
+                            <div class="dropdown">
+                                <a class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="" id="add_btn">
+                                            Ajouter l'édito à un livret
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="" id="delete_btn">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer l'édito
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Il n'y a pas d'éditos existants.</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
