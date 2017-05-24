@@ -234,6 +234,25 @@ class ChiefController extends Controller
 
     }
 
+    public function chiefChooseEditoAction()
+    {
+        //récupération des informations sur l'utilisateur
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = phpCAS::getUser();
+
+        // récuperation des projets d'un étudiant
+        $editos = $em->getRepository('IUTOLivretBundle:Edito')->findAll();
+
+        // affichage de la page de selection du projet à modifier ou prévisualiser
+        return $this->render('IUTOLivretBundle:Chief:chiefChooseEdito.html.twig', array(
+            'routing_statutCAShome' => '/chef',
+            'statutCAS' => 'chef de département',
+            'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '#'),
+            'editos' => $editos,
+        ));
+    }
+
     public function chiefCreateEditoAction(Request $request)
     {
         $idUniv = \phpCAS::getUser();
