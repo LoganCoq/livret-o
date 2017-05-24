@@ -2,6 +2,7 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use IUTO\LivretBundle\Form\LivretChooseProjectsType;
 use IUTO\LivretBundle\Form\LivretCreateType;
 use IUTO\LivretBundle\Form\NewLivretType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -34,7 +35,6 @@ class ChiefController extends Controller
         $manager = $this->getDoctrine()->getManager();
 
         $newLivret = new Livret();
-
         $newLivret->setDateCreationLivret(new \DateTime());
 
         $formCreate = $this->createForm(NewLivretType::class, $newLivret);
@@ -131,6 +131,55 @@ class ChiefController extends Controller
         ));
     }
 
+    public function chiefSelectLivretProjectsAction(Request $request, Livret $livret)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = \phpCAS::getUser();
+
+        $oldProjects = $livret->getProjets();
+
+        $form = $this->createForm(LivretChooseProjectsType::class);
+        $form->get('projects')->setData($oldProjects);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $newLivret = new Livret();
+
+            $newLivret->setIntituleLivret($livret->getIntituleLivret());
+            foreach ($livret->getEditos() as $edito) {
+                $newLivret->addEdito($edito);
+            }
+
+            $newLivret->setDateCreationLivret($livret->getDateCreationLivret());
+
+            $newProjects = $form['projects']->getData();
+
+            foreach ($newProjects as $curPro)
+            {
+                $newLivret->addProjet($curPro);
+                $curPro->addLivret($newLivret);
+                $em->persist($curPro);
+            }
+
+            $em->persist($newLivret);
+            $em->remove($livret);
+            $em->flush();
+
+            return $this->redirectToRoute('iuto_livret_chief_choose_livret', array(
+            ));
+        }
+
+        return $this->render('IUTOLivretBundle:Chief:chiefChooseLivretProjects.html.twig', array(
+            'livret' => $livret,
+            'form' => $form->createView(),
+            'statutCAS' => 'chef de département',
+            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
+            'routing_statutCAShome' => '/chef',
+        ));
+    }
+
     public function chieflisteAction()
     {
         $idUniv = \phpCAS::getUser();
@@ -166,7 +215,6 @@ class ChiefController extends Controller
         ));
 
     }
-
 
     public function correctionChief1Action()
     {

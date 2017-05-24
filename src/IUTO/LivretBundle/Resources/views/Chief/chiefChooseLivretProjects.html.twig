@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/createLivret.css') }}"
+{% endblock %}
+
+{% block content %}
+
+    <h2 id="page_title"> Génération de livret </h2>
+
+    {{ form(form) }}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/bootstrap-confirmation.js') }}"></script>
+
+    <script type="text/javascript">
+        $(function (){
+            $('[data-toggle=confirmation]').confirmation({
+                rootSelector: '[data-toggle=confirmation]',
+            });
+        });
+    </script>
+
+{% endblock %}
