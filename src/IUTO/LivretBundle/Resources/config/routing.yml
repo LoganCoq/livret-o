@@ -189,6 +189,14 @@ iuto_livret_chief_choose_project:
     path: /chef/choose/projet
     defaults: { _controller: IUTOLivretBundle:Chief:chiefChooseProject }
 
+iuto_livret_chief_choose_edito:
+    path: /chef/choose/edito
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefChooseEdito }
+
+iuto_livret_chief_create_edito:
+    path: /chef/create/edito
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefCreateEdito }
+
 #==========CORRECTION1=====#
 iuto_livret_correctionChief1:
     path: /chef/correctionChief1

@@ -1,0 +1,32 @@
+{# on entend base.html.twig pour avoir le menu sur la gauche #}
+{% extends 'base.html.twig' %}
+
+
+{# block titre pour changer le titre de l'onglet #}
+{% block title %}
+    Livret'O - Creation édito
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/editoEdit.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+    {# chargement du theme pour le formulaire #}
+    {% form_theme formCreate 'bootstrap_3_layout.html.twig' %}
+    {{ form(form) }}
+
+
+    {# bouton d'annulation / retour accueil #}
+    <a type="button" href="{{ path('iuto_livret_chiefhomepage') }}" class="btn btn-danger" id="livret_cancel_edito">
+        {#icone#}
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        Annuler
+    </a>
+
+    {#{{ parent() }}#}
+{% endblock %}

@@ -3,7 +3,9 @@
 namespace IUTO\LivretBundle\Controller;
 
 use IUTO\LivretBundle\Entity\Departement;
+use IUTO\LivretBundle\Entity\Edito;
 use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Form\EditoType;
 use IUTO\LivretBundle\Form\LivretChooseProjectsType;
 use IUTO\LivretBundle\Form\LivretCreateType;
 use IUTO\LivretBundle\Form\NewLivretType;
@@ -230,6 +232,35 @@ class ChiefController extends Controller
             'promos' => $proms,
         ));
 
+    }
+
+    public function chiefCreateEditoAction(Request $request)
+    {
+        $idUniv = \phpCAS::getUser();
+        $manager = $this->getDoctrine()->getManager();
+
+        $newEdito = new Edito();
+
+        $formCreate = $this->createForm(EditoType::class, $newEdito);
+        $formCreate->handleRequest($request);
+
+        if($formCreate->isSubmitted() && $formCreate->isValid())
+        {
+            $manager->persist($newEdito);
+            $manager->flush();
+
+            return $this->redirectToRoute('iuto_livret_chief_choose_edito', array(
+
+            ));
+        }
+
+        return $this->render('IUTOLivretBundle:Chief:chiefEdito.html.twig', array(
+            'routing_statutCAShome' => '/chef',
+            'statutCAS' => 'chef de département',
+            'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '#'),
+            'form' => $formCreate->createView(),
+        ));
     }
 
     public function correctionChief1Action()
