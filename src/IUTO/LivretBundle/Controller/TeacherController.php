@@ -37,7 +37,7 @@ class TeacherController extends Controller
 //        rendu de la page home du professeur avec les arguments nécessaires
         return $this->render('IUTOLivretBundle:Teacher:teacherhome.html.twig', array(
             'statutCAS' => 'professeur',
-            'info' => array('Demandes de correction', 'Projets validés', 'Tout les projets'),
+            'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
             'options' => array('Voir les demandes de correction de projets', 'Voir les projets validés', 'Voir tous les projets'),
             'routing_statutCAShome' => '/professeur',
             'professeur' => $professeur,
