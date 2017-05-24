@@ -1,7 +1,7 @@
 iuto_livret:
     resource: "@IUTOLivretBundle/Resources/config/routing.yml"
     prefix:   /
-    scheme: [https]
+    schemes: [https]
 
 app:
     resource: "@AppBundle/Controller/"
