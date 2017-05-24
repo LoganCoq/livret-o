@@ -26,10 +26,10 @@ class ChiefController extends Controller
 
         return $this->render('IUTOLivretBundle:Chief:chiefhome.html.twig', array(
             'statutCAS' => 'chef de département',
-            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'options' => array('Générer un livret au format pdf', 'Modifier la présentation du département', 'Sélection des projets', 'Afficher la liste des projets du département', 'Ajouter un projet'),
-            'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
-            'routing_options' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
+            'options' => array('Générer un livret au format pdf', 'Voir les livrets', 'Sélection des projets', 'Afficher la liste des projets du département', 'Ajouter un projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
+            'routing_options' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
             'routing_statutCAShome' => '/chef',
             'user' => $user,
         ));
@@ -59,8 +59,8 @@ class ChiefController extends Controller
 
         return $this->render('IUTOLivretBundle:Chief:chiefCreateLivret.html.twig', array(
             'statutCAS' => 'chef de département',
-            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
             'routing_statutCAShome' => '/chef',
             'formCreate' => $formCreate->createView(),
         ));
@@ -132,8 +132,8 @@ class ChiefController extends Controller
         return $this->render('IUTOLivretBundle:Communication:communicationgenerationlivret.html.twig', array(
             'form' => $form->createView(),
             'statutCAS' => 'chef de département',
-            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
             'routing_statutCAShome' => '/chef',
         ));
     }
@@ -181,8 +181,8 @@ class ChiefController extends Controller
             'livret' => $livret,
             'form' => $form->createView(),
             'statutCAS' => 'chef de département',
-            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
             'routing_statutCAShome' => '/chef',
         ));
     }
@@ -199,44 +199,27 @@ class ChiefController extends Controller
         // affichage de la page de selection du projet à modifier ou prévisualiser
         return $this->render('IUTOLivretBundle:Chief:chiefChooseLivret.html.twig', array(
             'statutCAS' => 'chef de département',
-            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
             'routing_statutCAShome' => '/chef',
             'livrets' => $livrets,
         ));
     }
 
-    public function chieflisteAction()
+    public function chiefChooseDepartmentProjectsAction()
     {
         $idUniv = \phpCAS::getUser();
-
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('IUTOLivretBundle:User');
-        $formation = $repository->findOneById($id)->getFormations();
-        $f = array();
-        foreach($formation as $elem){
-            $fId = $elem->getDepartement();
-            array_push($f,$fId);
-        }
-
-        $nomDpt = array();
-        foreach ($f as $x){
-            $nom = $x->getNomDpt();
-            array_push($nomDpt,$nom);
-        }
-
         $manager = $this->getDoctrine()->getManager();
-        $projets = $manager->getRepository(Projet::class)->findAll();
 
+        $repository = $manager->getRepository('IUTOLivretBundle:User');
+
+        $projets = $manager->getRepository(Projet::class)->findAll();
 
         return $this->render('IUTOLivretBundle:Chief:chiefliste.html.twig',array(
             'routing_statutCAShome' => '/chef',
             'statutCAS' => 'chef de département',
-            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('#', '/chef/presentation', '#', '/chef/liste', '#'),
-            'departement' => $nomDpt,
+            'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
             'projets' => $projets
         ));
 
