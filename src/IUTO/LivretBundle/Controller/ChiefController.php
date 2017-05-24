@@ -2,6 +2,7 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Form\LivretChooseProjectsType;
 use IUTO\LivretBundle\Form\LivretCreateType;
 use IUTO\LivretBundle\Form\NewLivretType;
@@ -19,6 +20,9 @@ class ChiefController extends Controller
     public function chiefhomeAction()
     {
         $idUniv = phpCAS::getUser();
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
+
 
         return $this->render('IUTOLivretBundle:Chief:chiefhome.html.twig', array(
             'statutCAS' => 'chef de département',
@@ -26,7 +30,9 @@ class ChiefController extends Controller
             'options' => array('Générer un livret au format pdf', 'Modifier la présentation du département', 'Sélection des projets', 'Afficher la liste des projets du département', 'Ajouter un projet'),
             'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
             'routing_options' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
-            'routing_statutCAShome' => '/chef',));
+            'routing_statutCAShome' => '/chef',
+            'user' => $user,
+        ));
     }
 
     public function chiefCreateLivretAction(Request $request)
