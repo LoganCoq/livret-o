@@ -47,4 +47,15 @@ form[name=iuto_livretbundle_edito]
     font-size: 1.2em;
 }
 
+#iuto_livretbundle_edito_titre
+{
+    width:70%;
+    margin-left: 10%;
+}
 
+#iuto_livretbundle_edito_contenuEdito
+{
+    width: 70%;
+    height: 20em;
+    margin-left: 10%;
+}
