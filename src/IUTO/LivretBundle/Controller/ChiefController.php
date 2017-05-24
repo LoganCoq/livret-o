@@ -5,6 +5,7 @@ namespace IUTO\LivretBundle\Controller;
 use IUTO\LivretBundle\Form\LivretChooseProjectsType;
 use IUTO\LivretBundle\Form\LivretCreateType;
 use IUTO\LivretBundle\Form\NewLivretType;
+use phpCAS;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Form\ProjetModifType;
@@ -17,7 +18,7 @@ class ChiefController extends Controller
 {
     public function chiefhomeAction()
     {
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
 
         return $this->render('IUTOLivretBundle:Chief:chiefhome.html.twig', array(
             'statutCAS' => 'chef de département',
@@ -30,7 +31,7 @@ class ChiefController extends Controller
 
     public function chiefCreateLivretAction(Request $request)
     {
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
 
         $manager = $this->getDoctrine()->getManager();
 
@@ -61,7 +62,7 @@ class ChiefController extends Controller
 
     public function chiefSelectOptionsLivretAction(Request $request, Livret $livret)
     {
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
 
         $manager = $this->getDoctrine()->getManager();
         $repositoryProjet = $manager->getRepository('IUTOLivretBundle:Projet');
@@ -117,7 +118,7 @@ class ChiefController extends Controller
             $manager->persist($livret);
             $manager->flush();
 
-            return $this->redirectToRoute('iuto_livret_choose_livret_projects', array(
+            return $this->redirectToRoute('iuto_livret_chief_livretProjects', array(
                 'livret' => $livret->getId(),
             ));
         }
@@ -134,7 +135,7 @@ class ChiefController extends Controller
     public function chiefSelectLivretProjectsAction(Request $request, Livret $livret)
     {
         $em = $this->getDoctrine()->getManager();
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
 
         $oldProjects = $livret->getProjets();
 
@@ -177,6 +178,25 @@ class ChiefController extends Controller
             'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
             'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
             'routing_statutCAShome' => '/chef',
+        ));
+    }
+
+    public function chiefChooseLivretAction()
+    {
+        //récupération des informations sur l'utilisateur
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = phpCAS::getUser();
+
+        // récuperation des projets d'un étudiant
+        $livrets = $em->getRepository('IUTOLivretBundle:Livret')->findAll();
+
+        // affichage de la page de selection du projet à modifier ou prévisualiser
+        return $this->render('IUTOLivretBundle:Chief:chiefChooseLivret.html.twig', array(
+            'statutCAS' => 'chef de département',
+            'info' => array('Générer livrets', 'Présentation département', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/presentation', '/chef/correctionChief1', '/chef/liste', '#'),
+            'routing_statutCAShome' => '/chef',
+            'livrets' => $livrets,
         ));
     }
 
