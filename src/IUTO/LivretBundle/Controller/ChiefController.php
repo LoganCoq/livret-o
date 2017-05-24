@@ -27,7 +27,7 @@ class ChiefController extends Controller
 
         return $this->render('IUTOLivretBundle:Chief:chiefhome.html.twig', array(
             'statutCAS' => 'chef de département',
-            'info' => array('Générer livrets', 'Voir les livrets', 'Voir les projets', 'Projets du département', 'Ajouter un projet'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Voir les projets', 'Créer un projet', 'Créer un édito'),
             'options' => array('Générer un livret au format pdf', 'Voir les livrets', 'Voir les projets', 'Afficher la liste des projets du département', 'Ajouter un projet'),
             'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '#'),
             'routing_options' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '#'),

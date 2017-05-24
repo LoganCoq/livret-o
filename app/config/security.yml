@@ -19,11 +19,12 @@ security:
         ROLE_affiliate: ROLE_admin
     # Définition des routes accessibles selon le ROLE de l'user connecté
     access_control:
-            - { path: /etudiant,        roles: ROLE_student }
-            - { path: /professeur,      roles: ROLE_faculty }
-            - { path: ^/communication,  roles: ROLE_employee }
-            - { path: /chef,            roles: ROLE_chief }
-            - { path: /administrateur,  roles: ROLE_admin }
+            - { path: /etudiant,        roles: ROLE_student,  requires_channel: https }
+            - { path: /professeur,      roles: ROLE_faculty,  requires_channel: https }
+            - { path: ^/communication,  roles: ROLE_employee, requires_channel: https }
+            - { path: /chef,            roles: ROLE_chief,    requires_channel: https }
+            - { path: /administrateur,  roles: ROLE_admin,    requires_channel: https }
+
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
