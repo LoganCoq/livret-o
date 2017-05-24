@@ -2,6 +2,7 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use IUTO\LivretBundle\Entity\Departement;
 use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Form\LivretChooseProjectsType;
 use IUTO\LivretBundle\Form\LivretCreateType;
@@ -214,13 +215,19 @@ class ChiefController extends Controller
         $repository = $manager->getRepository('IUTOLivretBundle:User');
 
         $projets = $manager->getRepository(Projet::class)->findAll();
+        $dpt = $manager->getRepository(Departement::class)->findAll();
+        $annee = array(1 => date("y"), 2 => date("y") - 1, 3 => date("y") - 2, 4 => date("y") - 3, 5 => date("y") - 4);
+        $proms = array(1 => "1A", 2 => "2A", 3 => "AS", 4 => "LP");
 
         return $this->render('IUTOLivretBundle:Chief:chiefliste.html.twig',array(
             'routing_statutCAShome' => '/chef',
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
             'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
-            'projets' => $projets
+            'projets' => $projets,
+            'dpt' => $dpt,
+            'annee' => $annee,
+            'promos' => $proms,
         ));
 
     }

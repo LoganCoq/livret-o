@@ -1,75 +1,211 @@
 {% extends 'base.html.twig' %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css"/>
 
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css"/>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/chooseProjectCommunication.css') }}">
 {% endblock %}
+
 {% block content %}
-    <div class="div_home">
+    <h1 class="titre"> Projets en cours </h1>
 
-        {{ departement[0] }}
-
-        <ul id="listeProjets">
-            {% for p in projets %}
-                <li><a href="/generate/{{ p.id }}" id="o{{ p.id }}">{{ p.intituleProjet }}</a></li>
+    <div class="selection">
+        <select id="selectionDpt" class="selectpicker form-control" data-live-search="data-live-search"
+                data-width="auto" multiple="multiple" title="Aucun département sélectionné">
+            {% for d in dpt %}
+                <option value="{{ d.id }}">{{ d.nomDpt }}</option>
             {% endfor %}
-        </ul>
+        </select>
+
+        <select id="selectionAnnee" class="selectpicker form-control" data-live-search="data-live-search"
+                data-width="auto" multiple="multiple" title="Aucune année sélectionnée">
+            {% for d in annee %}
+                <option value="{{ d }}">20{{ d }}</option>
+            {% endfor %}
+        </select>
+        <select id="selectionPromo" class="selectpicker form-control" data-live-search="data-live-search"
+                data-width="auto" multiple="multiple" title="Aucune promotions sélectionnées">
+            {% for p in promos %}
+                <option value="{{ p }}">{{ p }}</option>
+            {% endfor %}
+        </select>
+        <label>
+            <input type="checkbox" id="selectionValide"> Projets validés
+        </label>
+
     </div>
+    <br/>
+
+    <ul id="listeProjets">
+        {% for projet in projets %}
+            <li id="o{{ projet.id }}"  class="list-group-item">
+                <p id="choose_project_name">{{ projet.intituleProjet }}</p>
+                <div class="btns">
+                    <a href="" class="btn btn-warning" id="livret_modif_btn">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        Modifier le projet
+                    </a>
+                    <a href="/generate/{{ projet.id }}" class="btn btn-success" id="livret_btn_see">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        Aperçu du projet
+                    </a>
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle" type="button" data-toggle="dropdown" id="btn_drop_{{ projet.id }}" aria-haspopup="true" aria-expanded="true">
+                            <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="btn_drop_{{ projet.id }}">
+                            <li>
+                                <a href="" id="delete_btn">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer le projet
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+
     <script>
-        projets = Array();
+        projets = [];
+
         {% for p in projets %}
-        a = new Array();
-        a.push({{ p.id }})
+        a = [];
+        a.push({{ p.id }});
         a.push("{{ p.etudiants[0].formations[0].departement.nomDpt }}");
-        a.push("{{ p.dateDebut|date('Y') }}")
+        a.push("{{ p.dateDebut|date('Y') }}");
+        a.push("{{ p.etudiants[0].formations[0].typeFormation }}");
+        {% if p.validerProjet == 0 %}
+        a.push(false);
+        {% else %}
+        a.push(true);
+        {% endif %}
         projets.push(a);
         {% endfor %}
+
         liste = document.getElementById("listeProjets");
+
         selDpt = document.getElementById("selectionDpt");
-        selDpt.onchange = function(evenement){
+        selDpt.onchange = function (evenement) {
             actualiserProjets();
-        }
+        };
+
         selAnnee = document.getElementById("selectionAnnee");
-        selAnnee.onchange = function(evenement){
+        selAnnee.onchange = function (evenement) {
             actualiserProjets();
-        }
+        };
+
+        selProm = document.getElementById("selectionPromo");
+        selProm.onchange = function (evenement) {
+            actualiserProjets();
+        };
+
+        selValide = document.getElementById("selectionValide");
+        selValide.onchange = function (evenement) {
+            actualiserProjets();
+        };
+
         allHidden();
+        function allHidden() {
+            for (pro of projets) {
+                document.getElementById("o" + pro[0]).hidden = true;
+            }
+        }
+
         actualiserProjets();
-        function actualiserProjets(){
-            dpt = {{ departement[0] }};
-            for (pro of projets)
-            {
-                if (dpt.includes(pro[1]))
-                {
-                    document.getElementById("o"+pro[0]).hidden = false;
+        function actualiserProjets() {
+            dptS = selDpt.selectedOptions;
+            AnnS = selAnnee.selectedOptions;
+            promS = selProm.selectedOptions;
+            valS = selValide.checked;
+            dpt = [];
+            for (d of dptS) {
+                dpt.push(d.innerHTML);
+            }
+            ann = [];
+            for (a of AnnS) {
+                ann.push(20 + a.value);
+            }
+            prom = [];
+            for (pr of promS) {
+                prom.push(pr.value);
+            }
+            for (pro of projets) {
+                if (dptS.length > 0 && AnnS.length > 0 && promS.length > 0) {
+                    if (dpt.includes(pro[1]) && ann.includes(pro[2]) && prom.includes(pro[3]) && pro[4] === valS) {
+                        document.getElementById("o" + pro[0]).style.display = "inline-block";
+                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                    }
+
+                    else {
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
+                    }
+                } else if (dptS.length < 1 && AnnS.length > 0 && promS.length > 0 ) {
+                    if (ann.includes(pro[2]) && prom.includes(pro[3]) && pro[4] === valS) {
+                        document.getElementById("o" + pro[0]).style.display = "inline-block";
+                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                    }
+
+                    else {
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
+                    }
+                } else if (dptS.length > 0 && AnnS.length < 1 && promS.length > 0 ) {
+                    if (dpt.includes(pro[1]) && prom.includes(pro[3]) && pro[4] === valS) {
+                        document.getElementById("o" + pro[0]).style.display = "inline-block";
+                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                    }
+
+                    else {
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
+                    }
+                } else if (dptS.length > 0 && AnnS.length > 0 && promS.length < 1 ) {
+                    if (dpt.includes(pro[1]) && ann.includes(pro[2]) && pro[4] === valS) {
+                        document.getElementById("o" + pro[0]).style.display = "inline-block";
+                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                    }
+
+                    else {
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
+                    }
+                } else if (dptS.length < 1 && AnnS.length < 1 && promS.length < 1 ){
+                    if (pro[4] === valS) {
+                        document.getElementById("o" + pro[0]).style.display = "inline-block";
+                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                    }
+
+                    else {
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
+                    }
                 }
-                else
-                {
-                    document.getElementById("o"+pro[0]).hidden = true;
+                else {
+                    if ((dpt.includes(pro[1]) || ann.includes(pro[2]) || prom.includes(pro[3])) && pro[4] === valS) {
+                        document.getElementById("o" + pro[0]).style.display = "inline-block";
+                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                        document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
+                    }
+
+                    else {
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
+                        document.getElementById("l" + pro[0]).className = "btn";
+                    }
                 }
             }
-
         }
-
-        function allHidden()
-        {
-            for (pro of projets)
-            {
-                document.getElementById("o"+pro[0]).hidden = true;
-            }
-        }
-
     </script>
-
-
-
 {% endblock %}
