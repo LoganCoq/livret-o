@@ -61,6 +61,7 @@ class StudentController extends Controller
         // Recuperation des informations sur la formation de l'étudiant connecté
         $formation = $etudiant->getFormations()->last();
         $departement = $formation->getDepartement()->getNomDpt();
+        $promo = $formation->getTypeFormation();
 
         // remplissage des données de bases du projet
         $projet->setNomDpt($departement);
@@ -72,7 +73,8 @@ class StudentController extends Controller
 	    foreach ( $allUsers as $curUser ){
 	        if ( in_array('ROLE_student',$curUser->getRoles()) && !$curUser->getFormations()->isEmpty()){
 	            $curForm = $curUser->getFormations()->last()->getDepartement()->getNomDpt();
-	            if ( $curForm === $departement)
+	            $curProm = $curUser->getFormations()->last()->getTypeFormation();
+	            if ( $curForm === $departement && $curProm == $promo)
                 {
                     array_push($etudiants, $curUser);
                 }
