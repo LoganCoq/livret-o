@@ -7,6 +7,12 @@
     Livret'O - Creation édito
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/css/editoEdit.css') }}">
+{% endblock %}
+
 
 {% block content %}
 
@@ -16,7 +22,7 @@
 
 
     {# bouton d'annulation / retour accueil #}
-    <a type="button" href="{{ path('iuto_livret_communicationhomepage') }}" class="btn btn-danger" id="livret_cancel_create_student">
+    <a type="button" href="{{ path('iuto_livret_communicationhomepage') }}" class="btn btn-danger" id="livret_cancel_edito">
         {#icone#}
         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         Annuler

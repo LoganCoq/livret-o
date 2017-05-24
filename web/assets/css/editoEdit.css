@@ -1,0 +1,50 @@
+.form-group
+{
+    width: 70%;
+}
+
+.control-label
+{
+    margin: 1em 1em 1em 0em;
+    padding: auto;
+    font-size: 1.5em;
+    margin-right: 30%;
+}
+
+.form-control
+{
+    margin-right: 15em;
+    font-size: 1.2em;
+    height: auto;
+    /*text-align: center;*/
+}
+
+
+
+#iuto_livretbundle_edito_submit
+{
+    margin: 1em;
+    font-size: 1.2em;
+}
+
+form[name=iuto_livretbundle_edito]
+{
+    margin-left: 7em;
+}
+
+
+
+.btn-group
+{
+    width: 70% !important;
+}
+
+
+#livret_cancel_edito
+{
+    margin-left: 70%;
+    margin-top: -7.5em;
+    font-size: 1.2em;
+}
+
+
