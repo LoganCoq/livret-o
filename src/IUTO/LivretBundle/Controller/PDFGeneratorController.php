@@ -28,7 +28,7 @@ class PDFGeneratorController extends Controller
 //        Récupération des informations sur le projet
         $nomP = $projet->getIntituleProjet();
 //        $descripP = $projet->getDescripProjet();
-        $descripP = preg_replace("/\r\n/","\ ",$projet->getDescripProjet());
+        $descripP = $projet->getDescripProjet();
         $bilanP = $projet->getBilanProjet();
         $clientP = $projet->getClientProjet();
         $descripCli = $projet->getDescriptionClientProjet();
@@ -137,7 +137,7 @@ class PDFGeneratorController extends Controller
 //        Récupération des informations sur le projet
         $nomP = $projet->getIntituleProjet();
 //        $descripP = $projet->getDescripProjet();
-        $descripP = preg_replace("/\r\n/","\ ",$projet->getDescripProjet());
+        $descripP = $projet->getDescripProjet();
         $bilanP = $projet->getBilanProjet();
         $clientP = $projet->getClientProjet();
         $descripCli = $projet->getDescriptionClientProjet();
