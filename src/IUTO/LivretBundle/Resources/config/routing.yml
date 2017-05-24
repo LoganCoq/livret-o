@@ -185,9 +185,9 @@ iuto_livret_chiefPresentation:
     defaults: { _controller: IUTOLivretBundle:Chief:chiefPresentation }
 
 #==========LISTE==========#
-iuto_livret_chiefliste:
-    path: /chef/liste
-    defaults: { _controller: IUTOLivretBundle:Chief:chiefliste }
+iuto_livret_chief_choose_project:
+    path: /chef/choose/projet
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefChooseProject }
 
 #==========CORRECTION1=====#
 iuto_livret_correctionChief1:

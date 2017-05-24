@@ -27,10 +27,10 @@ class ChiefController extends Controller
 
         return $this->render('IUTOLivretBundle:Chief:chiefhome.html.twig', array(
             'statutCAS' => 'chef de département',
-            'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'options' => array('Générer un livret au format pdf', 'Voir les livrets', 'Sélection des projets', 'Afficher la liste des projets du département', 'Ajouter un projet'),
-            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
-            'routing_options' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
+            'info' => array('Générer livrets', 'Voir les livrets', 'Voir les projets', 'Projets du département', 'Ajouter un projet'),
+            'options' => array('Générer un livret au format pdf', 'Voir les livrets', 'Voir les projets', 'Afficher la liste des projets du département', 'Ajouter un projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '#'),
+            'routing_options' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '#'),
             'routing_statutCAShome' => '/chef',
             'user' => $user,
         ));
@@ -61,7 +61,7 @@ class ChiefController extends Controller
         return $this->render('IUTOLivretBundle:Chief:chiefCreateLivret.html.twig', array(
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '#'),
             'routing_statutCAShome' => '/chef',
             'formCreate' => $formCreate->createView(),
         ));
@@ -134,7 +134,7 @@ class ChiefController extends Controller
             'form' => $form->createView(),
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '#'),
             'routing_statutCAShome' => '/chef',
         ));
     }
@@ -183,7 +183,7 @@ class ChiefController extends Controller
             'form' => $form->createView(),
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '#'),
             'routing_statutCAShome' => '/chef',
         ));
     }
@@ -201,13 +201,13 @@ class ChiefController extends Controller
         return $this->render('IUTOLivretBundle:Chief:chiefChooseLivret.html.twig', array(
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '#'),
             'routing_statutCAShome' => '/chef',
             'livrets' => $livrets,
         ));
     }
 
-    public function chiefChooseDepartmentProjectsAction()
+    public function chiefChooseProjectAction()
     {
         $idUniv = \phpCAS::getUser();
         $manager = $this->getDoctrine()->getManager();
@@ -223,7 +223,7 @@ class ChiefController extends Controller
             'routing_statutCAShome' => '/chef',
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Voir les livrets', 'Sélection des projets', 'Projets du département', 'Ajouter un projet'),
-            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '#', '#', '#'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '#'),
             'projets' => $projets,
             'dpt' => $dpt,
             'annee' => $annee,
