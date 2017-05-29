@@ -209,6 +209,33 @@ class ChiefController extends Controller
         ));
     }
 
+    public function chiefModifLivretAction(Request $request, Livret $livret)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = phpCAS::getUser();
+
+        $formModif = $this->createForm(NewLivretType::class, $livret);
+        $formModif->handleRequest($request);
+
+        if ( $formModif->isSubmitted() && $formModif->isValid() )
+        {
+            $em->persist($livret);
+            $em->flush();
+
+            return $this->redirectToRoute('iuto_livret_chief_livretProjects', array(
+                'livret' => $livret->getId(),
+            ));
+        }
+
+        return $this->render('IUTOLivretBundle:Chief:chiefCreateLivret.html.twig', array(
+            'formCreate' => $formModif->createView(),
+            'statutCAS' => 'chef de département',
+            'info' => array('Générer livrets', 'Voir les livrets', 'Voir les projets', 'Créer un projet', 'Créer un édito', 'Voir les éditos'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '/chef/create/edito', '/chef/choose/edito'),
+            'routing_statutCAShome' => '/chef',
+        ));
+    }
+
     public function chiefDeleteLivretAction(Request $request, Livret $livret)
     {
         $idUnic = \phpCAS::getUser();

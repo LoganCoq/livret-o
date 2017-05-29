@@ -33,11 +33,11 @@
                     {% for livret in livrets %}
                         <li class="list-group-item">
                             <p id="choose_livret_name">{{ livret.intituleLivret }}</p>
-                            <a href="" class="btn btn-warning" id="livreto_modif_livret">
+                            <a href="{{ path('iuto_livret_chief_modif_livret') }}" class="btn btn-warning" id="livreto_modif_livret">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 Modifier le livret
                             </a>
-                            <a href="/generate/livret/{{ livret.id }}" class="btn btn-success" id="livreto_see_btn">
+                            <a href="{{ path('iuto_livret_livretgenerator', {'idLivret' : livret.id}) }}" class="btn btn-success" id="livreto_see_btn">
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                 Aperçu du livret
                             </a>

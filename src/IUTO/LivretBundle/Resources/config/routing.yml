@@ -179,6 +179,10 @@ iuto_livret_chief_choose_livret:
     path: /chef/choose/livret
     defaults: { _controller: IUTOLivretBundle:Chief:chiefChooseLivret }
 
+iuto_livret_chief_modif_livret:
+    path: /chef/modif/livret/{livret}
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefModifLivret }
+
 iuto_livret_chief_delete_livret:
     path: /chef/delete/livret/{livret}
     defaults: { _controller: IUTOLivretBundle:Chief:chiefDeleteLivret }
