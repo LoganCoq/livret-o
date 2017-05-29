@@ -42,47 +42,20 @@ class PDFGeneratorController extends Controller
         $logo = null;
         $image1 = null;
         $image2 = null;
-        if ($images->count() == 3) //TODO cleaner
+        $cpt = 0;
+        foreach ($images as $curImg)
         {
-            if ($images{0}->getIsLogo()) {
-                $logo = $images{0};
+            if ($curImg->getIsLogo())
+            {
+                $logo = $curImg;
             } else {
-                $image1 = $images{0};
-            }
-            if ($images{1}->getIsLogo()) {
-                $logo = $images{1};
-            } else {
-                if ($image1 !== null) {
-                    $image1 = $images{1};
+                if ( $cpt == 0)
+                {
+                    $image1 = $curImg;
                 } else {
-                    $image2 = $images{1};
+                    $image2 = $curImg;
                 }
-            }
-            if ($images{2}->getIsLogo()) {
-                $logo = $images{2};
-            } else {
-                $image2 = $images{2};
-            }
-        } elseif ($images->count() == 2) {
-            if ($images{0}->getIsLogo()) {
-                $logo = $images{0};
-            } else {
-                $image1 = $images{0};
-            }
-            if ($images{1}->getIsLogo()) {
-                $logo = $images{1};
-            } else {
-                if ($image1 !== null) {
-                    $image1 = $images{1};
-                } else {
-                    $image2 = $images{1};
-                }
-            }
-        } elseif ($images->count() == 1) {
-            if ($images{0}->getIsLogo()) {
-                $logo = $images{0};
-            } else {
-                $image1 = $images{0};
+                $cpt++;
             }
         }
 
@@ -146,47 +119,20 @@ class PDFGeneratorController extends Controller
         $logo = null;
         $image1 = null;
         $image2 = null;
-        if ($images->count() == 3) //TODO cleaner
+        $cpt = 0;
+        foreach ($images as $curImg)
         {
-            if ($images{0}->getIsLogo()) {
-                $logo = $images{0};
+            if ($curImg->getIsLogo())
+            {
+                $logo = $curImg;
             } else {
-                $image1 = $images{0};
-            }
-            if ($images{1}->getIsLogo()) {
-                $logo = $images{1};
-            } else {
-                if ($image1 !== null) {
-                    $image1 = $images{1};
+                if ( $cpt == 0)
+                {
+                    $image1 = $curImg;
                 } else {
-                    $image2 = $images{1};
+                    $image2 = $curImg;
                 }
-            }
-            if ($images{2}->getIsLogo()) {
-                $logo = $images{2};
-            } else {
-                $image2 = $images{2};
-            }
-        } elseif ($images->count() == 2) {
-            if ($images{0}->getIsLogo()) {
-                $logo = $images{0};
-            } else {
-                $image1 = $images{0};
-            }
-            if ($images{1}->getIsLogo()) {
-                $logo = $images{1};
-            } else {
-                if ($image1 !== null) {
-                    $image1 = $images{1};
-                } else {
-                    $image2 = $images{1};
-                }
-            }
-        } elseif ($images->count() == 1) {
-            if ($images{0}->getIsLogo()) {
-                $logo = $images{0};
-            } else {
-                $image1 = $images{0};
+                $cpt++;
             }
         }
 
@@ -313,47 +259,20 @@ class PDFGeneratorController extends Controller
             $logo = null;
             $image1 = null;
             $image2 = null;
-            if ($images->count() == 3) //TODO cleaner
+            $cpt = 0;
+            foreach ($images as $curImg)
             {
-                if ($images{0}->getIsLogo()) {
-                    $logo = $images{0};
+                if ($curImg->getIsLogo())
+                {
+                    $logo = $curImg;
                 } else {
-                    $image1 = $images{0};
-                }
-                if ($images{1}->getIsLogo()) {
-                    $logo = $images{1};
-                } else {
-                    if ($image1 !== null) {
-                        $image1 = $images{1};
+                    if ( $cpt == 0)
+                    {
+                        $image1 = $curImg;
                     } else {
-                        $image2 = $images{1};
+                        $image2 = $curImg;
                     }
-                }
-                if ($images{2}->getIsLogo()) {
-                    $logo = $images{2};
-                } else {
-                    $image2 = $images{2};
-                }
-            } elseif ($images->count() == 2) {
-                if ($images{0}->getIsLogo()) {
-                    $logo = $images{0};
-                } else {
-                    $image1 = $images{0};
-                }
-                if ($images{1}->getIsLogo()) {
-                    $logo = $images{1};
-                } else {
-                    if ($image1 !== null) {
-                        $image1 = $images{1};
-                    } else {
-                        $image2 = $images{1};
-                    }
-                }
-            } elseif ($images->count() == 1) {
-                if ($images{0}->getIsLogo()) {
-                    $logo = $images{0};
-                } else {
-                    $image1 = $images{0};
+                    $cpt++;
                 }
             }
 
@@ -480,47 +399,20 @@ class PDFGeneratorController extends Controller
             $logo = null;
             $image1 = null;
             $image2 = null;
-            if ($images->count() == 3) //TODO cleaner
+            $cpt = 0;
+            foreach ($images as $curImg)
             {
-                if ($images{0}->getIsLogo()) {
-                    $logo = $images{0};
+                if ($curImg->getIsLogo())
+                {
+                    $logo = $curImg;
                 } else {
-                    $image1 = $images{0};
-                }
-                if ($images{1}->getIsLogo()) {
-                    $logo = $images{1};
-                } else {
-                    if ($image1 !== null) {
-                        $image1 = $images{1};
+                    if ( $cpt == 0)
+                    {
+                        $image1 = $curImg;
                     } else {
-                        $image2 = $images{1};
+                        $image2 = $curImg;
                     }
-                }
-                if ($images{2}->getIsLogo()) {
-                    $logo = $images{2};
-                } else {
-                    $image2 = $images{2};
-                }
-            } elseif ($images->count() == 2) {
-                if ($images{0}->getIsLogo()) {
-                    $logo = $images{0};
-                } else {
-                    $image1 = $images{0};
-                }
-                if ($images{1}->getIsLogo()) {
-                    $logo = $images{1};
-                } else {
-                    if ($image1 !== null) {
-                        $image1 = $images{1};
-                    } else {
-                        $image2 = $images{1};
-                    }
-                }
-            } elseif ($images->count() == 1) {
-                if ($images{0}->getIsLogo()) {
-                    $logo = $images{0};
-                } else {
-                    $image1 = $images{0};
+                    $cpt++;
                 }
             }
 
