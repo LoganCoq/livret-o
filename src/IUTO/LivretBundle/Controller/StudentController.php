@@ -240,6 +240,7 @@ class StudentController extends Controller
         // Recuperation des informations sur la formation de l'étudiant connecté
         $formation = $etudiant->getFormations()->last();
         $departement = $formation->getDepartement()->getNomDpt();
+        $promo = $formation->getTypeFormation();
 
 
         $allUsers = $em->getRepository(User::class)->findAll();
