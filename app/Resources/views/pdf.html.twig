@@ -93,7 +93,7 @@
             <tr>
                 <td>
                     <div>
-                        <p class="descripClient">{{ descripCli }}</p>
+                        <p class="descripClient">{{ descripCli|nl2br }}</p>
                     </div>
                 </td>
             </tr>
@@ -103,7 +103,7 @@
                 <td style="width: 70%; ">
                     <div class="presentation_projet">
                         <h4 class="titre_info"> Description du projet </h4>
-                         {{ descrip }}
+                         {{ descrip|nl2br }}
                     </div>
                 </td>
                 <td style="width:30%; height: 10%">
@@ -131,7 +131,7 @@
                 <td style="width: 70%; ">
                     <div class="bilan_projet">
                         <h4 class="titre_info"> Bilan du projet </h4>
-                        <p> {{ bilan }} </p>
+                        <p> {{ bilan|nl2br }} </p>
                     </div>
                 </td>
             </tr>

@@ -594,13 +594,11 @@ class PDFGeneratorController extends Controller
         $titre = $edito->getTitre();
         $contenu = $edito->getContenuEdito();
 
-        $paras = explode('\r\n', $contenu);
-
         //        Création du template du projet avec les informations de celui-ci
         $template = $this->renderView('::edito.html.twig',
             [
                 'titre' => $titre,
-                'paragraphes' => $paras,
+                'texte' => $contenu,
             ]);
 
 //        Récupération de l'application de génération de pdf
