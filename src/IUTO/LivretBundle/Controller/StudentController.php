@@ -241,13 +241,15 @@ class StudentController extends Controller
         $formation = $etudiant->getFormations()->last();
         $departement = $formation->getDepartement()->getNomDpt();
 
+
         $allUsers = $em->getRepository(User::class)->findAll();
         $etudiants = array();
         $tuteurs = array();
         foreach ( $allUsers as $curUser ){
             if ( in_array('ROLE_student',$curUser->getRoles()) && !$curUser->getFormations()->isEmpty()){
                 $curForm = $curUser->getFormations()->last()->getDepartement()->getNomDpt();
-                if ( $curForm === $departement)
+                $curProm = $curUser->getFormations()->last()->getTypeFormation();
+                if ( $curForm === $departement && $curProm == $promo)
                 {
                     array_push($etudiants, $curUser);
                 }
@@ -255,9 +257,8 @@ class StudentController extends Controller
                 array_push($tuteurs, $curUser);
             }
         }
-
-        //creation du formulaire pour completer un projet
-        $form = $this->createForm(ProjetCompleteType::class, $projet, ['etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
+        // création du formulaire de création d'un projet
+        $form = $this->createForm(ProjetCreateType::class, $projet, ['annee' => $formation->getYearDebut(), 'etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
 
         // insertion des dates en string
         $form['dateDebut']->setData($projet->getDateDebut()->format('d/m/Y'));
