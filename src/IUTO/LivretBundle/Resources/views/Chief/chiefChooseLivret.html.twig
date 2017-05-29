@@ -33,7 +33,7 @@
                     {% for livret in livrets %}
                         <li class="list-group-item">
                             <p id="choose_livret_name">{{ livret.intituleLivret }}</p>
-                            <a href="{{ path('iuto_livret_chief_modif_livret') }}" class="btn btn-warning" id="livreto_modif_livret">
+                            <a href="{{ path('iuto_livret_chief_modif_livret', {'livret' : livret.id}) }}" class="btn btn-warning" id="livreto_modif_livret">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 Modifier le livret
                             </a>
