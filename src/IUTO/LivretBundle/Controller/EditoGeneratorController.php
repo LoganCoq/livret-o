@@ -2,10 +2,7 @@
 
 namespace IUTO\LivretBundle\Controller;
 
-use IUTO\LivretBundle\Entity\Livret;
-use IUTO\LivretBundle\Service\HTML2PDF;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
 
 class EditoGeneratorController extends Controller
@@ -14,12 +11,6 @@ class EditoGeneratorController extends Controller
 
     public function generatorAction()
     {
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('IUTOLivretBundle:Livret');
-
-
         $texte = $this->get('session')->get('edito');
 
         $template = $this->renderView('::edito.html.twig',

@@ -4,20 +4,15 @@ namespace IUTO\LivretBundle\Controller;
 
 use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Form\UserModifType;
+use phpCAS;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use IUTO\LivretBundle\Entity\Projet;
-use IUTO\LivretBundle\Form\ProjetModifType;
-use IUTO\LivretBundle\Form\ProjetContenuType;
-use IUTO\LivretBundle\Form\CommentaireCreateType;
 use Symfony\Component\HttpFoundation\Request;
-use IUTO\LivretBundle\Form\PresentationType;
-use IUTO\LivretBundle\Entity\Livret;
 
 class AdministrateurController extends Controller
 {
     public function adminHomeAction()
     {
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
 
         // creation de la vue home
         return $this->render('IUTOLivretBundle:Administrateur:adminHome.html.twig', array(
@@ -32,7 +27,7 @@ class AdministrateurController extends Controller
 
     public function adminChooseUserAction()
     {
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
 
         $repUser = $this->getDoctrine()->getRepository(User::class);
         $users = $repUser->findAll();
@@ -80,7 +75,7 @@ class AdministrateurController extends Controller
     public function modifUserAction(Request $request, User $user)
     {
         $em = $this->getDoctrine()->getManager();
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
 
         $form = $this->createForm(UserModifType::class, $user);
         $form->handleRequest($request);

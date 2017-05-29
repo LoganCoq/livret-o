@@ -2,7 +2,6 @@
 
 namespace IUTO\LivretBundle\Repository;
 
-use IUTO\LivretBundle\Entity\User;
 
 /**
  * FormationRepository

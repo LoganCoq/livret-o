@@ -10,14 +10,11 @@ use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Form\AddImageType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
-use IUTO\LivretBundle\Form\ProjetCompleteType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use phpCAS;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class StudentController extends Controller
 {
@@ -53,7 +50,7 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
         // Recuperation de l'étudiant connecté
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         //creation d'un nouveau projet
         $projet = new Projet();
@@ -421,7 +418,6 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
         //récupération des informations de l'utilisateur connecter
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
 //        récupération des mots clés du projet
         $motsCles = $projet->getMotsClesProjet();
@@ -684,7 +680,6 @@ class StudentController extends Controller
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
         $projet = $image->getProjet();
 

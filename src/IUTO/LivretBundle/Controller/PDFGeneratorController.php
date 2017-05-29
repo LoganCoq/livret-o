@@ -53,7 +53,7 @@ class PDFGeneratorController extends Controller
             if ($images{1}->getIsLogo()) {
                 $logo = $images{1};
             } else {
-                if ($image1 != null) {
+                if ($image1 !== null) {
                     $image1 = $images{1};
                 } else {
                     $image2 = $images{1};
@@ -73,7 +73,7 @@ class PDFGeneratorController extends Controller
             if ($images{1}->getIsLogo()) {
                 $logo = $images{1};
             } else {
-                if ($image1 != null) {
+                if ($image1 !== null) {
                     $image1 = $images{1};
                 } else {
                     $image2 = $images{1};
@@ -158,7 +158,7 @@ class PDFGeneratorController extends Controller
             if ($images{1}->getIsLogo()) {
                 $logo = $images{1};
             } else {
-                if ($image1 != null) {
+                if ($image1 !== null) {
                     $image1 = $images{1};
                 } else {
                     $image2 = $images{1};
@@ -178,7 +178,7 @@ class PDFGeneratorController extends Controller
             if ($images{1}->getIsLogo()) {
                 $logo = $images{1};
             } else {
-                if ($image1 != null) {
+                if ($image1 !== null) {
                     $image1 = $images{1};
                 } else {
                     $image2 = $images{1};
@@ -325,7 +325,7 @@ class PDFGeneratorController extends Controller
                 if ($images{1}->getIsLogo()) {
                     $logo = $images{1};
                 } else {
-                    if ($image1 != null) {
+                    if ($image1 !== null) {
                         $image1 = $images{1};
                     } else {
                         $image2 = $images{1};
@@ -345,7 +345,7 @@ class PDFGeneratorController extends Controller
                 if ($images{1}->getIsLogo()) {
                     $logo = $images{1};
                 } else {
-                    if ($image1 != null) {
+                    if ($image1 !== null) {
                         $image1 = $images{1};
                     } else {
                         $image2 = $images{1};
@@ -492,7 +492,7 @@ class PDFGeneratorController extends Controller
                 if ($images{1}->getIsLogo()) {
                     $logo = $images{1};
                 } else {
-                    if ($image1 != null) {
+                    if ($image1 !== null) {
                         $image1 = $images{1};
                     } else {
                         $image2 = $images{1};
@@ -512,7 +512,7 @@ class PDFGeneratorController extends Controller
                 if ($images{1}->getIsLogo()) {
                     $logo = $images{1};
                 } else {
-                    if ($image1 != null) {
+                    if ($image1 !== null) {
                         $image1 = $images{1};
                     } else {
                         $image2 = $images{1};

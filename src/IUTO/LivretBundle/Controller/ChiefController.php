@@ -227,7 +227,7 @@ class ChiefController extends Controller
 
     public function chiefDeleteLivretAction(Request $request, Livret $livret)
     {
-        $idUnic = \phpCAS::getUser();
+        $idUnic = phpCAS::getUser();
 
         $em = $this->getDoctrine()->getManager();
 
@@ -260,10 +260,9 @@ class ChiefController extends Controller
 
     public function chiefChooseProjectAction()
     {
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
         $manager = $this->getDoctrine()->getManager();
 
-        $repository = $manager->getRepository('IUTOLivretBundle:User');
 
         $projets = $manager->getRepository(Projet::class)->findAll();
         $dpt = $manager->getRepository(Departement::class)->findAll();
@@ -304,7 +303,7 @@ class ChiefController extends Controller
 
     public function chiefCreateEditoAction(Request $request)
     {
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
         $manager = $this->getDoctrine()->getManager();
 
         $newEdito = new Edito();
@@ -330,7 +329,7 @@ class ChiefController extends Controller
 
     public function correctionChief1Action()
     {
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
         $repository = $this
             ->getDoctrine()
             ->getManager()
@@ -357,7 +356,7 @@ class ChiefController extends Controller
 
     public function correctionChief2Action(Request $request, Projet $projet)
     {
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
 
         $form = $this->createForm(ProjetModifType::class, $projet);
         $form->handleRequest($request);
@@ -413,7 +412,7 @@ class ChiefController extends Controller
 
     public function correctionChief3Action(Request $request, Projet $projet)
     {
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
 
         $form = $this->createForm(ProjetContenuType::class, $projet);
         $form->handleRequest($request);
@@ -449,7 +448,7 @@ class ChiefController extends Controller
 
     public function correctionChief4Action(Request $request, Projet $projet)
     {
-        $idUniv = \phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
 
         $idProjet = $projet->getId();
 

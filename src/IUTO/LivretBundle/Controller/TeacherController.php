@@ -780,7 +780,6 @@ class TeacherController extends Controller
         //récupération des informations sur l'utilisateur
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
         // récuperation des projets d'un étudiant
         $projets = $em->getRepository(Projet::class)->findAll();

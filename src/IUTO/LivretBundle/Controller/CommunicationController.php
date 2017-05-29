@@ -437,7 +437,6 @@ class CommunicationController extends Controller
             $comReponse->setDate();
             $comReponse->setProjet($projet);
             // ajout de l'user au commentaire
-            $repository2 = $em->getRepository('IUTOLivretBundle:User');
             $comReponse->setUser($user);
             $comReponse->setContenu($formCom['contenu']->getData());
 
@@ -538,7 +537,6 @@ class CommunicationController extends Controller
             $comReponse->setDate();
             $comReponse->setProjet($projet);
             // ajout de l'user au commentaire
-            $repository2 = $em->getRepository('IUTOLivretBundle:User');
             $comReponse->setUser($user);
             $comReponse->setContenu($formCom['contenu']->getData());
 
@@ -671,7 +669,6 @@ class CommunicationController extends Controller
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         $form = $this->get('form.factory')->create();
         $form->handleRequest($request);
