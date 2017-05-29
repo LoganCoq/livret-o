@@ -27,7 +27,6 @@ class PDFGeneratorController extends Controller
 
 //        Récupération des informations sur le projet
         $nomP = $projet->getIntituleProjet();
-//        $descripP = $projet->getDescripProjet();
         $descripP = $projet->getDescripProjet();
         $bilanP = $projet->getBilanProjet();
         $clientP = $projet->getClientProjet();
@@ -132,7 +131,6 @@ class PDFGeneratorController extends Controller
 
 //        Récupération des informations sur le projet
         $nomP = $projet->getIntituleProjet();
-//        $descripP = $projet->getDescripProjet();
         $descripP = $projet->getDescripProjet();
         $bilanP = $projet->getBilanProjet();
         $clientP = $projet->getClientProjet();

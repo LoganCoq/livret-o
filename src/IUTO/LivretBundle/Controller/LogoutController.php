@@ -3,7 +3,6 @@
 namespace IUTO\LivretBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Ldap\Enty;
 use Symfony\Component\HttpFoundation\Request;
 
 class LogoutController extends Controller

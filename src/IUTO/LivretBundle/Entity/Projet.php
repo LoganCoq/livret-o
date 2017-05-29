@@ -399,8 +399,6 @@ class Projet
     {
         $this->etudiants[] = $etudiant;
 
-//        $etudiant->addProjetFait($this);
-
         return $this;
     }
 
@@ -444,8 +442,6 @@ class Projet
     public function addTuteur(\IUTO\LivretBundle\Entity\User $tuteur)
     {
         $this->tuteurs[] = $tuteur;
-
-//        $tuteur->addProjetSuivi($this);
 
         return $this;
     }

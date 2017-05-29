@@ -18,19 +18,4 @@ class LoginController extends Controller
         return $this->redirect($url . $target);
     }
 
-//    /**
-//     * @Route("/force", name="force")
-//     */
-//    public function forceAction()
-//    {
-//
-//        if (!isset($_SESSION)) {
-//            session_start();
-//        }
-//
-//        session_destroy();
-//
-//        return $this->redirect($this->generateUrl('iuto_livret_login'));
-//    }
-
 }

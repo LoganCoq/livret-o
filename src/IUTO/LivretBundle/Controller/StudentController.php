@@ -19,14 +19,13 @@ use phpCAS;
 class StudentController extends Controller
 {
 //    controlleur pour le home de l'étudiant connecté
-//    arguments :
+//    arguments
 //
     public function studenthomeAction()
     {
         $em = $this->getDoctrine()->getManager();
         // recupération de l'utilisateur connecté
         $idUniv = phpCAS::getUser();
-        //$idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         // creation de la vue home
@@ -42,7 +41,7 @@ class StudentController extends Controller
     }
 
 //    controlleur pour la gestion de la création d'un projet par un étudiant
-//    arguments :
+//    arguments
 //        request : objet pour gérer les requettes des formulaires
     public function createProjectAction(Request $request)
     {
@@ -140,7 +139,7 @@ class StudentController extends Controller
     }
 
 //    controlleur pour la gestion de l'ajout de contenu lors de la création d'un projet
-//    arguments :
+//    arguments
 //        request : objet pour gérer les requettes des formulaires
 //        projet  : projet sur le quel on va effectuer des ajouts d'information ( celui créer dans createProject )
     public function contenuProjectAction(Request $request, Projet $projet)
@@ -182,14 +181,14 @@ class StudentController extends Controller
     }
 
 //    controller pour l'affichage des projets d'un étudiant ( validés ou non )
-//    arguments :
+//    arguments
 //
     public function chooseProjectAction()
     {
         //récupération des informations sur l'utilisateur
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         // récuperation des projets d'un étudiant
         $projets = $etudiant->getProjetFaits();
@@ -219,7 +218,7 @@ class StudentController extends Controller
     }
 
 //    controlleur pour l'affichage du formulaire de correction du projet
-//    arguments :
+//    arguments
 //        request : objet pour gérer les requettes des formulaires
 //        projet  : projet sur le quel on va effectuer des modification
     public function completeProjectAction(Request $request, Projet $projet)
@@ -227,7 +226,7 @@ class StudentController extends Controller
         //récupération des informations de l'utilisateur connecter
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
+        $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         // Recuperation des informations sur la formation de l'étudiant connecté
         $formation = $etudiant->getFormations()->last();
@@ -409,7 +408,7 @@ class StudentController extends Controller
     }
 
 //    controlleur pour l'ajout de mots clés et d'image à un projet lors de la correction
-//    arguments :
+//    arguments
 //        request : objet pour gérer les requettes des formulaires
 //        projet  : projet sur le quel on va effectuer des modification
     public function addWordImageAction(Request $request, Projet $projet)
@@ -550,7 +549,7 @@ class StudentController extends Controller
     }
 
 //    controlleur pour l'ajout d'une nouvelle image au projet
-//    arguments :
+//    arguments
 //        request : objet pour gérer les requettes des formulaires
 //        projet  : projet sur le quel on va ajouter une image
     public function addImageAction(Request $request, Projet $projet)
@@ -600,7 +599,7 @@ class StudentController extends Controller
     }
 
 //    controlleur pour la vue d'apres ajout d'information à un projet pour voir le pdf ou le télécharger
-//    arguments :
+//    arguments
 //        projet  : projet modifié précedemment
     public function confirmCompleteProjectAction(Projet $projet)
     {
@@ -618,7 +617,7 @@ class StudentController extends Controller
     }
 
 //    controlleur pour voir le pdf d'un projet validé ou pour le télécharger.
-//    arguments :
+//    arguments
 //        projet  : projet validé
     public function viewFinishedProjectAction(Projet $projet)
     {
