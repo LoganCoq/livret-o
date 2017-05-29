@@ -209,6 +209,42 @@ class ChiefController extends Controller
         ));
     }
 
+    public function chiefDeleteLivretAction(Request $request, Livret $livret)
+    {
+        $idUnic = \phpCAS::getUser();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ( $form->isSubmitted() && $form->isValid())
+        {
+            foreach ($livret->getProjets() as $curProjet)
+            {
+                $curProjet->removeLivret($livret);
+                $em->persist($curProjet);
+            }
+
+            $em->remove($livret);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('info', "Le livret a bien été supprimé.");
+
+
+            return $this->redirectToRoute('iuto_livret_chief_choose_livret', array(
+            ));
+        }
+
+        return $this->render('IUTOLivretBundle:Chief:chiefDeleteLivret.html.twig', array(
+            'livret' => $livret,
+            'form'   => $form->createView(),
+            'statutCAS' => 'chef de département',
+            'info' => array('Générer livrets', 'Voir les livrets', 'Voir les projets', 'Créer un projet', 'Créer un édito', 'Voir les éditos'),
+            'routing_info' => array('/chef/create/livret', '/chef/choose/livret', '/chef/choose/projet', '#', '/chef/create/edito', '/chef/choose/edito'),
+            'routing_statutCAShome' => '/chef',
+        ));
+    }
+
     public function chiefChooseProjectAction()
     {
         $idUniv = \phpCAS::getUser();

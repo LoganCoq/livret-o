@@ -33,7 +33,7 @@
                     {% for livret in livrets %}
                         <li class="list-group-item">
                             <p id="choose_livret_name">{{ livret.intituleLivret }}</p>
-                            <a href="{{ path('iuto_livret_modif_livret', {'livret' : livret.id}) }}" class="btn btn-warning" id="livreto_modif_livret">
+                            <a href="" class="btn btn-warning" id="livreto_modif_livret">
                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                 Modifier le livret
                             </a>
@@ -52,7 +52,7 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="btn_drop_{{ livret.id }}">
                                     <li>
-                                        <a href="{{ path('iuto_livret_deleteLivret', {'livret': livret.id}) }}" id="delete_btn">
+                                        <a href="{{ path('iuto_livret_chief_delete_livret', {'livret': livret.id}) }}" id="delete_btn">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer le livret
                                         </a>
                                     </li>

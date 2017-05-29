@@ -169,7 +169,7 @@ iuto_livret_chief_newLivret_selectOptions:
     path: /chef/create/livret/{livret}/options
     defaults: { _controller: IUTOLivretBundle:Chief:chiefSelectOptionsLivret }
 
-#=====SELECTION==PROJET=====#
+#=====SELECTION==PROJETS=====#
 iuto_livret_chief_livretProjects:
     path: /chef/create/livret/{livret}/projects
     defaults: { _controller: IUTOLivretBundle:Chief:chiefSelectLivretProjects }
@@ -178,6 +178,10 @@ iuto_livret_chief_livretProjects:
 iuto_livret_chief_choose_livret:
     path: /chef/choose/livret
     defaults: { _controller: IUTOLivretBundle:Chief:chiefChooseLivret }
+
+iuto_livret_chief_delete_livret:
+    path: /chef/delete/livret/{livret}
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefDeleteLivret }
 
 #==========PRESENTATION====#
 iuto_livret_chiefPresentation:
