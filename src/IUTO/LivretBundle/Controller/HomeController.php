@@ -12,7 +12,7 @@ class HomeController extends Controller
     {
 //        On met deux route en paramètres:
 //        /login pour passer par l'authentification et /public pour accéder au module public
-        return $this->render('IUTOLivretBundle:Home:index.html.twig', array('onclick' => '/login','modulePublic' => '/public'));
+        return $this->render('IUTOLivretBundle:Home:index.html.twig', array('onclick' => '/login', 'modulePublic' => '/public'));
     }
 
     public function chooseModuleAction()

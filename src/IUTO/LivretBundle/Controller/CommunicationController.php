@@ -36,13 +36,13 @@ class CommunicationController extends Controller
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
         return $this->render('IUTOLivretBundle:Communication:communicationhome.html.twig', array(
-            'statutCAS' => 'service de communication',
-            'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets', 'Créer un édito', 'Voir les éditos'),
-            'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '/communication/create/edito', '/communication/choose/edito'),
-            'routing_statutCAShome' => '/communication',
-            'options' => array('Créer un livret au format PDF', 'Voir les livrets', 'Rechercher des projets', 'Créer un édito', 'Voir les éditos'),
-            'routing_options' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '/communication/create/edito', '/communication/choose/edito'),
-            'user' => $user,
+                'statutCAS' => 'service de communication',
+                'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets', 'Créer un édito', 'Voir les éditos'),
+                'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '/communication/create/edito', '/communication/choose/edito'),
+                'routing_statutCAShome' => '/communication',
+                'options' => array('Créer un livret au format PDF', 'Voir les livrets', 'Rechercher des projets', 'Créer un édito', 'Voir les éditos'),
+                'routing_options' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '/communication/create/edito', '/communication/choose/edito'),
+                'user' => $user,
             )
         );
     }
@@ -60,12 +60,11 @@ class CommunicationController extends Controller
         $formCreate = $this->createForm(NewLivretType::class, $newLivret);
         $formCreate->handleRequest($request);
 
-        if ($formCreate->isSubmitted() && $formCreate->isValid())
-        {
+        if ($formCreate->isSubmitted() && $formCreate->isValid()) {
             $manager->persist($newLivret);
             $manager->flush();
 
-            return $this->redirectToRoute( 'iuto_livret_communication_livret_project_choice', array(
+            return $this->redirectToRoute('iuto_livret_communication_livret_project_choice', array(
                     'livretId' => $newLivret->getId(),
                 )
             );
@@ -100,28 +99,23 @@ class CommunicationController extends Controller
 //            TODO projets marquants
             $qb = $repositoryProjet->createQueryBuilder('p');
             $qb->where('p.dateDebut > :dateDebut')
-                    ->setParameter('dateDebut', $dateDebutSelection)
+                ->setParameter('dateDebut', $dateDebutSelection)
                 ->andWhere('p.dateFin < :dateFin')
-                    ->setParameter('dateFin', $dateFinSelection)
+                ->setParameter('dateFin', $dateFinSelection)
                 ->andWhere('p.validerProjet = 1');
 
             $projets = $qb->getQuery()->getResult();
 
-            $livretProjets =array();
-            foreach ( $projets as $curProj )
-            {
+            $livretProjets = array();
+            foreach ($projets as $curProj) {
                 $curFormation = $curProj->getEtudiants()[0]->getFormations()[0];
                 $curDept = $curFormation->getDepartement()->getNomDpt();
                 $curTypeFormation = $curFormation->getTypeFormation();
 
-                foreach ( $formationsSelectionnes as $curFormSelected )
-                {
-                    if ( $curFormSelected == $curTypeFormation)
-                    {
-                        foreach ( $departementsSelectionnes as $curDeptSelected )
-                        {
-                            if ( $curDeptSelected == $curDept)
-                            {
+                foreach ($formationsSelectionnes as $curFormSelected) {
+                    if ($curFormSelected == $curTypeFormation) {
+                        foreach ($departementsSelectionnes as $curDeptSelected) {
+                            if ($curDeptSelected == $curDept) {
                                 array_push($livretProjets, $curProj);
                             }
                         }
@@ -130,8 +124,7 @@ class CommunicationController extends Controller
             }
 
             $idProjs = array();
-            foreach ($livretProjets as $p)
-            {
+            foreach ($livretProjets as $p) {
                 $livretId->addProjet($p);
                 $p->addLivret($livretId);
                 array_push($idProjs, $p->getId());
@@ -166,8 +159,7 @@ class CommunicationController extends Controller
         $form->get('projects')->setData($oldProjects);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $newLivret = new Livret();
 
             $newLivret->setIntituleLivret($livret->getIntituleLivret());
@@ -179,8 +171,7 @@ class CommunicationController extends Controller
 
             $newProjects = $form['projects']->getData();
 
-            foreach ($newProjects as $curPro)
-            {
+            foreach ($newProjects as $curPro) {
                 $newLivret->addProjet($curPro);
                 $curPro->addLivret($newLivret);
                 $em->persist($curPro);
@@ -232,8 +223,7 @@ class CommunicationController extends Controller
         $formModif = $this->createForm(NewLivretType::class, $livret);
         $formModif->handleRequest($request);
 
-        if ( $formModif->isSubmitted() && $formModif->isValid() )
-        {
+        if ($formModif->isSubmitted() && $formModif->isValid()) {
             $em->persist($livret);
             $em->flush();
 
@@ -299,25 +289,25 @@ class CommunicationController extends Controller
         }
 
         $form = $this->createFormBuilder()
-                ->add('choixLivret', ChoiceType::class, array(
-                    'label' => 'Choix du Livret',
-                    'attr' => [
-                        'class' => 'selectpicker',
-                        'data-live-search' => 'true',
-                        'name' => 'livret',
-                        'title' => 'Aucun livret sélectionné'
-                    ],
-                    'choices' =>$l
-                ))
-                ->add('submit', SubmitType::class, array(
-                    'label' => 'Valider'
-                ))
-                ->getForm();
+            ->add('choixLivret', ChoiceType::class, array(
+                'label' => 'Choix du Livret',
+                'attr' => [
+                    'class' => 'selectpicker',
+                    'data-live-search' => 'true',
+                    'name' => 'livret',
+                    'title' => 'Aucun livret sélectionné'
+                ],
+                'choices' => $l
+            ))
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Valider'
+            ))
+            ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
-                $session->set('numEdito', $ed = $form['choixLivret']->getData());
-                return $this->redirectToRoute("iuto_livret_communicationEdito", array());
-            }
+            $session->set('numEdito', $ed = $form['choixLivret']->getData());
+            return $this->redirectToRoute("iuto_livret_communicationEdito", array());
+        }
 
         return $this->render('IUTOLivretBundle:Communication:communicationSelectionLivret.html.twig', array(
             'statutCAS' => 'communication',
@@ -328,7 +318,7 @@ class CommunicationController extends Controller
             'routing_options' => array('/communication/edito', '/communication')
         ));
 
-        }
+    }
 
     public function communicationCorrectionProjetAction(Request $request, Projet $projet)
     {
@@ -350,10 +340,10 @@ class CommunicationController extends Controller
 
         $commentaires = array();
 
-        foreach($com as $elem){
-            $x=array();
+        foreach ($com as $elem) {
+            $x = array();
             $user = $elem->getUser();
-            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
             array_push($x, $user->getRole());
@@ -361,8 +351,7 @@ class CommunicationController extends Controller
         };
 
         // vérification de la validité du formulaire et si il à été envoyer
-        if ($formCorrect->isSubmitted() && $formCorrect->isValid())
-        {
+        if ($formCorrect->isSubmitted() && $formCorrect->isValid()) {
 
 //            création d'un nouveau projet afin d'enregistrer les
             $newProjet = new Projet();
@@ -380,8 +369,7 @@ class CommunicationController extends Controller
             $newProjet->setDescriptionClientProjet($projet->getDescriptionClientProjet());
 
 //            actualisation du projet associé aux images du projet
-            foreach ( $newProjet->getImages() as $oneImg )
-            {
+            foreach ($newProjet->getImages() as $oneImg) {
                 $oneImg->setProjet($newProjet);
             }
 
@@ -399,24 +387,21 @@ class CommunicationController extends Controller
             $tuts = $formCorrect['tuteurs']->getData();
 
 //            opérations sur les étudiant selectionnées
-            foreach ( $etus as $etu )
-            {
+            foreach ($etus as $etu) {
                 $etu->addProjetFait($newProjet);
                 $newProjet->addEtudiant($etu);
                 $em->persist($etu);
             }
 
 //            opérations sur les tuteurs sélectionnés
-            foreach ( $tuts as $tut )
-            {
+            foreach ($tuts as $tut) {
                 $tut->addProjetSuivi($newProjet);
                 $newProjet->addTuteur($tut);
                 $em->persist($tut);
             }
 
 //            actualisation du projet associé aux commentaires
-            foreach ( $com as $c )
-            {
+            foreach ($com as $c) {
                 $c->setProjet($newProjet);
             }
 
@@ -439,7 +424,6 @@ class CommunicationController extends Controller
                 )
             );
         }
-
 
 
         //creation du formulaire pour la section de chat/commentaire
@@ -465,10 +449,10 @@ class CommunicationController extends Controller
             //recupération des commentaires
             $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
             $commentaires = array();
-            foreach($com as $elem){
-                $x=array();
+            foreach ($com as $elem) {
+                $x = array();
                 $user = $elem->getUser();
-                array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
                 array_push($x, $elem->getContenu());
                 array_push($x, $elem->getDate());
                 array_push($x, $user->getRole());
@@ -522,10 +506,10 @@ class CommunicationController extends Controller
         //récupération des commentaires appartenant au projet actuel
         $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
         $commentaires = array();
-        foreach($com as $elem){
-            $x=array();
+        foreach ($com as $elem) {
+            $x = array();
             $user = $elem->getUser();
-            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
             array_push($x, $user->getRole());
@@ -540,14 +524,10 @@ class CommunicationController extends Controller
         $imagesL = $projet->getImages();
         $images = array();
         $logo = null;
-        foreach ($imagesL as $img)
-        {
-            if ($img->getIsLogo())
-            {
+        foreach ($imagesL as $img) {
+            if ($img->getIsLogo()) {
                 $logo = $img;
-            }
-            else
-            {
+            } else {
                 array_push($images, $img);
             }
         }
@@ -598,8 +578,7 @@ class CommunicationController extends Controller
         }
 
 //        vérification de si le formulaire pour l'ajout de mots clés et envoyer et valide
-        if ($formMot->isSubmitted() && $formMot->isValid())
-        {
+        if ($formMot->isSubmitted() && $formMot->isValid()) {
 
 //            ajouts du mot clé au projet
             $newWord = $formMot['mot']->getData();
@@ -659,18 +638,14 @@ class CommunicationController extends Controller
         $form->handleRequest($request);
 
 //        vérification de l'envoie du formulaire et de sa validité
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
 //            vérification que la limite du nombre d'images est respectée
-            if ( count($projet->getImages()) < 3 )
-            {
+            if (count($projet->getImages()) < 3) {
                 $image->setProjet($projet);
                 $em->persist($image);
                 $em->flush();
-            }
-//            exception si il y a déja deux images associées au projet
-            else
-            {
+            } //            exception si il y a déja deux images associées au projet
+            else {
                 throw new Exception('Seulement 2 images peuvent être liées au projet.');
             }
 
@@ -701,11 +676,9 @@ class CommunicationController extends Controller
         $form = $this->get('form.factory')->create();
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid() )
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            foreach ( $livret->getProjets() as $curProj)
-            {
+            foreach ($livret->getProjets() as $curProj) {
                 $curProj->removeLivret($livret);
                 $em->persist($curProj);
             }
@@ -715,13 +688,12 @@ class CommunicationController extends Controller
             $request->getSession()->getFlashBag()->add('info', "Le livret a bien été supprimé.");
 
 
-            return $this->redirectToRoute('iuto_livret_communicationChoixLivret', array(
-            ));
+            return $this->redirectToRoute('iuto_livret_communicationChoixLivret', array());
         }
 
         return $this->render('IUTOLivretBundle:Communication:confirmLivretDelete.html.twig', array(
             'livret' => $livret,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
             'statutCAS' => 'communication',
             'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets', 'Créer un édito', 'Voir les éditos'),
             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '/communication/create/edito', '/communication/choose/edito'),
@@ -740,8 +712,7 @@ class CommunicationController extends Controller
         $form = $this->get('form.factory')->create();
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid() )
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $em->remove($image);
             $em->flush();
@@ -756,7 +727,7 @@ class CommunicationController extends Controller
 
         return $this->render('IUTOLivretBundle:Communication:communicationConfirmImageDelete.html.twig', array(
             'image' => $image,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
             'statutCAS' => 'communication',
             'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets', 'Créer un édito', 'Voir les éditos'),
             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '/communication/create/edito', '/communication/choose/edito'),
@@ -782,8 +753,7 @@ class CommunicationController extends Controller
         $form->handleRequest($request);
 
 //        vérification de l'envoie du formulaire et de sa validité
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $image->setProjet($projet);
             $em->persist($image);
             $em->flush();
@@ -817,14 +787,11 @@ class CommunicationController extends Controller
         $formEdit = $this->createForm(EditoType::class, $edito);
         $formEdit->handleRequest($request);
 
-        if ( $formEdit->isSubmitted() && $formEdit->isValid())
-        {
+        if ($formEdit->isSubmitted() && $formEdit->isValid()) {
             $manager->persist($edito);
             $manager->flush();
 
-            return $this->redirectToRoute( 'iuto_livret_communication_choose_edito', array(
-
-            ));
+            return $this->redirectToRoute('iuto_livret_communication_choose_edito', array());
         }
         return $this->render('IUTOLivretBundle:Communication:communicationEdito.html.twig', array(
             'statutCAS' => 'communication',
@@ -863,14 +830,11 @@ class CommunicationController extends Controller
         $formEdit = $this->createForm(EditoType::class, $edito);
         $formEdit->handleRequest($request);
 
-        if ( $formEdit->isSubmitted() && $formEdit->isValid())
-        {
+        if ($formEdit->isSubmitted() && $formEdit->isValid()) {
             $manager->persist($edito);
             $manager->flush();
 
-            return $this->redirectToRoute( 'iuto_livret_communication_choose_edito', array(
-
-            ));
+            return $this->redirectToRoute('iuto_livret_communication_choose_edito', array());
         }
 
         return $this->render('IUTOLivretBundle:Communication:communicationEdito.html.twig', array(

@@ -43,48 +43,44 @@ class PDFGeneratorController extends Controller
         $logo = null;
         $image1 = null;
         $image2 = null;
-        if ( $images->count() == 3 ) //TODO cleaner
+        if ($images->count() == 3) //TODO cleaner
         {
-            if ($images{0}->getIsLogo()){
+            if ($images{0}->getIsLogo()) {
                 $logo = $images{0};
             } else {
                 $image1 = $images{0};
             }
-            if ($images{1}->getIsLogo()){
+            if ($images{1}->getIsLogo()) {
                 $logo = $images{1};
             } else {
-                if ($image1 != null)
-                {
+                if ($image1 != null) {
                     $image1 = $images{1};
                 } else {
                     $image2 = $images{1};
                 }
             }
-            if ($images{2}->getIsLogo()){
+            if ($images{2}->getIsLogo()) {
                 $logo = $images{2};
             } else {
                 $image2 = $images{2};
             }
-        }
-        elseif ( $images->count() == 2 )
-        {
-            if ($images{0}->getIsLogo()){
+        } elseif ($images->count() == 2) {
+            if ($images{0}->getIsLogo()) {
                 $logo = $images{0};
             } else {
                 $image1 = $images{0};
             }
-            if ($images{1}->getIsLogo()){
+            if ($images{1}->getIsLogo()) {
                 $logo = $images{1};
             } else {
-                if ($image1 != null)
-                {
+                if ($image1 != null) {
                     $image1 = $images{1};
                 } else {
                     $image2 = $images{1};
                 }
             }
-        } elseif ( $images->count() == 1){
-            if ($images{0}->getIsLogo()){
+        } elseif ($images->count() == 1) {
+            if ($images{0}->getIsLogo()) {
                 $logo = $images{0};
             } else {
                 $image1 = $images{0};
@@ -152,48 +148,44 @@ class PDFGeneratorController extends Controller
         $logo = null;
         $image1 = null;
         $image2 = null;
-        if ( $images->count() == 3 ) //TODO cleaner
+        if ($images->count() == 3) //TODO cleaner
         {
-            if ($images{0}->getIsLogo()){
+            if ($images{0}->getIsLogo()) {
                 $logo = $images{0};
             } else {
                 $image1 = $images{0};
             }
-            if ($images{1}->getIsLogo()){
+            if ($images{1}->getIsLogo()) {
                 $logo = $images{1};
             } else {
-                if ($image1 != null)
-                {
+                if ($image1 != null) {
                     $image1 = $images{1};
                 } else {
                     $image2 = $images{1};
                 }
             }
-            if ($images{2}->getIsLogo()){
+            if ($images{2}->getIsLogo()) {
                 $logo = $images{2};
             } else {
                 $image2 = $images{2};
             }
-        }
-        elseif ( $images->count() == 2 )
-        {
-            if ($images{0}->getIsLogo()){
+        } elseif ($images->count() == 2) {
+            if ($images{0}->getIsLogo()) {
                 $logo = $images{0};
             } else {
                 $image1 = $images{0};
             }
-            if ($images{1}->getIsLogo()){
+            if ($images{1}->getIsLogo()) {
                 $logo = $images{1};
             } else {
-                if ($image1 != null)
-                {
+                if ($image1 != null) {
                     $image1 = $images{1};
                 } else {
                     $image2 = $images{1};
                 }
             }
-        } elseif ( $images->count() == 1){
-            if ($images{0}->getIsLogo()){
+        } elseif ($images->count() == 1) {
+            if ($images{0}->getIsLogo()) {
                 $logo = $images{0};
             } else {
                 $image1 = $images{0};
@@ -259,27 +251,22 @@ class PDFGeneratorController extends Controller
         $dateCrea = $livret->getDateCreationLivret()->format('d-m-Y');
 
 //        Récupération des données projets par projets
-        foreach ( $projets as $curProj)
-        {
-            $curForm =$curProj->getEtudiants()[0]->getFormations()[0];
+        foreach ($projets as $curProj) {
+            $curForm = $curProj->getEtudiants()[0]->getFormations()[0];
             $curDpt = $curForm->getDepartement()->getNomDpt();
-            if ( !in_array($curDpt, $departements))
-            {
+            if (!in_array($curDpt, $departements)) {
                 array_push($departements, $curDpt);
             }
             $curTypeForm = $curForm->getTypeFormation();
-            if ( !in_array($curTypeForm, $promotions))
-            {
+            if (!in_array($curTypeForm, $promotions)) {
                 array_push($promotions, $curTypeForm);
             }
             $curYearStart = $curForm->getDateDebut()->format('y');
             $curYearEnd = $curForm->getDateFin()->format('y');
-            if ( $maxYear<$curYearEnd )
-            {
+            if ($maxYear < $curYearEnd) {
                 $maxYear = $curYearEnd;
             }
-            if( $minYear> $curYearStart)
-            {
+            if ($minYear > $curYearStart) {
                 $minYear = $curYearStart;
             }
             array_push($intitules, $curProj->getIntituleProjet());
@@ -287,7 +274,7 @@ class PDFGeneratorController extends Controller
 
         $template = $this->renderView('::couverture.html.twig',
             [
-               'intituleLivret' => $title,
+                'intituleLivret' => $title,
                 'minYear' => $minYear,
                 'maxYear' => $maxYear,
                 'departements' => $departements,
@@ -299,8 +286,7 @@ class PDFGeneratorController extends Controller
 
         $editos = $livret->getEditos();
 
-        foreach ($editos as $edito)
-        {
+        foreach ($editos as $edito) {
             $template = $this->renderView('::edito.html.twig',
                 [
                     'titre' => $edito->getTitre(),
@@ -311,8 +297,7 @@ class PDFGeneratorController extends Controller
         }
 
 //        Parcours des projets afin d'écrire page par page
-        foreach ( $projets as $projet)
-        {
+        foreach ($projets as $projet) {
 //            Récupération des informations sur le projet actuel
             $nomP = $projet->getIntituleProjet();
             $descripP = $projet->getDescripProjet();
@@ -330,48 +315,44 @@ class PDFGeneratorController extends Controller
             $logo = null;
             $image1 = null;
             $image2 = null;
-            if ( $images->count() == 3 ) //TODO cleaner
+            if ($images->count() == 3) //TODO cleaner
             {
-                if ($images{0}->getIsLogo()){
+                if ($images{0}->getIsLogo()) {
                     $logo = $images{0};
                 } else {
                     $image1 = $images{0};
                 }
-                if ($images{1}->getIsLogo()){
+                if ($images{1}->getIsLogo()) {
                     $logo = $images{1};
                 } else {
-                    if ($image1 != null)
-                    {
+                    if ($image1 != null) {
                         $image1 = $images{1};
                     } else {
                         $image2 = $images{1};
                     }
                 }
-                if ($images{2}->getIsLogo()){
+                if ($images{2}->getIsLogo()) {
                     $logo = $images{2};
                 } else {
                     $image2 = $images{2};
                 }
-            }
-            elseif ( $images->count() == 2 )
-            {
-                if ($images{0}->getIsLogo()){
+            } elseif ($images->count() == 2) {
+                if ($images{0}->getIsLogo()) {
                     $logo = $images{0};
                 } else {
                     $image1 = $images{0};
                 }
-                if ($images{1}->getIsLogo()){
+                if ($images{1}->getIsLogo()) {
                     $logo = $images{1};
                 } else {
-                    if ($image1 != null)
-                    {
+                    if ($image1 != null) {
                         $image1 = $images{1};
                     } else {
                         $image2 = $images{1};
                     }
                 }
-            } elseif ( $images->count() == 1){
-                if ($images{0}->getIsLogo()){
+            } elseif ($images->count() == 1) {
+                if ($images{0}->getIsLogo()) {
                     $logo = $images{0};
                 } else {
                     $image1 = $images{0};
@@ -396,7 +377,7 @@ class PDFGeneratorController extends Controller
                 ]);
 
 //            Ecriture du template dans le pdf
-	        $html2pdf->write($template);
+            $html2pdf->write($template);
         }
 
 //        Affichage du pdf
@@ -438,27 +419,22 @@ class PDFGeneratorController extends Controller
         $dateCrea = $livret->getDateCreationLivret()->format('d-m-Y');
 
 //        Récupération des données projets par projets
-        foreach ( $projets as $curProj)
-        {
-            $curForm =$curProj->getEtudiants()[0]->getFormations()[0];
+        foreach ($projets as $curProj) {
+            $curForm = $curProj->getEtudiants()[0]->getFormations()[0];
             $curDpt = $curForm->getDepartement()->getNomDpt();
-            if ( !in_array($curDpt, $departements))
-            {
+            if (!in_array($curDpt, $departements)) {
                 array_push($departements, $curDpt);
             }
             $curTypeForm = $curForm->getTypeFormation();
-            if ( !in_array($curTypeForm, $promotions))
-            {
+            if (!in_array($curTypeForm, $promotions)) {
                 array_push($promotions, $curTypeForm);
             }
             $curYearStart = $curForm->getDateDebut()->format('Y');
             $curYearEnd = $curForm->getDateFin()->format('Y');
-            if ( $maxYear<$curYearEnd )
-            {
+            if ($maxYear < $curYearEnd) {
                 $maxYear = $curYearEnd;
             }
-            if( $minYear> $curYearStart)
-            {
+            if ($minYear > $curYearStart) {
                 $minYear = $curYearStart;
             }
             array_push($intitules, $curProj->getIntituleProjet());
@@ -478,8 +454,7 @@ class PDFGeneratorController extends Controller
 
         $editos = $livret->getEditos();
 
-        foreach ($editos as $edito)
-        {
+        foreach ($editos as $edito) {
             $template = $this->renderView('::edito.html.twig',
                 [
                     'titre' => $edito->getTitre(),
@@ -489,8 +464,7 @@ class PDFGeneratorController extends Controller
             $html2pdf->write($template);
         }
 //        Parcours des projets afin d'écrire page par page
-        foreach ( $projets as $projet)
-        {
+        foreach ($projets as $projet) {
 //            Récupération des informations sur le projet actuel
             $nomP = $projet->getIntituleProjet();
             $descripP = $projet->getDescripProjet();
@@ -508,48 +482,44 @@ class PDFGeneratorController extends Controller
             $logo = null;
             $image1 = null;
             $image2 = null;
-            if ( $images->count() == 3 ) //TODO cleaner
+            if ($images->count() == 3) //TODO cleaner
             {
-                if ($images{0}->getIsLogo()){
+                if ($images{0}->getIsLogo()) {
                     $logo = $images{0};
                 } else {
                     $image1 = $images{0};
                 }
-                if ($images{1}->getIsLogo()){
+                if ($images{1}->getIsLogo()) {
                     $logo = $images{1};
                 } else {
-                    if ($image1 != null)
-                    {
+                    if ($image1 != null) {
                         $image1 = $images{1};
                     } else {
                         $image2 = $images{1};
                     }
                 }
-                if ($images{2}->getIsLogo()){
+                if ($images{2}->getIsLogo()) {
                     $logo = $images{2};
                 } else {
                     $image2 = $images{2};
                 }
-            }
-            elseif ( $images->count() == 2 )
-            {
-                if ($images{0}->getIsLogo()){
+            } elseif ($images->count() == 2) {
+                if ($images{0}->getIsLogo()) {
                     $logo = $images{0};
                 } else {
                     $image1 = $images{0};
                 }
-                if ($images{1}->getIsLogo()){
+                if ($images{1}->getIsLogo()) {
                     $logo = $images{1};
                 } else {
-                    if ($image1 != null)
-                    {
+                    if ($image1 != null) {
                         $image1 = $images{1};
                     } else {
                         $image2 = $images{1};
                     }
                 }
-            } elseif ( $images->count() == 1){
-                if ($images{0}->getIsLogo()){
+            } elseif ($images->count() == 1) {
+                if ($images{0}->getIsLogo()) {
                     $logo = $images{0};
                 } else {
                     $image1 = $images{0};

@@ -43,20 +43,18 @@ class AdministrateurController extends Controller
         $employees = array();
         $admins = array();
         $others = array();
-        foreach ($users as $curUser)
-        {
+        foreach ($users as $curUser) {
             $curRoles = $curUser->getRoles();
-            foreach ($curRoles as $role)
-            {
-                if ( $role == "ROLE_chief"){
+            foreach ($curRoles as $role) {
+                if ($role == "ROLE_chief") {
                     array_push($chiefs, $curUser);
-                } elseif ( $role == "ROLE_faculty" ) {
+                } elseif ($role == "ROLE_faculty") {
                     array_push($teachers, $curUser);
-                } elseif ( $role == "ROLE_student") {
+                } elseif ($role == "ROLE_student") {
                     array_push($students, $curUser);
-                } elseif ( $role == "ROLE_employee") {
+                } elseif ($role == "ROLE_employee") {
                     array_push($employees, $curUser);
-                } elseif ( $role == "ROLE_admin") {
+                } elseif ($role == "ROLE_admin") {
                     array_push($admins, $curUser);
                 } else {
                     array_push($others, $curUser);
@@ -67,7 +65,7 @@ class AdministrateurController extends Controller
         return $this->render('IUTOLivretBundle:Administrateur:adminChooseUser.html.twig', array(
             'statutCAS' => 'administrateur',
             'info' => array('Gérer un utilisateur'),
-            'routing_info' => array("/admin/users","#"),
+            'routing_info' => array("/admin/users", "#"),
             'routing_statutCAShome' => '/admin',
             'chiefs' => $chiefs,
             'teachers' => $teachers,
@@ -87,23 +85,20 @@ class AdministrateurController extends Controller
         $form = $this->createForm(UserModifType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($user);
             $em->flush();
 
             // affichage d'un message de confirmation que le projet à bien été créer
             $request->getSession()->getFlashBag()->add('success', 'Utilisateur bien modifié.');
 
-            return $this->redirectToRoute('iuto_livret_admin_chooseUser', array(
-
-            ));
+            return $this->redirectToRoute('iuto_livret_admin_chooseUser', array());
         }
 
         return $this->render('IUTOLivretBundle:Administrateur:adminManageUser.html.twig', array(
             'statutCAS' => 'administrateur',
             'info' => array('Gérer un utilisateur'),
-            'routing_info' => array("/admin/users","#"),
+            'routing_info' => array("/admin/users", "#"),
             'routing_statutCAShome' => '/admin',
             'user' => $user,
             'form' => $form->createView(),

@@ -50,8 +50,7 @@ class ChiefController extends Controller
         $formCreate = $this->createForm(NewLivretType::class, $newLivret);
         $formCreate->handleRequest($request);
 
-        if ( $formCreate->isSubmitted() && $formCreate->isValid())
-        {
+        if ($formCreate->isSubmitted() && $formCreate->isValid()) {
             $manager->persist($newLivret);
             $manager->flush();
 
@@ -94,21 +93,16 @@ class ChiefController extends Controller
                 ->andWhere('p.validerProjet = 1');
 
             $projets = $qb->getQuery()->getResult();
-            $livretProjets =array();
-            foreach ( $projets as $curProj )
-            {
+            $livretProjets = array();
+            foreach ($projets as $curProj) {
                 $curFormation = $curProj->getEtudiants()[0]->getFormations()[0];
                 $curDept = $curFormation->getDepartement()->getNomDpt();
                 $curTypeFormation = $curFormation->getTypeFormation();
 
-                foreach ( $formationsSelectionnes as $curFormSelected )
-                {
-                    if ( $curFormSelected == $curTypeFormation)
-                    {
-                        foreach ( $departementsSelectionnes as $curDeptSelected )
-                        {
-                            if ( $curDeptSelected == $curDept)
-                            {
+                foreach ($formationsSelectionnes as $curFormSelected) {
+                    if ($curFormSelected == $curTypeFormation) {
+                        foreach ($departementsSelectionnes as $curDeptSelected) {
+                            if ($curDeptSelected == $curDept) {
                                 array_push($livretProjets, $curProj);
                             }
                         }
@@ -117,8 +111,7 @@ class ChiefController extends Controller
             }
 
             $idProjs = array();
-            foreach ($livretProjets as $p)
-            {
+            foreach ($livretProjets as $p) {
                 $livret->addProjet($p);
                 $p->addLivret($livret);
                 array_push($idProjs, $p->getId());
@@ -152,8 +145,7 @@ class ChiefController extends Controller
         $form->get('projects')->setData($oldProjects);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $newLivret = new Livret();
 
             $newLivret->setIntituleLivret($livret->getIntituleLivret());
@@ -165,8 +157,7 @@ class ChiefController extends Controller
 
             $newProjects = $form['projects']->getData();
 
-            foreach ($newProjects as $curPro)
-            {
+            foreach ($newProjects as $curPro) {
                 $newLivret->addProjet($curPro);
                 $curPro->addLivret($newLivret);
                 $em->persist($curPro);
@@ -176,8 +167,7 @@ class ChiefController extends Controller
             $em->remove($livret);
             $em->flush();
 
-            return $this->redirectToRoute('iuto_livret_chief_choose_livret', array(
-            ));
+            return $this->redirectToRoute('iuto_livret_chief_choose_livret', array());
         }
 
         return $this->render('IUTOLivretBundle:Chief:chiefChooseLivretProjects.html.twig', array(
@@ -217,8 +207,7 @@ class ChiefController extends Controller
         $formModif = $this->createForm(NewLivretType::class, $livret);
         $formModif->handleRequest($request);
 
-        if ( $formModif->isSubmitted() && $formModif->isValid() )
-        {
+        if ($formModif->isSubmitted() && $formModif->isValid()) {
             $em->persist($livret);
             $em->flush();
 
@@ -245,10 +234,8 @@ class ChiefController extends Controller
         $form = $this->get('form.factory')->create();
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid())
-        {
-            foreach ($livret->getProjets() as $curProjet)
-            {
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($livret->getProjets() as $curProjet) {
                 $curProjet->removeLivret($livret);
                 $em->persist($curProjet);
             }
@@ -258,13 +245,12 @@ class ChiefController extends Controller
             $request->getSession()->getFlashBag()->add('info', "Le livret a bien été supprimé.");
 
 
-            return $this->redirectToRoute('iuto_livret_chief_choose_livret', array(
-            ));
+            return $this->redirectToRoute('iuto_livret_chief_choose_livret', array());
         }
 
         return $this->render('IUTOLivretBundle:Chief:chiefDeleteLivret.html.twig', array(
             'livret' => $livret,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
             'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
@@ -284,7 +270,7 @@ class ChiefController extends Controller
         $annee = array(1 => date("y"), 2 => date("y") - 1, 3 => date("y") - 2, 4 => date("y") - 3, 5 => date("y") - 4);
         $proms = array(1 => "1A", 2 => "2A", 3 => "AS", 4 => "LP");
 
-        return $this->render('IUTOLivretBundle:Chief:chiefliste.html.twig',array(
+        return $this->render('IUTOLivretBundle:Chief:chiefliste.html.twig', array(
             'routing_statutCAShome' => '/chef',
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
@@ -326,14 +312,11 @@ class ChiefController extends Controller
         $formCreate = $this->createForm(EditoType::class, $newEdito);
         $formCreate->handleRequest($request);
 
-        if($formCreate->isSubmitted() && $formCreate->isValid())
-        {
+        if ($formCreate->isSubmitted() && $formCreate->isValid()) {
             $manager->persist($newEdito);
             $manager->flush();
 
-            return $this->redirectToRoute('iuto_livret_chief_choose_edito', array(
-
-            ));
+            return $this->redirectToRoute('iuto_livret_chief_choose_edito', array());
         }
 
         return $this->render('IUTOLivretBundle:Chief:chiefEdito.html.twig', array(
@@ -356,7 +339,7 @@ class ChiefController extends Controller
 
 
         $projetsValides = array();
-        foreach($projets as $elem){
+        foreach ($projets as $elem) {
             if ($elem->getValiderProjet() == 1)
                 array_push($projetsValides, $elem);
         };
@@ -403,10 +386,10 @@ class ChiefController extends Controller
         $idProjet = $projet->getId();
 
         $commentaires = array();
-        foreach($com as $elem){
-            $x=array();
+        foreach ($com as $elem) {
+            $x = array();
             $user = $elem->getUser();
-            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
             array_push($x, $user->getRole());
@@ -424,7 +407,7 @@ class ChiefController extends Controller
                 'commentaires' => $commentaires,
                 'routing_options' => array('#', '#'),
                 'pagePrec' => '/chef/correctionChief1',
-                'pageSuiv' => '/chef/'.$idProjet.'/correctionChief3'
+                'pageSuiv' => '/chef/' . $idProjet . '/correctionChief3'
             ));
     }
 
@@ -459,8 +442,8 @@ class ChiefController extends Controller
                 'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
                 'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
                 'routing_options' => array('#', '#'),
-                'pagePrec' => '/chef/'.$idProjet.'/correctionChief2',
-                'pageSuiv' => '/chef/'.$idProjet.'/correctionChief4'
+                'pagePrec' => '/chef/' . $idProjet . '/correctionChief2',
+                'pageSuiv' => '/chef/' . $idProjet . '/correctionChief4'
             ));
     }
 
@@ -477,7 +460,7 @@ class ChiefController extends Controller
                 'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
                 'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
                 'routing_options' => array('#', '#'),
-                'pagePrec' => '/chef/'.$idProjet.'/correctionChief3'
+                'pagePrec' => '/chef/' . $idProjet . '/correctionChief3'
             ));
     }
 

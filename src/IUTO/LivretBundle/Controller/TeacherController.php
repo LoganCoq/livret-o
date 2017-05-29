@@ -62,11 +62,10 @@ class TeacherController extends Controller
 
 
         $projetsValides = array();
-        foreach($projets as $elem)
-        {
+        foreach ($projets as $elem) {
 //            ajout des projet qui n'ont pas étés validés par un utilisateur
             if ($elem->getValiderProjet() == 0)
-            array_push($projetsValides, $elem);
+                array_push($projetsValides, $elem);
         };
 
 //        rendu de la page d'affichage des projets suivis
@@ -94,10 +93,10 @@ class TeacherController extends Controller
         $allUsers = $em->getRepository(User::class)->findAll();
         $etudiants = array();
         $tuteurs = array();
-        foreach ( $allUsers as $curUser ){
-            if ( in_array('ROLE_student',$curUser->getRoles())){
+        foreach ($allUsers as $curUser) {
+            if (in_array('ROLE_student', $curUser->getRoles())) {
                 array_push($etudiants, $curUser);
-            } elseif ( in_array('ROLE_faculty',$curUser->getRoles())){
+            } elseif (in_array('ROLE_faculty', $curUser->getRoles())) {
                 array_push($tuteurs, $curUser);
             }
         }
@@ -118,11 +117,10 @@ class TeacherController extends Controller
 
         //recuperation des commentaires
         $commentaires = array();
-        foreach($com as $elem)
-        {
-            $x=array();
+        foreach ($com as $elem) {
+            $x = array();
             $user = $elem->getUser();
-            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
             array_push($x, $user->getRole());
@@ -130,8 +128,7 @@ class TeacherController extends Controller
         };
 
 //        vérification de la validité du formulaire et de si il à été envoyer
-        if ($formModif->isSubmitted() && $formModif->isValid())
-        {
+        if ($formModif->isSubmitted() && $formModif->isValid()) {
             $newProjet = new Projet();
 
             $newProjet->setIntituleProjet($projet->getIntituleProjet());
@@ -157,20 +154,17 @@ class TeacherController extends Controller
             $tuts = $formModif['tuteurs']->getData();
 
 
-            foreach ( $etus as $etu )
-            {
+            foreach ($etus as $etu) {
                 $etu->addProjetFait($newProjet);
                 $newProjet->addEtudiant($etu);
                 $em->persist($etu);
             }
-            foreach ( $tuts as $tut )
-            {
+            foreach ($tuts as $tut) {
                 $tut->addProjetSuivi($newProjet);
                 $newProjet->addTuteur($tut);
                 $em->persist($tut);
             }
-            foreach ( $com as $c )
-            {
+            foreach ($com as $c) {
                 $c->setProjet($newProjet);
             }
             // enregistrement des données dans la base
@@ -182,8 +176,8 @@ class TeacherController extends Controller
 //            redirection vers le formulaire de modification suivant une fois le formulaire envoyer
             return $this->redirectToRoute(
                 'iuto_livret_correctionProf3', array(
-                    'projet' => $newProjet->getId(),
-                ));
+                'projet' => $newProjet->getId(),
+            ));
         }
 
 //        creation du formulaire d'ajout d'un commentaire
@@ -192,8 +186,7 @@ class TeacherController extends Controller
         $formCom->handleRequest($request);
 
 //        vérification de lavalidité du formulaire et de son envoi
-        if ($formCom->isSubmitted() && $formCom->isValid())
-        {
+        if ($formCom->isSubmitted() && $formCom->isValid()) {
 //            création d'une nouvelle entité de commentaire
             $comReponse = new Commentaire;
 //            ajout des infirmations nécessaire au commentaire
@@ -211,11 +204,10 @@ class TeacherController extends Controller
             //actualisation des commentaires
             $com = $repositoryCommentaire->findByProjet($projet);
             $commentaires = array();
-            foreach($com as $elem)
-            {
-                $x=array();
+            foreach ($com as $elem) {
+                $x = array();
                 $user = $elem->getUser();
-                array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
                 array_push($x, $elem->getContenu());
                 array_push($x, $elem->getDate());
                 array_push($x, $user->getRole());
@@ -223,7 +215,7 @@ class TeacherController extends Controller
             };
 
 //            reaffichage du rendu de la section de commentaires
-            return $this->render( 'IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
+            return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig',
                 array(
                     'form' => $formModif->createView(),
                     'formCom' => $formCom->createView(),
@@ -237,14 +229,14 @@ class TeacherController extends Controller
 
 //        rendu de la page de correction du projet
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher2.html.twig', array(
-                'form' => $formModif->createView(),
-                'formCom' => $formCom->createView(),
-                'statutCAS' => 'professeur',
-                'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-                'routing_statutCAShome' => '/professeur',
-                'commentaires' => $commentaires,
-                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
-            ));
+            'form' => $formModif->createView(),
+            'formCom' => $formCom->createView(),
+            'statutCAS' => 'professeur',
+            'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
+            'routing_statutCAShome' => '/professeur',
+            'commentaires' => $commentaires,
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
+        ));
     }
 
 //    controlleur pour la seconde partie de la correction d'un projet
@@ -264,8 +256,7 @@ class TeacherController extends Controller
         $formContent->handleRequest($request);
 
 //        vérification de la validité et de l'envoi du formulaire
-        if ($formContent->isSubmitted() && $formContent->isValid())
-        {
+        if ($formContent->isSubmitted() && $formContent->isValid()) {
 //            enregistrement du formulaire dans la base
             $em->persist($projet);
             $em->flush();
@@ -282,11 +273,10 @@ class TeacherController extends Controller
         $com = $repositoryCommentaire->findByProjet($projet);
 
         $commentaires = array();
-        foreach($com as $elem)
-        {
-            $x=array();
+        foreach ($com as $elem) {
+            $x = array();
             $user = $elem->getUser();
-            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
             array_push($x, $user->getRole());
@@ -300,8 +290,7 @@ class TeacherController extends Controller
         $formCom->handleRequest($request);
 
 //        verification de l'envoie et de la validité du formulaire
-        if ($formCom->isSubmitted() && $formCom->isValid())
-        {
+        if ($formCom->isSubmitted() && $formCom->isValid()) {
 //            creation d'un nouveau commentaire et ajout des informations à celui ci
             $comReponse = new Commentaire;
             $comReponse->setDate();
@@ -316,11 +305,10 @@ class TeacherController extends Controller
             //actualisation des commentaires
             $com = $repositoryCommentaire->findByProjet($projet);
             $commentaires = array();
-            foreach($com as $elem)
-            {
-                $x=array();
+            foreach ($com as $elem) {
+                $x = array();
                 $user = $elem->getUser();
-                array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
                 array_push($x, $elem->getContenu());
                 array_push($x, $elem->getDate());
                 array_push($x, $user->getRole());
@@ -328,31 +316,31 @@ class TeacherController extends Controller
             };
 
 //            rendu du formulaire de modification du contenu du projet + formulaire d'ajout de commentaire
-            return $this->render( 'IUTOLivretBundle:Teacher:correctionTeacher3.html.twig', array(
-                    'form' => $formContent->createView(),
-                    'formCom' => $formCom->createView(),
-                    'statutCAS' => 'professeur',
-                    'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-                    'routing_statutCAShome' => '/professeur',
-                    'commentaires' => $commentaires,
-                    'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
-                    'projet' => $projet,
-                    'image' => $images,
-                ));
+            return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig', array(
+                'form' => $formContent->createView(),
+                'formCom' => $formCom->createView(),
+                'statutCAS' => 'professeur',
+                'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
+                'routing_statutCAShome' => '/professeur',
+                'commentaires' => $commentaires,
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
+                'projet' => $projet,
+                'image' => $images,
+            ));
         }
 
 //        rendu de la page de modification du projet et du formulaire d'ajout d'un commentaire
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig', array(
-                'form' => $formContent->createView(),
-                'formCom' => $formCom->createView(),
-                'statutCAS' => 'professeur',
-                'commentaires' => $commentaires,
-                'routing_statutCAShome' => '/professeur',
-                'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
-                'projet' => $projet,
-                'images' => $images,
-            ));
+            'form' => $formContent->createView(),
+            'formCom' => $formCom->createView(),
+            'statutCAS' => 'professeur',
+            'commentaires' => $commentaires,
+            'routing_statutCAShome' => '/professeur',
+            'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
+            'projet' => $projet,
+            'images' => $images,
+        ));
     }
 
 //    controlleur pour la gestion de l'ajout d'images et de mots clés
@@ -370,14 +358,10 @@ class TeacherController extends Controller
         $imagesL = $projet->getImages();
         $images = array();
         $logo = null;
-        foreach ($imagesL as $img)
-        {
-            if ($img->getIsLogo())
-            {
+        foreach ($imagesL as $img) {
+            if ($img->getIsLogo()) {
                 $logo = $img;
-            }
-            else
-            {
+            } else {
                 array_push($images, $img);
             }
         }
@@ -394,10 +378,10 @@ class TeacherController extends Controller
 
         $commentaires = array();
 
-        foreach($com as $elem){
-            $x=array();
+        foreach ($com as $elem) {
+            $x = array();
             $user = $elem->getUser();
-            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
             array_push($x, $user->getRole());
@@ -520,8 +504,7 @@ class TeacherController extends Controller
 
         $idProjet = $projet->getId();
 
-        if ($formSetValide->isSubmitted() && $formSetValide->isValid())
-        {
+        if ($formSetValide->isSubmitted() && $formSetValide->isValid()) {
 //            validation du projet si le formaulaire est envoyé
             $projet->setValiderProjet(true);
 
@@ -538,8 +521,7 @@ class TeacherController extends Controller
                 ));
         }
 
-        if ($formUnSetValide->isSubmitted() && $formUnSetValide->isValid())
-        {
+        if ($formUnSetValide->isSubmitted() && $formUnSetValide->isValid()) {
 //            validation du projet si le formaulaire est envoyé
             $projet->setValiderProjet(0);
 
@@ -556,8 +538,7 @@ class TeacherController extends Controller
                 ));
         }
 
-        if ($formSetMarquant->isSubmitted() && $formSetMarquant->isValid())
-        {
+        if ($formSetMarquant->isSubmitted() && $formSetMarquant->isValid()) {
             $projet->setMarquantProjet(true);
 
             $em->persist($projet);
@@ -570,8 +551,7 @@ class TeacherController extends Controller
                     'projetO' => $projet,
                 ));
         }
-        if ($formUnSetMarquant->isSubmitted() && $formUnSetMarquant->isValid())
-        {
+        if ($formUnSetMarquant->isSubmitted() && $formUnSetMarquant->isValid()) {
             $projet->setMarquantProjet(false);
 
             $em->persist($projet);
@@ -598,7 +578,7 @@ class TeacherController extends Controller
                 'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
                 'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
                 'projetO' => $projet,
-                )
+            )
         );
     }
 
@@ -616,16 +596,12 @@ class TeacherController extends Controller
         $form = $this->createForm(AddImageType::class, $image);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            if ( count($projet->getImages()) < 2 )
-            {
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (count($projet->getImages()) < 2) {
                 $image->setProjet($projet);
                 $em->persist($image);
                 $em->flush();
-            }
-            else
-            {
+            } else {
                 throw new Exception('Seulement 2 images peuvent être liées au projet.');
             }
 
@@ -662,13 +638,12 @@ class TeacherController extends Controller
 
 
         $projetsValides = array();
-        foreach($projets as $elem)
-        {
+        foreach ($projets as $elem) {
 //            recupération des projets validés
             if ($elem->getValiderProjet() == 1)
                 array_push($projetsValides, $elem);
         };
-    //  rendu de la page de selections des projets validés
+        //  rendu de la page de selections des projets validés
         return $this->render('IUTOLivretBundle:Teacher:projetsValidesTeacher1.html.twig', array(
             'statutCAS' => 'professeur',
             'projets' => $projetsValides,
@@ -691,18 +666,15 @@ class TeacherController extends Controller
         $form = $this->get('form.factory')->create();
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid() )
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
 //            suppression des images associées au projet
             $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
-            foreach ( $images as $img)
-            {
+            foreach ($images as $img) {
                 $em->remove($img);
             }
 //            suppression des commentaires associés au projet
             $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
-            foreach ( $com as $c)
-            {
+            foreach ($com as $c) {
                 $em->remove($c);
             }
 
@@ -720,7 +692,7 @@ class TeacherController extends Controller
 //        creation du rendu de la prage de suppression d'un projet
         return $this->render('IUTOLivretBundle:Teacher:confirmProjectDelete.html.twig', array(
             'projet' => $projet,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
             'statutCAS' => 'professeur',
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
@@ -739,8 +711,7 @@ class TeacherController extends Controller
         $form = $this->get('form.factory')->create();
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid() )
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $em->remove($image);
             $em->flush();
@@ -755,7 +726,7 @@ class TeacherController extends Controller
 
         return $this->render('IUTOLivretBundle:Teacher:confirmImageDelete.html.twig', array(
             'image' => $image,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
             'statutCAS' => 'professeur',
             'routing_statutCAShome' => '/professeur',
             'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
@@ -781,8 +752,7 @@ class TeacherController extends Controller
         $form->handleRequest($request);
 
 //        vérification de l'envoie du formulaire et de sa validité
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $image->setProjet($projet);
             $em->persist($image);
             $em->flush();
@@ -818,12 +788,11 @@ class TeacherController extends Controller
         $projetsFinis = array();
 
         // récupération des projets fait et non fait de l'étudiant
-        foreach ( $projets as $proj ){
-            if ( $proj->getValiderProjet() == 1){
+        foreach ($projets as $proj) {
+            if ($proj->getValiderProjet() == 1) {
                 // ajout du projet à la liste si il est valider
                 $projetsFinis[] = $proj;
-            }
-            else{
+            } else {
                 // ajout du projet à la liste si il est en cours de suivi
                 $projetsSuivis[] = $proj;
             }

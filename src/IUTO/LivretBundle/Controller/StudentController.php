@@ -28,7 +28,7 @@ class StudentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         // recupération de l'utilisateur connecté
-	    $idUniv = phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
         //$idUniv = $this->container->get('security.token_storage')->getToken()->getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
@@ -51,7 +51,7 @@ class StudentController extends Controller
     {
 //        récupération de l'entity manager
         $em = $this->getDoctrine()->getManager();
-	    $idUniv = phpCAS::getUser();
+        $idUniv = phpCAS::getUser();
         // Recuperation de l'étudiant connecté
         $etudiant = $em->getRepository(User::class)->findOneByIdUniv($idUniv); //TODO recuperation cas
 
@@ -66,22 +66,21 @@ class StudentController extends Controller
         // remplissage des données de bases du projet
         $projet->setNomDpt($departement);
         $projet->addEtudiant($etudiant);
-	
-	    $allUsers = $em->getRepository(User::class)->findAll();
-	    $etudiants = array();
-	    $tuteurs = array();
-	    foreach ( $allUsers as $curUser ){
-	        if ( in_array('ROLE_student',$curUser->getRoles()) && !$curUser->getFormations()->isEmpty()){
-	            $curForm = $curUser->getFormations()->last()->getDepartement()->getNomDpt();
-	            $curProm = $curUser->getFormations()->last()->getTypeFormation();
-	            if ( $curForm === $departement && $curProm == $promo)
-                {
+
+        $allUsers = $em->getRepository(User::class)->findAll();
+        $etudiants = array();
+        $tuteurs = array();
+        foreach ($allUsers as $curUser) {
+            if (in_array('ROLE_student', $curUser->getRoles()) && !$curUser->getFormations()->isEmpty()) {
+                $curForm = $curUser->getFormations()->last()->getDepartement()->getNomDpt();
+                $curProm = $curUser->getFormations()->last()->getTypeFormation();
+                if ($curForm === $departement && $curProm == $promo) {
                     array_push($etudiants, $curUser);
                 }
-	        } elseif ( in_array('ROLE_faculty',$curUser->getRoles())){
-		        array_push($tuteurs, $curUser);
-	        }
-	    }
+            } elseif (in_array('ROLE_faculty', $curUser->getRoles())) {
+                array_push($tuteurs, $curUser);
+            }
+        }
         // création du formulaire de création d'un projet
         $form = $this->createForm(ProjetCreateType::class, $projet, ['annee' => $formation->getYearDebut(), 'etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
         $form->handleRequest($request);
@@ -102,8 +101,7 @@ class StudentController extends Controller
             $tutsForm = $form['tuteurs']->getData();
 
 //              opérations sur les étudiants du projet
-            foreach ( $etusForm as $etu )
-            {
+            foreach ($etusForm as $etu) {
 //                ajout de l'étudiant au projet
                 $projet->addEtudiant($etu);
 //                ajout du projet à l'étudiant
@@ -113,8 +111,7 @@ class StudentController extends Controller
             }
 
 //            opération sur les tuteurs du projet
-            foreach ( $tutsForm as $tut )
-            {
+            foreach ($tutsForm as $tut) {
 //                ajout du tuteur au projet
                 $projet->addTuteur($tut);
 //                ajout du projet aux projets suivis par le tuteur
@@ -141,7 +138,7 @@ class StudentController extends Controller
                 'info' => array('Créer un compte rendu', 'Voir mes projets'),
                 'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
                 'routing_statutCAShome' => '/etudiant',
-                )
+            )
         );
     }
 
@@ -172,8 +169,7 @@ class StudentController extends Controller
             $request->getSession()->getFlashBag()->add('success', 'Projet bien ajouté.');
 
             // redirection vers le home de l'étudiant
-            return $this->redirectToRoute('iuto_livret_studenthomepage', array(
-                    )
+            return $this->redirectToRoute('iuto_livret_studenthomepage', array()
             );
         }
 
@@ -185,7 +181,7 @@ class StudentController extends Controller
                 'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
                 'routing_statutCAShome' => '/etudiant',
                 'projet' => $projet->getId())
-            );
+        );
     }
 
 //    controller pour l'affichage des projets d'un étudiant ( validés ou non )
@@ -204,12 +200,11 @@ class StudentController extends Controller
         $projetsFinis = array();
 
         // récupération des projets fait et non fait de l'étudiant
-        foreach ( $projets as $proj ){
-            if ( $proj->getValiderProjet() == 1){
+        foreach ($projets as $proj) {
+            if ($proj->getValiderProjet() == 1) {
                 // ajout du projet à la liste si il est valider
                 $projetsFinis[] = $proj;
-            }
-            else{
+            } else {
                 // ajout du projet à la liste si il est en cours de suivi
                 $projetsSuivis[] = $proj;
             }
@@ -246,15 +241,14 @@ class StudentController extends Controller
         $allUsers = $em->getRepository(User::class)->findAll();
         $etudiants = array();
         $tuteurs = array();
-        foreach ( $allUsers as $curUser ){
-            if ( in_array('ROLE_student',$curUser->getRoles()) && !$curUser->getFormations()->isEmpty()){
+        foreach ($allUsers as $curUser) {
+            if (in_array('ROLE_student', $curUser->getRoles()) && !$curUser->getFormations()->isEmpty()) {
                 $curForm = $curUser->getFormations()->last()->getDepartement()->getNomDpt();
                 $curProm = $curUser->getFormations()->last()->getTypeFormation();
-                if ( $curForm === $departement && $curProm == $promo)
-                {
+                if ($curForm === $departement && $curProm == $promo) {
                     array_push($etudiants, $curUser);
                 }
-            } elseif ( in_array('ROLE_faculty',$curUser->getRoles())){
+            } elseif (in_array('ROLE_faculty', $curUser->getRoles())) {
                 array_push($tuteurs, $curUser);
             }
         }
@@ -273,10 +267,10 @@ class StudentController extends Controller
 
         $commentaires = array();
 
-        foreach($com as $elem){
-            $x=array();
+        foreach ($com as $elem) {
+            $x = array();
             $user = $elem->getUser();
-            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
             array_push($x, $user->getRole());
@@ -284,8 +278,7 @@ class StudentController extends Controller
         };
 
         // vérification de la validité du formulaire et si il à été envoyer
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
 
 //            création d'un nouveau projet afin d'enregistrer les
             $newProjet = new Projet();
@@ -303,8 +296,7 @@ class StudentController extends Controller
             $newProjet->setDescriptionClientProjet($projet->getDescriptionClientProjet());
 
 //            actualisation du projet associé aux images du projet
-            foreach ( $newProjet->getImages() as $oneImg )
-            {
+            foreach ($newProjet->getImages() as $oneImg) {
                 $oneImg->setProjet($newProjet);
             }
 
@@ -322,24 +314,21 @@ class StudentController extends Controller
             $tuts = $form['tuteurs']->getData();
 
 //            opérations sur les étudiant selectionnées
-            foreach ( $etus as $etu )
-            {
+            foreach ($etus as $etu) {
                 $etu->addProjetFait($newProjet);
                 $newProjet->addEtudiant($etu);
                 $em->persist($etu);
             }
 
 //            opérations sur les tuteurs sélectionnés
-            foreach ( $tuts as $tut )
-            {
+            foreach ($tuts as $tut) {
                 $tut->addProjetSuivi($newProjet);
                 $newProjet->addTuteur($tut);
                 $em->persist($tut);
             }
 
 //            actualisation du projet associé aux commentaires
-            foreach ( $com as $c )
-            {
+            foreach ($com as $c) {
                 $c->setProjet($newProjet);
             }
 
@@ -383,10 +372,10 @@ class StudentController extends Controller
             //recupération des commentaires
             $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
             $commentaires = array();
-            foreach($com as $elem){
-                $x=array();
+            foreach ($com as $elem) {
+                $x = array();
                 $user = $elem->getUser();
-                array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
                 array_push($x, $elem->getContenu());
                 array_push($x, $elem->getDate());
                 array_push($x, $user->getRole());
@@ -396,26 +385,26 @@ class StudentController extends Controller
 
             //rechargement du formulaire pour les commentaires
             return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
-                    'form' => $form->createView(),
-                    'formCom' => $formCom->createView(),
-                    'statutCAS' => 'etudiant',
-                    'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                    'routing_statutCAShome' => '/etudiant',
-                    'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project'),
-                    'projet' => $projet,
-                    'commentaires' => $commentaires,
-                ));
+                'form' => $form->createView(),
+                'formCom' => $formCom->createView(),
+                'statutCAS' => 'etudiant',
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_statutCAShome' => '/etudiant',
+                'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project'),
+                'projet' => $projet,
+                'commentaires' => $commentaires,
+            ));
         }
 
 
         // affichage du formulaire pour compléter le projet
         return $this->render('IUTOLivretBundle:Student:completeProject.html.twig', array(
-            'form' => $form->createView(),
-            'formCom' => $formCom->createView(),
-            'statutCAS' => 'étudiant',
-            'info' => array('Créer un compte rendu', 'Voir mes projets'),
-            'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
-            'routing_statutCAShome' => '/etudiant',
+                'form' => $form->createView(),
+                'formCom' => $formCom->createView(),
+                'statutCAS' => 'étudiant',
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
+                'routing_statutCAShome' => '/etudiant',
                 'projet' => $projet,
                 'commentaires' => $commentaires,
             )
@@ -444,10 +433,10 @@ class StudentController extends Controller
         //récupération des commentaires appartenant au projet actuel
         $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
         $commentaires = array();
-        foreach($com as $elem){
-            $x=array();
+        foreach ($com as $elem) {
+            $x = array();
             $user = $elem->getUser();
-            array_push($x, $user->getPrenomUser()." ".$user->getNomUser());
+            array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
             array_push($x, $user->getRole());
@@ -462,15 +451,11 @@ class StudentController extends Controller
 //        récupération des images du projet
         $imagesL = $projet->getImages();
         $images = array();
-	    $logo = null;
-        foreach ($imagesL as $img)
-        {
-            if ($img->getIsLogo())
-            {
+        $logo = null;
+        foreach ($imagesL as $img) {
+            if ($img->getIsLogo()) {
                 $logo = $img;
-            }
-            else
-            {
+            } else {
                 array_push($images, $img);
             }
         }
@@ -523,8 +508,7 @@ class StudentController extends Controller
         }
 
 //        vérification de si le formulaire pour l'ajout de mots clés et envoyer et valide
-        if ($formMot->isSubmitted() && $formMot->isValid())
-        {
+        if ($formMot->isSubmitted() && $formMot->isValid()) {
 
 //            ajouts du mot clé au projet
             $newWord = $formMot['mot']->getData();
@@ -590,18 +574,14 @@ class StudentController extends Controller
         $form->handleRequest($request);
 
 //        vérification de l'envoie du formulaire et de sa validité
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
 //            vérification que la limite du nombre d'images est respectée
-            if ( count($projet->getImages()) < 3 )
-            {
+            if (count($projet->getImages()) < 3) {
                 $image->setProjet($projet);
                 $em->persist($image);
                 $em->flush();
-            }
-//            exception si il y a déja deux images associées au projet
-            else
-            {
+            } //            exception si il y a déja deux images associées au projet
+            else {
                 throw new Exception('Seulement 2 images peuvent être liées au projet.');
             }
 
@@ -633,29 +613,30 @@ class StudentController extends Controller
 
         // affichage de la page de confirmation des modification du projet
         return $this->render('IUTOLivretBundle:Student:confirmCompleteProject.html.twig', array(
-            'statutCAS' => 'étudiant',
-            'info' => array('Créer un compte rendu', 'Voir mes projets'),
-            'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
-            'routing_statutCAShome' => '/etudiant',
-            'projet' => $projet)
+                'statutCAS' => 'étudiant',
+                'info' => array('Créer un compte rendu', 'Voir mes projets'),
+                'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
+                'routing_statutCAShome' => '/etudiant',
+                'projet' => $projet)
         );
     }
 
 //    controlleur pour voir le pdf d'un projet validé ou pour le télécharger.
 //    arguments :
 //        projet  : projet validé
-    public function viewFinishedProjectAction(Projet $projet){
+    public function viewFinishedProjectAction(Projet $projet)
+    {
 
         // récupération des inforamtions dur l'utilsateur connecté
         $idUniv = phpCAS::getUser();
 
 //      rendu de la vue pour un projet fini
         return $this->render('IUTOLivretBundle:Student:finishedProject.html.twig', array(
-                'statutCAS' => 'étudiant',
-                'info' => array('Créer un compte rendu', 'Voir mes projets'),
-                'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
-                'routing_statutCAShome' => '/etudiant',
-                'projet' => $projet
+            'statutCAS' => 'étudiant',
+            'info' => array('Créer un compte rendu', 'Voir mes projets'),
+            'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
+            'routing_statutCAShome' => '/etudiant',
+            'projet' => $projet
         ));
     }
 
@@ -669,16 +650,13 @@ class StudentController extends Controller
         $form = $this->get('form.factory')->create();
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid() )
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
-            foreach ( $images as $img)
-            {
+            foreach ($images as $img) {
                 $em->remove($img);
             }
             $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
-            foreach ( $com as $c)
-            {
+            foreach ($com as $c) {
                 $em->remove($c);
             }
 
@@ -687,13 +665,12 @@ class StudentController extends Controller
             $request->getSession()->getFlashBag()->add('info', "Le projet a bien été supprimé.");
 
 
-            return $this->redirectToRoute('iuto_livret_chooseProject', array(
-            ));
+            return $this->redirectToRoute('iuto_livret_chooseProject', array());
         }
 
         return $this->render('IUTOLivretBundle:Student:confirmProjectDelete.html.twig', array(
             'projet' => $projet,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
             'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
@@ -714,8 +691,7 @@ class StudentController extends Controller
         $form = $this->get('form.factory')->create();
         $form->handleRequest($request);
 
-        if ( $form->isSubmitted() && $form->isValid() )
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $em->remove($image);
             $em->flush();
@@ -730,7 +706,7 @@ class StudentController extends Controller
 
         return $this->render('IUTOLivretBundle:Student:confirmImageDelete.html.twig', array(
             'image' => $image,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
             'statutCAS' => 'étudiant',
             'info' => array('Créer un compte rendu', 'Voir mes projets'),
             'routing_info' => array('/etudiant/create/project', '/etudiant/choose/project', '#',),
@@ -756,8 +732,7 @@ class StudentController extends Controller
         $form->handleRequest($request);
 
 //        vérification de l'envoie du formulaire et de sa validité
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $image->setProjet($projet);
             $em->persist($image);
             $em->flush();
