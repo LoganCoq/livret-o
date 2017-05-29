@@ -42,7 +42,9 @@
         </div>
 
         <div class="edito">
-            <p> {{ texte }} </p>
+            {% for para in paragraphes %}
+                <p> {{ para }} </p>
+            {% endfor %}
         </div>
     </body>
 </page>
