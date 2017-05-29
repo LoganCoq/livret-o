@@ -196,13 +196,11 @@
                     if ((dpt.includes(pro[1]) || ann.includes(pro[2]) || prom.includes(pro[3])) && pro[4] === valS) {
                         document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
-                        document.getElementById("l" + pro[0]).className = "btn projetPublicLi";
                     }
 
                     else {
                         document.getElementById("o" + pro[0]).style.display = "none";
                         document.getElementById("o" + pro[0]).className = "";
-                        document.getElementById("l" + pro[0]).className = "btn";
                     }
                 }
             }
