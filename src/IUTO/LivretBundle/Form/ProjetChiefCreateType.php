@@ -39,6 +39,22 @@ class ProjetChiefCreateType extends AbstractType
             ))
             ->add('nomDep', ChoiceType::class, array(
                 'label' => 'Département',
+                'choices' => array(
+                    'Chimie' => 'Chimie',
+                    'GEA' => 'GEA',
+                    'GMP' => 'GMP',
+                    'GTE' => 'GTE',
+                    'Informatique' => 'Informatique',
+                    'QLIO' => 'QLIO',
+                 ),
+                'multiple' => false,
+                'attr' => [
+                    'class' => 'selectpicker departement',
+                    'data-live-search' => 'true',
+                    'data-selected-text-format' => 'count > 5',
+                    'data-count-selected-text' => 'Tous les départements',
+                    'title' => 'Aucun département sélectionné'
+                ],
             ))
             ->add('etudiants', EntityType::class, array(
                 'class' => User::class,
