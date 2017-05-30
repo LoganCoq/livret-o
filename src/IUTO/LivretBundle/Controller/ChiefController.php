@@ -329,6 +329,35 @@ class ChiefController extends Controller
         ));
     }
 
+    public function chiefDeleteEditoAction(Request $request, Edito $edito)
+    {
+        // récupération des inforamtions dur l'utilsateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = phpCAS::getUser();
+
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $em->remove($edito);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('success', "L'édito a bien été supprimé.");
+
+            return $this->redirectToRoute('iuto_livret_chief_choose_edito', array());
+        }
+
+        return $this->render('IUTOLivretBundle:Chief:chiefConfirmEditoDelete.html.twig', array(
+            'edito' => $edito,
+            'form' => $form->createView(),
+            'routing_statutCAShome' => '/chef',
+            'statutCAS' => 'chef de département',
+            'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+        ));
+    }
+
     public function correctionChief1Action()
     {
         $idUniv = phpCAS::getUser();

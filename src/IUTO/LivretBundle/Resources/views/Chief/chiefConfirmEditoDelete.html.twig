@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}
+
+    Suppression - {{ parent() }}
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/confirmDelete.css') }}">
+{% endblock %}
+
+{% block content %}
+
+
+    <h2>Supprimer</h2>
+    <p id="message_confirm">
+        Etes-vous certain de vouloir supprimer l'édito "{{ edito.titre}}" ?
+
+        <br/>
+        Si oui, l'édito sera supprimé des livrets dont il fait partie.
+    </p>
+
+    {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+    <form action="{{ path('iuto_livret_chief_delete_edito', {'edito': edito.id}) }}" method="post">
+        <a href="{{ path('iuto_livret_chief_choose_edito') }}" class="btn btn-default">
+            <i class="glyphicon glyphicon-chevron-left"></i>
+            Retour au choix des éditos
+        </a>
+        <input type="submit" value="Supprimer" class="btn btn-danger" id="btn_delete"/>
+        {# Ceci va générer le champ CSRF #}
+        {{ form_rest(form) }}
+    </form>
+
+{% endblock %}

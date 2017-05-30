@@ -47,11 +47,6 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="" id="add_btn">
-                                            <span class="glyphicon glyphicon-plus"></span>Ajouter l'édito à un livret
-                                        </a>
-                                    </li>
-                                    <li>
                                         <a href="{{ path('iuto_livret_edito_download', {'id' : edito.id}) }}" class="download">
                                             {#icone telechargement#}
                                             <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
@@ -59,8 +54,9 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="" id="delete_btn">
-                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer l'édito
+                                        <a href="{{ path('iuto_livret_chief_delete_edito', {'edito': edito.id}) }}" id="delete_btn">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                            Supprimer l'édito
                                         </a>
                                     </li>
                                 </ul>

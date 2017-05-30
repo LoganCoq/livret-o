@@ -205,6 +205,10 @@ iuto_livret_chief_create_edito:
     path: /chef/create/edito
     defaults: { _controller: IUTOLivretBundle:Chief:chiefCreateEdito }
 
+iuto_livret_chief_delete_edito:
+    path: /chef/delete/edito/{edito}
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefDeleteEdito }
+
 #==========CORRECTION1=====#
 iuto_livret_correctionChief1:
     path: /chef/correctionChief1
