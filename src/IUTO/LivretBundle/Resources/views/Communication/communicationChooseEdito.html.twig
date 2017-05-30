@@ -56,12 +56,14 @@
                                     </li>
                                     <li>
                                         <a href="" id="add_btn">
-                                            <span class="glyphicon glyphicon-plus"></span>Ajouter l'édito à un livret
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                            Ajouter l'édito à un livret
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="" id="delete_btn">
-                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer l'édito
+                                        <a href="{{ path('iuto_livret_communication_delete_edito', {'edito': edito.id}) }}" id="delete_btn">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                            Supprimer l'édito
                                         </a>
                                     </li>
                                 </ul>

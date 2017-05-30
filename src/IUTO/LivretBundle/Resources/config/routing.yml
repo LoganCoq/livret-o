@@ -315,6 +315,10 @@ iuto_livret_communication_modif_edito:
     path: /communication/update/edito/{id}
     defaults: { _controller: IUTOLivretBundle:Communication:communicationModifEdito }
 
+iuto_livret_communication_delete_edito:
+    path: /communication/delete/edito/{edito}
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationDeleteEdito }
+
 
 #==========================================================#
 #==========================================================#
