@@ -873,12 +873,12 @@ class CommunicationController extends Controller
 
             $em->remove($edito);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('info', "L'édito a bien été supprimé.");
+            $request->getSession()->getFlashBag()->add('success', "L'édito a bien été supprimé.");
 
             return $this->redirectToRoute('iuto_livret_communication_choose_edito', array());
         }
 
-        return $this->render('IUTOLivretBundle:Communication:confirmLivretDelete.html.twig', array(
+        return $this->render('IUTOLivretBundle:Communication:communicationConfirmEditoDelete.html.twig', array(
             'edito' => $edito,
             'form' => $form->createView(),
             'statutCAS' => 'communication',

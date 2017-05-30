@@ -4,7 +4,7 @@
 
 {# block titre pour changer le titre de l'onglet #}
 {% block title %}
-    Livret'O - Livrets
+    Livret'O - Editos
 {% endblock %}
 
 {% block stylesheets %}
@@ -14,6 +14,15 @@
 {% endblock %}
 
 {% block content %}
+
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {# affichage du message#}
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
 
     {# bouton de retour à l'accueil #}
     <a type="button" href="{{ path('iuto_livret_communicationhomepage') }}" class="btn btn-primary" id="livret_btn_goto_home">
