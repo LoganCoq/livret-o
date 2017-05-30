@@ -41,11 +41,6 @@
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                 Aperçu de l'édito
                             </a>
-                            <a href="{{ path('iuto_livret_edito_download', {'id' : edito.id}) }}" class="btn btn-default download_confirm" id="livreto_download_finished">
-                                {#icone telechargement#}
-                                <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                                Enregistrer sur l'ordinateur
-                            </a>
                             <div class="dropdown">
                                 <a class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
@@ -54,6 +49,13 @@
                                     <li>
                                         <a href="" id="add_btn">
                                             <span class="glyphicon glyphicon-plus"></span>Ajouter l'édito à un livret
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('iuto_livret_edito_download', {'id' : edito.id}) }}" class="download">
+                                            {#icone telechargement#}
+                                            <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                                            Enregistrer sur l'ordinateur
                                         </a>
                                     </li>
                                     <li>
