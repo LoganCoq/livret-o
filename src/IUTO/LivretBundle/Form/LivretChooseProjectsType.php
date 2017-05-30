@@ -19,6 +19,7 @@ class LivretChooseProjectsType extends AbstractType
         $builder
             ->add('projects', EntityType::class, array(
                 'class' => Projet::class,
+                'placeholder' => 'Aucun projet ne correspond à votre sélection',
                 'label' => 'Projets',
                 'choice_label' => function (Projet $projet) {
                     return $projet->getIntituleProjet();
