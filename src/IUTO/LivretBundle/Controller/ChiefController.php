@@ -556,7 +556,7 @@ class ChiefController extends Controller
             $em->flush();
 
             //redirection vers la page suivante
-            return $this->redirectToRoute('iuto_livret_chiefhomepage', array(
+            return $this->redirectToRoute('iuto_livret_chief_addWordImage_project', array(
                     'projet' => $projet->getId())
             );
         }
