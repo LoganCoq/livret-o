@@ -283,6 +283,10 @@ iuto_livret_communicationChoix:
     path: /communication/selection
     defaults: { _controller: IUTOLivretBundle:Communication:communicationChoix}
 
+iuto_livret_communication_delete_projet:
+    path: /communication/delete/projet/{projet}
+    defaults: { _controller: IUTOLivretBundle:Communication:communicationDeleteProjet }
+
 iuto_livret_communication_correct_projet:
     path: /communication/projet/{projet}/correction
     defaults: { _controller: IUTOLivretBundle:Communication:communicationCorrectionProjet }

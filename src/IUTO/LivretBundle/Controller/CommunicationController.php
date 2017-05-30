@@ -279,6 +279,35 @@ class CommunicationController extends Controller
         ));
     }
 
+    public function communicationDeleteProjetAction(Request $request, Projet $projet)
+    {
+        // récupération des inforamtions dur l'utilsateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = phpCAS::getUser();
+
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $em->remove($projet);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('success', "Le projet a bien été supprimé.");
+
+            return $this->redirectToRoute('iuto_livret_communicationChoix', array());
+        }
+
+        return $this->render('IUTOLivretBundle:Communication:communicationConfirmProjetDelete.html.twig', array(
+            'projet' => $projet,
+            'form' => $form->createView(),
+            'statutCAS' => 'communication',
+            'info' => array('Créer un livret', 'Voir les livrets', 'Rechercher des projets', 'Créer un édito', 'Voir les éditos'),
+            'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '/communication/create/edito', '/communication/choose/edito'),
+            'routing_statutCAShome' => '/communication',
+        ));
+    }
+
     public function communicationSelectionlivretAction(Request $request)
     {
         $idUniv = phpCAS::getUser();
@@ -887,4 +916,5 @@ class CommunicationController extends Controller
             'routing_statutCAShome' => '/communication',
         ));
     }
+
 }

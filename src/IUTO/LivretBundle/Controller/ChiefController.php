@@ -640,4 +640,9 @@ class ChiefController extends Controller
         ));
     }
 
+    public function chiefDeleteProjectAction(Request $request, Projet $projet)
+    {
+
+    }
+
 } 
