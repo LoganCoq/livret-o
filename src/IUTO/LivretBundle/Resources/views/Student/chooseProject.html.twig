@@ -48,6 +48,13 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="btn_drop_{{ projet.id }}">
                                 <li>
+                                    <a href="{{ path('iuto_livret_download', {'id' : projet.id}) }}" class="btn btn-default download_confirm" id="livreto_download_finished">
+                                        {#icone telechargement#}
+                                        <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                                        Enregistrer sur l'ordinateur
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="{{ path('iuto_livret_deleteProject', {'projet': projet.id}) }}" id="delete_btn">
                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer le projet
                                     </a>

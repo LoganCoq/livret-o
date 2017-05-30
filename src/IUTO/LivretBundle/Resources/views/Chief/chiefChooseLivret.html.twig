@@ -41,11 +41,7 @@
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                 Aperçu du livret
                             </a>
-                            <a href="{{ path('iuto_livret_download_livret', {'id': livret.id}) }}" class="btn btn-default download_confirm" id="livreto_download_finished">
-                                {#icone telechargement#}
-                                <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                                Enregistrer sur l'ordinateur
-                            </a>
+
                             <div class="dropdown">
                                 <a class="btn dropdown-toggle" type="button" data-toggle="dropdown" id="btn_drop_{{ livret.id }}" aria-haspopup="true" aria-expanded="true">
                                     <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
@@ -54,6 +50,13 @@
                                     <li>
                                         <a href="{{ path('iuto_livret_chief_delete_livret', {'livret': livret.id}) }}" id="delete_btn">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer le livret
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('iuto_livret_download_livret', {'id': livret.id}) }}" class="btn btn-default download_confirm" id="livreto_download_finished">
+                                            {#icone telechargement#}
+                                            <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                                            Enregistrer sur l'ordinateur
                                         </a>
                                     </li>
                                 </ul>
