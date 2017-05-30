@@ -230,7 +230,7 @@ iuto_livret_correctionChief4:
     defaults: { _controller: IUTOLivretBundle:Chief:correctionChief4 }
 
 iuto_livret_create_project:
-    path: /chef/create/projet
+    path: /chef/create/project
     defaults: { _controller: IUTOLivretBundle:Chief:chiefCreateProject }
 
 #==========================================================#
