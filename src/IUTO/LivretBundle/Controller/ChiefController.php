@@ -642,7 +642,31 @@ class ChiefController extends Controller
 
     public function chiefDeleteProjectAction(Request $request, Projet $projet)
     {
+        // récupération des inforamtions dur l'utilsateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = phpCAS::getUser();
 
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $em->remove($projet);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('success', "Le projet a bien été supprimé.");
+
+            return $this->redirectToRoute('iuto_livret_chief_choose_project', array());
+        }
+
+        return $this->render('IUTOLivretBundle:Chief:chiefConfirmProjetDelete.html.twig', array(
+            'projet' => $projet,
+            'form' => $form->createView(),
+            'statutCAS' => 'chef de département',
+            'routing_statutCAShome' => '/chef',
+            'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+        ));
     }
 
 } 
