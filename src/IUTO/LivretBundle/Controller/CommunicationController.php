@@ -95,14 +95,17 @@ class CommunicationController extends Controller
             $dateFinSelection = \DateTime::createFromFormat('d/m/Y', $form["dateFin"]->getData());
             $formationsSelectionnes = $form["listeFormation"]->getData();
             $departementsSelectionnes = $form["listeDepartements"]->getData();
+            $projetsMarquants = $form["projetMarquants"]->getData();
 
-//            TODO projets marquants
+
             $qb = $repositoryProjet->createQueryBuilder('p');
             $qb->where('p.dateDebut > :dateDebut')
                 ->setParameter('dateDebut', $dateDebutSelection)
                 ->andWhere('p.dateFin < :dateFin')
                 ->setParameter('dateFin', $dateFinSelection)
-                ->andWhere('p.validerProjet = 1');
+                ->andWhere('p.validerProjet = 1')
+                ->andWhere('p.marquantProjet = :isMarquant')
+                ->setParameter('isMarquant', $projetsMarquants);
 
             $projets = $qb->getQuery()->getResult();
 
@@ -249,7 +252,7 @@ class CommunicationController extends Controller
             'routing_info' => array('/communication/create/livret', '/communication/chooseLivret', '/communication/selection', '/communication/create/edito', '/communication/choose/edito'),
             'options' => array('Apercu du compte rendu', 'Renvoyer la correction aux élèves', 'Valider', 'Retour'),
             'routing_statutCAShome' => '/communication',
-            'routing_options' => array('/generate/1', '#', '/communication/validation', 'communication/selection'))); // TODO "generate/1" a changer en id
+            'routing_options' => array('/generate/1', '#', '/communication/validation', 'communication/selection')));
     }
 
     public function communicationChoixAction()

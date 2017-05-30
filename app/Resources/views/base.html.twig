@@ -45,7 +45,6 @@
                     </a>
                     {% if statutCAS != "Public" %}
                         <a href="{{ path('iuto_livret_logout') }}">
-                            {#TODO style#}
                             <button type="button" class="btn btn-danger" style="width: 100%">
                                 <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                                 Déconnexion
@@ -53,7 +52,6 @@
                         </a>
                     {% else %}
                         <a href="{{ path('iuto_livret_homepage') }}">
-                            {#TODO style#}
                             <button type="button" class="btn btn-danger" style="width: 100%">
                                 <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                                 Retour à l'authentification

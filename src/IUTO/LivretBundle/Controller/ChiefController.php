@@ -83,14 +83,16 @@ class ChiefController extends Controller
             $dateFinSelection = \DateTime::createFromFormat('d/m/Y', $form["dateFin"]->getData());
             $formationsSelectionnes = $form["listeFormation"]->getData();
             $departementsSelectionnes = $form["listeDepartements"]->getData();
+            $projetsMarquants = $form["projetMarquants"]->getData();
 
-//            TODO projets marquants
             $qb = $repositoryProjet->createQueryBuilder('p');
             $qb->where('p.dateDebut > :dateDebut')
                 ->setParameter('dateDebut', $dateDebutSelection)
                 ->andWhere('p.dateFin < :dateFin')
                 ->setParameter('dateFin', $dateFinSelection)
-                ->andWhere('p.validerProjet = 1');
+                ->andWhere('p.validerProjet = 1')
+                ->andWhere('p.marquantProjet = :isMarquant')
+                ->setParameter('isMarquant', $projetsMarquants);
 
             $projets = $qb->getQuery()->getResult();
             $livretProjets = array();
