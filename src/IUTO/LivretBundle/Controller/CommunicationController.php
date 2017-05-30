@@ -329,7 +329,19 @@ class CommunicationController extends Controller
         $idUniv = phpCAS::getUser();
         $user = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
-        $formCorrect = $this->createForm(ProjetCompleteType::class, $projet);
+        $allUsers = $em->getRepository(User::class)->findAll();
+        $etudiants = array();
+        $tuteurs = array();
+        foreach ($allUsers as $curUser) {
+            if (in_array('ROLE_student', $curUser->getRoles())) {
+                array_push($etudiants, $curUser);
+            }
+            if (in_array('ROLE_faculty', $curUser->getRoles())) {
+                array_push($tuteurs, $curUser);
+            }
+        }
+
+        $formCorrect = $this->createForm(ProjetCompleteType::class, $projet, ['etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
 
         // insertion des dates en string
         $formCorrect['dateDebut']->setData($projet->getDateDebut()->format('d/m/Y'));

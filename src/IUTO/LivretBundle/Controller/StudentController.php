@@ -73,7 +73,8 @@ class StudentController extends Controller
                 if ($curForm === $departement && $curProm == $promo) {
                     array_push($etudiants, $curUser);
                 }
-            } elseif (in_array('ROLE_faculty', $curUser->getRoles())) {
+            }
+            if (in_array('ROLE_faculty', $curUser->getRoles())) {
                 array_push($tuteurs, $curUser);
             }
         }
@@ -244,7 +245,8 @@ class StudentController extends Controller
                 if ($curForm === $departement && $curProm == $promo) {
                     array_push($etudiants, $curUser);
                 }
-            } elseif (in_array('ROLE_faculty', $curUser->getRoles())) {
+            }
+            if (in_array('ROLE_faculty', $curUser->getRoles())) {
                 array_push($tuteurs, $curUser);
             }
         }

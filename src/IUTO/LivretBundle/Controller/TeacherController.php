@@ -96,7 +96,8 @@ class TeacherController extends Controller
         foreach ($allUsers as $curUser) {
             if (in_array('ROLE_student', $curUser->getRoles())) {
                 array_push($etudiants, $curUser);
-            } elseif (in_array('ROLE_faculty', $curUser->getRoles())) {
+            }
+            if (in_array('ROLE_faculty', $curUser->getRoles())) {
                 array_push($tuteurs, $curUser);
             }
         }
