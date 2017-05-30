@@ -127,7 +127,7 @@ iuto_livret_add_img_teacher:
     defaults: { _controller: IUTOLivretBundle:Teacher:addImageCorrection }
 
 #=====AJOUT LOGO CLIENT====#
-iuto_livret_add_logo:
+iuto_livret_add_logo_teacher:
     path: /professeur/{projet}/addLogo
     defaults: { _controller: IUTOLivretBundle:Teacher:addLogo }
 
