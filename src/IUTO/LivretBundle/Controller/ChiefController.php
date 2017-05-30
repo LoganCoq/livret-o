@@ -640,7 +640,7 @@ class ChiefController extends Controller
         ));
     }
 
-    public function chiefDeleteProjectAction(Request $request, Projet $projet)
+    public function chiefDeleteProjetAction(Request $request, Projet $projet)
     {
         // récupération des inforamtions dur l'utilsateur connecté
         $em = $this->getDoctrine()->getManager();
