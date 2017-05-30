@@ -229,6 +229,10 @@ iuto_livret_correctionChief4:
     path: /chef/{projet}/correctionChief4
     defaults: { _controller: IUTOLivretBundle:Chief:correctionChief4 }
 
+iuto_livret_create_project:
+    path: /chef/create/projet
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefCreateProject }
+
 #==========================================================#
 #==========================================================#
 #================ROUTES MODULE COMMUNICATIONN==============#

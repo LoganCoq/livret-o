@@ -9,6 +9,8 @@ use IUTO\LivretBundle\Form\EditoType;
 use IUTO\LivretBundle\Form\LivretChooseProjectsType;
 use IUTO\LivretBundle\Form\LivretCreateType;
 use IUTO\LivretBundle\Form\NewLivretType;
+use IUTO\LivretBundle\Form\ProjetChiefCreateType;
+use IUTO\LivretBundle\Form\ProjetCreateType;
 use phpCAS;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Entity\Projet;
@@ -30,9 +32,9 @@ class ChiefController extends Controller
         return $this->render('IUTOLivretBundle:Chief:chiefhome.html.twig', array(
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/project', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             'options' => array('Générer un livret au format pdf', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_options' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'routing_options' => array('/chef/create/livret', '/chef/create/project', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             'routing_statutCAShome' => '/chef',
             'user' => $user,
         ));
@@ -62,7 +64,7 @@ class ChiefController extends Controller
         return $this->render('IUTOLivretBundle:Chief:chiefCreateLivret.html.twig', array(
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/project', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             'routing_statutCAShome' => '/chef',
             'formCreate' => $formCreate->createView(),
         ));
@@ -131,7 +133,7 @@ class ChiefController extends Controller
             'form' => $form->createView(),
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/project', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             'routing_statutCAShome' => '/chef',
         ));
     }
@@ -177,7 +179,7 @@ class ChiefController extends Controller
             'form' => $form->createView(),
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/project', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             'routing_statutCAShome' => '/chef',
         ));
     }
@@ -195,7 +197,7 @@ class ChiefController extends Controller
         return $this->render('IUTOLivretBundle:Chief:chiefChooseLivret.html.twig', array(
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/project', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             'routing_statutCAShome' => '/chef',
             'livrets' => $livrets,
         ));
@@ -222,7 +224,7 @@ class ChiefController extends Controller
             'formCreate' => $formModif->createView(),
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/project', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             'routing_statutCAShome' => '/chef',
         ));
     }
@@ -255,7 +257,7 @@ class ChiefController extends Controller
             'form' => $form->createView(),
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/project', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             'routing_statutCAShome' => '/chef',
         ));
     }
@@ -275,7 +277,7 @@ class ChiefController extends Controller
             'routing_statutCAShome' => '/chef',
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/project', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             'projets' => $projets,
             'dpt' => $dpt,
             'annee' => $annee,
@@ -298,7 +300,7 @@ class ChiefController extends Controller
             'routing_statutCAShome' => '/chef',
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/project', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             'editos' => $editos,
         ));
     }
@@ -324,7 +326,7 @@ class ChiefController extends Controller
             'routing_statutCAShome' => '/chef',
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/project', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             'form' => $formCreate->createView(),
         ));
     }
@@ -354,7 +356,7 @@ class ChiefController extends Controller
             'routing_statutCAShome' => '/chef',
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/project', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
         ));
     }
 
@@ -432,12 +434,9 @@ class ChiefController extends Controller
                 'formCom' => $form2->createView(),
                 'statutCAS' => 'chef de département',
                 'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-                'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
                 'routing_statutCAShome' => '/chef',
                 'commentaires' => $commentaires,
-                'routing_options' => array('#', '#'),
-                'pagePrec' => '/chef/correctionChief1',
-                'pageSuiv' => '/chef/' . $idProjet . '/correctionChief3'
             ));
     }
 
@@ -470,10 +469,7 @@ class ChiefController extends Controller
                 'commentaires' => $commentaires,
                 'routing_statutCAShome' => '/chef',
                 'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-                'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
-                'routing_options' => array('#', '#'),
-                'pagePrec' => '/chef/' . $idProjet . '/correctionChief2',
-                'pageSuiv' => '/chef/' . $idProjet . '/correctionChief4'
+                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             ));
     }
 
@@ -488,10 +484,91 @@ class ChiefController extends Controller
                 'statutCAS' => 'chef de département',
                 'routing_statutCAShome' => '/chef',
                 'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-                'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
-                'routing_options' => array('#', '#'),
-                'pagePrec' => '/chef/' . $idProjet . '/correctionChief3'
+                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             ));
+    }
+
+    public function chiefCreateProjectAction(Request $request)
+    {
+        //        récupération de l'entity manager
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = phpCAS::getUser();
+        // Recuperation de l'étudiant connecté
+        $chef = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
+
+        //creation d'un nouveau projet
+        $projet = new Projet();
+
+        $allUsers = $em->getRepository(User::class)->findAll();
+        $etudiants = array();
+        $tuteurs = array();
+        foreach ($allUsers as $curUser) {
+            if (in_array('ROLE_student', $curUser->getRoles()) && !$curUser->getFormations()->isEmpty()) {
+                array_push($etudiants, $curUser);
+            }
+            if (in_array('ROLE_faculty', $curUser->getRoles())) {
+                array_push($tuteurs, $curUser);
+            }
+        }
+        // création du formulaire de création d'un projet
+        $form = $this->createForm(ProjetChiefCreateType::class, $projet, ['etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
+        $form->handleRequest($request);
+
+        //verifie si le formulaire est valide ou non et si il est envoyé
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // récupération de la date et changement de son format
+            $dateFormD = $form['dateDebut']->getData();
+            $dateFormF = $form['dateFin']->getData();
+
+            //stockage de la date dans le projet
+            $projet->setDateDebut(\DateTime::createFromFormat('d/m/Y', $dateFormD));
+            $projet->setDateFin(\DateTime::createFromFormat('d/m/Y', $dateFormF));
+
+//            récupération des étudiants selectionnées dans le formulaire
+            $etusForm = $form['etudiants']->getData();
+            $tutsForm = $form['tuteurs']->getData();
+
+//              opérations sur les étudiants du projet
+            foreach ($etusForm as $etu) {
+//                ajout de l'étudiant au projet
+                $projet->addEtudiant($etu);
+//                ajout du projet à l'étudiant
+                $etu->addProjetFait($projet);
+//                on indique à doctrine que cette données va être sauvegardée
+                $em->persist($etu);
+            }
+
+//            opération sur les tuteurs du projet
+            foreach ($tutsForm as $tut) {
+//                ajout du tuteur au projet
+                $projet->addTuteur($tut);
+//                ajout du projet aux projets suivis par le tuteur
+                $tut->addProjetSuivi($projet);
+//                on indique à doctrine que cette données va être sauvegardée
+                $em->persist($tut);
+            }
+
+//            on indique à doctrine que la donnée va être sauvegardée
+            $em->persist($projet);
+            // enregistrement des données dans la base
+            $em->flush();
+
+            //redirection vers la page suivante
+            return $this->redirectToRoute('iuto_livret_chiefhomepage', array(
+                    'projet' => $projet->getId())
+            );
+        }
+
+        // affichage de la page du formulaire
+        return $this->render('IUTOLivretBundle:Chief:chiefCreateProject.html.twig', array(
+                'form' => $form->createView(),
+                'routing_statutCAShome' => '/chef',
+                'statutCAS' => 'chef de département',
+                'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            )
+        );
     }
 
 } 
