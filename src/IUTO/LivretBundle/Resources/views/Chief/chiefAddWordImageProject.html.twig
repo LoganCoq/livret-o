@@ -1,0 +1,108 @@
+{# on entend base.html.twig pour avoir le menu sur la gauche #}
+{% extends 'base.html.twig' %}
+
+{# block titre pour changer le titre de l'onglet #}
+{% block title %}
+    Livret'O - Images/Mots projet
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css"/>
+
+
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/addWordImageStudent.css") }}"/>
+
+
+{% endblock %}
+
+
+{% block content %}
+    <div class="form-complete">
+
+        <div id="logo_client">
+            <div id="livret_add_logo">
+                <label class="control-label" for="project_btn_add_img">
+                    Logo client
+                </label>
+                {% if logo == null %}
+                    <a type="button" href="" class="btn btn-default" id="project_btn_add_img">
+                        {# icone #}
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        Ajouter le logo du client
+                    </a>
+                {% endif %}
+            </div>
+            <div id="logo">
+                {% if logo != null %}
+                    <a href="/images/projects/{{ logo.imageName }}">
+                        <img href="/images/projects/{{ logo.imageName }}" alt="" src="/images/projects/{{ logo.imageName }}"/>
+                    </a>
+                    <a href="" id="delete_btn">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="images_projet">
+            <div id="livret_add_img">
+                <label class="control-label" for="project_btn_add_img">
+                    Images
+                </label>
+                {% if images|length < 2 %}
+                    <a type="button" href="" class="btn btn-default" id="project_btn_add_img">
+                        {# icone #}
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        Ajouter une image au projet
+                    </a>
+                {% endif %}
+            </div>
+            <div id="images">
+                {% for img in images %}
+                    <a href="/images/projects/{{ img.imageName }}">
+                        <img href="/images/projects/{{ img.imageName }}" alt="" src="/images/projects/{{ img.imageName }}"/>
+                    </a>
+                    <a href="" id="delete_btn">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="key_words_project">
+            <div id="livret_add_word">
+                {% form_theme formMot 'bootstrap_3_layout.html.twig' %}
+                {{ form(formMot) }}
+            </div>
+            <div id="key_words">
+                {% if motsCles|length == 0 %}
+                    <h3><small>Il n'y a pas de mots clés pour ce projet</small></h3>
+                {% else %}
+                    <label>Mots clés du projet :</label>
+                    {% for mot in motsCles %}
+                        <span class="label label-info">{{ mot }}</span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <a type="button" href="" class="btn btn-success" id="correction_accept_wordImg">
+            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+            Terminer
+        </a>
+
+        {# bouton retour accueil #}
+        <a type="button" href="{{ path('iuto_livret_chiefhomepage') }}" class="btn btn-danger" id="livret_cancel_create_student">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            Annuler
+        </a>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+{% endblock %}

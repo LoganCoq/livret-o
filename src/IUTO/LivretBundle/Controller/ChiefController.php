@@ -9,6 +9,7 @@ use IUTO\LivretBundle\Form\EditoType;
 use IUTO\LivretBundle\Form\LivretChooseProjectsType;
 use IUTO\LivretBundle\Form\LivretCreateType;
 use IUTO\LivretBundle\Form\NewLivretType;
+use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
 use IUTO\LivretBundle\Form\ProjetChiefCreateType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
 use phpCAS;
@@ -569,6 +570,74 @@ class ChiefController extends Controller
                 'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             )
         );
+    }
+
+    public function chiefAddImgWordAction(Request $request, Projet $projet)
+    {
+        //        récupération de l'entity manager
+        $em = $this->getDoctrine()->getManager();
+        //récupération des informations de l'utilisateur connecter
+        $idUniv = phpCAS::getUser();
+
+//        récupération des mots clés du projet
+        $motsCles = $projet->getMotsClesProjet();
+
+//        création du formulaire d'ajout d'une image
+        $formMot = $this->createForm(ProjetAddKeyWordType::class);
+        $formMot->handleRequest($request);
+
+
+//        récupération des images du projet
+        $imagesL = $projet->getImages();
+        $images = array();
+        $logo = null;
+        foreach ($imagesL as $img) {
+            if ($img->getIsLogo()) {
+                $logo = $img;
+            } else {
+                array_push($images, $img);
+            }
+        }
+
+//        vérification de si le formulaire pour l'ajout de mots clés et envoyer et valide
+        if ($formMot->isSubmitted() && $formMot->isValid()) {
+
+//            ajouts du mot clé au projet
+            $newWord = $formMot['mot']->getData();
+            $projet->addMotCleProjet($newWord);
+//            actualisation des mots clés du projet pour le rechargement de la page
+            $motsCles = $projet->getMotsClesProjet();
+
+//            enregistrement des donnees
+            $em->persist($projet);
+            $em->flush();
+
+            //rechargement du formulaire pour les mots clés
+            return $this->render('IUTOLivretBundle:Chief:chiefAddWordImageProject.html.twig', array(
+                'formMot' => $formMot->createView(),
+                'statutCAS' => 'chef de département',
+                'routing_statutCAShome' => '/chef',
+                'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+                'projet' => $projet,
+                'images' => $images,
+                'motsCles' => $motsCles,
+                'logo' => $logo,
+            ));
+        }
+
+//        rendu de la page d'ajout de mots clés et de d'images
+        return $this->render('IUTOLivretBundle:Chief:chiefAddWordImageProject.html.twig', array(
+            'formMot' => $formMot->createView(),
+            'statutCAS' => 'chef de département',
+            'routing_statutCAShome' => '/chef',
+            'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'projet' => $projet,
+            'images' => $images,
+            'motsCles' => $motsCles,
+            'logo' => $logo,
+        ));
     }
 
 } 
