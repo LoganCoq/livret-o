@@ -753,7 +753,7 @@ class ChiefController extends Controller
         }
 
 //        rendu de la page finale de modification
-        return $this->render('IUTOLivretBundle:chief:chiefValiderProjet.html.twig',
+        return $this->render('IUTOLivretBundle:Chief:chiefValiderProjet.html.twig',
             array(
                 'formSetValide' => $formSetValide->createView(),
                 'formSetMarquant' => $formSetMarquant->createView(),
