@@ -215,9 +215,9 @@ iuto_livret_chief_correction_projet:
     defaults: { _controller: IUTOLivretBundle:Chief:chiefCorrectionProjet }
 
 #==========CORRECTION2=====#
-iuto_livret_chief_correction_img_word:
+iuto_livret_chief_add_img_word:
     path: /chef/correction/projet/{projet}/imgWord
-    defaults: { _controller: IUTOLivretBundle:Chief:chiefCorrectionImgWord }
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefAddImgWord }
 
 iuto_livret_chief_create_project:
     path: /chef/create/project

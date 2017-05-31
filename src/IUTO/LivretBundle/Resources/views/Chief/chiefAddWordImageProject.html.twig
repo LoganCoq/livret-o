@@ -26,7 +26,7 @@
                     Logo client
                 </label>
                 {% if logo == null %}
-                    <a type="button" href="" class="btn btn-default" id="project_btn_add_img">
+                    <a type="button" href="{{ path('iuto_livret_chief_add_logo_projet', {'projet' : projet.id}) }}" class="btn btn-default" id="project_btn_add_img">
                         {# icone #}
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         Ajouter le logo du client
@@ -38,7 +38,7 @@
                     <a href="/images/projects/{{ logo.imageName }}">
                         <img href="/images/projects/{{ logo.imageName }}" alt="" src="/images/projects/{{ logo.imageName }}"/>
                     </a>
-                    <a href="" id="delete_btn">
+                    <a href="{{ path('iuto_livret_chief_delete_image_logo', {'image' : logo.id}) }}" id="delete_btn">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </a>
                 {% endif %}
@@ -51,7 +51,7 @@
                     Images
                 </label>
                 {% if images|length < 2 %}
-                    <a type="button" href="" class="btn btn-default" id="project_btn_add_img">
+                    <a type="button" href="{{ path('iuto_livret_add_image_projet', {'projet' : projet.id}) }}" class="btn btn-default" id="project_btn_add_img">
                         {# icone #}
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         Ajouter une image au projet
@@ -63,7 +63,7 @@
                     <a href="/images/projects/{{ img.imageName }}">
                         <img href="/images/projects/{{ img.imageName }}" alt="" src="/images/projects/{{ img.imageName }}"/>
                     </a>
-                    <a href="" id="delete_btn">
+                    <a href="{{ path('iuto_livret_chief_delete_image_logo', {'image' : img.id}) }}" id="delete_btn">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </a>
                 {% endfor %}

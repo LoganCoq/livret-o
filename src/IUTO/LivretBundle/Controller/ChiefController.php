@@ -461,7 +461,7 @@ class ChiefController extends Controller
             $em->flush();
 
             //redirection vers la page suivante
-            return $this->redirectToRoute('iuto_livret_chief_correction_img_word', array(
+            return $this->redirectToRoute('iuto_livret_chief_add_img_word', array(
                     'projet' => $newProjet->getId())
             );
         }
@@ -526,7 +526,7 @@ class ChiefController extends Controller
         );
     }
 
-    public function chiefCorrectionImgWordAction(Request $request, Projet $projet)
+    public function chiefAddImgWordAction(Request $request, Projet $projet)
     {
 //      recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
@@ -602,7 +602,7 @@ class ChiefController extends Controller
             };
 
             //rechargement du formulaire pour les commentaires
-            return $this->render('IUTOLivretBundle:Chief:chiefCorrectionImgWord.html.twig', array(
+            return $this->render('IUTOLivretBundle:Chief:chiefAddWordImage.html.twig', array(
                 'formMot' => $formMot->createView(),
                 'formCom' => $formCom->createView(),
                 'routing_statutCAShome' => '/chef',
@@ -627,7 +627,7 @@ class ChiefController extends Controller
             $em->flush();
 
             //rechargement du formulaire pour les mots clés
-            return $this->render('IUTOLivretBundle:Chief:chiefCorrectionImgWord.html.twig', array(
+            return $this->render('IUTOLivretBundle:Chief:chiefAddWordImage.html.twig', array(
                 'formMot' => $formMot->createView(),
                 'formCom' => $formCom->createView(),
                 'routing_statutCAShome' => '/chef',
@@ -641,7 +641,7 @@ class ChiefController extends Controller
                 'commentaires' => $commentaires,
             ));
         }
-        return $this->render('IUTOLivretBundle:Chief:chiefCorrectionImgWord.html.twig', array(
+        return $this->render('IUTOLivretBundle:Chief:chiefAddWordImage.html.twig', array(
             'formMot' => $formMot->createView(),
             'formCom' => $formCom->createView(),
             'routing_statutCAShome' => '/chef',
@@ -723,7 +723,7 @@ class ChiefController extends Controller
             $em->flush();
 
             //redirection vers la page suivante
-            return $this->redirectToRoute('iuto_livret_chief_addWordImage_project', array(
+            return $this->redirectToRoute('iuto_livret_chief_add_img_word', array(
                     'projet' => $projet->getId())
             );
         }
@@ -887,7 +887,7 @@ class ChiefController extends Controller
             $em->flush();
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
-            return $this->redirectToRoute('iuto_livret_chief_correction_img_word', array(
+            return $this->redirectToRoute('iuto_livret_chief_add_img_word', array(
                     'projet' => $projet->getId(),
                 )
             );
@@ -924,7 +924,7 @@ class ChiefController extends Controller
             }
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
-            return $this->redirectToRoute('iuto_livret_chief_correction_img_word', array(
+            return $this->redirectToRoute('iuto_livret_chief_add_img_word', array(
                     'projet' => $projet->getId(),
                 )
             );
@@ -959,7 +959,7 @@ class ChiefController extends Controller
             $request->getSession()->getFlashBag()->add('info', "L'image a bien été supprimée.");
 
 
-            return $this->redirectToRoute('iuto_livret_chief_correction_img_word', array(
+            return $this->redirectToRoute('iuto_livret_chief_add_img_word', array(
                 'projet' => $projet->getId(),
             ));
         }
