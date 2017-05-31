@@ -243,6 +243,7 @@ iuto_livret_chief_delete_projet:
 
 iuto_livret_chief_valider_projet:
     path: /chef/valider/projet/{projet}
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefValiderProjet }
 
 #==========================================================#
 #==========================================================#
