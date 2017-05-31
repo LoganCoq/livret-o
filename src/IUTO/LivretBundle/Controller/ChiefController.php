@@ -467,7 +467,7 @@ class ChiefController extends Controller
 
             //redirection vers la page suivante
             return $this->redirectToRoute('iuto_livret_chief_correction_img_word', array(
-                    'projet' => $projet->getId())
+                    'projet' => $newProjet->getId())
             );
         }
 
