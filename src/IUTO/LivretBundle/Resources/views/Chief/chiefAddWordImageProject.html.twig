@@ -51,7 +51,7 @@
                     Images
                 </label>
                 {% if images|length < 2 %}
-                    <a type="button" href="{{ path('iuto_livret_add_image_projet', {'projet' : projet.id}) }}" class="btn btn-default" id="project_btn_add_img">
+                    <a type="button" href="{{ path('iuto_livret_chief_add_image_projet', {'projet' : projet.id}) }}" class="btn btn-default" id="project_btn_add_img">
                         {# icone #}
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         Ajouter une image au projet
