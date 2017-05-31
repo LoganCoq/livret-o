@@ -749,6 +749,16 @@ class ChiefController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+//            suppression des images associées au projet
+            $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+            foreach ($images as $img) {
+                $em->remove($img);
+            }
+//            suppression des commentaires associés au projet
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
+            foreach ($com as $c) {
+                $em->remove($c);
+            }
 
 
             $em->remove($projet);
