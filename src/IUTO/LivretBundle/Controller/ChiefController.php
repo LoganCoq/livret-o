@@ -2,11 +2,13 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use Exception;
 use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Departement;
 use IUTO\LivretBundle\Entity\Edito;
 use IUTO\LivretBundle\Entity\Image;
 use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Form\AddImageType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use IUTO\LivretBundle\Form\EditoType;
 use IUTO\LivretBundle\Form\LivretChooseProjectsType;
@@ -526,7 +528,7 @@ class ChiefController extends Controller
 
     public function chiefCorrectionImgWordAction(Request $request, Projet $projet)
     {
-// recupération de l'utilisateur connecté
+//      recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
         $chef = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
@@ -737,74 +739,6 @@ class ChiefController extends Controller
         );
     }
 
-    public function chiefAddImgWordAction(Request $request, Projet $projet)
-    {
-        //        récupération de l'entity manager
-        $em = $this->getDoctrine()->getManager();
-        //récupération des informations de l'utilisateur connecter
-        $idUniv = phpCAS::getUser();
-
-//        récupération des mots clés du projet
-        $motsCles = $projet->getMotsClesProjet();
-
-//        création du formulaire d'ajout d'une image
-        $formMot = $this->createForm(ProjetAddKeyWordType::class);
-        $formMot->handleRequest($request);
-
-
-//        récupération des images du projet
-        $imagesL = $projet->getImages();
-        $images = array();
-        $logo = null;
-        foreach ($imagesL as $img) {
-            if ($img->getIsLogo()) {
-                $logo = $img;
-            } else {
-                array_push($images, $img);
-            }
-        }
-
-//        vérification de si le formulaire pour l'ajout de mots clés et envoyer et valide
-        if ($formMot->isSubmitted() && $formMot->isValid()) {
-
-//            ajouts du mot clé au projet
-            $newWord = $formMot['mot']->getData();
-            $projet->addMotCleProjet($newWord);
-//            actualisation des mots clés du projet pour le rechargement de la page
-            $motsCles = $projet->getMotsClesProjet();
-
-//            enregistrement des donnees
-            $em->persist($projet);
-            $em->flush();
-
-            //rechargement du formulaire pour les mots clés
-            return $this->render('IUTOLivretBundle:Chief:chiefAddWordImageProject.html.twig', array(
-                'formMot' => $formMot->createView(),
-                'statutCAS' => 'chef de département',
-                'routing_statutCAShome' => '/chef',
-                'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
-                'projet' => $projet,
-                'images' => $images,
-                'motsCles' => $motsCles,
-                'logo' => $logo,
-            ));
-        }
-
-//        rendu de la page d'ajout de mots clés et de d'images
-        return $this->render('IUTOLivretBundle:Chief:chiefAddWordImageProject.html.twig', array(
-            'formMot' => $formMot->createView(),
-            'statutCAS' => 'chef de département',
-            'routing_statutCAShome' => '/chef',
-            'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
-            'projet' => $projet,
-            'images' => $images,
-            'motsCles' => $motsCles,
-            'logo' => $logo,
-        ));
-    }
-
     public function chiefDeleteProjetAction(Request $request, Projet $projet)
     {
         // récupération des inforamtions dur l'utilsateur connecté
@@ -930,4 +864,115 @@ class ChiefController extends Controller
         );
     }
 
+    public function chiefAddLogoAction(Request $request, Projet $projet)
+    {
+        //        récupération de l'entity manager
+        $em = $this->getDoctrine()->getManager();
+//        récupération des données sur l'étudiant connecté
+        $idUniv = phpCAS::getUser();
+
+
+//        création d'une entité image qui va être remplie dans le formulaire
+        $image = new Image();
+        $image->setIsLogo(true);
+
+//        creation du formulaire d'ajout d'image
+        $form = $this->createForm(AddImageType::class, $image);
+        $form->handleRequest($request);
+
+//        vérification de l'envoie du formulaire et de sa validité
+        if ($form->isSubmitted() && $form->isValid()) {
+            $image->setProjet($projet);
+            $em->persist($image);
+            $em->flush();
+
+            // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
+            return $this->redirectToRoute('iuto_livret_chief_correction_img_word', array(
+                    'projet' => $projet->getId(),
+                )
+            );
+        }
+
+        return $this->render('IUTOLivretBundle:Chief:chiefAddImageLogoProject.html.twig', array(
+                'form' => $form->createView(),
+                'statutCAS' => 'chef de département',
+                'routing_statutCAShome' => '/chef',
+                'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+                'projet' => $projet,
+            )
+        );
+    }
+
+    public function chiefAddImageAction(Request $request, Projet $projet)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = phpCAS::getUser();
+
+        $image = new Image();
+
+        $form = $this->createForm(AddImageType::class, $image);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (count($projet->getImages()) < 2) {
+                $image->setProjet($projet);
+                $em->persist($image);
+                $em->flush();
+            } else {
+                throw new Exception('Seulement 2 images peuvent être liées au projet.');
+            }
+
+            // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
+            return $this->redirectToRoute('iuto_livret_chief_correction_img_word', array(
+                    'projet' => $projet->getId(),
+                )
+            );
+        }
+
+        return $this->render('IUTOLivretBundle:Chief:chiefAddImageLogoProject.html.twig', array(
+                'form' => $form->createView(),
+                'statutCAS' => 'chef de département',
+                'routing_statutCAShome' => '/chef',
+                'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+                'projet' => $projet,
+            )
+        );
+    }
+
+    public function  chiefDeleteImageLogoAction(Request $request, Image $image)
+    {
+//      récupération des inforamtions dur l'utilsateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = phpCAS::getUser();
+
+        $projet = $image->getProjet();
+
+        $form = $this->get('form.factory')->create();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em->remove($image);
+            $em->flush();
+            $request->getSession()->getFlashBag()->add('info', "L'image a bien été supprimée.");
+
+
+            return $this->redirectToRoute('iuto_livret_chief_correction_img_word', array(
+                'projet' => $projet->getId(),
+            ));
+        }
+
+
+        return $this->render('IUTOLivretBundle:Chief:chiefConfirmImageLogoDelete.html.twig', array(
+            'image' => $image,
+            'form' => $form->createView(),
+            'statutCAS' => 'chef de département',
+            'routing_statutCAShome' => '/chef',
+            'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+            'projet' => $projet,
+        ));
+    }
 } 

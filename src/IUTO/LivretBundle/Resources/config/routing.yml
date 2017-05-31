@@ -223,10 +223,6 @@ iuto_livret_chief_create_project:
     path: /chef/create/project
     defaults: { _controller: IUTOLivretBundle:Chief:chiefCreateProject }
 
-iuto_livret_chief_addWordImage_project:
-    path: /chef/projet/{projet}/wordImg
-    defaults: { _controller: IUTOLivretBundle:Chief:chiefAddImgWord }
-
 iuto_livret_chief_delete_projet:
     path: /chef/delete/projet/{projet}
     defaults: { _controller: IUTOLivretBundle:Chief:chiefDeleteProjet }
@@ -234,6 +230,18 @@ iuto_livret_chief_delete_projet:
 iuto_livret_chief_valider_projet:
     path: /chef/valider/projet/{projet}
     defaults: { _controller: IUTOLivretBundle:Chief:chiefValiderProjet }
+
+iuto_livret_chief_add_logo_projet:
+    path: /chef/projet/{projet}/add/logo
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefAddLogo }
+
+iuto_livret_chief_add_image_projet:
+    path: /chef/projet/{projet}/add/image
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefAddImage }
+
+iuto_livret_chief_delete_image_logo:
+    path: /chef/delete/image/{image}
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefDeleteImageLogo }
 
 #==========================================================#
 #==========================================================#
