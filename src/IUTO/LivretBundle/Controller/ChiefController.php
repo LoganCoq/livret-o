@@ -600,7 +600,7 @@ class ChiefController extends Controller
             };
 
             //rechargement du formulaire pour les commentaires
-            return $this->render('IUTOLivretBundle:Teacher:correctionTeacherWordImage.html.twig', array(
+            return $this->render('IUTOLivretBundle:Chief:chiefCorrectionImgWord.html.twig', array(
                 'formMot' => $formMot->createView(),
                 'formCom' => $formCom->createView(),
                 'routing_statutCAShome' => '/chef',
@@ -625,7 +625,7 @@ class ChiefController extends Controller
             $em->flush();
 
             //rechargement du formulaire pour les mots clés
-            return $this->render('IUTOLivretBundle:Teacher:correctionTeacherWordImage.html.twig', array(
+            return $this->render('IUTOLivretBundle:Chief:chiefCorrectionImgWord.html.twig', array(
                 'formMot' => $formMot->createView(),
                 'formCom' => $formCom->createView(),
                 'routing_statutCAShome' => '/chef',
@@ -639,7 +639,7 @@ class ChiefController extends Controller
                 'commentaires' => $commentaires,
             ));
         }
-        return $this->render('IUTOLivretBundle:Teacher:correctionTeacherWordImage.html.twig', array(
+        return $this->render('IUTOLivretBundle:Chief:chiefCorrectionImgWord.html.twig', array(
             'formMot' => $formMot->createView(),
             'formCom' => $formCom->createView(),
             'routing_statutCAShome' => '/chef',
