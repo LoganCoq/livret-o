@@ -460,7 +460,7 @@ class ChiefController extends Controller
             }
 
 //            on indique à doctrine que la donnée va être sauvegardée
-            $em->persist($projet);
+            $em->persist($newProjet);
             $em->remove($projet);
             // enregistrement des données dans la base
             $em->flush();
