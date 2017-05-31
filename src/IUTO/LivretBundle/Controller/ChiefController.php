@@ -526,34 +526,35 @@ class ChiefController extends Controller
 
     public function chiefCorrectionImgWordAction(Request $request, Projet $projet)
     {
-        // recupération de l'utilisateur connecté
+// recupération de l'utilisateur connecté
         $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
+        $chef = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
-        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
-//        creation du formulaire de modification du contenu du projet
-        $formContent = $this->createForm(ProjetContenuType::class, $projet);
-        $formContent->handleRequest($request);
-
-//        vérification de la validité et de l'envoi du formulaire
-        if ($formContent->isSubmitted() && $formContent->isValid()) {
-//            enregistrement du formulaire dans la base
-            $em->persist($projet);
-            $em->flush();
-
-//            redirection vers la page de fin de correction du projet
-            return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
-                    'projet' => $projet->getId(),
-                )
-            );
+//        récupération des images du projet
+        $imagesL = $projet->getImages();
+        $images = array();
+        $logo = null;
+        foreach ($imagesL as $img) {
+            if ($img->getIsLogo()) {
+                $logo = $img;
+            } else {
+                array_push($images, $img);
+            }
         }
 
-        $repositoryCommentaire = $em->getRepository('IUTOLivretBundle:Commentaire');
-//        recupération des commentaires associés au projet actuel
-        $com = $repositoryCommentaire->findByProjet($projet);
+//        récupération des mots clés du projet
+        $motsCles = $projet->getMotsClesProjet();
+
+//        création du formulaire d'ajout d'une image
+        $formMot = $this->createForm(ProjetAddKeyWordType::class);
+        $formMot->handleRequest($request);
+
+        //récupération des commentaires appartenant au projet actuel
+        $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
 
         $commentaires = array();
+
         foreach ($com as $elem) {
             $x = array();
             $user = $elem->getUser();
@@ -562,29 +563,30 @@ class ChiefController extends Controller
             array_push($x, $elem->getDate());
             array_push($x, $user->getRole());
             array_push($commentaires, $x);
+
         };
 
-
-//        creation du formulaire d'ajout d'un commentaire
+        //creation du formulaire pour la section de chat/commentaire
         $formCom = $this->createForm(CommentaireCreateType::class, $com);
-//        mise en attente du formulaire d'une action sur celui-ci
         $formCom->handleRequest($request);
 
-//        verification de l'envoie et de la validité du formulaire
+        // vérification de la validité du formulaire si celui-ci à été envoyer
         if ($formCom->isSubmitted() && $formCom->isValid()) {
-//            creation d'un nouveau commentaire et ajout des informations à celui ci
+            // création et affectation des informations dans le nouveau commentaire
             $comReponse = new Commentaire;
             $comReponse->setDate();
             $comReponse->setProjet($projet);
-            $comReponse->setUser($professeur);
+            // ajout de l'user au commentaire
+            $comReponse->setUser($chef);
             $comReponse->setContenu($formCom['contenu']->getData());
 
-//            enregistrement du commentaire dans la base
+            // sauvegarde des commentaires dans la base de données
             $em->persist($comReponse);
             $em->flush();
 
-            //actualisation des commentaires
-            $com = $repositoryCommentaire->findByProjet($projet);
+            //actualisation des commentaires une fois le nouveau ajouté
+            //recupération des commentaires
+            $com = $em->getRepository(Commentaire::class)->findByProjet($projet);
             $commentaires = array();
             foreach ($com as $elem) {
                 $x = array();
@@ -594,33 +596,61 @@ class ChiefController extends Controller
                 array_push($x, $elem->getDate());
                 array_push($x, $user->getRole());
                 array_push($commentaires, $x);
+
             };
 
-//            rendu du formulaire de modification du contenu du projet + formulaire d'ajout de commentaire
-            return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig', array(
-                'form' => $formContent->createView(),
+            //rechargement du formulaire pour les commentaires
+            return $this->render('IUTOLivretBundle:Teacher:correctionTeacherWordImage.html.twig', array(
+                'formMot' => $formMot->createView(),
                 'formCom' => $formCom->createView(),
                 'routing_statutCAShome' => '/chef',
                 'statutCAS' => 'chef de département',
                 'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
                 'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
-                'commentaires' => $commentaires,
                 'projet' => $projet,
-                'image' => $images,
+                'motsCle' => $motsCles,
+                'images' => $images,
+                'logo' => $logo,
+                'commentaires' => $commentaires,
             ));
         }
 
-//        rendu de la page de modification du projet et du formulaire d'ajout d'un commentaire
-        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig', array(
-            'form' => $formContent->createView(),
+        if ($formMot->isSubmitted() && $formMot->isValid()) {
+            $newWord = $formMot['mot']->getData();
+            $projet->addMotCleProjet($newWord);
+            $motsCles = $projet->getMotsClesProjet();
+
+
+            $em->persist($projet);
+            $em->flush();
+
+            //rechargement du formulaire pour les mots clés
+            return $this->render('IUTOLivretBundle:Teacher:correctionTeacherWordImage.html.twig', array(
+                'formMot' => $formMot->createView(),
+                'formCom' => $formCom->createView(),
+                'routing_statutCAShome' => '/chef',
+                'statutCAS' => 'chef de département',
+                'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+                'projet' => $projet,
+                'motsCle' => $motsCles,
+                'images' => $images,
+                'logo' => $logo,
+                'commentaires' => $commentaires,
+            ));
+        }
+        return $this->render('IUTOLivretBundle:Teacher:correctionTeacherWordImage.html.twig', array(
+            'formMot' => $formMot->createView(),
             'formCom' => $formCom->createView(),
             'routing_statutCAShome' => '/chef',
             'statutCAS' => 'chef de département',
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
             'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
-            'commentaires' => $commentaires,
             'projet' => $projet,
+            'motsCle' => $motsCles,
             'images' => $images,
+            'logo' => $logo,
+            'commentaires' => $commentaires,
         ));
     }
 
