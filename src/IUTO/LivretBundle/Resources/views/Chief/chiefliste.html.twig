@@ -11,6 +11,16 @@
 {% endblock %}
 
 {% block content %}
+
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {# affichage du message#}
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <h1 class="titre"> Projets en cours </h1>
 
     <div class="selection">

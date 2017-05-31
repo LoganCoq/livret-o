@@ -7,6 +7,16 @@
 {% endblock %}
 
 {% block content %}
+
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {# affichage du message#}
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="div_confirm_complete">
         <a href="{{ path('iuto_livret_pdfgenerator', {'id' : projet.id}) }}" class="btn btn-success">Aperçu du compte rendu</a>
         <a href="{{ path('iuto_livret_download', {'id' : projet.id}) }}" class="btn btn-default">Enregistrer sur l'ordinateur</a>

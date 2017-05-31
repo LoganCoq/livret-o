@@ -247,7 +247,7 @@ class ChiefController extends Controller
 
             $em->remove($livret);
             $em->flush();
-            $request->getSession()->getFlashBag()->add('info', "Le livret a bien été supprimé.");
+            $request->getSession()->getFlashBag()->add('success', "Le livret a bien été supprimé.");
 
 
             return $this->redirectToRoute('iuto_livret_chief_choose_livret', array());
