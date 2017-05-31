@@ -432,37 +432,30 @@ class ChiefController extends Controller
             $dateFormF = $form['dateFin']->getData();
 
             //stockage de la date dans le projet
-            $projet->setDateDebut(\DateTime::createFromFormat('d/m/Y', $dateFormD));
-            $projet->setDateFin(\DateTime::createFromFormat('d/m/Y', $dateFormF));
+            $newProjet->setDateDebut(\DateTime::createFromFormat('d/m/Y', $dateFormD));
+            $newProjet->setDateFin(\DateTime::createFromFormat('d/m/Y', $dateFormF));
 
 //            récupération des étudiants selectionnées dans le formulaire
-            $etusForm = $form['etudiants']->getData();
-            $tutsForm = $form['tuteurs']->getData();
+            $etus = $form['etudiants']->getData();
+            $tuts = $form['tuteurs']->getData();
 
-//              opérations sur les étudiants du projet
-            foreach ($etusForm as $etu) {
-//                ajout de l'étudiant au projet
-                $projet->addEtudiant($etu);
-//                ajout du projet à l'étudiant
-                $etu->addProjetFait($projet);
-//                on indique à doctrine que cette données va être sauvegardée
+            foreach ($etus as $etu) {
+                $etu->addProjetFait($newProjet);
+                $newProjet->addEtudiant($etu);
                 $em->persist($etu);
             }
-
-//            opération sur les tuteurs du projet
-            foreach ($tutsForm as $tut) {
-//                ajout du tuteur au projet
-                $projet->addTuteur($tut);
-//                ajout du projet aux projets suivis par le tuteur
-                $tut->addProjetSuivi($projet);
-//                on indique à doctrine que cette données va être sauvegardée
+            foreach ($tuts as $tut) {
+                $tut->addProjetSuivi($newProjet);
+                $newProjet->addTuteur($tut);
                 $em->persist($tut);
             }
-
-//            on indique à doctrine que la donnée va être sauvegardée
-            $em->persist($newProjet);
-            $em->remove($projet);
+            foreach ($com as $c) {
+                $c->setProjet($newProjet);
+            }
             // enregistrement des données dans la base
+            $em->persist($newProjet);
+//            suppression de l'ancien projet de la base
+            $em->remove($projet);
             $em->flush();
 
             //redirection vers la page suivante
