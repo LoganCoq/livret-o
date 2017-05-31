@@ -2,16 +2,17 @@
 
 namespace IUTO\LivretBundle\Controller;
 
+use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Departement;
 use IUTO\LivretBundle\Entity\Edito;
 use IUTO\LivretBundle\Entity\User;
+use IUTO\LivretBundle\Form\CommentaireCreateType;
 use IUTO\LivretBundle\Form\EditoType;
 use IUTO\LivretBundle\Form\LivretChooseProjectsType;
 use IUTO\LivretBundle\Form\LivretCreateType;
 use IUTO\LivretBundle\Form\NewLivretType;
 use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
 use IUTO\LivretBundle\Form\ProjetChiefCreateType;
-use IUTO\LivretBundle\Form\ProjetCreateType;
 use IUTO\LivretBundle\Form\ProjetMarquantType;
 use IUTO\LivretBundle\Form\ProjetNotMarquantType;
 use IUTO\LivretBundle\Form\ProjetNotValideType;
@@ -19,9 +20,7 @@ use IUTO\LivretBundle\Form\ProjetValideType;
 use phpCAS;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Entity\Projet;
-use IUTO\LivretBundle\Form\ProjetModifType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
-use IUTO\LivretBundle\Form\CommentaireCreateType;
 use Symfony\Component\HttpFoundation\Request;
 use IUTO\LivretBundle\Entity\Livret;
 
@@ -365,63 +364,40 @@ class ChiefController extends Controller
         ));
     }
 
-    public function correctionChief1Action()
+    public function chiefCorrectionProjetAction(Request $request, Projet $projet)
     {
+        //        récupération de l'entity manager
+        $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('IUTOLivretBundle:User');
-        $projets = $repository->findOneById($id)->getProjetSuivis();
+        // Recuperation de l'étudiant connecté
+        $chef = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
+
+        $allUsers = $em->getRepository(User::class)->findAll();
+        $etudiants = array();
+        $tuteurs = array();
+        foreach ($allUsers as $curUser) {
+            if (in_array('ROLE_student', $curUser->getRoles()) && !$curUser->getFormations()->isEmpty()) {
+                array_push($etudiants, $curUser);
+            }
+            if (in_array('ROLE_faculty', $curUser->getRoles())) {
+                array_push($tuteurs, $curUser);
+            }
+        }
+        // création du formulaire de création d'un projet
+        $form = $this->createForm(ProjetChiefCreateType::class, $projet, ['etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
+
+        // insertion des dates en string
+        $form['dateDebut']->setData($projet->getDateDebut()->format('d/m/Y'));
+        $form['dateFin']->setData($projet->getDateFin()->format('d/m/Y'));
 
 
-        $projetsValides = array();
-        foreach ($projets as $elem) {
-            if ($elem->getValiderProjet() == 1)
-                array_push($projetsValides, $elem);
-        };
-
-
-        return $this->render('IUTOLivretBundle:Chief:correctionChief1.html.twig', array('id' => $id,
-            'statutCAS' => 'chef de département',
-            'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-            'routing_info' => array('/chef/create/livret', '#', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
-            'routing_statutCAShome' => '/chef',
-            'pagePrec' => '/chef',
-            'projets' => $projetsValides));
-
-    }
-
-    public function correctionChief2Action(Request $request, Projet $projet)
-    {
-        $idUniv = phpCAS::getUser();
-
-        $form = $this->createForm(ProjetModifType::class, $projet);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        //        récupération des commentaires appartenant au porjet actuel
+        $repositoryCommentaire = $em->getRepository('IUTOLivretBundle:Commentaire');
+        $com = $repositoryCommentaire->findByProjet($projet);
 
-            return $this->redirectToRoute('');
-        }
-
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('IUTOLivretBundle:Commentaire');
-        $com = $repository->findByProjet($projet);
-
-        $form2 = $this->createForm(CommentaireCreateType::class, $com);
-        $form2->handleRequest($request);
-
-        if ($form2->isSubmitted() && $form2->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('');
-        }
-
-        $idProjet = $projet->getId();
-
+        //recuperation des commentaires
         $commentaires = array();
         foreach ($com as $elem) {
             $x = array();
@@ -431,21 +407,130 @@ class ChiefController extends Controller
             array_push($x, $elem->getDate());
             array_push($x, $user->getRole());
             array_push($commentaires, $x);
-
         };
 
-        return $this->render('IUTOLivretBundle:Chief:correctionChief2.html.twig',
-            array('form' => $form->createView(),
-                'formCom' => $form2->createView(),
+        //verifie si le formulaire est valide ou non et si il est envoyé
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $newProjet = new Projet();
+
+            $newProjet->setIntituleProjet($projet->getIntituleProjet());
+            $newProjet->setDescripProjet($projet->getDescripProjet());
+            $newProjet->setBilanProjet($projet->getBilanProjet());
+            $newProjet->setMarquantProjet($projet->getMarquantProjet());
+            $newProjet->setMotsClesProjet($projet->getMotsClesProjet());
+            $newProjet->setClientProjet($projet->getClientProjet());
+            $newProjet->setValiderProjet($projet->getValiderProjet());
+            $newProjet->setNomDpt($projet->getNomDpt());
+            $newProjet->setImages($projet->getImages());
+            $newProjet->setDescriptionClientProjet(($projet->getDescriptionClientProjet()));
+
+
+            // récupération de la date et changement de son format
+            $dateFormD = $form['dateDebut']->getData();
+            $dateFormF = $form['dateFin']->getData();
+
+            //stockage de la date dans le projet
+            $projet->setDateDebut(\DateTime::createFromFormat('d/m/Y', $dateFormD));
+            $projet->setDateFin(\DateTime::createFromFormat('d/m/Y', $dateFormF));
+
+//            récupération des étudiants selectionnées dans le formulaire
+            $etusForm = $form['etudiants']->getData();
+            $tutsForm = $form['tuteurs']->getData();
+
+//              opérations sur les étudiants du projet
+            foreach ($etusForm as $etu) {
+//                ajout de l'étudiant au projet
+                $projet->addEtudiant($etu);
+//                ajout du projet à l'étudiant
+                $etu->addProjetFait($projet);
+//                on indique à doctrine que cette données va être sauvegardée
+                $em->persist($etu);
+            }
+
+//            opération sur les tuteurs du projet
+            foreach ($tutsForm as $tut) {
+//                ajout du tuteur au projet
+                $projet->addTuteur($tut);
+//                ajout du projet aux projets suivis par le tuteur
+                $tut->addProjetSuivi($projet);
+//                on indique à doctrine que cette données va être sauvegardée
+                $em->persist($tut);
+            }
+
+//            on indique à doctrine que la donnée va être sauvegardée
+            $em->persist($projet);
+            $em->remove($projet);
+            // enregistrement des données dans la base
+            $em->flush();
+
+            //redirection vers la page suivante
+            return $this->redirectToRoute('iuto_livret_chief_correction_img_word', array(
+                    'projet' => $projet->getId())
+            );
+        }
+
+        //        creation du formulaire d'ajout d'un commentaire
+        $formCom = $this->createForm(CommentaireCreateType::class, $com);
+//        mise en attente du formulaire d'une action sur celui ci ( submit )
+        $formCom->handleRequest($request);
+
+        //        vérification de lavalidité du formulaire et de son envoi
+        if ($formCom->isSubmitted() && $formCom->isValid()) {
+//            création d'une nouvelle entité de commentaire
+            $comReponse = new Commentaire;
+//            ajout des infirmations nécessaire au commentaire
+            $comReponse->setDate();
+            $comReponse->setProjet($projet);
+
+
+            $comReponse->setUser($chef);
+            $comReponse->setContenu($formCom['contenu']->getData());
+
+//            enregistrement des données dans la base
+            $em->persist($comReponse);
+            $em->flush();
+
+            //actualisation des commentaires
+            $com = $repositoryCommentaire->findByProjet($projet);
+            $commentaires = array();
+            foreach ($com as $elem) {
+                $x = array();
+                $user = $elem->getUser();
+                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
+                array_push($x, $elem->getContenu());
+                array_push($x, $elem->getDate());
+                array_push($x, $user->getRole());
+                array_push($commentaires, $x);
+            };
+
+//            reaffichage du rendu de la section de commentaires
+            return $this->render('IUTOLivretBundle:Chief:chiefCorrectionProjet.html.twig',
+                array(
+                    'form' => $form->createView(),
+                    'formCom' => $formCom->createView(),
+                    'commentaires' => $commentaires,
+                    'routing_statutCAShome' => '/chef',
+                    'statutCAS' => 'chef de département',
+                    'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+                    'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+                ));
+        }
+
+        // affichage de la page du formulaire
+        return $this->render('IUTOLivretBundle:Chief:chiefCorrectionProjet.html.twig', array(
+                'form' => $form->createView(),
+                'fromCom' => $formCom->createView(),
+                'commentaires' => $commentaires,
+                'routing_statutCAShome' => '/chef',
                 'statutCAS' => 'chef de département',
                 'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
                 'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
-                'routing_statutCAShome' => '/chef',
-                'commentaires' => $commentaires,
-            ));
+            )
+        );
     }
 
-    public function correctionChief3Action(Request $request, Projet $projet)
+    public function chiefCorrectionImgWordAction(Request $request, Projet $projet)
     {
         $idUniv = phpCAS::getUser();
 
@@ -472,21 +557,6 @@ class ChiefController extends Controller
             array('form' => $form->createView(),
                 'statutCAS' => 'Chef de département',
                 'commentaires' => $commentaires,
-                'routing_statutCAShome' => '/chef',
-                'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
-            ));
-    }
-
-    public function correctionChief4Action(Request $request, Projet $projet)
-    {
-        $idUniv = phpCAS::getUser();
-
-        $idProjet = $projet->getId();
-
-        return $this->render('IUTOLivretBundle:Chief:correctionChief4.html.twig',
-            array(
-                'statutCAS' => 'chef de département',
                 'routing_statutCAShome' => '/chef',
                 'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
                 'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),

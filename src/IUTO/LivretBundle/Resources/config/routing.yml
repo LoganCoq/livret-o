@@ -209,25 +209,15 @@ iuto_livret_chief_delete_edito:
     path: /chef/delete/edito/{edito}
     defaults: { _controller: IUTOLivretBundle:Chief:chiefDeleteEdito }
 
-#==========CORRECTION1=====#
-iuto_livret_correctionChief1:
-    path: /chef/correctionChief1
-    defaults: { _controller: IUTOLivretBundle:Chief:correctionChief1 }
+#==========CORRECTION=====#
+iuto_livret_chief_correction_projet:
+    path: /chef/correction/projet/{projet}/contenu
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefCorrectionProjet }
 
 #==========CORRECTION2=====#
-iuto_livret_correctionChief2:
-    path: /chef/{projet}/correctionChief2
-    defaults: { _controller: IUTOLivretBundle:Chief:correctionChief2 }
-
-#==========CORRECTION3=====#
-iuto_livret_correctionChief3:
-    path: /chef/{projet}/correctionChief3
-    defaults: { _controller: IUTOLivretBundle:Chief:correctionChief3 }
-
-#==========CORRECTION4=====#
-iuto_livret_correctionChief4:
-    path: /chef/{projet}/correctionChief4
-    defaults: { _controller: IUTOLivretBundle:Chief:correctionChief4 }
+iuto_livret_chief_correction_img_word:
+    path: /chef/correction/projet/{projet}/imgWord
+    defaults: { _controller: IUTOLivretBundle:Chief:chiefCorrectionImgWord }
 
 iuto_livret_chief_create_project:
     path: /chef/create/project
