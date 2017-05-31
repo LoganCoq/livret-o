@@ -241,6 +241,9 @@ iuto_livret_chief_delete_projet:
     path: /chef/delete/projet/{projet}
     defaults: { _controller: IUTOLivretBundle:Chief:chiefDeleteProjet }
 
+iuto_livret_chief_valider_projet:
+    path: /chef/valider/projet/{projet}
+
 #==========================================================#
 #==========================================================#
 #================ROUTES MODULE COMMUNICATIONN==============#

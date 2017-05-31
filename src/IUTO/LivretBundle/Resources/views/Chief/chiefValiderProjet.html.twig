@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        .div_confirm_complete
+        {
+            margin-top: -15em;
+
+        }
+        .btn-info
+        {
+            margin-left: 26em;
+            margin-top: 20em;
+        }
+        .btn-success
+        {
+            margin-top: 20em;
+            margin-left: 3em;
+        }
+        .formulaire
+        {
+            margin-top: 8em;
+            margin-left: 37em;
+        }
+
+        #livreto_download_finished
+        {
+            margin-top: 30em;
+            margin-left: -23em;
+        }
+
+        #btn-goto-accueil
+        {
+            margin: 1em;
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block title %}
+    Livret'O - Correction projets
+{% endblock %}
+
+{% block content %}
+    <a type="button" class="btn btn-primary" href="{{ path('iuto_livret_chiefhomepage') }}" id="btn-goto-accueil">
+        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+        Accueil
+    </a>
+    <br>
+    <h1> Finalisation du projet </h1>
+    <br>
+    <div class="div_confirm_complete">
+
+
+        <a href="{{ path('iuto_livret_pdfgenerator', {'id' : projetO.id}) }}" class="btn btn-info apercu_confirm">
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+            Aperçu du compte rendu
+        </a>
+
+        <a href="{{ path('iuto_livret_download', {'id': projetO.id}) }}" class="btn btn-default download_confirm" id="livreto_download_finished">
+            {#icone telechargement#}
+            <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+            Enregistrer sur l'ordinateur
+        </a>
+
+
+        <div class="formulaire">
+            <div id="marquant">
+                {% if not projetO.marquantProjet %}
+                    {% form_theme formSetMarquant 'bootstrap_3_layout.html.twig' %}
+                    {{ form(formSetMarquant) }}
+                {% else %}
+                    {% form_theme formUnSetMarquant 'bootstrap_3_layout.html.twig' %}
+                    {{ form(formUnSetMarquant) }}
+                {% endif %}
+            </div>
+
+            <div id="valide">
+                {% if not projetO.validerProjet %}
+                    {% form_theme formSetValide 'bootstrap_3_layout.html.twig' %}
+                    {{ form(formSetValide) }}
+                {% else %}
+                    {% form_theme formUnSetValide 'bootstrap_3_layout.html.twig' %}
+                    {{ form(formUnSetValide) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+
+
+
+
+

@@ -12,6 +12,10 @@ use IUTO\LivretBundle\Form\NewLivretType;
 use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
 use IUTO\LivretBundle\Form\ProjetChiefCreateType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
+use IUTO\LivretBundle\Form\ProjetMarquantType;
+use IUTO\LivretBundle\Form\ProjetNotMarquantType;
+use IUTO\LivretBundle\Form\ProjetNotValideType;
+use IUTO\LivretBundle\Form\ProjetValideType;
 use phpCAS;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Entity\Projet;
@@ -667,6 +671,102 @@ class ChiefController extends Controller
             'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
             'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
         ));
+    }
+
+    public function chiefValiderProjetAction(Request $request, Projet $projet)
+    {
+        // recupération de l'utilisateur connecté
+        $em = $this->getDoctrine()->getManager();
+        $idUniv = phpCAS::getUser();
+
+//        creation du formulaire de validation d'un projet
+        $formSetValide = $this->createForm(ProjetValideType::class, $projet);
+        $formSetValide->handleRequest($request);
+
+        $formSetMarquant = $this->createForm(ProjetMarquantType::class, $projet);
+        $formSetMarquant->handleRequest($request);
+
+        $formUnSetValide = $this->createForm(ProjetNotValideType::class, $projet);
+        $formUnSetValide->handleRequest($request);
+
+        $formUnSetMarquant = $this->createForm(ProjetNotMarquantType::class, $projet);
+        $formUnSetMarquant->handleRequest($request);
+
+
+        $idProjet = $projet->getId();
+
+        if ($formSetValide->isSubmitted() && $formSetValide->isValid()) {
+//            validation du projet si le formaulaire est envoyé
+            $projet->setValiderProjet(true);
+
+//            enregistrement des données dans la base
+            $em->persist($projet);
+            $em->flush();
+
+//            rendu du home de teacher
+            return $this->redirectToRoute('iuto_livret_chief_valider_projet',
+                array(
+                    'projet' => $projet->getId(),
+                    'projetO' => $projet,
+                ));
+        }
+
+        if ($formUnSetValide->isSubmitted() && $formUnSetValide->isValid()) {
+//            validation du projet si le formaulaire est envoyé
+            $projet->setValiderProjet(0);
+
+//            enregistrement des données dans la base
+            $em->persist($projet);
+            $em->flush();
+
+//            rendu du home de teacher
+            return $this->redirectToRoute('iuto_livret_chief_valider_projet',
+                array(
+                    'projet' => $projet->getId(),
+                    'projetO' => $projet,
+                ));
+        }
+
+        if ($formSetMarquant->isSubmitted() && $formSetMarquant->isValid()) {
+            $projet->setMarquantProjet(true);
+
+            $em->persist($projet);
+            $em->flush();
+
+            return $this->redirectToRoute('iuto_livret_chief_valider_projet',
+                array(
+                    'projet' => $projet->getId(),
+                    'projetO' => $projet,
+                ));
+        }
+        if ($formUnSetMarquant->isSubmitted() && $formUnSetMarquant->isValid()) {
+            $projet->setMarquantProjet(false);
+
+            $em->persist($projet);
+            $em->flush();
+
+            return $this->redirectToRoute('iuto_livret_chief_valider_projet',
+                array(
+                    'projet' => $projet->getId(),
+                    'projetO' => $projet,
+                ));
+        }
+
+//        rendu de la page finale de modification
+        return $this->render('IUTOLivretBundle:chief:chiefValiderProjet.html.twig',
+            array(
+                'formSetValide' => $formSetValide->createView(),
+                'formSetMarquant' => $formSetMarquant->createView(),
+                'formUnSetValide' => $formUnSetValide->createView(),
+                'formUnSetMarquant' => $formUnSetMarquant->createView(),
+                'projet' => $idProjet,
+                'statutCAS' => 'chef de département',
+                'routing_statutCAShome' => '/chef',
+                'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+                'projetO' => $projet,
+            )
+        );
     }
 
 } 
