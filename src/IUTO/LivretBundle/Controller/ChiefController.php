@@ -521,7 +521,7 @@ class ChiefController extends Controller
         // affichage de la page du formulaire
         return $this->render('IUTOLivretBundle:Chief:chiefCorrectionProjet.html.twig', array(
                 'form' => $form->createView(),
-                'fromCom' => $formCom->createView(),
+                'formCom' => $formCom->createView(),
                 'commentaires' => $commentaires,
                 'routing_statutCAShome' => '/chef',
                 'statutCAS' => 'chef de département',
