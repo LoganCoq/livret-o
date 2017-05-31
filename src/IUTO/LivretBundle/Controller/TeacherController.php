@@ -761,7 +761,7 @@ class TeacherController extends Controller
             $em->flush();
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
-            return $this->redirectToRoute('iuto_livret_add_word_image_teacher', array(
+            return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
                     'projet' => $projet->getId(),
                 )
             );
