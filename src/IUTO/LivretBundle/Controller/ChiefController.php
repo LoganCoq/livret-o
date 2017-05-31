@@ -910,6 +910,8 @@ class ChiefController extends Controller
         $idUniv = phpCAS::getUser();
 
         $image = new Image();
+        $image->setIsLogo(false);
+
 
         $form = $this->createForm(AddImageType::class, $image);
         $form->handleRequest($request);

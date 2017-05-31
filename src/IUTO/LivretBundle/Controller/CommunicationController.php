@@ -674,6 +674,8 @@ class CommunicationController extends Controller
 
 //        création d'une entité image qui va être remplie dans le formulaire
         $image = new Image();
+        $image->setIsLogo(false);
+
 
 //        creation du formulaire d'ajout d'image
         $form = $this->createForm(AddImageType::class, $image);
