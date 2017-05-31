@@ -5,6 +5,7 @@ namespace IUTO\LivretBundle\Controller;
 use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Departement;
 use IUTO\LivretBundle\Entity\Edito;
+use IUTO\LivretBundle\Entity\Image;
 use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use IUTO\LivretBundle\Form\EditoType;
@@ -532,35 +533,102 @@ class ChiefController extends Controller
 
     public function chiefCorrectionImgWordAction(Request $request, Projet $projet)
     {
+        // recupération de l'utilisateur connecté
+        $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
+        $professeur = $em->getRepository(User::class)->findOneByIdUniv($idUniv);
 
-        $form = $this->createForm(ProjetContenuType::class, $projet);
-        $form->handleRequest($request);
+        $images = $em->getRepository(Image::class)->findByProjet($projet->getId());
+//        creation du formulaire de modification du contenu du projet
+        $formContent = $this->createForm(ProjetContenuType::class, $projet);
+        $formContent->handleRequest($request);
 
+//        vérification de la validité et de l'envoi du formulaire
+        if ($formContent->isSubmitted() && $formContent->isValid()) {
+//            enregistrement du formulaire dans la base
+            $em->persist($projet);
+            $em->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('');
+//            redirection vers la page de fin de correction du projet
+            return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(
+                    'projet' => $projet->getId(),
+                )
+            );
         }
 
-        $idProjet = $projet->getId();
+        $repositoryCommentaire = $em->getRepository('IUTOLivretBundle:Commentaire');
+//        recupération des commentaires associés au projet actuel
+        $com = $repositoryCommentaire->findByProjet($projet);
 
-        $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('IUTOLivretBundle:Commentaire');
-        $commentaires = $repository->findOneByProjet($idProjet);
-        $idProjet = $projet->getId();
+        $commentaires = array();
+        foreach ($com as $elem) {
+            $x = array();
+            $user = $elem->getUser();
+            array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
+            array_push($x, $elem->getContenu());
+            array_push($x, $elem->getDate());
+            array_push($x, $user->getRole());
+            array_push($commentaires, $x);
+        };
 
-        return $this->render('IUTOLivretBundle:Chief:correctionChief3.html.twig',
-            array('form' => $form->createView(),
-                'statutCAS' => 'Chef de département',
+
+//        creation du formulaire d'ajout d'un commentaire
+        $formCom = $this->createForm(CommentaireCreateType::class, $com);
+//        mise en attente du formulaire d'une action sur celui-ci
+        $formCom->handleRequest($request);
+
+//        verification de l'envoie et de la validité du formulaire
+        if ($formCom->isSubmitted() && $formCom->isValid()) {
+//            creation d'un nouveau commentaire et ajout des informations à celui ci
+            $comReponse = new Commentaire;
+            $comReponse->setDate();
+            $comReponse->setProjet($projet);
+            $comReponse->setUser($professeur);
+            $comReponse->setContenu($formCom['contenu']->getData());
+
+//            enregistrement du commentaire dans la base
+            $em->persist($comReponse);
+            $em->flush();
+
+            //actualisation des commentaires
+            $com = $repositoryCommentaire->findByProjet($projet);
+            $commentaires = array();
+            foreach ($com as $elem) {
+                $x = array();
+                $user = $elem->getUser();
+                array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
+                array_push($x, $elem->getContenu());
+                array_push($x, $elem->getDate());
+                array_push($x, $user->getRole());
+                array_push($commentaires, $x);
+            };
+
+//            rendu du formulaire de modification du contenu du projet + formulaire d'ajout de commentaire
+            return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig', array(
+                'form' => $formContent->createView(),
+                'formCom' => $formCom->createView(),
+                'statutCAS' => 'professeur',
+                'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
+                'routing_statutCAShome' => '/professeur',
                 'commentaires' => $commentaires,
-                'routing_statutCAShome' => '/chef',
-                'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
-                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
+                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
+                'projet' => $projet,
+                'image' => $images,
             ));
+        }
+
+//        rendu de la page de modification du projet et du formulaire d'ajout d'un commentaire
+        return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig', array(
+            'form' => $formContent->createView(),
+            'formCom' => $formCom->createView(),
+            'statutCAS' => 'professeur',
+            'commentaires' => $commentaires,
+            'routing_statutCAShome' => '/professeur',
+            'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
+            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
+            'projet' => $projet,
+            'images' => $images,
+        ));
     }
 
     public function chiefCreateProjectAction(Request $request)
