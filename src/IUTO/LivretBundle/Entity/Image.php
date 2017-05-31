@@ -58,7 +58,7 @@ class Image
     /**
      * @var bool
      *
-     * @ORM\Column(name="isLogo", type="boolean")
+     * @ORM\Column(name="isLogo", type="boolean", options={"default":false})
      */
     private $isLogo;
 
