@@ -607,11 +607,11 @@ class ChiefController extends Controller
             return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig', array(
                 'form' => $formContent->createView(),
                 'formCom' => $formCom->createView(),
-                'statutCAS' => 'professeur',
-                'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-                'routing_statutCAShome' => '/professeur',
+                'routing_statutCAShome' => '/chef',
+                'statutCAS' => 'chef de département',
+                'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+                'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
                 'commentaires' => $commentaires,
-                'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
                 'projet' => $projet,
                 'image' => $images,
             ));
@@ -621,11 +621,11 @@ class ChiefController extends Controller
         return $this->render('IUTOLivretBundle:Teacher:correctionTeacher3.html.twig', array(
             'form' => $formContent->createView(),
             'formCom' => $formCom->createView(),
-            'statutCAS' => 'professeur',
+            'routing_statutCAShome' => '/chef',
+            'statutCAS' => 'chef de département',
+            'info' => array('Générer livrets', 'Créer un projet', 'Créer un édito', 'Voir les éditos', 'Voir les livrets', 'Voir les projets'),
+            'routing_info' => array('/chef/create/livret', '/chef/create/projet', '/chef/create/edito', '/chef/choose/edito', '/chef/choose/livret', '/chef/choose/projet'),
             'commentaires' => $commentaires,
-            'routing_statutCAShome' => '/professeur',
-            'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
-            'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
             'projet' => $projet,
             'images' => $images,
         ));
