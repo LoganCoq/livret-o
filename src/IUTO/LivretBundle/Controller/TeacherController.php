@@ -600,13 +600,11 @@ class TeacherController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (count($projet->getImages()) < 2) {
-                $image->setProjet($projet);
-                $em->persist($image);
-                $em->flush();
-            } else {
-                throw new Exception('Seulement 2 images peuvent être liées au projet.');
-            }
+
+            $image->setProjet($projet);
+            $em->persist($image);
+            $em->flush();
+
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_add_img_word_teacher', array(

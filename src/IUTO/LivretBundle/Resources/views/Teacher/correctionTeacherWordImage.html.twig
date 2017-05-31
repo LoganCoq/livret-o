@@ -23,11 +23,13 @@
                 <label class="control-label" for="project_btn_add_img">
                     Logo client
                 </label>
-                <a type="button" href="{{ path('iuto_livret_add_logo_teacher', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
-                    {# icone #}
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    Ajouter le logo du client
-                </a>
+                {% if logo == null %}
+                    <a type="button" href="{{ path('iuto_livret_add_logo_teacher', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
+                        {# icone #}
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        Ajouter le logo du client
+                    </a>
+                {% endif %}
             </div>
             <div id="logo">
                 {% if logo != null %}
@@ -45,11 +47,13 @@
                 <label class="control-label" for="project_btn_add_img">
                     Images
                 </label>
-                <a type="button" href="{{ path('iuto_livret_add_img_teacher', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
-                    {# icone #}
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    Ajouter une image au projet
-                </a>
+                {% if images|length < 2 %}
+                    <a type="button" href="{{ path('iuto_livret_add_img_teacher', {'projet': projet.id }) }}" class="btn btn-default" id="project_btn_add_img">
+                        {# icone #}
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        Ajouter une image au projet
+                    </a>
+                {% endif %}
             </div>
             <div id="images">
                 {% for img in images %}

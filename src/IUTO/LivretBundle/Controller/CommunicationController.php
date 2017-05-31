@@ -684,14 +684,9 @@ class CommunicationController extends Controller
 //        vérification de l'envoie du formulaire et de sa validité
         if ($form->isSubmitted() && $form->isValid()) {
 //            vérification que la limite du nombre d'images est respectée
-            if (count($projet->getImages()) < 3) {
-                $image->setProjet($projet);
-                $em->persist($image);
-                $em->flush();
-            } //            exception si il y a déja deux images associées au projet
-            else {
-                throw new Exception('Seulement 2 images peuvent être liées au projet.');
-            }
+            $image->setProjet($projet);
+            $em->persist($image);
+            $em->flush();
 
             // redirection vers la page de prévisualisation ou de retour à l'accueil une fois le formulaire envoyer
             return $this->redirectToRoute('iuto_livret_communication_wordImg_projet', array(
