@@ -89,6 +89,29 @@
         $glyph = document.createElement('span');
         $glyph.className = 'glyphicon glyphicon-chevron-right';
         $subBtn.appendChild($glyph);
+
+        //        Affichage d'un sous-label d'information sur la sélection des étudiants et des tuteurs
+        $students = document.getElementById('iuto_livretbundle_projet_etudiants');
+        $studsParent = $students.parentNode.parentNode;
+        $tutors = document.getElementById('iuto_livretbundle_projet_tuteurs');
+        $tutsParent = $tutors.parentNode.parentNode;
+
+        $txtEtu = document.createTextNode("Chaque étudiant doit s'être connecté une fois pour apparraitre dans la liste");
+        $txtTut = document.createTextNode("Chaque enseignant doit s'être connecté une fois pour apparraitre dans la liste")
+
+        $sublabelEtus = document.createElement('h3');
+        $studsParent.insertBefore($sublabelEtus, $students.parentNode);
+        $sublabelEtusContent = document.createElement('small');
+        $sublabelEtus.appendChild($sublabelEtusContent);
+        $sublabelEtusContent.appendChild($txtEtu);
+
+
+        $sublabelTuts = document.createElement('h3');
+        $tutsParent.insertBefore($sublabelTuts, $tutors.parentNode);
+        $sublabelTutsContent = document.createElement('small');
+        $sublabelTuts.appendChild($sublabelTutsContent);
+        $sublabelTutsContent.appendChild($txtTut);
+
     </script>
 
 {% endblock %}
