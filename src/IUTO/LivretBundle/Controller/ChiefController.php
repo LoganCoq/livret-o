@@ -406,7 +406,7 @@ class ChiefController extends Controller
             array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
-            array_push($x, $user->getRole());
+            array_push($x, $user->getRoles());
             array_push($commentaires, $x);
         };
 
@@ -494,7 +494,7 @@ class ChiefController extends Controller
                 array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
                 array_push($x, $elem->getContenu());
                 array_push($x, $elem->getDate());
-                array_push($x, $user->getRole());
+                array_push($x, $user->getRoles());
                 array_push($commentaires, $x);
             };
 
@@ -561,7 +561,7 @@ class ChiefController extends Controller
             array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
             array_push($x, $elem->getContenu());
             array_push($x, $elem->getDate());
-            array_push($x, $user->getRole());
+            array_push($x, $user->getRoles());
             array_push($commentaires, $x);
 
         };
@@ -594,7 +594,7 @@ class ChiefController extends Controller
                 array_push($x, $user->getPrenomUser() . " " . $user->getNomUser());
                 array_push($x, $elem->getContenu());
                 array_push($x, $elem->getDate());
-                array_push($x, $user->getRole());
+                array_push($x, $user->getRoles());
                 array_push($commentaires, $x);
 
             };

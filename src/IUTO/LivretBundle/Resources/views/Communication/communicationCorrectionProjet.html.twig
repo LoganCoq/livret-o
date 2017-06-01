@@ -74,7 +74,7 @@
 
                         {# vérification du role de l'utilisateur pour le commentaire actuel #}
                         {# le commentaire se trouve à gauche si c'est un étudiant #}
-                        {% if commentaires[o][3] == "ROLE_student" %}
+                        {% if "ROLE_student"  in commentaires[o][3] %}
                             <div class="direct-chat-msg-left">
                                 {% if o != 0 %}
                                     {# affichage du nom de l'utilisateur si le commentaire précédent n'avais pas le même propriétaire #}
@@ -96,7 +96,7 @@
                             </div>
                         {% endif %}
                         {# le commentaire se met à droite si ce n'est pas un étudiant #}
-                        {% if commentaires[o][3] == "ROLE_faculty" or commentaires[o][3] == "ROLE_employee" %}
+                        {% if "ROLE_faculty"  in commentaires[o][3] or "ROLE_employee"  in commentaires[o][3] or "ROLE_chief"  in commentaires[o][3]%}
                             <div class="direct-chat-msg-right">
                                 {% if o != 0 %}
                                     {# affichage du nom de l'utilisateur si le commentaire précédent n'avais pas le même propriétaire #}

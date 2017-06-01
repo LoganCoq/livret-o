@@ -124,7 +124,7 @@
                             </div>
                         {% endif %}
 
-                        {% if commentaires[o][3] == "ROLE_student" %}
+                        {% if "ROLE_student" in commentaires[o][3] %}
                             <div class="direct-chat-msg-left">
                                 {% if o != 0 %}
                                     {% if commentaires[o][0] != commentaires[o-1][0]  %}
@@ -143,7 +143,7 @@
                             </div>
                         {% endif %}
 
-                        {% if commentaires[o][3] == "ROLE_faculty" or commentaires[o][3] == "ROLE_employee"%}
+                        {% if "ROLE_faculty"  in commentaires[o][3] or "ROLE_employee"  in commentaires[o][3] or "ROLE_chief"  in commentaires[o][3]%}
                             <div class="direct-chat-msg-right">
                                 {% if o != 0 %}
                                     {% if commentaires[o][0] != commentaires[o-1][0]  %}
