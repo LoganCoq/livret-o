@@ -35,13 +35,13 @@ class LivretChooseProjectsType extends AbstractType
                 'label' => 'Valider la selection',
                 'attr' => [
                     'class' => 'btn btn-primary',
-                    'data-toggle' => 'confirmation',
-                    'data-singleton' => true,
-                    'data-popout' => true,
-                    'data-title' => 'Êtes-vous sûr ?',
-                    'data-content' => 'Le livret sera créer avec les projets sélectionnés',
-                    'data-btn-ok-label' => 'Continuer',
-                    'data-btn-cancel-label' => 'Annuler'
+//                    'data-toggle' => 'confirmation',
+//                    'data-singleton' => true,
+//                    'data-popout' => true,
+//                    'data-title' => 'Êtes-vous sûr ?',
+//                    'data-content' => 'Le livret sera créer avec les projets sélectionnés',
+//                    'data-btn-ok-label' => 'Continuer',
+//                    'data-btn-cancel-label' => 'Annuler'
                 ]
             ));
     }

@@ -73,13 +73,13 @@ class ProjetCreateType extends AbstractType
                 'label' => 'Suivant',
                 'attr' => [
                     'class' => 'btn btn-primary',
-                    'data-toggle' => 'confirmation',
-                    'data-singleton' => true,
-                    'data-popout' => true,
-                    'data-title' => 'Êtes-vous sûr ?',
-                    'data-content' => 'Le projet sera enregistré',
-                    'data-btn-ok-label' => 'Continuer',
-                    'data-btn-cancel-label' => 'Annuler'
+//                    'data-toggle' => 'confirmation',
+//                    'data-singleton' => true,
+//                    'data-popout' => true,
+//                    'data-title' => 'Êtes-vous sûr ?',
+//                    'data-content' => 'Le projet sera enregistré',
+//                    'data-btn-ok-label' => 'Continuer',
+//                    'data-btn-cancel-label' => 'Annuler'
                 ]
             ));
     }
