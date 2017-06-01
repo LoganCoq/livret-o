@@ -2,7 +2,6 @@
 
 namespace IUTO\LivretBundle\Controller;
 
-use Exception;
 use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Image;
 use IUTO\LivretBundle\Entity\Projet;

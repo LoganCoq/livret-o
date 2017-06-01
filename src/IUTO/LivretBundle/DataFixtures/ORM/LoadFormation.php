@@ -8,7 +8,6 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use IUTO\LivretBundle\Entity\Departement;
 use IUTO\LivretBundle\Entity\Formation;
-use IUTO\LivretBundle\Entity\User;
 
 class LoadFormation implements FixtureInterface,DependentFixtureInterface
 {

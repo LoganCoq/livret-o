@@ -2,7 +2,6 @@
 
 namespace IUTO\LivretBundle\Controller;
 
-use Exception;
 use IUTO\LivretBundle\Entity\Commentaire;
 use IUTO\LivretBundle\Entity\Departement;
 use IUTO\LivretBundle\Entity\Edito;
@@ -23,7 +22,6 @@ use IUTO\LivretBundle\Form\ProjetValideType;
 use phpCAS;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use IUTO\LivretBundle\Entity\Projet;
-use IUTO\LivretBundle\Form\ProjetContenuType;
 use Symfony\Component\HttpFoundation\Request;
 use IUTO\LivretBundle\Entity\Livret;
 
