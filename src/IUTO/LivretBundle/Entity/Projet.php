@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping\GeneratedValue;
  */
 class Projet
 {
-    public $nomDep;
+    public $nomDpt;
 
     public $listeEtudiants;
 
@@ -132,20 +132,20 @@ class Projet
     }
 
     /**
-     * @return string
-     */
-    public function setNomDpt($nom){
-        $this->nomDep = $nom;
-    }
-
-    /**
      * Get nomDepartement
      *
      * @return string
      */
     public function getNomDpt()
     {
-        return $this->nomDep;
+        return $this->nomDpt;
+    }
+
+    /**
+     * @return string
+     */
+    public function setNomDpt($nom){
+        $this->nomDpt = $nom;
     }
 
     /**

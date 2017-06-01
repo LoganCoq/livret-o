@@ -35,7 +35,7 @@ class ProjetCreateType extends AbstractType
                     'class' => 'datepicker to_date',
                 ],
             ))
-            ->add('nomDep', TextType::class, array(
+            ->add('nomDpt', TextType::class, array(
                 'disabled' => true,
                 'label' => 'Département'))
             ->add('etudiants', EntityType::class, array(

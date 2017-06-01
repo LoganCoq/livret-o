@@ -37,7 +37,7 @@ class ProjetChiefCreateType extends AbstractType
                     'class' => 'datepicker to_date',
                 ],
             ))
-            ->add('nomDep', ChoiceType::class, array(
+            ->add('nomDpt', ChoiceType::class, array(
                 'label' => 'Département',
                 'choices' => array(
                     'Chimie' => 'Chimie',
