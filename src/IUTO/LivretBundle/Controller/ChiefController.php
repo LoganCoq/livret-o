@@ -426,6 +426,10 @@ class ChiefController extends Controller
             $newProjet->setImages($projet->getImages());
             $newProjet->setDescriptionClientProjet(($projet->getDescriptionClientProjet()));
 
+            //            actualisation du projet associé aux images du projet
+            foreach ($newProjet->getImages() as $oneImg) {
+                $oneImg->setProjet($newProjet);
+            }
 
             // récupération de la date et changement de son format
             $dateFormD = $form['dateDebut']->getData();

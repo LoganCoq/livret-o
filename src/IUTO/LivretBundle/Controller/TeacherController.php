@@ -142,6 +142,11 @@ class TeacherController extends Controller
             $newProjet->setImages($projet->getImages());
             $newProjet->setDescriptionClientProjet(($projet->getDescriptionClientProjet()));
 
+            //            actualisation du projet associé aux images du projet
+            foreach ($newProjet->getImages() as $oneImg) {
+                $oneImg->setProjet($newProjet);
+            }
+
 //            récupération des dates du formulaire
             $dateFormD = $formModif['dateDebut']->getData();
             $dateFormF = $formModif['dateFin']->getData();
