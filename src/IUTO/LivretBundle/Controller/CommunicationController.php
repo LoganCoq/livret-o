@@ -406,6 +406,7 @@ class CommunicationController extends Controller
             $newProjet->setMarquantProjet($projet->getMarquantProjet());
             $newProjet->setMotsClesProjet($projet->getMotsClesProjet());
             $newProjet->setClientProjet($projet->getClientProjet());
+            $newProjet->setDescriptionClientProjet($projet->getDescriptionClientProjet());
             $newProjet->setValiderProjet($projet->getValiderProjet());
             $newProjet->setNomDpt($projet->getNomDpt());
             $newProjet->setImages($projet->getImages());
