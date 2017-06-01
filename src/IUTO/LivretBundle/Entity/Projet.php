@@ -23,7 +23,7 @@ class Projet
     /**
      * @var string
      *
-     * @ORM\Column(name="nomDpt", type="string", length="255")
+     * @ORM\Column(name="nomDpt", type="string", length=255, nullable=false)
      */
     public $nomDpt;
     /**
