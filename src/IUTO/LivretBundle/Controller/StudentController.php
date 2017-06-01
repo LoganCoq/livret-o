@@ -9,6 +9,7 @@ use IUTO\LivretBundle\Entity\User;
 use IUTO\LivretBundle\Form\AddImageType;
 use IUTO\LivretBundle\Form\CommentaireCreateType;
 use IUTO\LivretBundle\Form\ProjetAddKeyWordType;
+use IUTO\LivretBundle\Form\ProjetChiefCreateType;
 use IUTO\LivretBundle\Form\ProjetContenuType;
 use IUTO\LivretBundle\Form\ProjetCreateType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -250,7 +251,7 @@ class StudentController extends Controller
             }
         }
         // création du formulaire de création d'un projet
-        $form = $this->createForm(ProjetCreateType::class, $projet, ['annee' => $formation->getYearDebut(), 'etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
+        $form = $this->createForm(ProjetChiefCreateType::class, $projet, ['annee' => $formation->getYearDebut(), 'etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
 
         // insertion des dates en string
         $form['dateDebut']->setData($projet->getDateDebut()->format('d/m/Y'));
