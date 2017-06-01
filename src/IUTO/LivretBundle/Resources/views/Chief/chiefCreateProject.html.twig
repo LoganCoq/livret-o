@@ -92,22 +92,22 @@
 
         //        Affichage d'un sous-label d'information sur la sélection des étudiants et des tuteurs
         $students = document.getElementById('iuto_livretbundle_projet_etudiants');
-        $studsParent = $students.parentNode.parentNode;
+        $studsParent = $students.parentNode;
         $tutors = document.getElementById('iuto_livretbundle_projet_tuteurs');
-        $tutsParent = $tutors.parentNode.parentNode;
+        $tutsParent = $tutors.parentNode;
 
         $txtEtu = document.createTextNode("Chaque étudiant doit s'être connecté une fois pour apparraitre dans la liste");
-        $txtTut = document.createTextNode("Chaque enseignant doit s'être connecté une fois pour apparraitre dans la liste")
+        $txtTut = document.createTextNode("Chaque enseignant doit s'être connecté une fois pour apparraitre dans la liste");
 
         $sublabelEtus = document.createElement('h3');
-        $studsParent.insertBefore($sublabelEtus, $students.parentNode);
+        $studsParent.insertBefore($sublabelEtus, $students);
         $sublabelEtusContent = document.createElement('small');
         $sublabelEtus.appendChild($sublabelEtusContent);
         $sublabelEtusContent.appendChild($txtEtu);
 
 
         $sublabelTuts = document.createElement('h3');
-        $tutsParent.insertBefore($sublabelTuts, $tutors.parentNode);
+        $tutsParent.insertBefore($sublabelTuts, $tutors);
         $sublabelTutsContent = document.createElement('small');
         $sublabelTuts.appendChild($sublabelTutsContent);
         $sublabelTutsContent.appendChild($txtTut);
