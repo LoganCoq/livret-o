@@ -17,10 +17,15 @@ use Doctrine\ORM\Mapping\GeneratedValue;
  */
 class Projet
 {
-    public $nomDpt;
+
 
     public $listeEtudiants;
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomDpt", type="string", length="255")
+     */
+    public $nomDpt;
     /**
      * @var int
      *
@@ -29,92 +34,78 @@ class Projet
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
      * @ORM\Column(name="intituleProjet", type="text")
      */
     private $intituleProjet;
-
     /**
      * @var string
      *
      * @ORM\Column(name="descripProjet", type="text", nullable=true)
      */
     private $descripProjet;
-
     /**
      * @var string
      *
      * @ORM\Column(name="bilanProjet", type="text", nullable=true)
      */
     private $bilanProjet;
-
     /**
      * @var bool
      *
      * @ORM\Column(name="marquantProjet", type="boolean")
      */
     private $marquantProjet;
-
     /**
      * @var array
      *
      * @ORM\Column(name="motsClesProjet", type="array", nullable=true)
      */
     private $motsClesProjet;
-
     /**
      * @var string
      *
      * @ORM\Column(name="clientProjet", type="string", length=255, nullable=true)
      */
     private $clientProjet;
-
     /**
      * @var string
      *
      * @ORM\Column(name="descriptionClientProjet", type="text", nullable=true)
      */
     private $descriptionClientProjet;
-
     /**
      * @var bool
      *
      * @ORM\Column(name="validerProjet", type="boolean")
      */
     private $validerProjet;
-
     /**
      * @var date
      *
      * @ORM\Column(name="dateDebut", type="date")
      */
     private $dateDebut;
-
     /**
      * @var date
      *
      * @ORM\Column(name="dateFin", type="date")
      */
     private $dateFin;
-
     /**
     * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\User", mappedBy="projetFaits")
     */
     private $etudiants;
-
     /**
      * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\User", mappedBy="projetSuivis")
      */
     private $tuteurs;
-
     /**
      * @ORM\ManyToMany(targetEntity="IUTO\LivretBundle\Entity\Livret", inversedBy="projets")
      */
     private $livrets;
-
     /**
      * @ORM\OneToMany(targetEntity="IUTO\LivretBundle\Entity\Image", mappedBy="projet")
      */
