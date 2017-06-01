@@ -168,6 +168,7 @@
     </script>
 
     <script type="text/javascript">
+
         $('.selectpicker').selectpicker('refresh');
         $subBtn = document.getElementById('iuto_livretbundle_projet_submit');
         $glyph = document.createElement('span');
@@ -176,6 +177,27 @@
 
         $champCom = document.getElementById('iuto_livretbundle_commentaire_contenu');
         $champCom.value = '';
+
+
+        $students = document.getElementById('iuto_livretbundle_projet_etudiants');
+        $tutors = document.getElementById('iuto_livretbundle_projet_tuteurs');
+
+        $txtEtu = document.createTextNode("Chaque étudiant doit s'être connecté pour apparraitre dans la liste");
+        $txtTut = document.createTextNode("Chaque enseignant doit s'être connecté pour apparraitre dans la liste")
+
+        $sublabelEtus = document.createElement('h3');
+        $students.before($sublabelEtus);
+        $sublabelEtusContent = document.createElement('small');
+        $sublabelEtus.appendChild($sublabelEtusContent);
+        $sublabelEtusContent.appendChild($txtEtu);
+
+
+        $sublabelTuts = document.createElement('h3');
+        $tutors.before($sublabelTutsContent);
+        $sublabelTutsContent = document.createElement('small');
+        $sublabelTuts.appendChild($sublabelTutsContent);
+        $sublabelTutsContent.appendChild($txtTut);
+
 
     </script>
 
