@@ -180,22 +180,22 @@
 
 
         $students = document.getElementById('iuto_livretbundle_projet_etudiants');
-        $studsParent = $students.parentNode;
+        $studsParent = $students.parentNode.parentNode;
         $tutors = document.getElementById('iuto_livretbundle_projet_tuteurs');
-        $tutsParent = $tutors.parentNode;
+        $tutsParent = $tutors.parentNode.parentNode;
 
         $txtEtu = document.createTextNode("Chaque étudiant doit s'être connecté pour apparraitre dans la liste");
         $txtTut = document.createTextNode("Chaque enseignant doit s'être connecté pour apparraitre dans la liste")
 
         $sublabelEtus = document.createElement('h3');
-        $studsParent.insertBefore($sublabelEtus, $students);
+        $studsParent.insertBefore($sublabelEtus, $students.parentNode);
         $sublabelEtusContent = document.createElement('small');
         $sublabelEtus.appendChild($sublabelEtusContent);
         $sublabelEtusContent.appendChild($txtEtu);
 
 
         $sublabelTuts = document.createElement('h3');
-        $tutsParent.insertBefore($sublabelTutsContent, $tutors);
+        $tutsParent.insertBefore($sublabelTutsContent, $tutors.parentNode);
         $sublabelTutsContent = document.createElement('small');
         $sublabelTuts.appendChild($sublabelTutsContent);
         $sublabelTutsContent.appendChild($txtTut);
