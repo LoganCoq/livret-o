@@ -251,7 +251,7 @@ class StudentController extends Controller
             }
         }
         // création du formulaire de création d'un projet
-        $form = $this->createForm(ProjetChiefCreateType::class, $projet, ['annee' => $formation->getYearDebut(), 'etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
+        $form = $this->createForm(ProjetChiefCreateType::class, $projet, ['etudiants' => $etudiants, 'tuteurs' => $tuteurs]);
 
         // insertion des dates en string
         $form['dateDebut']->setData($projet->getDateDebut()->format('d/m/Y'));
