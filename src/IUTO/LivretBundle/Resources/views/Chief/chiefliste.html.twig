@@ -187,42 +187,18 @@
                                 {
                                     document.getElementById("o" + pro[0]).style.display = "inline-block";
                                     document.getElementById("o" + pro[0]).className = "projetPublic";
-                                } else {
-                                    document.getElementById("o" + pro[0]).style.display = "none";
-                                    document.getElementById("o" + pro[0]).className = "";
                                 }
                             }
                         } else {
                             document.getElementById("o" + pro[0]).style.display = "inline-block";
                             document.getElementById("o" + pro[0]).className = "projetPublic";
                         }
-                    }
-
-                    else {
-                        if ( txt.length > 0 ) {
-                            for ( mot of pro[5])
-                            {
-                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
-                                {
-                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
-                                    document.getElementById("o" + pro[0]).className = "projetPublic";
-                                } else {
-                                    document.getElementById("o" + pro[0]).style.display = "none";
-                                    document.getElementById("o" + pro[0]).className = "";
-                                }
-                            }
-                        } else {
-                            document.getElementById("o" + pro[0]).style.display = "none";
-                            document.getElementById("o" + pro[0]).className = "";
-                        }
+                    } else {
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
                     }
                 } else if (dptS.length < 1 && AnnS.length > 0 && promS.length > 0) {
                     if (ann.includes(pro[2]) && prom.includes(pro[3]) && pro[4] === valS) {
-                        document.getElementById("o" + pro[0]).style.display = "inline-block";
-                        document.getElementById("o" + pro[0]).className = "projetPublic";
-                    }
-
-                    else {
                         if ( txt.length > 0 ) {
                             for ( mot of pro[5])
                             {
@@ -230,15 +206,15 @@
                                 {
                                     document.getElementById("o" + pro[0]).style.display = "inline-block";
                                     document.getElementById("o" + pro[0]).className = "projetPublic";
-                                } else {
-                                    document.getElementById("o" + pro[0]).style.display = "none";
-                                    document.getElementById("o" + pro[0]).className = "";
                                 }
                             }
                         } else {
-                            document.getElementById("o" + pro[0]).style.display = "none";
-                            document.getElementById("o" + pro[0]).className = "";
+                            document.getElementById("o" + pro[0]).style.display = "inline-block";
+                            document.getElementById("o" + pro[0]).className = "projetPublic";
                         }
+                    } else {
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
                     }
                 } else if (dptS.length > 0 && AnnS.length < 1 && promS.length > 0) {
                     if (dpt.includes(pro[1]) && prom.includes(pro[3]) && pro[4] === valS) {
@@ -249,34 +225,15 @@
                                 {
                                     document.getElementById("o" + pro[0]).style.display = "inline-block";
                                     document.getElementById("o" + pro[0]).className = "projetPublic";
-                                } else {
-                                    document.getElementById("o" + pro[0]).style.display = "none";
-                                    document.getElementById("o" + pro[0]).className = "";
                                 }
                             }
                         } else {
                             document.getElementById("o" + pro[0]).style.display = "inline-block";
                             document.getElementById("o" + pro[0]).className = "projetPublic";
                         }
-                    }
-
-                    else {
-                        if ( txt.length > 0 ) {
-                            for ( mot of pro[5])
-                            {
-                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
-                                {
-                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
-                                    document.getElementById("o" + pro[0]).className = "projetPublic";
-                                } else {
-                                    document.getElementById("o" + pro[0]).style.display = "none";
-                                    document.getElementById("o" + pro[0]).className = "";
-                                }
-                            }
-                        } else {
-                            document.getElementById("o" + pro[0]).style.display = "none";
-                            document.getElementById("o" + pro[0]).className = "";
-                        }
+                    } else {
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
                     }
                 } else if (dptS.length > 0 && AnnS.length > 0 && promS.length < 1) {
                     if (dpt.includes(pro[1]) && ann.includes(pro[2]) && pro[4] === valS) {
@@ -287,9 +244,6 @@
                                 {
                                     document.getElementById("o" + pro[0]).style.display = "inline-block";
                                     document.getElementById("o" + pro[0]).className = "projetPublic";
-                                } else {
-                                    document.getElementById("o" + pro[0]).style.display = "none";
-                                    document.getElementById("o" + pro[0]).className = "";
                                 }
                             }
                         } else {
@@ -299,22 +253,8 @@
                     }
 
                     else {
-                        if ( txt.length > 0 ) {
-                            for ( mot of pro[5])
-                            {
-                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
-                                {
-                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
-                                    document.getElementById("o" + pro[0]).className = "projetPublic";
-                                } else {
-                                    document.getElementById("o" + pro[0]).style.display = "none";
-                                    document.getElementById("o" + pro[0]).className = "";
-                                }
-                            }
-                        } else {
-                            document.getElementById("o" + pro[0]).style.display = "none";
-                            document.getElementById("o" + pro[0]).className = "";
-                        }
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
                     }
                 } else if (dptS.length < 1 && AnnS.length < 1 && promS.length < 1) {
                     if (pro[4] === valS) {
@@ -325,9 +265,6 @@
                                 {
                                     document.getElementById("o" + pro[0]).style.display = "inline-block";
                                     document.getElementById("o" + pro[0]).className = "projetPublic";
-                                } else {
-                                    document.getElementById("o" + pro[0]).style.display = "none";
-                                    document.getElementById("o" + pro[0]).className = "";
                                 }
                             }
                         } else {
@@ -337,22 +274,8 @@
                     }
 
                     else {
-                        if ( txt.length > 0 ) {
-                            for ( mot of pro[5])
-                            {
-                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
-                                {
-                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
-                                    document.getElementById("o" + pro[0]).className = "projetPublic";
-                                } else {
-                                    document.getElementById("o" + pro[0]).style.display = "none";
-                                    document.getElementById("o" + pro[0]).className = "";
-                                }
-                            }
-                        } else {
-                            document.getElementById("o" + pro[0]).style.display = "none";
-                            document.getElementById("o" + pro[0]).className = "";
-                        }
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
                     }
                 }
                 else {
@@ -364,9 +287,6 @@
                                 {
                                     document.getElementById("o" + pro[0]).style.display = "inline-block";
                                     document.getElementById("o" + pro[0]).className = "projetPublic";
-                                } else {
-                                    document.getElementById("o" + pro[0]).style.display = "none";
-                                    document.getElementById("o" + pro[0]).className = "";
                                 }
                             }
                         } else {
@@ -376,22 +296,8 @@
                     }
 
                     else {
-                        if ( txt.length > 0 ) {
-                            for ( mot of pro[5])
-                            {
-                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
-                                {
-                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
-                                    document.getElementById("o" + pro[0]).className = "projetPublic";
-                                } else {
-                                    document.getElementById("o" + pro[0]).style.display = "none";
-                                    document.getElementById("o" + pro[0]).className = "";
-                                }
-                            }
-                        } else {
-                            document.getElementById("o" + pro[0]).style.display = "none";
-                            document.getElementById("o" + pro[0]).className = "";
-                        }
+                        document.getElementById("o" + pro[0]).style.display = "none";
+                        document.getElementById("o" + pro[0]).className = "";
                     }
                 }
             }
