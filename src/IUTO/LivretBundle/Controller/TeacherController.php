@@ -3,6 +3,7 @@
 namespace IUTO\LivretBundle\Controller;
 
 use IUTO\LivretBundle\Entity\Commentaire;
+use IUTO\LivretBundle\Entity\Departement;
 use IUTO\LivretBundle\Entity\Image;
 use IUTO\LivretBundle\Entity\Projet;
 use IUTO\LivretBundle\Entity\User;
@@ -783,25 +784,15 @@ class TeacherController extends Controller
 
     public function chooseProjectAction()
     {
-        //récupération des informations sur l'utilisateur
-        $em = $this->getDoctrine()->getManager();
         $idUniv = phpCAS::getUser();
+        $manager = $this->getDoctrine()->getManager();
 
-        // récuperation des projets d'un étudiant
-        $projets = $em->getRepository(Projet::class)->findAll();
-        $projetsSuivis = array();
-        $projetsFinis = array();
 
-        // récupération des projets fait et non fait de l'étudiant
-        foreach ($projets as $proj) {
-            if ($proj->getValiderProjet() == 1) {
-                // ajout du projet à la liste si il est valider
-                $projetsFinis[] = $proj;
-            } else {
-                // ajout du projet à la liste si il est en cours de suivi
-                $projetsSuivis[] = $proj;
-            }
-        }
+        $projets = $manager->getRepository(Projet::class)->findAll();
+        $dpt = $manager->getRepository(Departement::class)->findAll();
+        $annee = array(1 => date("y"), 2 => date("y") - 1, 3 => date("y") - 2, 4 => date("y") - 3, 5 => date("y") - 4);
+        $proms = array(1 => "1A", 2 => "2A", 3 => "AS", 4 => "LP");
+
 
         // affichage de la page de selection du projet à modifier ou prévisualiser
         return $this->render('IUTOLivretBundle:Teacher:chooseProject.html.twig', array(
@@ -809,8 +800,10 @@ class TeacherController extends Controller
                 'routing_statutCAShome' => '/professeur',
                 'info' => array('Demandes de correction', 'Projets validés', 'Voir tous les projets'),
                 'routing_info' => array('/professeur/correctionProf1', '/professeur/projetsValides1', '/professeur/projets/choose'),
-                'projetsFinis' => $projetsFinis,
-                'projetsSuivis' => $projetsSuivis,)
-        );
+                'projets' => $projets,
+                'dpt' => $dpt,
+                'annee' => $annee,
+                'promos' => $proms,
+        ));
     }
 }

@@ -288,7 +288,6 @@ class ChiefController extends Controller
             'annee' => $annee,
             'promos' => $proms,
         ));
-
     }
 
     public function chiefChooseEditoAction()
