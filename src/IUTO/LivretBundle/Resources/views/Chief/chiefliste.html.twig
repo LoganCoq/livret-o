@@ -24,6 +24,7 @@
     <h1 class="titre"> Projets en cours </h1>
 
     <div class="selection">
+        <input type="text" id="textSearch" placeholder="Entrez un mot clé">
         <select id="selectionDpt" class="selectpicker form-control" data-live-search="data-live-search"
                 data-width="auto" multiple="multiple" title="Aucun département sélectionné">
             {% for d in dpt %}
@@ -52,10 +53,11 @@
 
     <ul id="listeProjets">
         {% for projet in projets %}
-            <li id="o{{ projet.id }}"  class="list-group-item">
+            <li id="o{{ projet.id }}" class="list-group-item">
                 <p id="choose_project_name">{{ projet.intituleProjet }}</p>
                 <div class="btns">
-                    <a href="{{ path('iuto_livret_chief_correction_projet', {'projet' : projet.id}) }}" class="btn btn-warning" id="livret_modif_btn">
+                    <a href="{{ path('iuto_livret_chief_correction_projet', {'projet' : projet.id}) }}"
+                       class="btn btn-warning" id="livret_modif_btn">
                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                         Corriger le projet
                     </a>
@@ -64,7 +66,8 @@
                         Aperçu du projet
                     </a>
                     <div class="dropdown">
-                        <a class="btn dropdown-toggle" type="button" data-toggle="dropdown" id="btn_drop_{{ projet.id }}" aria-haspopup="true" aria-expanded="true">
+                        <a class="btn dropdown-toggle" type="button" data-toggle="dropdown"
+                           id="btn_drop_{{ projet.id }}" aria-haspopup="true" aria-expanded="true">
                             <span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="btn_drop_{{ projet.id }}">
@@ -76,8 +79,10 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ path('iuto_livret_chief_delete_projet', {'projet' : projet.id}) }}" id="delete_btn">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer le projet
+                                <a href="{{ path('iuto_livret_chief_delete_projet', {'projet' : projet.id}) }}"
+                                   id="delete_btn">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer le
+                                    projet
                                 </a>
                             </li>
                         </ul>
@@ -97,20 +102,33 @@
         projets = [];
 
         {% for p in projets %}
-        a = [];
-        a.push({{ p.id }});
-        a.push("{{ p.etudiants[0].formations[0].departement.nomDpt }}");
-        a.push("{{ p.dateDebut|date('Y') }}");
-        a.push("{{ p.etudiants[0].formations[0].typeFormation }}");
-        {% if p.validerProjet == 0 %}
-        a.push(false);
-        {% else %}
-        a.push(true);
-        {% endif %}
-        projets.push(a);
+            a = [];
+            a.push({{ p.id }});
+            a.push("{{ p.etudiants[0].formations[0].departement.nomDpt }}");
+            a.push("{{ p.dateDebut|date('Y') }}");
+            a.push("{{ p.etudiants[0].formations[0].typeFormation }}");
+
+            {% if p.validerProjet == 0 %}
+                a.push(false);
+            {% else %}
+                a.push(true);
+            {% endif %}
+
+            mots = [];
+            {% for mot in p.motsClesProjet %}
+                mots.push("{{ mot }}");
+            {% endfor %}
+            a.push(mots);
+
+            projets.push(a);
         {% endfor %}
 
         liste = document.getElementById("listeProjets");
+
+        selTxt = document.getElementById("textSearch");
+        $('#textSearch').on("input", function (evenement) {
+            actualiserProjets();
+        });
 
         selDpt = document.getElementById("selectionDpt");
         selDpt.onchange = function (evenement) {
@@ -145,6 +163,7 @@
             AnnS = selAnnee.selectedOptions;
             promS = selProm.selectedOptions;
             valS = selValide.checked;
+            txt = selTxt.value;
             dpt = [];
             for (d of dptS) {
                 dpt.push(d.innerHTML);
@@ -158,66 +177,221 @@
                 prom.push(pr.value);
             }
             for (pro of projets) {
+
                 if (dptS.length > 0 && AnnS.length > 0 && promS.length > 0) {
                     if (dpt.includes(pro[1]) && ann.includes(pro[2]) && prom.includes(pro[3]) && pro[4] === valS) {
-                        document.getElementById("o" + pro[0]).style.display = "inline-block";
-                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                        if ( txt.length > 0 ) {
+                            for ( mot of pro[5])
+                            {
+                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
+                                {
+                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
+                                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                                } else {
+                                    document.getElementById("o" + pro[0]).style.display = "none";
+                                    document.getElementById("o" + pro[0]).style.display = "block";
+                                }
+                            }
+                        } else {
+                            document.getElementById("o" + pro[0]).style.display = "inline-block";
+                            document.getElementById("o" + pro[0]).className = "projetPublic";
+                        }
                     }
 
                     else {
-                        document.getElementById("o" + pro[0]).style.display = "none";
-                        document.getElementById("o" + pro[0]).className = "";
+                        if ( txt.length > 0 ) {
+                            for ( mot of pro[5])
+                            {
+                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
+                                {
+                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
+                                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                                } else {
+                                    document.getElementById("o" + pro[0]).style.display = "none";
+                                    document.getElementById("o" + pro[0]).style.display = "block";
+                                }
+                            }
+                        } else {
+                            document.getElementById("o" + pro[0]).style.display = "none";
+                            document.getElementById("o" + pro[0]).className = "";
+                        }
                     }
-                } else if (dptS.length < 1 && AnnS.length > 0 && promS.length > 0 ) {
+                } else if (dptS.length < 1 && AnnS.length > 0 && promS.length > 0) {
                     if (ann.includes(pro[2]) && prom.includes(pro[3]) && pro[4] === valS) {
                         document.getElementById("o" + pro[0]).style.display = "inline-block";
                         document.getElementById("o" + pro[0]).className = "projetPublic";
                     }
 
                     else {
-                        document.getElementById("o" + pro[0]).style.display = "none";
-                        document.getElementById("o" + pro[0]).className = "";
+                        if ( txt.length > 0 ) {
+                            for ( mot of pro[5])
+                            {
+                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
+                                {
+                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
+                                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                                } else {
+                                    document.getElementById("o" + pro[0]).style.display = "none";
+                                    document.getElementById("o" + pro[0]).style.display = "block";
+                                }
+                            }
+                        } else {
+                            document.getElementById("o" + pro[0]).style.display = "none";
+                            document.getElementById("o" + pro[0]).className = "";
+                        }
                     }
-                } else if (dptS.length > 0 && AnnS.length < 1 && promS.length > 0 ) {
+                } else if (dptS.length > 0 && AnnS.length < 1 && promS.length > 0) {
                     if (dpt.includes(pro[1]) && prom.includes(pro[3]) && pro[4] === valS) {
-                        document.getElementById("o" + pro[0]).style.display = "inline-block";
-                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                        if ( txt.length > 0 ) {
+                            for ( mot of pro[5])
+                            {
+                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
+                                {
+                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
+                                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                                } else {
+                                    document.getElementById("o" + pro[0]).style.display = "none";
+                                    document.getElementById("o" + pro[0]).style.display = "block";
+                                }
+                            }
+                        } else {
+                            document.getElementById("o" + pro[0]).style.display = "inline-block";
+                            document.getElementById("o" + pro[0]).className = "projetPublic";
+                        }
                     }
 
                     else {
-                        document.getElementById("o" + pro[0]).style.display = "none";
-                        document.getElementById("o" + pro[0]).className = "";
+                        if ( txt.length > 0 ) {
+                            for ( mot of pro[5])
+                            {
+                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
+                                {
+                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
+                                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                                } else {
+                                    document.getElementById("o" + pro[0]).style.display = "none";
+                                    document.getElementById("o" + pro[0]).style.display = "block";
+                                }
+                            }
+                        } else {
+                            document.getElementById("o" + pro[0]).style.display = "none";
+                            document.getElementById("o" + pro[0]).className = "";
+                        }
                     }
-                } else if (dptS.length > 0 && AnnS.length > 0 && promS.length < 1 ) {
+                } else if (dptS.length > 0 && AnnS.length > 0 && promS.length < 1) {
                     if (dpt.includes(pro[1]) && ann.includes(pro[2]) && pro[4] === valS) {
-                        document.getElementById("o" + pro[0]).style.display = "inline-block";
-                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                        if ( txt.length > 0 ) {
+                            for ( mot of pro[5])
+                            {
+                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
+                                {
+                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
+                                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                                } else {
+                                    document.getElementById("o" + pro[0]).style.display = "none";
+                                    document.getElementById("o" + pro[0]).style.display = "block";
+                                }
+                            }
+                        } else {
+                            document.getElementById("o" + pro[0]).style.display = "inline-block";
+                            document.getElementById("o" + pro[0]).className = "projetPublic";
+                        }
                     }
 
                     else {
-                        document.getElementById("o" + pro[0]).style.display = "none";
-                        document.getElementById("o" + pro[0]).className = "";
+                        if ( txt.length > 0 ) {
+                            for ( mot of pro[5])
+                            {
+                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
+                                {
+                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
+                                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                                } else {
+                                    document.getElementById("o" + pro[0]).style.display = "none";
+                                    document.getElementById("o" + pro[0]).style.display = "block";
+                                }
+                            }
+                        } else {
+                            document.getElementById("o" + pro[0]).style.display = "none";
+                            document.getElementById("o" + pro[0]).className = "";
+                        }
                     }
-                } else if (dptS.length < 1 && AnnS.length < 1 && promS.length < 1 ){
+                } else if (dptS.length < 1 && AnnS.length < 1 && promS.length < 1) {
                     if (pro[4] === valS) {
-                        document.getElementById("o" + pro[0]).style.display = "inline-block";
-                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                        if ( txt.length > 0 ) {
+                            for ( mot of pro[5])
+                            {
+                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
+                                {
+                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
+                                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                                } else {
+                                    document.getElementById("o" + pro[0]).style.display = "none";
+                                    document.getElementById("o" + pro[0]).style.display = "block";
+                                }
+                            }
+                        } else {
+                            document.getElementById("o" + pro[0]).style.display = "inline-block";
+                            document.getElementById("o" + pro[0]).className = "projetPublic";
+                        }
                     }
 
                     else {
-                        document.getElementById("o" + pro[0]).style.display = "none";
-                        document.getElementById("o" + pro[0]).className = "";
+                        if ( txt.length > 0 ) {
+                            for ( mot of pro[5])
+                            {
+                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
+                                {
+                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
+                                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                                } else {
+                                    document.getElementById("o" + pro[0]).style.display = "none";
+                                    document.getElementById("o" + pro[0]).style.display = "block";
+                                }
+                            }
+                        } else {
+                            document.getElementById("o" + pro[0]).style.display = "none";
+                            document.getElementById("o" + pro[0]).className = "";
+                        }
                     }
                 }
                 else {
                     if ((dpt.includes(pro[1]) || ann.includes(pro[2]) || prom.includes(pro[3])) && pro[4] === valS) {
-                        document.getElementById("o" + pro[0]).style.display = "inline-block";
-                        document.getElementById("o" + pro[0]).className = "projetPublic";
+                        if ( txt.length > 0 ) {
+                            for ( mot of pro[5])
+                            {
+                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
+                                {
+                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
+                                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                                } else {
+                                    document.getElementById("o" + pro[0]).style.display = "none";
+                                    document.getElementById("o" + pro[0]).style.display = "block";
+                                }
+                            }
+                        } else {
+                            document.getElementById("o" + pro[0]).style.display = "inline-block";
+                            document.getElementById("o" + pro[0]).className = "projetPublic";
+                        }
                     }
 
                     else {
-                        document.getElementById("o" + pro[0]).style.display = "none";
-                        document.getElementById("o" + pro[0]).className = "";
+                        if ( txt.length > 0 ) {
+                            for ( mot of pro[5])
+                            {
+                                if ( mot.toLowerCase().indexOf(txt.toLowerCase()) !== -1 )
+                                {
+                                    document.getElementById("o" + pro[0]).style.display = "inline-block";
+                                    document.getElementById("o" + pro[0]).className = "projetPublic";
+                                } else {
+                                    document.getElementById("o" + pro[0]).style.display = "none";
+                                    document.getElementById("o" + pro[0]).style.display = "block";
+                                }
+                            }
+                        } else {
+                            document.getElementById("o" + pro[0]).style.display = "none";
+                            document.getElementById("o" + pro[0]).className = "";
+                        }
                     }
                 }
             }
